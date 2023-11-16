@@ -1,10 +1,11 @@
-import { View, Text, Image, KeyboardAvoidingView } from "react-native";
+import { View, Text, Image, KeyboardAvoidingView,SafeAreaView } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FollowHandler from "./FollowHandler";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 
 const MyFollowers = () => {
   const userData = useSelector((state) => state.userReducer);
@@ -23,7 +24,7 @@ const MyFollowers = () => {
         backgroundColor: "black",
       }}
     >
-      <View style={{ flex: 1, marginTop: 50 }}>
+      <SafeAreaView>
         <View
           style={{
             flexDirection: "row",
@@ -143,7 +144,7 @@ const MyFollowers = () => {
                             justifyContent: "center",
                           }}
                         >
-                          {user._id = userData._id ? (
+                          {user._id === userData._id ? (
                             <Text>
                               Vous
                             </Text>
@@ -166,7 +167,7 @@ const MyFollowers = () => {
             })}
           </>
         </View>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

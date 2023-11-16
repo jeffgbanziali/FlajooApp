@@ -9,9 +9,8 @@ import { RNCamera } from 'react-native-camera';
 import { useNavigation } from '@react-navigation/native';
 
 const StoryCamera = () => {
-    const [hasPermission, setHasPermission] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
-    const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+    const [type, setType] = useState(RNCamera.Constants.Type.back);
+    const [flash, setFlash] = useState(RNCamera.Constants.FlashMode.off);
     const cameraRef = useRef(null);
 
 
@@ -21,12 +20,7 @@ const StoryCamera = () => {
         navigation.navigate('StoryCreate');
     }
 
-    useEffect(() => {
-        (async () => {
-            const { status } = await RNCamera.requestPermissionsAsync();
-            setHasPermission(status === 'granted');
-        })();
-    }, []);
+
 
     const toggleCameraType = () => {
         setType(
@@ -49,12 +43,7 @@ const StoryCamera = () => {
     };
 
 
-    if (hasPermission === null) {
-        return <View />;
-    }
-    if (hasPermission === false) {
-        return <Text>Pas d'accès à la caméra</Text>;
-    }
+
 
     return (
         <View style={styles.container}>

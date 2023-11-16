@@ -4,6 +4,7 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  SafeAreaView
 } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -32,7 +33,7 @@ const FriendsFollowing = () => {
         backgroundColor: "black",
       }}
     >
-      <View style={{ flex: 1, marginTop: 50 }}>
+      <SafeAreaView >
         <View
           style={{
             flexDirection: "row",
@@ -89,12 +90,11 @@ const FriendsFollowing = () => {
               marginTop: 10,
             }}
           >
-            <>
               {usersData.map((user) => {
                 for (let i = 0; i < users.following.length; i++) {
                   if (user._id === users.following[i]) {
                     return (
-                      <>
+                     
                         <View
                           style={{
                             flexDirection: "row",
@@ -102,7 +102,6 @@ const FriendsFollowing = () => {
                           }}
                         >
                           <View
-                            key={user._id}
                             style={{
                               padding: 5,
                               marginLeft: 20,
@@ -169,16 +168,14 @@ const FriendsFollowing = () => {
 
                           </View>
                         </View>
-                      </>
                     );
                   }
                 }
                 return null;
               })}
-            </>
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

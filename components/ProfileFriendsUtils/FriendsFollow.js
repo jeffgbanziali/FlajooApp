@@ -29,7 +29,7 @@ const Followers = ({ users }) => {
     getPostUser();
   }, [users._id]);
 
-  console.log(user.posts)
+  console.log(user)
 
 
   const handleFollowing = () => {

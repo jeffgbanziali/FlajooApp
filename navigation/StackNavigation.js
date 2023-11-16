@@ -43,30 +43,8 @@ import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
-  const { uid } = useContext(UidContext);
-  console.log(uid);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    console.log("uid in StackNavigation", uid);
-
-    if (uid === null || uid === undefined) {
-      console.log("Navigating to Signin");
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Signin' }],
-      });
-    } else {
-      console.log("Navigating to HomeScreen");
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'TabNavigation' }],
-      });
-    }
-  }, [uid, navigation]);
-
-
-
+  const { uid } = useContext(UidContext)
+  console.log("je suis là:", uid);
 
   return (
     <Stack.Navigator
@@ -75,42 +53,55 @@ const StackNavigation = () => {
       }}
     >
 
-      <Stack.Screen name="TabNavigation" component={TabNavigation} />
-      <Stack.Screen name="Réels" component={Réels} />
-      <Stack.Screen name="createRéels" component={CreateRéels} />
-      <Stack.Screen name="StoryStream" component={StoriesStream} />
-      <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
-      <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
-      <Stack.Screen name="Messages" component={Message} />
-      <Stack.Screen name="IncomingCall" component={IncomingCall} />
-      <Stack.Screen name="CallingOn" component={CallingOn} />
-      <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
-      <Stack.Screen name="VoiceCall" component={VoiceCall} />
-      <Stack.Screen name="VideoCall" component={VideoCall} />
-      <Stack.Screen name="Chatlist" component={ChatList} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Settings" component={Settings} />
-      <Stack.Screen name="EditProfil" component={ProfileEdit} />
-      <Stack.Screen name="buttonning" component={ButtonColor} />
-      <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
-      <Stack.Screen name="StoryCreate" component={CreateMyStory} />
-      <Stack.Screen name="Infos" component={UserInfos} />
-      <Stack.Screen name="Live" component={LiveScreen} />
-      <Stack.Screen name="Photo" component={CameraScreen} />
-      <Stack.Screen name="StoryCamera" component={StoryCamera} />
-      <Stack.Screen name="BioUpdate" component={BioUpdate} />
-      <Stack.Screen name="UpdateName" component={UpdateName} />
-      <Stack.Screen name="AccountInfo" component={AccountInfo} />
-      <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="Myfollowing" component={MyFollowings} />
-      <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
-      <Stack.Screen name="Myfollowers" component={MyFollowers} />
-      <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
-      <Stack.Screen name="Searching" component={Search} />
-      < Stack.Screen name="Start" component={StartPage} />
-      <Stack.Screen name="Signup" component={SignUpScreen} />
-      <Stack.Screen name="Signin" component={SignInScreen} />
-      <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
+      {
+        uid ? (
+          <>
+
+            <Stack.Screen name="TabNavigation" component={TabNavigation} />
+            <Stack.Screen name="Réels" component={Réels} />
+            <Stack.Screen name="createRéels" component={CreateRéels} />
+            <Stack.Screen name="StoryStream" component={StoriesStream} />
+            <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
+            <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
+            <Stack.Screen name="Messages" component={Message} />
+            <Stack.Screen name="IncomingCall" component={IncomingCall} />
+            <Stack.Screen name="CallingOn" component={CallingOn} />
+            <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
+            <Stack.Screen name="VoiceCall" component={VoiceCall} />
+            <Stack.Screen name="VideoCall" component={VideoCall} />
+            <Stack.Screen name="Chatlist" component={ChatList} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="EditProfil" component={ProfileEdit} />
+            <Stack.Screen name="buttonning" component={ButtonColor} />
+            <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+            <Stack.Screen name="StoryCreate" component={CreateMyStory} />
+            <Stack.Screen name="Infos" component={UserInfos} />
+            <Stack.Screen name="Live" component={LiveScreen} />
+            <Stack.Screen name="Photo" component={CameraScreen} />
+            <Stack.Screen name="StoryCamera" component={StoryCamera} />
+            <Stack.Screen name="BioUpdate" component={BioUpdate} />
+            <Stack.Screen name="UpdateName" component={UpdateName} />
+            <Stack.Screen name="AccountInfo" component={AccountInfo} />
+            <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="Myfollowing" component={MyFollowings} />
+            <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
+            <Stack.Screen name="Myfollowers" component={MyFollowers} />
+            <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
+            <Stack.Screen name="Searching" component={Search} />
+
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Signin" component={SignInScreen} />
+            < Stack.Screen name="Start" component={StartPage} />
+            <Stack.Screen name="Signup" component={SignUpScreen} />
+            <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
+          </>
+        )
+      }
+
+
 
     </Stack.Navigator>
   );

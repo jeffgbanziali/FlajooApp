@@ -4,6 +4,7 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -29,7 +30,7 @@ const MyFollowers = () => {
         backgroundColor: "black",
       }}
     >
-      <View style={{ flex: 1, marginTop: 50 }}>
+      <SafeAreaView >
         <View
           style={{
             flexDirection: "row",
@@ -75,7 +76,6 @@ const MyFollowers = () => {
             My Followers
           </Text>
         </View>
-
         <View
           style={{
             flexDirection: "column",
@@ -149,7 +149,7 @@ const MyFollowers = () => {
                             justifyContent: "center",
                           }}
                         >
-                           {user._id = userData._id ? (
+                           {user._id === userData._id ? (
                             <Text>
                               Vous
                             </Text>
@@ -171,7 +171,7 @@ const MyFollowers = () => {
             })}
           </>
         </View>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

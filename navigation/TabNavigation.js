@@ -8,6 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Octicons from 'react-native-vector-icons/Octicons';
 
@@ -83,7 +84,8 @@ const TabNavigation = () => {
           tabBarStyle: {
             display: "flex",
             backgroundColor: isDarkMode ? "#171717" : "white",
-            height: "8%",
+            height: "10%",
+            alignItems: "center"
           },
           headerShown: false,
           tabBarActiveTintColor: isDarkMode ? "white" : "black",
@@ -206,18 +208,46 @@ const TabNavigation = () => {
         transparent={true}
         animationType="slide"
         onRequestClose={closeModal}>
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "10%",
+            marginTop: "4%",
+            zIndex: 3
+          }}
+        >
+          <TouchableOpacity
+            onPress={closeModal}
+            style={{
+              width: '10%',
+              height: '100%',
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Entypo
+              size={35}
+              name='cross'
+              color="white" />
+          </TouchableOpacity>
+
+        </View>
         <View style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: isDarkMode ? "rgba(0, 1, 1, 0.5)" : "rgba(0, 0, 0, 0.5)",
         }}>
-          <Button title="Fermer" onPress={closeModal} />
+
+
           <View style={{
             borderRadius: 10,
             width: "60%",
-            height: "26%",
+            height: "30%",
             borderRadius: 20,
+            padding: 2,
             backgroundColor: isDarkMode ? "#171717" : "white",
             shadowColor: "#000",
             shadowOffset: {
@@ -238,7 +268,7 @@ const TabNavigation = () => {
                 alignItems: "center",
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
-                padding: 12,
+                padding: 10,
                 borderBottomWidth: 1,
                 borderBottomColor: "rgba(255,255,255)",
                 backgroundColor: isPressed ? "#F5F5F5" : "#FFFFFF",
@@ -247,12 +277,12 @@ const TabNavigation = () => {
 
 
               }}>
-              <AntDesign name="picture" size={34} color={isDarkMode ? "white" : "black"} />
+              <AntDesign name="picture" size={30} color={isDarkMode ? "white" : "black"} />
               <Text
                 style={{
                   color: isDarkMode ? "#F5F5F5" : "black",
                   fontSize: 24,
-                  marginLeft: 16
+                  marginLeft: 14
 
                 }}
               >
@@ -266,7 +296,7 @@ const TabNavigation = () => {
                 height: '25%',
                 flexDirection: "row",
                 alignItems: "center",
-                padding: 12,
+                padding: 10,
                 borderBottomWidth: 1,
                 borderBottomColor: "rgba(255,255,255)",
                 backgroundColor: isPressed ? "#F5F5F5" : "#FFFFFF",
@@ -281,7 +311,7 @@ const TabNavigation = () => {
               <Text style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
                 fontSize: 24,
-                marginLeft: 16
+                marginLeft: 14
 
               }}>
                 Add a réels
@@ -295,7 +325,7 @@ const TabNavigation = () => {
                 height: '25%',
                 flexDirection: "row",
                 alignItems: "center",
-                padding: 12,
+                padding: 10,
                 backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
                 borderBottomWidth: 1,
                 borderBottomColor: "rgba(255,255,255)",
@@ -321,12 +351,12 @@ const TabNavigation = () => {
                 borderBottomLeftRadius: 20,
                 borderBottomRightRadius: 20,
                 backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
-                padding: 12,
+                padding: 10,
                 borderBottomColor: "rgba(255,255,255)",
               }}>
 
               <FontAwesome5
-                name="video" size={28}
+                name="video" size={26}
                 color={isDarkMode ? "white" : "black"} />
               <Text style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
@@ -349,19 +379,21 @@ const TabNavigation = () => {
 const styles = StyleSheet.create({
   bottomTabIconFocused: {
     color: "red",
+
   },
 
   tabIconContainer: {
     flexDirection: "row",
     width: "80%",
-    height: 70,
+    justifyContent: "center",
+    alignItems: "center",
 
   },
   addButton: {
     backgroundColor: "#0D73D1",
     borderRadius: 100,
-    width: "100%",
-    height: "100%",
+    width: 50,
+    height: 50,
     padding: 5,
     justifyContent: "center",
     alignItems: "center",

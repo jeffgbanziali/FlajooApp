@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -22,10 +23,10 @@ import { Image } from "react-native";
 
 const Message = () => {
   const navigation = useNavigation();
-  const [currentChat, setCurrentChat] = useState(null);
+  const [currentChat, setCurrentChat] = useState([]);
   const [chat, setChat] = useState([]);
   const [newChat, setNewChat] = useState("");
-  const [arrivalChat, setArrivalChat] = useState(null);
+  const [arrivalChat, setArrivalChat] = useState([]);
   const [height, setHeight] = useState(40);
   const socket = useRef(io("ws://localhost:8900"));
   const { uid } = useContext(UidContext);
@@ -50,14 +51,16 @@ const Message = () => {
 
     socket.current.on("getMessage", (data) => {
       console.log("Received message:", data);
-      setArrivalChat(prevArrivalChat => ({
+      setArrivalChat((prevArrivalChat) => [
         ...prevArrivalChat,
-        senderId: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      }));
-
+        {
+          senderId: data.senderId,
+          text: data.text,
+          createdAt: Date.now(),
+        },
+      ]);
     });
+
 
     // Nettoyage lors du démontage du composant
     return () => {
@@ -66,19 +69,13 @@ const Message = () => {
   }, [uid]);
 
   useEffect(() => {
-    arrivalChat &&
-      currentChat?.members?.includes(arrivalChat.senderId) &&
-      setChat((prev) => [...prev, arrivalChat]);
-  }, [arrivalChat, currentChat]);
+    if (arrivalChat.length > 0) {
+      setChat((prevChat) => [...prevChat, ...arrivalChat]);
+      setCurrentChat((prevCurrentChat) => [...prevCurrentChat, ...arrivalChat]);
+    }
+  }, [arrivalChat]);
 
-  useEffect(() => {
-    socket.current.on("getUsers", (users) => {
-      console.log(users);
-      setOnlineUser(
-        uid.followings.filter((f) => users.some((u) => u._id === f))
-      );
-    });
-  }, [uid])
+
 
   useEffect(() => {
     const getMessages = async () => {
@@ -98,8 +95,20 @@ const Message = () => {
 
 
   useEffect(() => {
-    console.log("ArrivalChat:", arrivalChat);
+    if (arrivalChat.length > 0) {
+      setChat((prevChat) => {
+        const uniqueMessages = new Set([...prevChat, ...arrivalChat]);
+        return [...uniqueMessages];
+      });
+
+      setCurrentChat((prevCurrentChat) => {
+        const uniqueMessages = new Set([...prevCurrentChat, ...arrivalChat]);
+        return [...uniqueMessages];
+      });
+      console.log(arrivalChat)
+    }
   }, [arrivalChat]);
+
 
   useEffect(() => {
     setCurrentChat(chat);
@@ -181,6 +190,7 @@ const Message = () => {
         style={{
           flex: 1,
           backgroundColor: "#2C2828",
+          width: "100%",
         }}
       >
         <View
@@ -188,8 +198,10 @@ const Message = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 30,
             marginTop: "12%",
+            width: "100%",
+            height: "6%",
+
           }}
         >
           <View
@@ -330,10 +342,11 @@ const Message = () => {
             flex: 1,
             paddingBottom: 10,
             backgroundColor: "white",
-            marginTop: 40,
-            width: "100%",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
+            marginTop: "2%",
+            width: "100%",
+            height: "100%",
           }}
         >
           {currentChat ? (
@@ -345,6 +358,9 @@ const Message = () => {
                 onContentSizeChange={() =>
                   scrollRef.current.scrollToEnd({ animated: true })
                 }
+                style={{
+                  marginTop: "2%"
+                }}
               >
                 {chat.map((mes, index) => (
                   <View
@@ -364,7 +380,7 @@ const Message = () => {
                 style={{
                   position: "relative",
                   width: "100%",
-                  height: "15%",
+                  height: "12%",
                   backgroundColor: "transparent",
                   justifyContent: "center",
                   flexDirection: "row",

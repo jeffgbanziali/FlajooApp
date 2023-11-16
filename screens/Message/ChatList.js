@@ -13,6 +13,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAvoidingView } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessagesUser";
@@ -35,14 +37,9 @@ const Message = () => {
   const { conversationId, user } = route.params;
   const { isDarkMode } = useDarkMode();
 
-
-
-
-
   useEffect(() => {
     // Établir la connexion une seule fois lors du montage du composant
     socket.current = io("ws://localhost:8900");
-
     // Émission de l'événement "addUser" après la connexion
     socket.current.on("connect", () => {
       console.log("Utilisateur connecté !!!!", socket.current.id);
@@ -61,7 +58,6 @@ const Message = () => {
       ]);
     });
 
-
     // Nettoyage lors du démontage du composant
     return () => {
       socket.current.disconnect();
@@ -74,7 +70,6 @@ const Message = () => {
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, ...arrivalChat]);
     }
   }, [arrivalChat]);
-
 
 
   useEffect(() => {
@@ -97,13 +92,13 @@ const Message = () => {
   useEffect(() => {
     if (arrivalChat.length > 0) {
       setChat((prevChat) => {
-        const uniqueMessages = new Set([...prevChat, ...arrivalChat]);
-        return [...uniqueMessages];
+        const uniMessages = new Set([...prevChat, ...arrivalChat]);
+        return [...uniMessages];
       });
 
       setCurrentChat((prevCurrentChat) => {
-        const uniqueMessages = new Set([...prevCurrentChat, ...arrivalChat]);
-        return [...uniqueMessages];
+        const uniMessages = new Set([...prevCurrentChat, ...arrivalChat]);
+        return [...uniMessages];
       });
       console.log(arrivalChat)
     }
@@ -126,10 +121,10 @@ const Message = () => {
     };
     console.log("où est mon : ", conversationId);
 
-    const uniqueSenders = [
+    const mesSenders = [
       ...new Set(currentChat.map((message) => message.senderId)),
     ];
-    const receiverId = uniqueSenders.find((sender) => sender !== uid);
+    const receiverId = mesSenders.find((sender) => sender !== uid);
 
     socket.current.emit("sendMessage", {
       senderId: uid,
@@ -231,27 +226,25 @@ const Message = () => {
             <Image
               source={{ uri: user.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
               style={{
-                width: 50,
-                height: 50,
+                width: 30,
+                height: 30,
                 borderRadius: 100,
                 marginLeft: "4%"
               }}
             />
             <View
               style={{
-                alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
+                marginLeft: "4%"
+
               }}
             >
               <Text
                 style={{
                   fontWeight: "bold",
                   fontSize: 16,
-                  textAlign: "center",
-                  alignItems: "center",
                   color: "#FFFFFF",
-                  marginLeft: 10
                 }}
               >
                 {user.pseudo}
@@ -260,10 +253,7 @@ const Message = () => {
                 style={{
                   fontWeight: "normal",
                   fontSize: 14,
-                  textAlign: "center",
-                  alignItems: "center",
                   color: "#FFFFFF",
-                  marginLeft: 10
                 }}
               >
                 Online
@@ -341,7 +331,7 @@ const Message = () => {
           style={{
             flex: 1,
             paddingBottom: 10,
-            backgroundColor: "white",
+            backgroundColor: "black",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             marginTop: "2%",
@@ -393,7 +383,7 @@ const Message = () => {
                     height: Math.max(50, height),
                     flexDirection: "row",
                     alignItems: "center",
-                    backgroundColor: "#D9D9D9",
+                    backgroundColor: "gray",
                     borderRadius: 30,
                     marginBottom: 10,
                     padding: 10
@@ -408,7 +398,7 @@ const Message = () => {
                       alignItems: "center"
                     }}
                   >
-                    <AntDesign name="smile-circle" size={28} color="gray" />
+                    <AntDesign name="smile-circle" size={28} color="#D9D9D9" />
                   </TouchableOpacity>
 
                   <TextInput
@@ -420,16 +410,17 @@ const Message = () => {
                     style={{
 
                       width: "67%",
-                      borderColor: "#D9D9D9",
+                      borderColor: "gray",
                       borderWidth: 2,
                       marginLeft: "2%",
+                      color: "white",
                       textAlignVertical: 'center',
                       height: Math.max(50, height),
                     }}
-                    placeholder="Message..."
-                    placeholderTextColor="#787373"
-                    backgroundColor="#D9D9D9"
-                    fontSize="20px"
+                    placeholder="Message"
+                    placeholderTextColor="lightgray"
+                    backgroundColor="gray"
+                    fontSize={22}
                   />
                   <View
                     style={{
@@ -448,7 +439,7 @@ const Message = () => {
                         alignItems: "center"
                       }}
                     >
-                      <FontAwesome name="paperclip" size={28} color="gray" />
+                      <FontAwesome name="paperclip" size={28} color="#D9D9D9" />
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{
@@ -459,29 +450,54 @@ const Message = () => {
                         alignItems: "center"
                       }}
                     >
-                      <FontAwesome name="camera" size={25} color="gray" />
+                      <FontAwesome name="camera" size={25} color="#D9D9D9" />
                     </TouchableOpacity>
                   </View>
                 </View>
-                <Pressable
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 30,
-                    marginLeft: "2%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "gray",
-                    marginBottom: 10
-                  }}
-                  onPress={handleSendMessage}
-                >
-                  <FontAwesome
-                    name="send"
-                    size={24}
-                    color={newChat === "" ? "#FFFFFF" : "#3B4FB8"}
-                  />
-                </Pressable>
+                {
+                  newChat === "" ?
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 30,
+                        marginLeft: "2%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "red",
+                        marginBottom: 10
+                      }}
+                      onPress={handleSendMessage}
+                    >
+                      <MaterialCommunityIcons
+                        name="microphone"
+                        size={24}
+                        color="#FFFFFF"
+                      />
+
+                    </Pressable>
+                    :
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 30,
+                        marginLeft: "2%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "red",
+                        marginBottom: 10
+                      }}
+                      onPress={handleSendMessage}
+                    >
+                      <MaterialIcons
+                        name="send"
+                        size={24}
+                        color="#FFFFFF"
+                      />
+
+                    </Pressable>
+                }
               </View>
             </>
           ) : (

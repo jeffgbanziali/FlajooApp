@@ -59,25 +59,26 @@ const AppW = () => {
 
 
 
+
     useEffect(() => {
         const fetchToken = async () => {
-          await axios({
-            method: "get",
-            url: `${APP_API_URL}/jwtid`,
-            withCredentials: true,
-          })
-            .then((res) => {
-              console.log(res);
-              setUid(res.data);
-              AsyncStorage.setItem('uid', res.data);
-              console.log(AsyncStorage.getItem('uid'));
+            await axios({
+                method: "get",
+                url: `${APP_API_URL}/jwtid`,
+                withCredentials: true,
             })
-            .catch((err) => console.log("No token", err));
+                .then((res) => {
+                    console.log(res);
+                    setUid(res.data);
+                    AsyncStorage.setItem('uid', res.data);
+                    console.log(AsyncStorage.getItem('uid'));
+                })
+                .catch((err) => console.log("No token", err));
         };
         fetchToken();
         if (uid) dispatch(getUser(uid))
-      }, [uid, dispatch]);
-      console.log("Current uid:", uid);
+    }, [uid, dispatch]);
+    console.log("Current uid:", uid);
 
     return (
 

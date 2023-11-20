@@ -140,8 +140,11 @@ const Stories = () => {
                 !isEmpty(usersData[0]) &&
                 usersData
                   .map((user) => {
-                    if (user._id === item.container.posterId) return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                    else return null;
+                    if (user._id === item.container.posterId) {
+                      return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                    }
+                    else
+                      return null;
                   })
                   .join(""),
             }}

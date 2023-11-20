@@ -57,12 +57,6 @@ const BioUpdate = () => {
                 name="arrow-back-ios"
                 size={28}
                 color="white"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
               />
             </TouchableOpacity>
           </View>

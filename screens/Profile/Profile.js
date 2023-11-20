@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/native";
 import PostsUser from "../../components/ProfileUtils.js/PostsUser";
-import { UidContext, useDarkMode } from "../../components/Context/AppContext";
+import { useDarkMode } from "../../components/Context/AppContext";
 import { KeyboardAvoidingView } from "react-native";
 import VideoRéelsUser from "../../components/ProfileUtils.js/VideoRéelsUser";
 import { SafeAreaView } from "react-native";
@@ -217,7 +217,6 @@ const Profile = () => {
           )}
         </ScrollView>
       </SafeAreaView>
-
     </KeyboardAvoidingView>
   );
 };

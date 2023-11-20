@@ -4,85 +4,70 @@ import { USER } from "../../Data/Users";
 
 
 
-const ChatOnline = () => {
+const ChatOnline = ({ user }) => {
     return (
+
+
+
         <View
             style={{
-                flexDirection: 'row',
-                marginTop: 10,
-                marginBottom: 10,
-                marginLeft: 10,
-                marginRight: 10,
-                alignSelf: 'center',
-
-
+                display: 'flex',
+                flexDirection: 'column',
+                height: "100%",
+                justifyContent: "space-around",
+                alignItems: "center",
+                marginLeft: "2%"
             }}
         >
-            {
-                USER.map((story, index) => (
-                    <View
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                        }}
-                    >
-                        <View
-                            style={{
-                                display: 'flex',
-                                padding: 2,
-                                alignItems: 'center',
+            <View
+                style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 100,
+                    alignContent: 'center',
+                    //borderColor: "#3B4FB8",
+                    //padding: 2,
+                    //borderWidth: 4,
+                }}>
+                <Image source={{ uri: user.image }}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 100,
+                        alignContent: 'center',
+                        resizeMode: "cover"
+                    }}
 
-                            }}
-                        >
-                            <Image source={require('../../assets/Images/woman-gdc9219422_1920.jpg')}
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    borderRadius: 100,
-                                    objectfit: 'cover',
-                                    marginRight: 10,
-                                    alignContent: 'center',
-                                    marginBottom: 10,
-                                    borderWidth: 5,
-                                    borderColor: "#3B4FB8",
-                                }}
+                />
+            </View>
 
-                            />
-                            <View style={{
-                                backgroundColor: "#09C03C",
-                                position: "absolute",
-                                left: 50,
-                                width: 14,
-                                height: 14,
-                                borderRadius: 25,
-                                borderWidth: 2,
-                                borderColor: "#000000",
-                                justifyContent: "center",
-                                alignSelf: "center",
-                                alignItems: "center",
-                                marginLeft: 16,
-                                marginTop: 60,
-                                zIndex: 100
+            <View style={{
+                backgroundColor: "#09C03C",
+                position: "absolute",
+                left: 62,
+                width: 20,
+                height: 20,
+                borderRadius: 25,
+                borderWidth: 3,
+                borderColor: "#E9C8C8",
+                justifyContent: "center",
+                alignSelf: "center",
+                alignItems: "center",
+                top: 60,
+                zIndex: 100
 
-                            }}>
-                            </View>
-                            <Text
-                                style={{
-                                    fontSize: 16,
-                                    fontWeight: 'normal',
-                                    color: '#fff',
-                                }}
-                            >
-                                Koukouda
-                            </Text>
+            }}>
+            </View>
+            <Text
+                style={{
+                    fontSize: 14,
+                    fontWeight: '600',
+                    color: '#fff',
 
-
-                        </View>
-                    </View>
-                ))
-            }
-
-
+                }}
+            >
+                {user.user}
+            </Text>
         </View>
     )
 }

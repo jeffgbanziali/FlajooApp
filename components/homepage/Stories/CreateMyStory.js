@@ -928,9 +928,7 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
             </Modal>
 
         </>

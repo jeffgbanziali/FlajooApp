@@ -56,14 +56,13 @@ const StackNavigation = () => {
       {
         uid ? (
           <>
-
+            <Stack.Screen name="Messages" component={Message} />
             <Stack.Screen name="TabNavigation" component={TabNavigation} />
             <Stack.Screen name="Réels" component={Réels} />
             <Stack.Screen name="createRéels" component={CreateRéels} />
             <Stack.Screen name="StoryStream" component={StoriesStream} />
             <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
             <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
-            <Stack.Screen name="Messages" component={Message} />
             <Stack.Screen name="IncomingCall" component={IncomingCall} />
             <Stack.Screen name="CallingOn" component={CallingOn} />
             <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />

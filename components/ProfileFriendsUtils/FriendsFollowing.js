@@ -44,7 +44,7 @@ const FriendsFollowing = () => {
             onPress={() => handleClickReturnProfile(id)}
             style={{
               justifyContent: "center",
-              alignSelf: "center",
+              alignItems: "center",
               backgroundColor: "#161414",
               width: 50,
               height: 50,
@@ -58,12 +58,6 @@ const FriendsFollowing = () => {
                 name="arrowleft"
                 size={28}
                 color="#5F5858"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
               />
             </View>
           </TouchableOpacity>
@@ -90,89 +84,90 @@ const FriendsFollowing = () => {
               marginTop: 10,
             }}
           >
-              {usersData.map((user) => {
-                for (let i = 0; i < users.following.length; i++) {
-                  if (user._id === users.following[i]) {
-                    return (
-                     
-                        <View
+            {usersData.map((user) => {
+              for (let i = 0; i < users.following.length; i++) {
+                if (user._id === users.following[i]) {
+                  return (
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+
+                      }}
+                      key={user._id}
+                    >
+                      <View
+                        style={{
+                          padding: 5,
+                          marginLeft: 20,
+                          marginRight: 20,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          flexDirection: "row",
+                        }}
+                      >
+                        <Image
+                          source={{
+                            uri:
+                              user.picture ||
+                              "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
+                          }}
                           style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
+                            width: 60,
+                            height: 60,
+                            borderRadius: 100,
+                            objectFit: "cover",
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontWeight: "bold",
+                            color: "#F6F6F6",
+                            textAlign: "center",
+                            marginLeft: 16,
+                            justifyContent: "center",
+                            alignContent: "center",
+                            alignItems: "center",
+                            alignSelf: "center",
                           }}
                         >
-                          <View
+                          {user.pseudo}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          width: 100,
+                          padding: 5,
+                          marginRight: 20,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          justifyContent: "center",
+                        }}
+                      >
+                        {user._id === userData._id ? (
+                          <Text
                             style={{
-                              padding: 5,
-                              marginLeft: 20,
-                              marginRight: 20,
-                              marginTop: 10,
-                              marginBottom: 10,
-                              flexDirection: "row",
-                            }}
-                          >
-                            <Image
-                              source={{
-                                uri:
-                                  user.picture ||
-                                  "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
-                              }}
-                              style={{
-                                width: 60,
-                                height: 60,
-                                borderRadius: 100,
-                                objectFit: "cover",
-                              }}
-                            />
+                              fontSize: 20,
+                              color: "white"
+                            }}>
+                            Vous
+                          </Text>
+                        ) : (
+                          <FollowHandler
+                            idToFollow={user._id}
+                            type={"suggestion"}
+                          />
+                        )}
 
-                            <Text
-                              style={{
-                                fontSize: 16,
-                                fontWeight: "bold",
-                                color: "#F6F6F6",
-                                textAlign: "center",
-                                marginLeft: 16,
-                                justifyContent: "center",
-                                alignContent: "center",
-                                alignItems: "center",
-                                alignSelf: "center",
-                              }}
-                            >
-                              {user.pseudo}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              width: 100,
-                              padding: 5,
-                              marginRight: 20,
-                              marginTop: 10,
-                              marginBottom: 10,
-                              justifyContent: "center",
-                            }}
-                          >
-                            {user._id === userData._id ? (
-                              <Text
-                                style={{
-                                  fontSize: 20,
-                                  color: "white"
-                                }}>
-                                Vous
-                              </Text>
-                            ) : (
-                              <FollowHandler
-                                idToFollow={user._id}
-                                type={"suggestion"}
-                              />
-                            )}
-
-                          </View>
-                        </View>
-                    );
-                  }
+                      </View>
+                    </View>
+                  );
                 }
-                return null;
-              })}
+              }
+              return null;
+            })}
           </View>
         </ScrollView>
       </SafeAreaView>

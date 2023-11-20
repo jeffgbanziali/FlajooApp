@@ -154,7 +154,6 @@ const Message = () => {
   console.log("toi là ", user)
 
 
-
   const handleClickReturnMessageList = () => {
     console.log("clicked");
     navigation.navigate("Messages");
@@ -168,14 +167,6 @@ const Message = () => {
     console.warn("user called");
     navigation.navigate("VideoCall", { user: user });
   };
-
-
-
-
-
-
-
-
 
 
   return (
@@ -226,8 +217,8 @@ const Message = () => {
             <Image
               source={{ uri: user.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
               style={{
-                width: 30,
-                height: 30,
+                width: 40,
+                height: 40,
                 borderRadius: 100,
                 marginLeft: "4%"
               }}
@@ -267,9 +258,9 @@ const Message = () => {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              width: "35%",
+              width: "40%",
               justifyContent: "space-around",
-              marginRight: "4%",
+              marginRight: "2%",
             }}>
             <TouchableOpacity onPress={() => handleClickCall(user)}
               style={{
@@ -334,7 +325,7 @@ const Message = () => {
             backgroundColor: "black",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
-            marginTop: "2%",
+            marginTop: "4%",
             width: "100%",
             height: "100%",
           }}
@@ -380,7 +371,7 @@ const Message = () => {
                 <View
                   style={{
                     width: "85%",
-                    height: Math.max(50, height),
+                    height: Math.max(50, height), // Ajuste la hauteur en fonction de la hauteur du contenu
                     flexDirection: "row",
                     alignItems: "center",
                     backgroundColor: "gray",
@@ -416,11 +407,14 @@ const Message = () => {
                       color: "white",
                       textAlignVertical: 'center',
                       height: Math.max(50, height),
+                      paddingTop: 8,
                     }}
                     placeholder="Message"
                     placeholderTextColor="lightgray"
                     backgroundColor="gray"
                     fontSize={22}
+                    multiline={true} // Permet à l'utilisateur de saisir sur plusieurs lignes
+                    numberOfLines={4}
                   />
                   <View
                     style={{
@@ -495,7 +489,6 @@ const Message = () => {
                         size={24}
                         color="#FFFFFF"
                       />
-
                     </Pressable>
                 }
               </View>

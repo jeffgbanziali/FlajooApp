@@ -41,6 +41,7 @@ const Posts = ({ post }) => {
       console.log("go to profile friends", id);
     }
   };
+  
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
@@ -126,9 +127,11 @@ const Posts = ({ post }) => {
                           !isEmpty(usersData[0]) &&
                           usersData
                             .map((user) => {
-                              if (user._id === post.posterId)
+                              if (user._id === post.posterId) {
                                 return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                              else return null;
+                              }
+                              else
+                                return null;
                             })
                             .join(""),
                       }}

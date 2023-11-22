@@ -117,6 +117,7 @@ const StoriesStream = () => {
 
           // Réinitialiser l'animation si nécessaire
           resetAnimation();
+
         } else {
           console.log('Navigating to TabNavigation.');
           navigation.navigate("TabNavigation");
@@ -510,10 +511,11 @@ const StoriesStream = () => {
             </View>
           )}
         {!selectedStory.container.stories[currentStoryIndex].media && (
+
           <View
-            onLoadEnd={() => {
+            onLayout={() => {
               progressAnimation.setValue(0);
-              start()
+              start();
             }}
             style={{
               flex: 1,

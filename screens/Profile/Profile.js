@@ -34,24 +34,15 @@ const Profile = () => {
     navigation.navigate("Settings");
   };
 
-  const handleSwitchChange = (value) => {
-    setSelectedSwitchValue(value);
-    // Vous pouvez effectuer des actions spécifiques en fonction de la valeur ici
-    switch (value) {
-      case "P":
-        console.log("Option sélectionnée : Post");
-        // Faire quelque chose pour l'option "Post"
-        break;
-      case "V":
-        console.log("Option sélectionnée : Video");
-        // Faire quelque chose pour l'option "Video"
-        break;
-      case "A":
-        console.log("Option sélectionnée : Audio");
-        // Faire quelque chose pour l'option "Audio"
-        break;
-      default:
-        break;
+
+  const MAX_MESSAGE_LENGTH = 55;
+  const renderLimitedMessage = (message) => {
+    if (message && message.length <= MAX_MESSAGE_LENGTH) {
+      return message;
+    } else if (message) {
+      return message.substring(0, MAX_MESSAGE_LENGTH) + "...";
+    } else {
+      return "";
     }
   };
 
@@ -195,7 +186,7 @@ const Profile = () => {
                   marginTop: 10,
                 }}
               >
-                {userData.bio}
+                {renderLimitedMessage(userData.bio)}
               </Text>
             </View>
           </View>

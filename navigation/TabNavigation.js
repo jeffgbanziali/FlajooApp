@@ -204,7 +204,8 @@ const TabNavigation = () => {
       </Tab.Navigator>
 
 
-      <Modal visible={showOptions}
+      <Modal
+        visible={showOptions}
         transparent={true}
         animationType="slide"
         onRequestClose={closeModal}>

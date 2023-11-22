@@ -124,6 +124,30 @@ const FollowHandler = ({ idToFollow, type }) => {
               <FontAwesome5 name="user-check" size={8} color="black" />
             </View>
           )}
+          {type === "mess" && (
+            <View
+              style={{
+                width: "100%",
+                height: 40,
+                backgroundColor: "#615656",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 16,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  justifyContent: "center",
+                  fontSize: 13,
+                }}
+              >
+                Following
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
       )}
       {isFollowed === false && !isEmpty(userData) && (
@@ -220,6 +244,30 @@ const FollowHandler = ({ idToFollow, type }) => {
               }}
             >
               <FontAwesome5 name="user-plus" size={10} color="black" />
+            </View>
+          )}
+          {type === "mess" && (
+            <View
+              style={{
+                width: "100%",
+                height: 40,
+                backgroundColor: "#E50000",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 16,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  justifyContent: "center",
+                  fontSize: 16,
+                }}
+              >
+                Follow
+              </Text>
             </View>
           )}
         </TouchableOpacity>

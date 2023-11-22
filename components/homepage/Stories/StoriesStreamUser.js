@@ -75,22 +75,13 @@ const StoriesStreamUser = () => {
 
                 if (currentStoryIndex < totalStories - 1) {
                     const nextStoryIndex = currentStoryIndex + 1;
-                    const nextStory = selectedStory.container.stories[nextStoryIndex];
                     setCurrentStoryIndex(nextStoryIndex);
                     resetAnimation();
                 } else {
-                    const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
-
-                    if (nextContainerIndex < storiesData.length) {
-                        const nextContainer = storiesData[nextContainerIndex];
-                        setSelectedStory(nextContainer);
-                        setCurrentStoryIndex(0);
-                        resetAnimation();
-                    } else {
-                        console.error('Unable to go to the next story or container.');
-                        navigation.navigate("TabNavigation");
-                    }
+                    console.error('Unable to go to the next story or container.');
+                    navigation.navigate("TabNavigation");
                 }
+
             } else {
                 console.error('Invalid story or container.');
             }

@@ -33,7 +33,6 @@ export const updateProfile = (pictureUrl, userId) => {
                 `${APP_API_URL}/api/user/updateProfile/${userId}`,
                 pictureUrl
             );
-            console.log("Response from server:", response);
             if (response.status === 200) {
                 dispatch({ type: UPDATE_PROFILE, payload: pictureUrl });
                 alert("Profile picture updated successfully");
@@ -104,24 +103,6 @@ export const signIn = (email, password) => {
             dispatch({ type: SIGNIN_FAILURE, payload: { general: "An error occurred" } });
         }
     };
-};
-
-
-export const uploadPicture = (data, id) => {
-    return async (dispatch) => {
-        try {
-            // Uploader l'image
-            const uploadResponse = await axios.post(`${APP_API_URL}/api/user/upload`, data);
-
-            // Mettre à jour l'utilisateur après le téléchargement de l'image
-            const userResponse = await axios.get(`${APP_API_URL}/api/user/${id}`);
-
-            // Dispatch des actions avec les données mises à jour
-            dispatch({ type: UPLOAD_PICTURE, payload: userResponse.data.picture });
-        } catch (error) {
-            console.error('Erreur lors du téléchargement de l\'image:', error);
-        }
-    }
 };
 
 export const updateBio = (bio, userId) => {

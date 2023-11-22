@@ -71,14 +71,13 @@ const AppW = () => {
                     console.log(res);
                     setUid(res.data);
                     AsyncStorage.setItem('uid', res.data);
-                    console.log(AsyncStorage.getItem('uid'));
+                    AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
                 })
                 .catch((err) => console.log("No token", err));
         };
         fetchToken();
         if (uid) dispatch(getUser(uid))
-    }, [uid, dispatch]);
-    console.log("Current uid:", uid);
+    }, [isDarkMode, uid, dispatch]);
 
     return (
 

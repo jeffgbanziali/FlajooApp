@@ -44,21 +44,17 @@ const ProfileFriends = () => {
   const users = usersData.find((user) => user._id === id);
   console.log(users)
 
-  const handleSwitchChange = (value) => {
-    setSelectedSwitchValue(value);
-    // Vous pouvez effectuer des actions spécifiques en fonction de la valeur ici
-    switch (value) {
-      case "P":
-        console.log("Option sélectionnée : Post");
-        break;
-      case "V":
-        console.log("Option sélectionnée : Video");
-        break;
-      case "A":
-        console.log("Option sélectionnée : Audio");
-        break;
-      default:
-        break;
+
+
+  const MAX_MESSAGE_LENGTH = 55;
+
+  const renderLimitedMessage = (message) => {
+    if (message && message.length <= MAX_MESSAGE_LENGTH) {
+      return message;
+    } else if (message) {
+      return message.substring(0, MAX_MESSAGE_LENGTH) + "...";
+    } else {
+      return "";
     }
   };
 
@@ -201,7 +197,9 @@ const ProfileFriends = () => {
                   marginTop: 4,
                 }}
               >
-                <Text style={{ fontSize: 15, color: "gray" }}>{users.bio}</Text>
+                <Text style={{ fontSize: 15, color: "gray" }}>
+                  {renderLimitedMessage(users.bio)}
+                </Text>
               </View>
               <View
                 style={{

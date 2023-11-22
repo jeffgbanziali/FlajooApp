@@ -26,14 +26,9 @@ export const getStories = (num) => {
 export const addStory = (data) => {
   return async (dispatch) => {
     try {
-      console.log('Adding story:', data);
-
       const response = await axios.post(`${APP_API_URL}/api/stories/`, data);
 
       if (response.data.message === 'Story added to container successfully!') {
-        console.log('Story added successfully:', response.data.story);
-
-        // Mettre à jour le state Redux avec l'histoire nouvellement ajoutée
         dispatch({ type: ADD_STORY, payload: response.data.story });
       } else {
         console.log('Error adding story:', response.data.message);

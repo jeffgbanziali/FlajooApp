@@ -101,7 +101,7 @@ const Message = () => {
               <AntDesign
                 name="arrowleft"
                 size={28}
-                color={isDarkMode ? "white" : "black"}
+                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
               />
             </TouchableOpacity>
           </View>
@@ -115,7 +115,7 @@ const Message = () => {
             <Text
               style={{
                 fontSize: 26,
-                color: isDarkMode ? "white" : "black",
+                color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
               }}
             >
               Chat
@@ -144,7 +144,7 @@ const Message = () => {
             <Entypo
               name="new-message"
               size={28}
-              color={isDarkMode ? "white" : "black"}
+              color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSearch}
@@ -159,7 +159,7 @@ const Message = () => {
             <AntDesign
               name="search1"
               size={28}
-              color={isDarkMode ? "white" : "black"}
+              color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
             />
           </TouchableOpacity>
         </View>
@@ -167,14 +167,12 @@ const Message = () => {
 
       <View
         style={{
-          height: "12%",
+          height: "14%",
           width: "100%",
           flexDirection: "row",
         }}
       >
-        {USER.map(user => (
-          <ChatOnline key={user.id} user={user} />
-        ))}
+        <ChatOnline />
       </View>
 
       <View

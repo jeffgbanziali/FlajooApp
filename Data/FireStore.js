@@ -1,98 +1,39 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as fs from 'react-native-fs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// ...
 
-const uploadImageToFirebase = async (localUri, imageName) => {
+// Fonction générique d'upload
+const uploadToFirebase = async (localUri, storagePath) => {
     const storage = getStorage();
-    const storageRef = ref(storage, 'PostImages/' + imageName);
+    const storageRef = ref(storage, storagePath);
 
-    // Convertit l'image en blob
+    // Convertit le fichier en blob
     const response = await fetch(localUri);
     const blob = await response.blob();
 
     // Télécharge le blob vers Firebase Storage
     await uploadBytes(storageRef, blob);
 
-    // Récupère l'URL de téléchargement de l'image
-    const imageUrl = await getDownloadURL(storageRef);
+    // Récupère l'URL de téléchargement
+    const fileUrl = await getDownloadURL(storageRef);
 
-    return imageUrl;
-};
-const uploadProfileToFirebase = async (localUri, imageName) => {
-    const storage = getStorage();
-    const storageRef = ref(storage, 'ProfileImage/' + imageName);
-
-    // Convertit l'image en blob
-    const response = await fetch(localUri);
-    const blob = await response.blob();
-
-    // Télécharge le blob vers Firebase Storage
-    await uploadBytes(storageRef, blob);
-
-    // Récupère l'URL de téléchargement de l'image
-    const imageUrl = await getDownloadURL(storageRef);
-
-    return imageUrl;
+    return fileUrl;
 };
 
-const uploadStoryToFirebase = async (localUri, imageName) => {
-    try {
-        const storage = getStorage();
-        const storageRef = ref(storage, 'StoryContainer/' + imageName);
+// Fonctions spécifiques d'upload
+const uploadImageToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `PostImages/${imageName}`);
+const uploadMediaToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `PostImages/${imageName}`);
+const uploadProfileToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `ProfileImage/${imageName}`);
+const uploadStoryToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `StoryContainer/${imageName}`);
+const uploadRéelsToFirebase = (localUri, fileName) => uploadToFirebase(localUri, `VideoRéelsContainer/${fileName}`);
 
-        // Convertit l'image en blob
-        const response = await fetch(localUri);
-        const blob = await response.blob();
+export { uploadImageToFirebase, uploadMediaToFirebase, uploadStoryToFirebase, uploadProfileToFirebase, uploadRéelsToFirebase };
 
-        // Télécharge le blob vers Firebase Storage en utilisant put
-        await uploadBytes(storageRef, blob);
-
-        // Récupère l'URL de téléchargement de l'image
-        const mediaUrl = await getDownloadURL(storageRef);
-
-        return mediaUrl;
-    } catch (error) {
-        console.error('Error during uploadStoryToFirebase:', error);
-        throw error;
-    }
-
-};
-
-
-const uploadRéelsToFirebase = async (localUri, fileName) => {
-    try {
-        const storage = getStorage();
-        const storageRef = ref(storage, 'VideoRéelsContainer/' + fileName);
-
-        console.log('Fetching blob from:', localUri);
-        const response = await fetch(localUri);
-        const blob = await response.blob();
-        console.log('Blob fetched successfully:', blob);
-
-        console.log('Uploading blob to Firebase Storage...');
-        await uploadBytes(storageRef, blob);
-        console.log('Blob uploaded successfully.');
-
-        console.log('Getting download URL...');
-        const mediaUrl = await getDownloadURL(storageRef);
-        console.log('Download URL obtained:', mediaUrl);
-
-        return mediaUrl;
-    } catch (error) {
-        console.error('Error during uploadRéelsToFirebase:', error);
-        throw error;
-    }
-};
-
-
-
-export { uploadImageToFirebase, uploadStoryToFirebase, uploadProfileToFirebase, uploadRéelsToFirebase };
-
-
+// Fonction pour convertir une image en ArrayBuffer
 const convertImageToArrayBuffer = async (localUri) => {
     try {
         const { uri } = await fs.downloadAsync(localUri, fs.DocumentDirectoryPath + 'image.jpg');
@@ -114,9 +55,7 @@ const convertImageToArrayBuffer = async (localUri) => {
 
 export { convertImageToArrayBuffer };
 
-
-
-
+// Configuration Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBrghzEzaaI_HgZbnRzKUlaHGNKizVF2aU",
     authDomain: "myflajooapp-15652.firebaseapp.com",
@@ -130,8 +69,12 @@ const firebaseConfig = {
 // Initialisez l'application Firebase
 const app = initializeApp(firebaseConfig);
 
+// Initialisez Firebase Auth avec la persistence AsyncStorage
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+
 // Obtenez des références vers les services dont vous avez besoin
-const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 

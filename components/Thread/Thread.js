@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../actions/post.actions";
@@ -8,7 +8,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
-  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const posting = useSelector((state) => state.postReducer);
 
@@ -21,22 +20,20 @@ const Thread = () => {
 
   return (
     <GestureHandlerRootView>
-      <View>
-        {!isEmpty(posting) &&
-          Array.isArray(posting) &&
-          posting.map((post) => {
-            return (
-              <View
-                style={{
-                  alignItems: "center",
-                }}
-                key={post._id}
-              >
-                <Posts post={post} />
-              </View>
-            );
-          })}
-      </View>
+      <FlatList
+        data={posting}
+        keyExtractor={(post) => post._id}
+        renderItem={({ item: post }) => (
+          <View
+            style={{
+              alignItems: "center",
+            }}
+            key={post._id}
+          >
+            <Posts post={post} />
+          </View>
+        )}
+      />
     </GestureHandlerRootView>
   );
 };

@@ -35,23 +35,23 @@ const StoriesStream = () => {
   const { uid } = useContext(UidContext);
   const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
-  console.log(storiesData)
+
+
+  console.log("le container que j'ai choisi", storiesData)
+
+
   const usersData = useSelector((state) => state.usersReducer);
   console.log(id);
-  const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id))); // Remplace selectedStoryData par la valeur initiale
+  const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id)));
   storiesData.find((story) => story.container.stories.some((s) => s._id === id));
-  if (selectedStory) {
-    const selectedContainer = selectedStory.container;
-    console.log("Selected Container:", selectedContainer);
-  } else {
-    console.log("Container not found for story ID:", id);
-  }
-  const user = usersData.find((user) => user._id === selectedStory.container.posterId);
-  console.log(user);
 
 
   const [currentStoryIndex, setCurrentStoryIndex] = useState(
     selectedStory.container.stories.findIndex((story) => story._id === id)
+  );
+
+  const [currentContainerIndex, setCurrentContainerIndex] = useState(
+    storiesData.findIndex((story) => story === selectedStory)
   );
 
   useEffect(() => {
@@ -78,6 +78,7 @@ const StoriesStream = () => {
         const totalStories = selectedStory.container.stories.length;
 
         if (currentStoryIndex < totalStories - 1) {
+          // Passer à l'histoire suivante dans le même conteneur
           const nextStoryIndex = currentStoryIndex + 1;
           const nextStory = selectedStory.container.stories[nextStoryIndex];
 
@@ -86,17 +87,8 @@ const StoriesStream = () => {
           setCurrentStoryIndex(nextStoryIndex);
           resetAnimation();
         } else {
-          const nextContainerIndex = storiesData.findIndex((story) => story.container === selectedStory.container) + 1;
-
-          if (nextContainerIndex < storiesData.length) {
-            const nextContainer = storiesData[nextContainerIndex];
-            setSelectedStory(nextContainer);
-            setCurrentStoryIndex(0);
-            resetAnimation();
-          } else {
-            console.error('Unable to go to the next story or container.');
-            navigation.navigate("TabNavigation");
-          }
+          console.log('No next container. Navigating to TabNavigation.');
+          goToNextContainer();
         }
       } else {
         console.error('Invalid story or container.');
@@ -106,10 +98,46 @@ const StoriesStream = () => {
     }
   };
 
+  const goToNextContainer = () => {
+    try {
+      if (selectedStory) {
+        const totalContainers = storiesData.length;
+
+        if (currentContainerIndex < totalContainers - 1) {
+          // Passer au conteneur suivant
+          const nextContainerIndex = currentContainerIndex + 1;
+          const nextContainer = storiesData[nextContainerIndex];
+
+          // Mettre à jour l'histoire sélectionnée et l'index du conteneur
+          setSelectedStory(nextContainer);
+          setCurrentContainerIndex(nextContainerIndex);
+
+          // Réinitialiser l'index de l'histoire
+          setCurrentStoryIndex(0);
+
+          // Réinitialiser l'animation si nécessaire
+          resetAnimation();
+        } else {
+          console.log('Navigating to TabNavigation.');
+          navigation.navigate("TabNavigation");
+        }
+      } else {
+        console.error('Invalid selected story.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+
+
+
 
 
   const handleNextStoryButtonPress = () => {
     goToNextStory();
+
   };
   const handlePrevStoryButtonPress = () => {
     goToPrevStory();

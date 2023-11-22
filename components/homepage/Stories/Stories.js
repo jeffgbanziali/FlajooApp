@@ -12,7 +12,14 @@ const Stories = () => {
   const [loadStories, setLoadStories] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const storiesData = useSelector((state) => state.storyReducer);
+  const storiesData = useSelector((state) => state.storyReducer).map((story, index) => ({
+    ...story,
+    container: {
+      ...story.container,
+      index: index,
+    },
+  }));
+
   const usersData = useSelector((state) => state.usersReducer);
   const { isDarkMode } = useDarkMode();
   const { uid } = useContext(UidContext);

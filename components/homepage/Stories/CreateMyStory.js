@@ -551,7 +551,7 @@ const CreateStory = () => {
                 <View style={{
                     flex: 1,
                     alignItems: "center",
-                    backgroundColor: isDarkMode ? "red" : "black",
+                    backgroundColor: isDarkMode ? "black" : "black",
                     width: windowWidth,
                     height: windowHeight
                 }}>
@@ -585,7 +585,7 @@ const CreateStory = () => {
                             style={{
                                 width: "100%",
                                 height: "100%",
-                                resizeMode: "cover"
+                                resizeMode: "contain"
                             }}
                         />
                     )}
@@ -601,7 +601,7 @@ const CreateStory = () => {
                             rate={1.0}
                             volume={1.0}
                             isMuted={false}
-                            resizeMode="cover"
+                            resizeMode="contain"
                             shouldPlay
                             isLooping
                         />
@@ -928,7 +928,9 @@ const CreateStory = () => {
                             />
                         </TouchableOpacity>
                     </View>
+
                 </View>
+
             </Modal>
 
         </>

@@ -9,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDarkMode } from "../../components/Context/AppContext";
+import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
@@ -51,8 +52,8 @@ const Conversation = ({ conversation, currentUser }) => {
       conversationId: conversation._id,
       user: user
     });
-    console.log("Montre moi le chemin", conversation._id, user);
   };
+
 
 
   const viewProfile = () => {
@@ -336,8 +337,8 @@ const Conversation = ({ conversation, currentUser }) => {
               >
                 <FontAwesome
                   name="user"
-                  size={30}
-                  color={isDarkMode ? "white" : "black"}
+                  size={36}
+                  color={isDarkMode ? "white" : "white"}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -351,8 +352,8 @@ const Conversation = ({ conversation, currentUser }) => {
               >
                 <Ionicons
                   name="call"
-                  size={30}
-                  color={isDarkMode ? "white" : "black"}
+                  size={34}
+                  color={isDarkMode ? "white" : "white"}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -366,36 +367,25 @@ const Conversation = ({ conversation, currentUser }) => {
               >
                 <FontAwesome5
                   name="video"
-                  size={28}
-                  color={isDarkMode ? "white" : "black"}
+                  size={30}
+                  color={isDarkMode ? "white" : "white"}
                 />
               </TouchableOpacity>
               <View
                 style={{
                   width: "26%",
-                  height: 45,
+                  height: 40,
                   backgroundColor: "blue",
-                  alignItems: "center",
-                  justifyContent: "center",
                   borderRadius: 16,
                 }}
               >
-                <Text
-                  style={{
-                    color: isDarkMode ? "white" : "black",
-                    fontSize: 16,
-                    fontWeight: '600'
-                  }}
-                >
-                  Follow
-                </Text>
+                <FollowHandler idToFollow={user?._id ?? ''} type={"mess"} />
               </View>
             </View>
           </View>
         </View>
       </Modal>
     </>
-
   );
 };
 

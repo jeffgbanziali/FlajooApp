@@ -45,6 +45,8 @@ const StoriesStream = () => {
   const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id)));
   storiesData.find((story) => story.container.stories.some((s) => s._id === id));
 
+  const user = usersData.find((user) => user._id === selectedStory.container.posterId);
+  console.log(user);
 
   const [currentStoryIndex, setCurrentStoryIndex] = useState(
     selectedStory.container.stories.findIndex((story) => story._id === id)
@@ -114,7 +116,6 @@ const StoriesStream = () => {
 
           // Réinitialiser l'index de l'histoire
           setCurrentStoryIndex(0);
-
           // Réinitialiser l'animation si nécessaire
           resetAnimation();
 
@@ -131,7 +132,7 @@ const StoriesStream = () => {
   };
 
 
-
+  const createdAt = selectedStory.container.stories[currentStoryIndex]?.createdAt;
 
 
 
@@ -154,6 +155,7 @@ const StoriesStream = () => {
     }).start(({ finished }) => {
       if (finished) {
         goToNextStory();
+
       }
     });
   };
@@ -161,6 +163,16 @@ const StoriesStream = () => {
   const resetAnimation = () => {
     progressAnimation.setValue(0);
   };
+
+
+
+  useEffect(() => {
+    resetAnimation();
+    start();
+
+  });
+
+
 
 
   return (
@@ -329,7 +341,7 @@ const StoriesStream = () => {
                   fontSize: 12,
                 }}
               >
-                {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt)}
+                {formatPostDate(createdAt)}
               </Text>
             </View>
             <TouchableOpacity onPress={() => goProfil(user._id)}>
@@ -366,8 +378,8 @@ const StoriesStream = () => {
           </View>
         </View>
 
-        {selectedStory.container.stories[currentStoryIndex].media &&
-          selectedStory.container.stories[currentStoryIndex].text && (
+        {selectedStory.container.stories[currentStoryIndex]?.media &&
+          selectedStory.container.stories[currentStoryIndex]?.text && (
             <View
               style={{
                 flex: 1,
@@ -377,7 +389,7 @@ const StoriesStream = () => {
                 borderRadius: 30,
                 width: "80%",
                 height: "70%",
-                top: "16%",
+                top: "15%",
               }}
             >
               {selectedStory.container.stories[currentStoryIndex].media_type === "image" && (
@@ -417,7 +429,6 @@ const StoriesStream = () => {
                   }}
                 />
               )}
-
               <LinearGradient
                 colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
                 style={{
@@ -432,7 +443,6 @@ const StoriesStream = () => {
               />
               <View
                 style={{
-                  flex: 1,
                   display: "flex",
                   flexDirection: "row",
                   position: "absolute",
@@ -456,8 +466,8 @@ const StoriesStream = () => {
             </View>
           )}
 
-        {selectedStory.container.stories[currentStoryIndex].media &&
-          !selectedStory.container.stories[currentStoryIndex].text && (
+        {selectedStory.container.stories[currentStoryIndex]?.media &&
+          !selectedStory.container.stories[currentStoryIndex]?.text && (
 
             <View
               style={{
@@ -467,7 +477,7 @@ const StoriesStream = () => {
                 borderRadius: 30,
                 width: "100%",
                 height: "100%",
-                backgroundColor: "green"
+                backgroundColor: "black"
               }}
             >
 
@@ -478,6 +488,7 @@ const StoriesStream = () => {
                     height: "100%",
                     width: "100%",
                     borderRadius: 30,
+                    resizeMode: "contain",
                     opacity: 0.9,
                   }}
                   onLoadEnd={() => {
@@ -510,7 +521,7 @@ const StoriesStream = () => {
               )}
             </View>
           )}
-        {!selectedStory.container.stories[currentStoryIndex].media && (
+        {!selectedStory.container.stories[currentStoryIndex]?.media && (
 
           <View
             onLayout={() => {
@@ -536,7 +547,7 @@ const StoriesStream = () => {
                 fontSize: 30,
               }}
             >
-              {selectedStory.container.stories[currentStoryIndex].text}
+              {selectedStory.container.stories[currentStoryIndex]?.text}
             </Text>
           </View>
         )}
@@ -564,7 +575,7 @@ const StoriesStream = () => {
             }}
           >
             <LikeStoriesButton
-              story={selectedStory.container.stories[currentStoryIndex]}
+              story={selectedStory.container?.stories[currentStoryIndex]}
             />
           </View>
         </View>

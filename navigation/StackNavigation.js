@@ -43,7 +43,7 @@ import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
-  const uid = useContext(UidContext)
+  const { uid } = useContext(UidContext)
 
   return (
     <Stack.Navigator
@@ -92,8 +92,8 @@ const StackNavigation = () => {
           </>
         ) : (
           <>
-            <Stack.Screen name="Signin" component={SignInScreen} />
             < Stack.Screen name="Start" component={StartPage} />
+            <Stack.Screen name="Signin" component={SignInScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
             <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
           </>

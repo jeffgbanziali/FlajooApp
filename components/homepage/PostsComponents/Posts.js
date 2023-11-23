@@ -41,7 +41,7 @@ const Posts = ({ post }) => {
       console.log("go to profile friends", id);
     }
   };
-  
+
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
@@ -707,7 +707,7 @@ const Posts = ({ post }) => {
           <View
             style={{
               borderBottomWidth: 1,
-              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+              borderColor: isDarkMode ? "#343232" : "lightgray",
               height: 50,
             }}
           >
@@ -720,7 +720,7 @@ const Posts = ({ post }) => {
                 marginTop: 10,
               }}
             >
-              Post Comment
+              {post.comments.length} Comments
             </Text>
           </View>
           <ScrollView>
@@ -731,7 +731,7 @@ const Posts = ({ post }) => {
               width: "100%",
               height: "15%",
               borderTopWidth: 1,
-              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+              borderColor: isDarkMode ? "#343232" : "lightgray",
             }}
           >
             <AddCommentButton post={post} />

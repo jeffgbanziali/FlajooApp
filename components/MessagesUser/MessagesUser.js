@@ -80,6 +80,9 @@ const MessagesUser = ({ message, own, user }) => {
 
   console.log(message)
 
+  let opacity = new Animated.Value(0);
+
+  
 
 
   return (

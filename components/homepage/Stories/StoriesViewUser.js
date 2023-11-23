@@ -74,7 +74,6 @@ const StoriesViewUser = () => {
             style={{
                 height: "66%",
                 width: "100%",
-                resizeMode: "cover",
                 borderRadius: 25,
                 shadowColor: "#000",
                 shadowOffset: {

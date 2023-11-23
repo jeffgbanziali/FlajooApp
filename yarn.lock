@@ -7033,6 +7033,11 @@ react-native-image-picker@^7.0.2:
   resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-7.0.2.tgz"
   integrity sha512-2Y+TMzv2l32IikqYpj4WOqkYvv42SXkSvL9zAo0XdhA3Rbe3lc0Oz12KlR6M2bGh8RxXz5lUrs+9mxy/GpcLIg==
 
+react-native-image-resizer@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.npmjs.org/react-native-image-resizer/-/react-native-image-resizer-1.4.5.tgz"
+  integrity sha512-33EgL3C9pyvjKpullAB6fWyD5QhoYEpNNB9rxNvUsrpAnL2mHBW7PTrUCCZudJeB6Weg7nbweKrSw1nnto5aqg==
+
 react-native-incall-manager@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/react-native-incall-manager/-/react-native-incall-manager-4.1.0.tgz"
@@ -7197,7 +7202,7 @@ react-native-webrtc@^111.0.6:
     debug "4.3.4"
     event-target-shim "6.0.2"
 
-react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", react-native@^0.72.6, "react-native@>= 0.47.0", "react-native@>= 0.60.2", react-native@>=0.40.0, react-native@>=0.46, react-native@>=0.47.0, react-native@>=0.5.0, react-native@>=0.59, react-native@>=0.60.0, "react-native@>=0.60.0-rc.0 <1.0.x", react-native@>=0.60.0-rc.2, react-native@>=0.65.0, react-native@>=0.8.0:
+react-native@*, "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", react-native@^0.72.6, "react-native@>= 0.47.0", "react-native@>= 0.60.2", react-native@>=0.40.0, react-native@>=0.46, react-native@>=0.47.0, react-native@>=0.5.0, react-native@>=0.59, react-native@>=0.60.0, "react-native@>=0.60.0-rc.0 <1.0.x", react-native@>=0.60.0-rc.2, react-native@>=0.65.0, react-native@>=0.8.0, react-native@>=v0.40.0:
   version "0.72.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.6.tgz"
   integrity sha512-RafPY2gM7mcrFySS8TL8x+TIO3q7oAlHpzEmC7Im6pmXni6n1AuufGaVh0Narbr1daxstw7yW7T9BKW5dpVc2A==

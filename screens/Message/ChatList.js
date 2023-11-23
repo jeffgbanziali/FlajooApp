@@ -6,11 +6,13 @@ import {
   TextInput,
   Pressable,
   SafeAreaView,
+  Easing,
   Modal,
   Image,
   Dimensions,
   Alert,
-  FlatList
+  FlatList,
+  Animated
 } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -32,6 +34,7 @@ import Video from 'react-native-video';
 //import { collection, addDoc, getDoc, } from 'firebase/firestore';
 //import { firestore, uploadMediaToFirebase } from '../../Data/FireStore';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { EasingFunction } from 'react-native';
 import RNFS from 'react-native-fs';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -637,7 +640,7 @@ const Message = () => {
               {
                 selectTools &&
                 (
-                  <View
+                  <Animated.View
                     style={{
                       width: "100%",
                       height: "90%",
@@ -902,7 +905,7 @@ const Message = () => {
                       </View>
 
                     </View>
-                  </View>
+                  </Animated.View>
                 )
               }
               <View

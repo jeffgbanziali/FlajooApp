@@ -537,11 +537,11 @@ const VideoRéels = ({ item, isActive }) => {
       </View>
       <Modal
         isVisible={showComments}
-        onBackdropPress={toggleComments} // Pour fermer le modal en appuyant sur l'arrière-plan
-        style={{ margin: 0, justifyContent: "flex-end" }} // Placez le modal en bas de l'écran
-        backdropOpacity={0.5} // Opacité de l'arrière-plan
-        animationIn="slideInUp" // Animation pour afficher le modal
-        animationOut="slideOutDown" // Animation pour fermer le modal
+        onBackdropPress={toggleComments} 
+        style={{ margin: 0, justifyContent: "flex-end" }} 
+        backdropOpacity={0.5} 
+        animationIn="slideInUp" 
+        animationOut="slideOutDown" 
         useNativeDriverForBackdrop
       >
         <View
@@ -555,7 +555,7 @@ const VideoRéels = ({ item, isActive }) => {
           <View
             style={{
               borderBottomWidth: 1,
-              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+              borderColor: isDarkMode ? "#343232" : "lightgray",
               height: 50,
             }}
           >
@@ -568,7 +568,7 @@ const VideoRéels = ({ item, isActive }) => {
                 marginTop: 10,
               }}
             >
-              Post Comment
+              {item.comments.length} Comment
             </Text>
           </View>
           <ScrollView>
@@ -579,7 +579,7 @@ const VideoRéels = ({ item, isActive }) => {
               width: "100%",
               height: "15%",
               borderTopWidth: 1,
-              borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+              borderColor: isDarkMode ? "#343232" : "lightgray",
             }}
           >
             <AddRéelsComment réels={item} />

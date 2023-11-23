@@ -29,10 +29,10 @@ const LikeStoriesButton = ({ story }) => {
 
   useEffect(() => {
     setLiked((prevLiked) => {
-      if (story.likers.includes(uid)) return true;
+      if (story?.likers.includes(uid)) return true;
       else return false;
     });
-  }, [uid, story.likers]);
+  }, [uid, story?.likers]);
   
 
 

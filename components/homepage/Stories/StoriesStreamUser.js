@@ -14,7 +14,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { formatPostDate, isEmpty } from "../../Context/Utils";
+import { formatPostDate, isEmpty, timestampStoryParser } from "../../Context/Utils";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
@@ -136,6 +136,14 @@ const StoriesStreamUser = () => {
             ref?.current?.scrollTo(-200);
         }
     }, [ref]);
+
+
+    useEffect(() => {
+        resetAnimation();
+        start();
+
+    });
+
 
     return (
         <>
@@ -455,7 +463,7 @@ const StoriesStreamUser = () => {
                                     borderRadius: 30,
                                     width: "100%",
                                     height: "100%",
-                                    backgroundColor: "green"
+                                    backgroundColor: "black"
                                 }}
                             >
 
@@ -468,7 +476,7 @@ const StoriesStreamUser = () => {
                                             borderRadius: 30,
                                             opacity: 0.9,
                                         }}
-                                        resizeMode="cover"
+                                        resizeMode="contain"
                                         onLoadEnd={() => {
                                             progressAnimation.setValue(0);
                                             start()
@@ -502,9 +510,9 @@ const StoriesStreamUser = () => {
                     {!selectedStory.container.stories[currentStoryIndex].media &&
                         selectedStory.container.stories[currentStoryIndex].text && (
                             <View
-                                onLoadEnd={() => {
+                                onLayout={() => {
                                     progressAnimation.setValue(0);
-                                    start()
+                                    start();
                                 }}
                                 style={{
                                     flex: 1,

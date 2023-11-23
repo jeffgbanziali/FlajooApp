@@ -45,7 +45,7 @@ const VideoRéelsFriendsUser = ({ users }) => {
                     isMuted={false}
                     resizeMode="cover"
                     isLooping
-                    shouldPlay={false}
+                    paused={true}
                     style={{
                         width: 135,
                         height: 200,

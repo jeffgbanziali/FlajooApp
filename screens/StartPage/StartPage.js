@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, ImageBackground, ScrollView } from 'react-native';
-import Button from '../../components/Button/Button';
+import { View, Text, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import { LinearGradient } from "react-native-linear-gradient";
+import { useDarkMode } from '../../components/Context/AppContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from "@react-navigation/native";
+
 
 
 
@@ -11,94 +15,196 @@ import Feather from 'react-native-vector-icons/Feather';
 
 
 function StartPage(props) {
+
+
+    const { isDarkMode } = useDarkMode();
+
+    const navigation = useNavigation();
+
+    const goEmailSignUp = () => {
+        navigation.navigate("Signup")
+    }
+
+
+    const goFacebook = () => {
+        console.warn("Facebook")
+    }
+
+    const goGoogle = () => {
+        console.warn("Google")
+    }
+
+    const goSignIn = () => {
+        navigation.navigate("Signin")
+    }
+
     return (
 
         <>
-            <ImageBackground source={require("../../assets/Images/Background3.jpg")} style={{ height: '100%' }}>
-                <ScrollView>
-                    <View style={{ alignItems: 'center', marginHorizontal: 40, marginVertical: 100 }}>
-                        <Text style={{ color: "black", fontSize: 64 }}>Let's Start </Text>
-                        <Text style={{ color: "black", fontSize: 64, marginBottom: 40 }}>Welcome </Text>
+
+            <LinearGradient
+                colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
+                style={{
+                    flex: 1,
+                    height: 500,
+                    backgroundColor: isDarkMode ? "#171717" : "white",
+                }}
+            >
+                <SafeAreaView>
+                    <View style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: "100%",
+                        height: "90%",
+
+
+                    }}>
+
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: "100%",
+                                height: "40%",
+                                zIndex: 10,
+
+                            }}
+                        >
+                            <Text style={{ color: "white", fontSize: 64 }}>Let's Start </Text>
+                            <Text style={{ color: "white", fontSize: 64, }}>Welcome </Text>
+
+                        </View>
                         <View style={{
-                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: "100%",
+                            height: "40%",
+                            marginTop: "2%",
+                            justifyContent: "space-evenly"
                         }}>
-
-
-
-                            <View
+                            <TouchableOpacity
+                                onPress={goEmailSignUp}
                                 style={{
-                                    position: 'absolute',
-                                    marginHorizontal: 16,
-                                    marginVertical: 19,
-                                    zIndex: 100,
-                                    alignSelf: "flex-start",
-                                }}
-                            >
+                                    alignItems: "center",
+                                    width: 300,
+                                    height: 60,
+                                    backgroundColor: isDarkMode ? "#171717" : "white",
+                                    flexDirection: "row",
+                                    borderRadius: 30,
+                                    padding: 10,
+                                    borderWidth: 2,
+                                    borderColor: isDarkMode ? "#343232" : "lightgray",
+
+                                }}>
+
                                 <Feather
                                     name="mail"
-                                    size={40}
-                                    color="#FFFFFF"
-                                    style={{
-                                        alignSelf: 'center',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                    }}
+                                    size={30}
+                                    color={isDarkMode ? "#FFFFFF" : "black"}
                                 />
-                            </View>
-
-                            <Button bgColor="#6D5B57" textColor="white" buttonLabel="Continue with Email" Press={() => props.navigation.navigate("Signup")} />
-                        </View>
-                        <View style={{
-                            display: 'flex',
-
-
-                        }}>
-                            <View
+                                <Text
+                                    style={{
+                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        marginLeft: "2%",
+                                        fontSize: 24,
+                                    }}>
+                                    Sign up with a email
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={goFacebook}
                                 style={{
-                                    position: 'absolute',
-                                    marginHorizontal: 6,
-                                    marginVertical: 14,
-                                    zIndex: 100,
-                                    alignSelf: "flex-start",
-                                }}
-                            >
-                                <MaterialIcons name="facebook" size={50} color="#FFFFFF" />
-                            </View>
-                            <Button
-                                bgColor="#6D5B57"
-                                textColor='white'
-                                buttonLabel="Continue with Facebook"
-                                Press={() => props.navigation.navigate("loginFacebook")} />
-                        </View>
-                        <View style={{
-                            display: 'flex',
-                        }}>
-                            <View
-                                style={{
-                                    position: 'absolute',
-                                    marginHorizontal: 10,
-                                    marginVertical: 19,
-                                    zIndex: 100,
-                                    alignSelf: "flex-start",
-                                }}
-                            >
-                                <AntDesign name="google" size={40} color="#FFFFFF" />
-                            </View>
+                                    alignItems: "center",
+                                    width: 300,
+                                    height: 60,
+                                    backgroundColor: isDarkMode ? "#171717" : "white",
+                                    flexDirection: "row",
+                                    borderRadius: 30,
+                                    padding: 10,
+                                    borderWidth: 2,
+                                    borderColor: isDarkMode ? "#343232" : "lightgray",
 
-                            <Button bgColor="#6D5B57" textColor='white' buttonLabel="Continue with Google" Press={() => props.navigation.navigate("loginGoogle")} />
+
+                                }}>
+                                <MaterialIcons name="facebook" size={40} color="#0332D8" />
+                                <Text
+                                    style={{
+                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        marginLeft: "2%",
+                                        fontSize: 20,
+                                    }}>
+                                    Continue with facebook
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={goGoogle}
+                                style={{
+                                    alignItems: "center",
+                                    width: 300,
+                                    height: 60,
+                                    backgroundColor: isDarkMode ? "#171717" : "white",
+                                    flexDirection: "row",
+                                    borderRadius: 30,
+                                    padding: 10,
+                                    borderWidth: 2,
+                                    borderColor: isDarkMode ? "#343232" : "lightgray",
+
+
+                                }}>
+
+                                <AntDesign name="google" size={35} color="red" />
+                                <Text
+                                    style={{
+                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        marginLeft: "2%",
+                                        fontSize: 20,
+                                    }}>
+                                    Continue with Google
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: "100%",
+                                height: "10%",
+                                marginTop: "2%"
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: isDarkMode ? "#F5F5F5" : "black",
+                                    fontSize: 18
+                                }}> have a account ? </Text>
+
+                            <TouchableOpacity
+                                onPress={goSignIn}
+                                style={{
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: 120,
+                                    height: 50,
+                                    backgroundColor: "red",
+                                    borderRadius: 30,
+                                    marginTop: "4%"
+                                }}>
+
+                                <Text
+                                    style={{
+                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        fontSize: 20,
+                                        fontWeight: "600"
+                                    }}>Sign in </Text>
+
+                            </TouchableOpacity>
                         </View>
 
                     </View>
-                    <View style={{ alignItems: 'center', marginHorizontal: 40, marginVertical: -38, }}>
-                        <Text style={{ marginHorizontal: 40, color: "black", fontSize: 20, display: 'flex' }}>Have an account ? </Text>
-                        <View style={{ display: 'flex' }}>
-                            <Button bgColor='#1565C0' buttonLabel='Sign In' Press={() => props.navigation.navigate("Signin")} />
-                        </View>
 
 
-                    </View>
-                </ScrollView>
-            </ImageBackground>
+                </SafeAreaView >
+            </LinearGradient >
 
         </>
 

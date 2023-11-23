@@ -104,7 +104,7 @@ const AllCommentView = ({ post }) => {
 
                     }}
                   >
-                    {formatPostDate(comment.createdAt)}
+                    {formatPostDate(comment.timestamp)}
                   </Text>
                 </View>
               </View>

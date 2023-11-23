@@ -101,7 +101,7 @@ const RéelsComment = ({ réels }) => {
                       color: "gray",
                     }}
                   >
-                    {formatPostDate(comment.createdAt)}
+                    {formatPostDate(comment.timestamp)}
                   </Text>
                 </View>
               </View>

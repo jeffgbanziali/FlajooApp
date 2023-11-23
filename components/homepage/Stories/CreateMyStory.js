@@ -15,6 +15,8 @@ import { firestore, uploadStoryToFirebase } from '../../../Data/FireStore';
 import { Modal } from 'react-native';
 import { addStory, getStories } from '../../../actions/story.action';
 import Video from 'react-native-video';
+import RNFS from 'react-native-fs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -68,13 +70,12 @@ const CreateStory = () => {
             let mediaType = null;
 
             if (selectedImage) {
-
                 const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName);
+                mediaUrl = await saveMediaLocally(selectedImage.uri, mediaName, 'image');
                 mediaType = 'image';
             } else if (selectedVideo) {
                 const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName);
+                mediaUrl = await saveMediaLocally(selectedVideo.uri, mediaName, 'video');
                 mediaType = 'video';
             }
 
@@ -89,11 +90,17 @@ const CreateStory = () => {
 
             // Condition pour la soumission
             if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
+                // Sauvegarde localement avant l'envoi au serveur
+                saveStoryLocally(storyData);
+
+                // Envoyer la story au serveur ou à d'autres utilisateurs
                 dispatch(addStory(storyData));
                 const docRef = await addDoc(collection(firestore, 'stories'), storyData);
                 const docSnapshot = await getDoc(docRef);
+
                 console.log('Story créée avec succès! Document ID:', docRef.id);
                 console.log('Document data:', docSnapshot.data());
+
                 Alert.alert('Succès', 'Votre story a été publiée avec succès !');
                 setPostText('');
                 setSelectedImage(null);
@@ -109,6 +116,43 @@ const CreateStory = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
+
+    const saveMediaLocally = async (uri, fileName, mediaType) => {
+        return new Promise((resolve, reject) => {
+            // Utiliser RNFS pour sauvegarder localement
+            RNFS.copyFile(uri, `${RNFS.DocumentDirectoryPath}/${fileName}`)
+                .then(() => {
+                    console.log(`${mediaType} sauvegardé avec succès localement !`);
+                    resolve(`${RNFS.DocumentDirectoryPath}/${fileName}`);
+                })
+                .catch((error) => {
+                    console.error(`Erreur lors de la sauvegarde locale du ${mediaType}.`, error);
+                    reject(error);
+                });
+        });
+    };
+
+    const saveStoryLocally = async (story) => {
+        try {
+            // Récupérer les stories existantes
+            const existingStoriesStr = await AsyncStorage.getItem('localStories');
+            const existingStories = existingStoriesStr ? JSON.parse(existingStoriesStr) : [];
+
+            // Ajouter la nouvelle story à la liste
+            existingStories.push(story);
+
+            // Sauvegarder la liste mise à jour localement
+            await AsyncStorage.setItem('localStories', JSON.stringify(existingStories));
+
+            console.log('Story sauvegardée localement avec succès !');
+        } catch (error) {
+            console.error('Erreur lors de la sauvegarde locale de la story :', error);
+            throw error;
+        }
+    };
+
+
+
 
 
     const handleModalImage = async (item) => {

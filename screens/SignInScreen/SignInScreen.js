@@ -28,7 +28,7 @@ const SignInScreen = () => {
   const { uid, setUid } = useContext(UidContext)
 
 
-  
+
 
 
 
@@ -71,7 +71,9 @@ const SignInScreen = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoadingSignIn(false);
+      setTimeout(() => {
+        setIsLoadingSignIn(false);
+      }, 5000);
     }
   };
 

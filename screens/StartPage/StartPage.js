@@ -14,8 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 
 
 
-function StartPage(props) {
-
+function StartPage() {
 
     const { isDarkMode } = useDarkMode();
 

@@ -1,20 +1,27 @@
-import { View, Text, Image, KeyboardAvoidingView,SafeAreaView } from "react-native";
+import { View, Text, Image, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FollowHandler from "./FollowHandler";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 
 const MyFollowers = () => {
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
+
+
+
   const handleClickReturnProfile = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
   };
+
+
+  const { t } = useTranslation();
 
   return (
     <KeyboardAvoidingView
@@ -67,7 +74,7 @@ const MyFollowers = () => {
               marginRight: "4.5%",
             }}
           >
-            My Followings
+            {t('Myfollowed')}
           </Text>
         </View>
 
@@ -78,6 +85,7 @@ const MyFollowers = () => {
             paddingTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
+            marginBottom: 50,
             marginTop: 10,
           }}
         >
@@ -146,7 +154,7 @@ const MyFollowers = () => {
                         >
                           {user._id === userData._id ? (
                             <Text>
-                              Vous
+                              {t('You')}
                             </Text>
                           ) : (
                             <FollowHandler

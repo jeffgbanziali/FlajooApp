@@ -15,6 +15,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { Modal } from 'react-native';
 import Video from 'react-native-video';
 import { addVideoReels, getVideoReels } from '../../actions/réels.action';
+import { useTranslation } from 'react-i18next';
 
 
 const CreateRéels = () => {
@@ -31,7 +32,7 @@ const CreateRéels = () => {
     const [loadVideo, setLoadVideo] = useState(true);
     const [addText, setAddText] = useState(false);
 
-
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -230,7 +231,7 @@ const CreateRéels = () => {
                                 marginLeft: "3.5%",
                                 alignSelf: 'center'
                             }}>
-                            Create Your Réels
+                            {t('CreateRéels')}
                         </Text>
 
                     </View>
@@ -283,7 +284,7 @@ const CreateRéels = () => {
                                 marginTop: 10,
                             }}
                         >
-                            Camera
+                            {t('Camera')}
                         </Text>
 
                     </TouchableOpacity>
@@ -316,7 +317,7 @@ const CreateRéels = () => {
 
                             }}
                         >
-                            Music
+                            {t('Music')}
                         </Text>
 
                     </TouchableOpacity>
@@ -354,7 +355,7 @@ const CreateRéels = () => {
                                 fontSize: 16
                             }}
                         >
-                            Effects
+                            {t('Effects')}
                         </Text>
 
                     </TouchableOpacity>
@@ -388,7 +389,7 @@ const CreateRéels = () => {
                                 fontSize: 16
                             }}
                         >
-                            Selfie
+                            {t('Selfie')}
                         </Text>
 
                     </TouchableOpacity>
@@ -429,7 +430,7 @@ const CreateRéels = () => {
                                     marginLeft: "3.5%",
                                     alignSelf: 'center'
                                 }}>
-                                Pellicule
+                                {t('Film')}
                             </Text>
                             <View
                                 style={{
@@ -476,7 +477,7 @@ const CreateRéels = () => {
                                     marginLeft: "3.5%",
                                     alignSelf: 'center'
                                 }}>
-                                Multiple choices
+                                {t('Multi')}
                             </Text>
 
 
@@ -606,7 +607,7 @@ const CreateRéels = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Text
+                                {t('Text')}
                             </Text>
                             <Ionicons
                                 name="text"
@@ -633,7 +634,7 @@ const CreateRéels = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Song
+                                {t('Song')}
                             </Text>
                             <Ionicons
                                 name="musical-notes"
@@ -660,7 +661,7 @@ const CreateRéels = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Effects
+                                {t('Effects')}
                             </Text>
                             <Entypo
                                 name="adjust"
@@ -697,7 +698,7 @@ const CreateRéels = () => {
                                 value={postText}
                                 onChangeText={(text) => setPostText(text)}
                                 editable
-                                placeholder="Leave a short text..."
+                                placeholder={t('TextInputStory')}
                                 placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
                                 fontSize="20"
                                 color={isDarkMode ? "#F5F5F5" : "white"} />

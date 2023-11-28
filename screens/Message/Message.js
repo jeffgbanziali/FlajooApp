@@ -1,11 +1,8 @@
 import {
   View,
   Text,
-  ScrollView,
-  TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Image,
+  ActivityIndicator,
   FlatList,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -14,17 +11,27 @@ import Conversation from "./Conversation";
 import ChatOnline from "../../components/MessagesUser/ChatOnline";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
 import { SafeAreaView } from "react-native";
 import { USER } from "../../Data/Users";
+import { initializeUseSelector } from "react-redux/es/hooks/useSelector";
+import { isEmpty } from "../../components/Context/Utils";
+import { useTranslation } from "react-i18next";
 
 const Message = () => {
   const [conver, setConver] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const { isDarkMode } = useDarkMode();
+  const usersData = initializeUseSelector((state) => state.usersReducer);
+  const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
+  useEffect(() => {
+    !isEmpty(usersData)[0] && setIsLoading(false);
+  }, [usersData]);
 
 
   const { uid } = useContext(UidContext);
@@ -118,7 +125,7 @@ const Message = () => {
                 color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
               }}
             >
-              Chat
+              {t('Chat')}
             </Text>
 
           </View>
@@ -208,34 +215,79 @@ const Message = () => {
                 fontWeight: "500",
                 color: isDarkMode ? "white" : "black",
               }}>
-              Messages
+              {t('Messages')}
             </Text>
           </View>
-          <View
-            style={{
-              width: "100%",
-              height: "78%",
-            }}
-          >
-            <FlatList
-              data={conver}
-              keyExtractor={(item) => item._id} // Utilise une clé unique de chaque élément
-              renderItem={({ item: c }) => (
-                <TouchableOpacity onPress={() => setCurrentChat(c)}>
-                  <View
-                    style={{
-                      width: "100%",
-                      padding: 1,
-                      height: 90,
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Conversation conversation={c} currentUser={uid} />
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
+
+          {isLoading ? (
+
+            <View
+              style={{
+                width: "100%",
+                height: "50%",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column"
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  width: "30%",
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    color: isDarkMode ? "white" : "black",
+                  }}
+                >
+                  {t('Loading')}
+                </Text>
+                <ActivityIndicator size="large" color="white" />
+              </View>
+              <Text
+                style={{
+                  fontSize: 26,
+                  marginTop: "5%",
+                  textAlign: "center",
+                  color: isDarkMode ? "white" : "black",
+                }}
+              >
+                {t('PleaseWait')}
+              </Text>
+            </View>
+
+          ) : (
+            <View
+              style={{
+                width: "100%",
+                height: "78%",
+              }}
+            >
+              <FlatList
+                data={conver}
+                keyExtractor={(item) => item._id} // Utilise une clé unique de chaque élément
+                renderItem={({ item: c }) => (
+                  <TouchableOpacity onPress={() => setCurrentChat(c)}>
+                    <View
+                      style={{
+                        width: "100%",
+                        padding: 1,
+                        height: 90,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Conversation conversation={c} currentUser={uid} />
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          )}
         </View>
       </View>
     </SafeAreaView>

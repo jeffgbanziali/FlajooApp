@@ -21,15 +21,18 @@ import { Modal } from "react-native";
 import { getUser, updateProfile } from "../../actions/user.action";
 import { firestore, uploadProfileToFirebase } from "../../Data/FireStore";
 import { addDoc, collection, getDoc } from "firebase/firestore";
+import { useDarkMode } from "../Context/AppContext";
+import { useTranslation } from 'react-i18next'
 
 const ProfileEdit = () => {
-  const [text, setText] = useState("");
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [showImage, setShowImage] = useState(false);
   const [loadUsers, setLoadUSers] = useState(true);
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  const { isDarkMode } = useDarkMode();
+  const { t } = useTranslation();
 
   const handleUpdateBio = () => {
     console.log("clicked");
@@ -121,572 +124,590 @@ const ProfileEdit = () => {
 
   return (
     <>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: "black",
+          backgroundColor: isDarkMode ? '#0D0C0C' : '#FFFFFF',
         }}
       >
-        <SafeAreaView>
-          <View
+        <View
+          style={{
+            paddingBottom: 4,
+            marginLeft: 10,
+            marginRight: 10,
+            flexDirection: "row",
+            borderBottomColor: "gray",
+            borderBottomWidth: 1,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={() => handleClickReturnProfile()}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+              }}
+            >
+              <MaterialIcons
+                name="arrow-back-ios"
+                size={28}
+                color={isDarkMode ? "white" : "black"}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text
             style={{
-              paddingBottom: 4,
-              marginLeft: 10,
+              fontSize: 30,
+              color: isDarkMode ? "white" : "black",
+              fontWeight: "bold",
               marginRight: 10,
-              flexDirection: "row",
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
-              justifyContent: "space-between",
-              alignItems: "center",
             }}
           >
-            <TouchableOpacity onPress={() => handleClickReturnProfile()}>
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: 40,
-                  height: 40,
-                  borderRadius: 30,
-                }}
-              >
-                <MaterialIcons name="arrow-back-ios" size={28} color="white" />
-              </View>
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 30,
-                color: "#fff",
-                fontWeight: "bold",
-                marginRight: 10,
-              }}
-            >
-              ProfileEdit
-            </Text>
-          </View>
-          <ScrollView
-            vertical
-            howsHorizontalScrollIndicator={false}
-            scrollEventThrottle={16}
+            {t('ProfileEdit')}
+          </Text>
+        </View>
+        <ScrollView
+          vertical
+          howsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+        >
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 250,
+              flexDirection: "column",
+              borderBottomColor: "gray",
+              borderBottomWidth: 1,
+            }}
           >
             <View
               style={{
-                marginTop: 10,
-                width: "100%",
-                height: 250,
-                flexDirection: "column",
-
-                borderBottomColor: "gray",
-                borderBottomWidth: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 4,
               }}
             >
-              <View
+              <Text
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: 4,
+                  fontSize: 25,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "bold",
+                  marginLeft: 10,
                 }}
               >
+                {t('Profile-picture')}
+              </Text>
+              <TouchableOpacity
+                onPress={handleSelectImage}>
                 <Text
                   style={{
-                    fontSize: 25,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    marginLeft: 10,
+                    fontSize: 20,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
                   }}
                 >
-                  Profil picture
+                  {t('Update')}
                 </Text>
-                <TouchableOpacity
-                  onPress={handleSelectImage}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
-                    }}
-                  >
-                    Udapte
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "80%",
+                padding: 4,
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                onPress={handleSelectImage}>
+                <Image
+                  source={{
+                    uri: userData?.picture
+                      ? userData.picture
+                      : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
+                  }}
+                  style={{
+                    width: 160,
+                    height: 160,
+                    borderRadius: 100,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 120,
+              flexDirection: "column",
+              borderBottomColor: "gray",
+              borderBottomWidth: 1,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+
+                padding: 4,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "600",
+                  marginLeft: 10,
+                }}
+              >
+                Bio
+              </Text>
+              <TouchableOpacity onPress={handleUpdateBio}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
+                  }}
+                >
+                  To Add
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Pressable onPress={handleUpdateBio}>
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "center",
+                  height: "85%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 25,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
+                  }}
+                >
+                  {t('describle')}
+                </Text>
+              </View>
+            </Pressable>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 120,
+              flexDirection: "column",
+              borderBottomColor: "gray",
+              borderBottomWidth: 1,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 4,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "600",
+                  marginLeft: 10,
+                }}
+              >
+                {t('Contact-details')}
+              </Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
+                  }}
+                >
+                  {t('Update')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
                   height: "80%",
                   padding: 4,
-                  marginTop: 10,
                 }}
               >
-                <TouchableOpacity
-                  onPress={handleSelectImage}>
-                  <Image
-                    source={{
-                      uri: userData?.picture
-                        ? userData.picture
-                        : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
-                    }}
-                    style={{
-                      width: 160,
-                      height: 160,
-                      borderRadius: 100,
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View
-              style={{
-                marginTop: 10,
-                width: "100%",
-                height: 120,
-                flexDirection: "column",
-                borderBottomColor: "gray",
-                borderBottomWidth: 1,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-
-                  padding: 4,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 25,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    marginLeft: 10,
-                  }}
-                >
-                  Bio
-                </Text>
-                <TouchableOpacity onPress={handleUpdateBio}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
-                    }}
-                  >
-                    To Add
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <Pressable onPress={handleUpdateBio}>
                 <View
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
                     justifyContent: "center",
-                    height: "85%",
+                    alignItems: "center",
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginLeft: 10,
+                  }}
+                >
+                  <MaterialIcons
+                    name="local-phone"
+                    size={30}
+                    color={isDarkMode ? "white" : "black"}
+                  />
+                </View>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "column",
                   }}
                 >
                   <Text
                     style={{
-                      fontSize: 30,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
+                      fontSize: 20,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "600",
+                      marginLeft: 10,
                     }}
                   >
-                    Describe yourselft...
+                    {userData.phoneNumber}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "gray",
+                      fontWeight: "normal",
+                      marginLeft: 10,
+                    }}
+                  >
+                    Mobile
                   </Text>
                 </View>
-              </Pressable>
-            </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 200,
+              flexDirection: "column",
+              borderBottomColor: "gray",
+              borderBottomWidth: 1,
+            }}
+          >
             <View
               style={{
-                marginTop: 10,
-                width: "100%",
-                height: 120,
-                flexDirection: "column",
-                borderBottomColor: "gray",
-                borderBottomWidth: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 4,
               }}
             >
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "600",
+                  marginLeft: 10,
+                }}
+              >
+                {t('Genarals-infos')}
+              </Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
+                  }}
+                >
+                  {t('Update')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: 4,
+                  padding: 14,
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontSize: 25,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    marginLeft: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
                   }}
                 >
-                  Contact details
-                </Text>
-                <TouchableOpacity>
+                  <FontAwesome
+                    name="user"
+                    size={28}
+                    color={isDarkMode ? "white" : "black"}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "600",
+                      marginLeft: 10,
                     }}
                   >
-                    Update
+                    {t('Gender-ma')}
                   </Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    height: "80%",
-                    padding: 4,
-                  }}
-                >
-                  <View
+                  <Text
                     style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#3D3939",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
+                      fontSize: 14,
+                      color: "gray",
+                      fontWeight: "normal",
+                      marginLeft: 10,
                     }}
                   >
-                    <MaterialIcons name="local-phone" size={30} color="black" />
-                  </View>
-
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        fontWeight: "600",
-                        marginLeft: 10,
-                      }}
-                    >
-                      {userData.phoneNumber}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "gray",
-                        fontWeight: "normal",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Mobile
-                    </Text>
-                  </View>
+                    {t('Gender')}
+                  </Text>
                 </View>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                marginTop: 10,
-                width: "100%",
-                height: 200,
-                flexDirection: "column",
-                borderBottomColor: "gray",
-                borderBottomWidth: 1,
-              }}
-            >
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: 4,
+                  padding: 14,
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontSize: 25,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    marginLeft: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
                   }}
                 >
-                  Générals informations
-                </Text>
-                <TouchableOpacity>
+                  <FontAwesome
+                    name="birthday-cake"
+                    size={24}
+                    color={isDarkMode ? "white" : "black"}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "600",
+                      marginLeft: 10,
                     }}
                   >
-                    Update
+                    11 Juillet 2001
                   </Text>
-                </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "gray",
+                      fontWeight: "normal",
+                      marginLeft: 10,
+                    }}
+                  >
+                    {t('Day-birth')}
+                  </Text>
+                </View>
               </View>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    padding: 14,
-                  }}
-                >
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#3D3939",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
-                    }}
-                  >
-                    <FontAwesome name="user" size={28} color="black" />
-                  </View>
-
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        fontWeight: "600",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Homme
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "gray",
-                        fontWeight: "normal",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Genre
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    padding: 14,
-                  }}
-                >
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#3D3939",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
-                    }}
-                  >
-                    <FontAwesome name="birthday-cake" size={24} color="black" />
-                  </View>
-
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        fontWeight: "600",
-                        marginLeft: 10,
-                      }}
-                    >
-                      11 Juillet 2001
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "gray",
-                        fontWeight: "normal",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Date de naissance
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 200,
+              flexDirection: "column",
+              borderBottomColor: "gray",
+              borderBottomWidth: 1,
+            }}
+          >
             <View
               style={{
-                marginTop: 10,
-                width: "100%",
-                height: 200,
-                flexDirection: "column",
-                borderBottomColor: "gray",
-                borderBottomWidth: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 4,
               }}
             >
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "600",
+                  marginLeft: 10,
+                }}
+              >
+                Locations
+              </Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "normal",
+                    marginRight: 10,
+                  }}
+                >
+                  {t('Update')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: 4,
+                  padding: 14,
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontSize: 25,
-                    color: "#fff",
-                    fontWeight: "bold",
-                    marginLeft: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
                   }}
                 >
-                  Locations
-                </Text>
-                <TouchableOpacity>
+                  <MaterialIcons
+                    name="location-on"
+                    size={30}
+                    color={isDarkMode ? "white" : "black"}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 20,
-                      color: "#fff",
-                      fontWeight: "normal",
-                      marginRight: 10,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "600",
+                      marginLeft: 10,
                     }}
                   >
-                    Update
+                    Paris
                   </Text>
-                </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "gray",
+                      fontWeight: "normal",
+                      marginLeft: 10,
+                      marginTop: 2,
+                    }}
+                  >
+                    {t('City')}
+                  </Text>
+                </View>
               </View>
-              <TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  padding: 14,
+                }}
+              >
                 <View
                   style={{
-                    flexDirection: "row",
+                    justifyContent: "center",
                     alignItems: "center",
-                    padding: 14,
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
                   }}
                 >
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#3D3939",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
-                    }}
-                  >
-                    <MaterialIcons name="location-on" size={30} color="black" />
-                  </View>
-
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        fontWeight: "600",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Paris
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "gray",
-                        fontWeight: "normal",
-                        marginLeft: 10,
-                        marginTop: 2,
-                      }}
-                    >
-                      Current City
-                    </Text>
-                  </View>
+                  <MaterialIcons
+                    name="location-on"
+                    size={30}
+                    color={isDarkMode ? "white" : "black"} />
                 </View>
-              </TouchableOpacity>
-              <TouchableOpacity>
+
                 <View
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    padding: 14,
+                    justifyContent: "center",
+                    flexDirection: "column",
                   }}
                 >
-                  <View
+                  <Text
                     style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#3D3939",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 30,
+                      fontSize: 20,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "600",
+                      marginLeft: 10,
                     }}
                   >
-                    <MaterialIcons name="location-on" size={30} color="black" />
-                  </View>
-
-                  <View
+                    Longjumeau
+                  </Text>
+                  <Text
                     style={{
-                      justifyContent: "center",
-                      flexDirection: "column",
+                      fontSize: 14,
+                      color: "gray",
+                      fontWeight: "normal",
+                      marginLeft: 10,
+                      marginTop: 2,
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                        color: "#fff",
-                        fontWeight: "600",
-                        marginLeft: 10,
-                      }}
-                    >
-                      Longjumeau
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "gray",
-                        fontWeight: "normal",
-                        marginLeft: 10,
-                        marginTop: 2,
-                      }}
-                    >
-                      Hometown
-                    </Text>
-                  </View>
+                    {t('City')}
+                  </Text>
                 </View>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-
-      </KeyboardAvoidingView>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
 
       <Modal
         visible={showImage}

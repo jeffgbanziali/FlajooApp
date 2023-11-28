@@ -12,7 +12,7 @@ import {
     UPDATE_PROFILE,
 } from '../actions/user.action';
 
-const initialState = {}; // initial state
+const initialState = {};
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
@@ -49,6 +49,7 @@ export default function userReducer(state = initialState, action) {
                 picture: action.payload,
             };
         case UPDATE_BIO:
+            console.log("Nouvelle biographie reçue:", action.payload);
             return {
                 ...state,
                 bio: action.payload,

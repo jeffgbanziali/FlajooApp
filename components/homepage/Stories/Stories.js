@@ -187,8 +187,8 @@ const Stories = () => {
                 justifyContent: "center",
                 alignSelf: "center",
                 alignItems: "center",
-                marginLeft: -8,
-                marginTop: 7,
+                marginLeft: -18,
+                marginTop: 10,
                 zIndex: 100,
               }}
             ></View>

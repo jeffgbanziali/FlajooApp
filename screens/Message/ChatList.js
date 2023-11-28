@@ -36,6 +36,7 @@ import Video from 'react-native-video';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { EasingFunction } from 'react-native';
 import RNFS from 'react-native-fs';
+import { useTranslation } from "react-i18next";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -53,6 +54,7 @@ const Message = () => {
   const route = useRoute();
   const { conversationId, user } = route.params;
   const { isDarkMode } = useDarkMode();
+  const { t } = useTranslation();
   const [isPressed, setIsPressed] = useState(false);
   const [postText, setPostText] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
@@ -494,7 +496,7 @@ const Message = () => {
                 width: 40,
                 height: 40,
                 borderRadius: 100,
-                marginLeft: "4%"
+                marginLeft: "2%"
               }}
             />
             <View
@@ -521,7 +523,7 @@ const Message = () => {
                   color: "#FFFFFF",
                 }}
               >
-                Online
+                {t('Online')}
               </Text>
             </View>
 
@@ -594,7 +596,6 @@ const Message = () => {
 
             </TouchableOpacity>
           </View>
-
 
         </View>
 
@@ -715,7 +716,7 @@ const Message = () => {
                             fontSize: 15
                           }}
                         >
-                          Files
+                          {t('Files')}
                         </Text>
                       </View>
                       <View
@@ -752,7 +753,7 @@ const Message = () => {
                             color: isDarkMode ? "#F7F4F4" : "#5E5E5E",
                             fontSize: 15
                           }}>
-                          Caméra
+                          {t('Camera')}
                         </Text>
                       </View>
                       <View
@@ -790,7 +791,7 @@ const Message = () => {
                             fontSize: 15
                           }}
                         >
-                          Galerie
+                          {t('Gallery')}
                         </Text>
                       </View>
                       <View
@@ -826,7 +827,7 @@ const Message = () => {
                             color: isDarkMode ? "#F7F4F4" : "#5E5E5E",
                             fontSize: 15
                           }}>
-                          Audio
+                          {t('Audio')}
                         </Text>
                       </View>
                       <View
@@ -863,7 +864,7 @@ const Message = () => {
                             fontSize: 15
                           }}
                         >
-                          Localisation
+                          {t('Location')}
                         </Text>
                       </View>
                       <View
@@ -900,7 +901,7 @@ const Message = () => {
                             color: isDarkMode ? "#F7F4F4" : "#5E5E5E",
                           }}
                         >
-                          Friends
+                          {t('Friends')}
                         </Text>
                       </View>
 
@@ -961,7 +962,7 @@ const Message = () => {
                       height: Math.max(50, height),
                       paddingTop: 8,
                     }}
-                    placeholder="Message"
+                    placeholder={t("Message")}
                     placeholderTextColor={isDarkMode ? "lightgray" : "gray"}
                     backgroundColor={isDarkMode ? "#343434" : "#F7F4F4"}
                     fontSize={22}
@@ -1048,7 +1049,7 @@ const Message = () => {
               </View>
             </>
           ) : (
-            <Text>Loading...</Text>
+            <Text>{t('Loading')}</Text>
           )}
         </KeyboardAvoidingView>
       </View>
@@ -1154,7 +1155,7 @@ const Message = () => {
                     fontWeight: "600",
                   }}
                 >
-                  Text
+                  {t('Text')}
                 </Text>
                 <Ionicons
                   name="text"
@@ -1183,7 +1184,7 @@ const Message = () => {
                     fontWeight: "600",
                   }}
                 >
-                  Song
+                  {t('Song')}
                 </Text>
                 <Ionicons
                   name="musical-notes"
@@ -1210,7 +1211,7 @@ const Message = () => {
                     fontWeight: "600",
                   }}
                 >
-                  Effects
+                  {t('Effects')}
                 </Text>
                 <Entypo
                   name="adjust"
@@ -1246,7 +1247,7 @@ const Message = () => {
                   value={postText}
                   onChangeText={(text) => setPostText(text)}
                   editable
-                  placeholder="Leave a short text..."
+                  placeholder={t('TextInputStory')}
                   placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
                   fontSize="20"
                   color={isDarkMode ? "#F5F5F5" : "white"} />
@@ -1305,7 +1306,7 @@ const Message = () => {
                     height: Math.max(50, height),
                     paddingTop: 8,
                   }}
-                  placeholder="Add a legende"
+                  placeholder={t('placeholder')}
                   placeholderTextColor={isDarkMode ? "lightgray" : "gray"}
                   backgroundColor={isDarkMode ? "#343434" : "#F7F4F4"}
                   fontSize={22}

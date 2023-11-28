@@ -7,13 +7,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from "@react-navigation/native";
 import { useDarkMode } from "../../components/Context/AppContext";
+import { useTranslation } from "react-i18next";
 
 const Settings = () => {
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
-  const backgroundColorLight = "#F3F2F2";
-  const backgroundColorDark = "#2C2828";
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
@@ -26,8 +26,7 @@ const Settings = () => {
   };
 
   const handleAccount = () => {
-    console.log("clicked");
-    navigation.navigate("AccountInfo");
+    console.warn("clicked");
   };
 
   const handleEditProfil = () => {
@@ -35,7 +34,8 @@ const Settings = () => {
     navigation.navigate("EditProfil");
   };
 
-  const [isEnabled, setIsEnabled] = useState(false);
+
+
   return (
     <View
       style={{
@@ -65,17 +65,23 @@ const Settings = () => {
               borderRadius: 30,
             }}
           >
-            <MaterialIcons name="arrow-back-ios" size={28} color={isDarkMode ? "white" : "black"} />
+            <MaterialIcons
+              name="arrow-back-ios"
+              size={28}
+              color={isDarkMode ? "white" : "black"}
+            />
           </View>
         </TouchableOpacity>
-        <Text style={{
-          fontSize: 40,
-          color: isDarkMode ? "white" : "black",
-          fontWeight: "bold",
-          marginLeft: 10,
-        }}>Settings</Text>
+        <Text
+          style={{
+            fontSize: 40,
+            color: isDarkMode ? "white" : "black",
+            fontWeight: "bold",
+            marginLeft: 10,
+          }}>
+          {t('Settings')}
+        </Text>
       </View>
-
       <View
         style={{
           width: "100%",
@@ -84,24 +90,25 @@ const Settings = () => {
           alignItems: "center",
         }}
       >
-        <View
+        <TouchableOpacity
+          onPress={handleAccount}
+
           style={{
             marginTop: 12,
             width: "98%",
-            height: "5%",
+            height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 6,
+            padding: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
             }}
-            onPress={handleAccount}
           >
             <MaterialCommunityIcons
               name="account-circle-outline"
@@ -116,28 +123,29 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-              Account
+          {t('Account')}
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleClickAppli}
+
           style={{
             marginTop: 12,
             width: "98%",
-            height: "5%",
+            height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 6,
+            padding: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
             }}
-            onPress={handleClickAppli}
           >
             <Ionicons
               name="notifications-outline"
@@ -152,28 +160,28 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-              Application Settings
+                {t('Application-Settings')}
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleEditProfil}
           style={{
             marginTop: 12,
             width: "98%",
-            height: "5%",
+            height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 6,
+            padding: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
         >
-          <TouchableOpacity
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
             }}
-            onPress={handleEditProfil}
           >
             <FontAwesome5
               name="user-edit"
@@ -188,10 +196,10 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-              Edit your Profile
+            {t('Edit-Profile')}
             </Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <View
           style={{
             marginTop: 12,

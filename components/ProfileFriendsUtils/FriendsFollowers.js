@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import FollowHandler from "../ProfileUtils.js/FollowHandler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useTranslation } from "react-i18next";
 
 
 const FriendsFollowers = () => {
@@ -20,6 +21,7 @@ const FriendsFollowers = () => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const users = usersData.find((user) => user._id === id);
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
   const handleClickReturnProfile = () => {
@@ -71,7 +73,7 @@ const FriendsFollowers = () => {
               marginRight: "4.5%",
             }}
           >
-            {users.followers ? users.followers.length : 0} Followers
+            {users.followers ? users.followers.length : 0}      {t("Myfollowers")}
           </Text>
         </View>
         <ScrollView>
@@ -82,6 +84,7 @@ const FriendsFollowers = () => {
               paddingTop: 10,
               paddingLeft: 10,
               paddingRight: 10,
+              marginBottom: 50,
               marginTop: 10,
             }}
           >
@@ -152,7 +155,7 @@ const FriendsFollowers = () => {
                               color: "white"
                             }}
                           >
-                            Vous
+                            {t('You')}
                           </Text>
                         ) : (
                           <FollowHandler

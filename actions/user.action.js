@@ -106,15 +106,24 @@ export const signIn = (email, password) => {
 };
 
 export const updateBio = (bio, userId) => {
-    return (dispatch) => {
-        const data = bio
-        return axios
-            .put(`${Config.APP_API_URL}/api/user/` + userId, { bio })
-            .then((res) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.patch(
+                `${APP_API_URL}/api/user/${userId}`,
+                { bio }
+            );
+            if (response.status === 200) {
                 dispatch({ type: UPDATE_BIO, payload: bio });
-            })
-            .catch((err) => console.log(err));
-    }
+                alert("bio updated successfully");
+            } else {
+                console.error("Error updating bio. Server responded with status:", response.status);
+                alert(`An error occurred while updating bio. Server responded with status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error updating bio:", error);
+            alert("An error occurred while updating bio");
+        }
+    };
 };
 
 export const followUser = (followerId, idToFollow) => {

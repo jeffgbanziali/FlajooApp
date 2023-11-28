@@ -75,6 +75,7 @@ const AppW = () => {
                 })
                 .catch((err) => console.log("No token", err));
         };
+       
         fetchToken();
         if (uid) dispatch(getUser(uid))
     }, [isDarkMode, uid, dispatch]);

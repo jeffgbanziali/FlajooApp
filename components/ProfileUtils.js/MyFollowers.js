@@ -11,17 +11,27 @@ import { useSelector } from "react-redux";
 import FollowHandler from "./FollowHandler";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useTranslation } from "react-i18next";
 
 
 const MyFollowers = () => {
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
+ 
+ 
+  const { t } = useTranslation();
+
 
   const navigation = useNavigation();
   const handleClickReturnProfile = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
   };
+
+
+
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -73,7 +83,7 @@ const MyFollowers = () => {
               marginRight: "4.5%",
             }}
           >
-            My Followers
+            {t("Myfollowers")}
           </Text>
         </View>
         <View
@@ -83,6 +93,7 @@ const MyFollowers = () => {
             paddingTop: 10,
             paddingLeft: 10,
             paddingRight: 10,
+            marginBottom: 50,
             marginTop: 10,
           }}
         >
@@ -149,9 +160,9 @@ const MyFollowers = () => {
                             justifyContent: "center",
                           }}
                         >
-                           {user._id === userData._id ? (
+                          {user._id === userData._id ? (
                             <Text>
-                              Vous
+                              {t('You')}
                             </Text>
                           ) : (
                             <FollowHandler

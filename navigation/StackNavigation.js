@@ -28,9 +28,6 @@ import CreateMyStory from "../components/homepage/Stories/CreateMyStory";
 import ButtonColor from "../components/Settings/ButtonColor";
 import ProfileEdit from "../components/Settings/ProfileEdit";
 import BioUpdate from "../components/Settings/BioUpdate";
-import AccountInfo from "../components/Settings/AccountInfo";
-import UserInfos from "../components/Settings/UserInfos";
-import UpdateName from "../components/Settings/UpdateName";
 import StoryCamera from "../components/homepage/Stories/StoryCamera";
 import CreateRéels from "../components/Réels/CreateRéels";
 import StoriesStreamUser from "../components/homepage/Stories/StoriesStreamUser";
@@ -66,7 +63,8 @@ const StackNavigation = () => {
         isFirstTime ? (
           <>
             < Stack.Screen name="Start" component={StartPage} />
-
+            <Stack.Screen name="Signin" component={SignInScreen} />
+            <Stack.Screen name="Signup" component={SignUpScreen} />
           </>
         ) :
           uid ? (
@@ -91,13 +89,10 @@ const StackNavigation = () => {
               <Stack.Screen name="buttonning" component={ButtonColor} />
               <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
               <Stack.Screen name="StoryCreate" component={CreateMyStory} />
-              <Stack.Screen name="Infos" component={UserInfos} />
               <Stack.Screen name="Live" component={LiveScreen} />
               <Stack.Screen name="Photo" component={CameraScreen} />
               <Stack.Screen name="StoryCamera" component={StoryCamera} />
               <Stack.Screen name="BioUpdate" component={BioUpdate} />
-              <Stack.Screen name="UpdateName" component={UpdateName} />
-              <Stack.Screen name="AccountInfo" component={AccountInfo} />
               <Stack.Screen name="Notifications" component={Notifications} />
               <Stack.Screen name="Myfollowing" component={MyFollowings} />
               <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
@@ -108,6 +103,8 @@ const StackNavigation = () => {
             </>
           ) : (
             <>
+            < Stack.Screen name="Start" component={StartPage} />
+
               <Stack.Screen name="Signin" component={SignInScreen} />
               <Stack.Screen name="Signup" component={SignUpScreen} />
               <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert } from 'react-native';
 import InputPage from '../../components/InputPage/InputPage';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from '../../components/Context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -13,7 +14,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 const SignUpScreen = () => {
     const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
-
+    const { t } = useTranslation();
     const [pseudo, setPseudo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -38,47 +39,47 @@ const SignUpScreen = () => {
 
             // Validate the form data
             if (pseudo === '') {
-                alert("Please enter your pseudo");
+                Alert.alert("Please enter your pseudo");
                 return;
             }
 
             if (firstName === '') {
-                alert("Please enter your first name");
+                Alert.alert("Please enter your first name");
                 return;
             }
 
             if (lastName === '') {
-                alert("Please enter your last name");
+                Alert.alert("Please enter your last name");
                 return;
             }
 
             if (email === '') {
-                alert("Please enter your email");
+                Alert.alert("Please enter your email");
                 return;
             }
 
             if (!EMAIL_REGEX.test(email)) {
-                alert("Please enter a valid email");
+                Alert.alert("Please enter a valid email");
                 return;
             }
 
             if (password === '') {
-                alert("Please enter your password");
+                Alert.alert("Please enter your password");
                 return;
             }
 
             if (confirmPassword === '') {
-                alert("Please confirm your password");
+                Alert.alert("Please confirm your password");
                 return;
             }
 
             if (password !== confirmPassword) {
-                alert("Passwords do not match");
+                Alert.alert("Passwords do not match");
                 return;
             }
 
             if (phoneNumber === '') {
-                alert("Please enter your phone number");
+                Alert.alert("Please enter your phone number");
                 return;
             }
 
@@ -110,166 +111,174 @@ const SignUpScreen = () => {
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{
-                backgroundColor: isDarkMode ? "#231C1C" : "#1A1D1E",
+                backgroundColor: isDarkMode ? "#171717" : "white",
                 alignItems: 'center',
                 justifyContent: 'center',
                 height: "100%"
             }}
-
         >
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{
-                    width: 200,
-                    height: 120,
-
-                    marginTop: 50,
-                    padding: 2,
+            <SafeAreaView
+                style={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                }}>
-                    <Image
-                        style={{
-                            width: "100%",
-                            height: "100%",
+                    height: "100%",
+                    width: "100%",
+                }}
 
-                        }}
-                        source={require("../../assets/Logos/my_flajooo.png")} />
-                </View>
-
-                <View
-                    style={{
-                        overflow: 'hidden',
-                        borderRadius: 20,
-                        marginTop: 20,
-                        alignItems: 'center',
+            >
+                <ScrollView
+                    showsVerticalScrollIndicator={false}>
+                    <View style={{
+                        width: "100%",
+                        height: 150,
+                        padding: 2,
                         justifyContent: 'center',
-                        alignContent: 'center',
-                        alignSelf: 'center',
-                    }}
-                >
-
-                    <Text style={{
-                        color: 'blue',
-                        fontSize: 64,
-                        fontWeight: 'bold',
-                        marginVertical: 20
+                        alignItems: 'center',
                     }}>
-                        Register
-                    </Text>
-                    <Text style={{
-                        fontSize: 20,
-                        color: isDarkMode ? "black" : "white",
-                        fontWeight: 'bold',
-                        marginVertical: 2,
-                        marginBottom: 10
-                    }}>
-                        Create a new account for the specified
-                    </Text>
+                        <Image
+                            style={{
+                                width: 150,
+                                height: 150,
+                                borderRadius: 100
 
-
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Pseudo"
-                        placeholderTextColor='gray'
-                        value={pseudo}
-                        onChangeText={(text) => setPseudo(text)}
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="First Name"
-                        placeholderTextColor='gray'
-                        value={firstName}
-                        onChangeText={(text) => setFirstName(text)}
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Last Name"
-                        placeholderTextColor='gray'
-                        value={lastName}
-                        onChangeText={(text) => setLastName(text)}
-                        keyboardType='none'
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Email"
-                        placeholderTextColor='gray'
-                        onChangeText={(text) => setEmail(text)}
-                        value={email}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Password"
-                        placeholderTextColor='gray'
-                        onChangeText={(text) => setPassword(text)}
-                        value={password}
-                        secureTextEntry={true}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Confirm Password"
-                        placeholderTextColor='gray'
-                        value={confirmPassword}
-                        onChangeText={(text) => setConfirmPassword(text)}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        secureTextEntry={true}
-                    />
-                    <InputPage
-                        style={styles.input}
-                        placeholder="Phone Number"
-                        placeholderTextColor='gray'
-                        value={phoneNumber}
-                        onChangeText={(text) => setPhoneNumber(text)}
-                        keyboardType="phone-pad"
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                    />
-                    <TouchableOpacity
+                            }}
+                            source={require("../../assets/Logos/ios/1212.png")} />
+                    </View>
+                    <View
                         style={{
-                            backgroundColor: darkRose,
-                            marginLeft: 30,
-                            marginRight: 30,
-                            marginTop: 10,
-                            width: 100,
-                            height: 48,
+                            overflow: 'hidden',
                             borderRadius: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            alignContent: 'center',
-                            alignSelf: 'center'
+                            marginTop: "2%"
                         }}
-                        onPress={handleSignUp}
                     >
-                        <Text style={{
-                            color: 'white',
-                            fontSize: 16,
-                            fontWeight: 'bold'
-                        }}>
-                            Register
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={styles.footerView}>
-                        <Text style={styles.footerText}>Have an account? <Text onPress={() => navigation.navigate("Signin")} style={styles.footerLink}>Sign in</Text></Text>
-                    </View>
 
-                </View>
-            </ScrollView>
-        </KeyboardAvoidingView>
+                        <Text style={{
+                            fontSize: 20,
+                            color: isDarkMode ? "#FFFFFF" : "black",
+                            fontWeight: 'bold',
+                            marginVertical: 2,
+                            marginBottom: 10
+                        }}>
+                            {t('CreateAccount')}
+                        </Text>
+
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('Pseudo')}
+                            placeholderTextColor='gray'
+                            value={pseudo}
+                            onChangeText={(text) => setPseudo(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('FirstName')}
+                            placeholderTextColor='gray'
+                            value={firstName}
+                            onChangeText={(text) => setFirstName(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t("LastName")}
+                            placeholderTextColor='gray'
+                            value={lastName}
+                            onChangeText={(text) => setLastName(text)}
+                            keyboardType='none'
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('Email')}
+                            placeholderTextColor='gray'
+                            onChangeText={(text) => setEmail(text)}
+                            value={email}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('Password')}
+                            placeholderTextColor='gray'
+                            onChangeText={(text) => setPassword(text)}
+                            value={password}
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('ConfirmPass')}
+                            placeholderTextColor='gray'
+                            value={confirmPassword}
+                            onChangeText={(text) => setConfirmPassword(text)}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            secureTextEntry={true}
+                        />
+                        <InputPage
+                            style={styles.input}
+                            placeholder={t('PhoneNumb')}
+                            placeholderTextColor='gray'
+                            value={phoneNumber}
+                            onChangeText={(text) => setPhoneNumber(text)}
+                            keyboardType="phone-pad"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                        />
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: darkRose,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                marginTop: 10,
+                                width: 120,
+                                height: 48,
+                                borderRadius: 20,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                alignContent: 'center',
+                                alignSelf: 'center'
+                            }}
+                            onPress={handleSignUp}
+                        >
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 16,
+                                fontWeight: 'bold'
+                            }}>
+                                {t('ButtonRegis')}
+                            </Text>
+                        </TouchableOpacity>
+                        <View style={styles.footerView}>
+                            <Text style={{
+                                fontSize: 16,
+                                color: isDarkMode ? "#FFFFFF" : "black",
+                            }}>{t('HaveAccount')}{" "}
+                                <Text
+                                    onPress={() => navigation.navigate("Signin")}
+                                    style={{
+                                        color: isDarkMode ? "#2D75FF" : "#74A0F4",
+                                        fontWeight: "bold",
+                                        fontSize: 16
+                                    }}>
+                                    {t('ButtonSignin')}
+                                </Text>
+                            </Text>
+                        </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </KeyboardAvoidingView >
 
     );
 }
@@ -308,7 +317,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 10,
-        width: 100,
+        width: 120,
         height: 48,
         borderRadius: 5,
         alignItems: "center",
@@ -326,15 +335,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 20
     },
-    footerText: {
-        fontSize: 16,
-        color: '#FFFFFF'
-    },
-    footerLink: {
-        color: darkBlue,
-        fontWeight: "bold",
-        fontSize: 16
-    }
+
 })
 
 export default SignUpScreen;

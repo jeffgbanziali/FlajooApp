@@ -11,6 +11,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  Platform,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -537,7 +538,7 @@ const StoriesStream = () => {
               alignItems: "center",
               borderRadius: 30,
               width: "90%",
-              height: "78%",
+              height: "75%",
               top: "14%",
             }}
           >
@@ -551,7 +552,8 @@ const StoriesStream = () => {
             </Text>
           </View>
         )}
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "null"}
           style={{
             flex: 1,
             width: "100%",
@@ -578,7 +580,7 @@ const StoriesStream = () => {
               story={selectedStory.container?.stories[currentStoryIndex]}
             />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
 
     </KeyboardAvoidingView>

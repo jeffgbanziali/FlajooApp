@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ImageBackground,
+  SafeAreaView
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -16,21 +16,18 @@ import { Image } from "react-native";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import Loading from "../../components/Loading/Loading";
 import { APP_API_URL } from "../../config";
+import { useTranslation } from "react-i18next";
 
 
 const SignInScreen = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
+  const { t } = useTranslation();
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { uid, setUid } = useContext(UidContext)
-
-
-
-
-
 
   const handleSignIn = async () => {
     setIsLoadingSignIn(true);
@@ -85,114 +82,131 @@ const SignInScreen = () => {
       {isLoadingSignIn ? (
         <Loading />
       ) : (
-        <KeyboardAvoidingView
+        <View
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
             flex: 1,
             alignItems: "center",
-            backgroundColor: isDarkMode ? "#231C1C" : "#1A1D1E",
+            height: "100%",
+            width: "100%",
+            backgroundColor: isDarkMode ? "#171717" : "white",
           }}
         >
-          <View style={{
-            marginTop: "20%",
-          }}>
+          <SafeAreaView
+            style={{
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+
+            }}>
             <Text style={{
               fontSize: 30,
-              color: isDarkMode ? "black" : "white",
+              color: isDarkMode ? "#FFFFFF" : "black",
             }}
             >
               Sign into your account
             </Text>
-          </View>
 
-
-
-          <View
-            style={{
-              width: "40%",
-              height: "18%",
-              borderRadius: 100,
-              marginTop: "10%",
-              justifyContent: "center",
-              alignItems: "center",
-
-            }}
-          >
-            <Image
+            <View
               style={{
-                width: "100%",
-                height: "100%",
+                width: 80,
+                height: 80,
                 borderRadius: 100,
+                marginTop: "10%",
+                justifyContent: "center",
+                alignItems: "center",
+
               }}
-              source={{ uri: "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
-            />
-          </View>
-          <View
-            style={{
-              overflow: "hidden",
-              width: '90%',
-              height: '40%',
-              borderRadius: 20,
-              backgroundColor: isDarkMode ? "#D13333" : "#022A36",
-              marginTop: "10%",
-              alignItems: "center",
-              justifyContent: "center",
-              alignContent: "center",
-              alignSelf: "center",
-            }}
-          >
-            <View>
+            >
               <Image
-                source={require("../../assets/Logos/my_flajooo.png")}
                 style={{
-                  width: 150,
-                  height: 90,
-                  marginLeft: 10
-                }} />
-              {errors.email && <Text style={styles.error}>{errors.email}</Text>}
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="gray"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                autoCapitalize="none"
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 100,
+                }}
+                source={isDarkMode ? require("../../assets/Logos/ios/1212.png") : require("../../assets/Logos/ios/1212.png")}
               />
-              {errors.password && (
-                <Text style={styles.error}>{errors.password}</Text>
-              )}
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="gray"
-                secureTextEntry={true}
-                placeholder="Password"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                autoCapitalize="none"
-              />
-              <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                <Text style={styles.buttonTitle}>Sign in</Text>
-              </TouchableOpacity>
-              <View style={styles.footerView}>
-                <Text style={styles.footerText}>
-                  Don't have an account?{" "}
-                  <Text
-                    onPress={() => navigation.navigate("Signup")}
-                    style={styles.footerLink}
-                  >
-                    Sign up
+            </View>
+            <View
+              style={{
+                width: '90%',
+                height: '50%',
+                borderRadius: 20,
+                backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
+                marginTop: "10%",
+                alignItems: "center",
+                justifyContent: "center",
+                shadowColor: isDarkMode ? "white" : "black",
+                shadowOffset: {
+                  width: 0,
+                  height: isDarkMode ? 1 : 2,
+                },
+                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowRadius: 3.84,
+                elevation: 2,
+              }}
+            >
+              <View>
+                <Image
+                  source={require("../../assets/Logos/my_flajooo.png")}
+                  style={{
+                    width: 150,
+                    height: 90,
+                    marginLeft: 10
+                  }} />
+                {errors.email && <Text style={styles.error}>{errors.email}</Text>}
+                <TextInput
+                  style={styles.input}
+                  placeholder={t("Email")}
+                  placeholderTextColor="gray"
+                  onChangeText={(text) => setEmail(text)}
+                  value={email}
+                  autoCapitalize="none"
+                />
+                {errors.password && (
+                  <Text style={styles.error}>{errors.password}</Text>
+                )}
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="gray"
+                  secureTextEntry={true}
+                  placeholder={t("Password")}
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  autoCapitalize="none"
+                />
+                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+                  <Text style={styles.buttonTitle}>{t('ButtonSignin')}</Text>
+                </TouchableOpacity>
+                <View style={styles.footerView}>
+                  <Text style={{
+                    fontSize: 16,
+                    color: isDarkMode ? "#FFFFFF" : "black",
+                  }}>
+                    {t("DontAccount")}{" "}
+                    <Text
+                      onPress={() => navigation.navigate("Signup")}
+                      style={{
+                        color: isDarkMode ? "#2D75FF" : "#74A0F4",
+                        fontWeight: "300",
+                        fontSize: 16,
+                      }}
+                    >
+                      {t('ButtonSignup')}
+                    </Text>
                   </Text>
-                </Text>
+                </View>
               </View>
             </View>
-          </View>
-        </KeyboardAvoidingView>
+          </SafeAreaView>
+        </View >
       )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+
 
 
   error: {
@@ -221,7 +235,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     marginTop: 10,
-    width: 100,
+    width: 130,
     height: 48,
     borderRadius: 20,
     alignItems: "center",
@@ -238,15 +252,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginTop: 20,
-  },
-  footerText: {
-    fontSize: 16,
-    color: "white",
-  },
-  footerLink: {
-    color: "#80F3BC",
-    fontWeight: "300",
-    fontSize: 16,
   },
 });
 export default SignInScreen;

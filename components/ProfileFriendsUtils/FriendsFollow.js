@@ -5,13 +5,16 @@ import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
 import { useDarkMode } from "../Context/AppContext";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
+import { useTranslation } from "react-i18next";
 
 
 const Followers = ({ users }) => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
   const [user, setUser] = useState([]);
-  
+
+
+  const { t } = useTranslation();
 
   const id = users._id;
 
@@ -66,7 +69,7 @@ const Followers = ({ users }) => {
               textAlign: "center",
             }}
           >
-             {user.posts ? user.posts.length : 0}
+            {user.posts ? user.posts.length : 0}
           </Text>
           <Text
             style={{
@@ -74,7 +77,7 @@ const Followers = ({ users }) => {
               textAlign: "center",
             }}
           >
-            Post
+            {t('Post')}
           </Text>
         </View>
         <View
@@ -99,7 +102,7 @@ const Followers = ({ users }) => {
                 color: "#787373",
               }}
             >
-              Followers
+              {t('Followers')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -125,7 +128,7 @@ const Followers = ({ users }) => {
                 color: "#787373",
               }}
             >
-              Following
+              {t('Followeds')}
             </Text>
           </TouchableOpacity>
         </View>

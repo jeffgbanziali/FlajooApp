@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Feather from 'react-native-vector-icons/Feather';
 import { useDarkMode } from "../../Context/AppContext";
 import { getPosts } from "../../../actions/post.actions";
+import { useTranslation } from "react-i18next";
 
 const AllCommentView = ({ post }) => {
   const { isDarkMode } = useDarkMode();
@@ -19,7 +20,9 @@ const AllCommentView = ({ post }) => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
 
-  console.log(post.comments)
+
+  const {t} =useTranslation();
+
 
 
   useEffect(() => {

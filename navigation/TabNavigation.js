@@ -32,6 +32,7 @@ import Notifications from "../screens/Notifications/Notifications";
 import CallScreen from "../screens/CallScreen/CallScreen";
 import IncomingCall from "../screens/CallScreen/IncomingCall";
 import VoiceCall from "../screens/CallScreen/VoiceCall";
+import { useTranslation } from "react-i18next";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const TabNavigation = () => {
   const navigation = useNavigation();
   const [showOptions, setShowOptions] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-
+  const {t} = useTranslation();
 
 
   const handleToggleOptions = () => {
@@ -287,7 +288,7 @@ const TabNavigation = () => {
 
                 }}
               >
-                Add a post
+                {t('AddPosting')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -315,7 +316,7 @@ const TabNavigation = () => {
                 marginLeft: 14
 
               }}>
-                Add a réels
+                {t('AddReels')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -339,7 +340,7 @@ const TabNavigation = () => {
                 fontSize: 24,
                 marginLeft: 16
               }}>
-                Add a story
+                {t('AddStory')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -364,14 +365,12 @@ const TabNavigation = () => {
                 fontSize: 24,
                 marginLeft: 16
               }}>
-                Live stream
+                {t('LiveStream')}
               </Text>
             </TouchableOpacity>
-
           </View>
         </View>
       </Modal>
-
     </View>
   );
 };

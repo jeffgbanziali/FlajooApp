@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FollowHandler from "../ProfileUtils.js/FollowHandler";
 import { TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const FriendsFollowing = () => {
   const route = useRoute();
@@ -21,10 +22,19 @@ const FriendsFollowing = () => {
   const users = usersData.find((user) => user._id === id);
 
   const navigation = useNavigation();
+
+  const { t } = useTranslation();
+
+
   const handleClickReturnProfile = () => {
     console.log("clicked");
     navigation.navigate("ProfilFriends", { id });
   };
+
+
+
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -70,7 +80,7 @@ const FriendsFollowing = () => {
               marginRight: "4.5%",
             }}
           >
-            {users.following ? users.following.length : 0} Followings
+            {users.following ? users.following.length : 0}    {t('Myfollowed')}
           </Text>
         </View>
         <ScrollView>
@@ -81,6 +91,7 @@ const FriendsFollowing = () => {
               paddingTop: 10,
               paddingLeft: 10,
               paddingRight: 10,
+              marginBottom: 50,
               marginTop: 10,
             }}
           >
@@ -152,7 +163,7 @@ const FriendsFollowing = () => {
                               fontSize: 20,
                               color: "white"
                             }}>
-                            Vous
+                            {t('You')}
                           </Text>
                         ) : (
                           <FollowHandler

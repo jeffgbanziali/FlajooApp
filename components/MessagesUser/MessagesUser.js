@@ -7,6 +7,7 @@ import Modal from "react-native-modal";
 import { useDarkMode } from "../Context/AppContext";
 import { TouchableOpacity } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useTranslation } from "react-i18next";
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -53,7 +54,9 @@ const MessagesUser = ({ message, own, user }) => {
     setSelectedImage(message.attachment.url);
     setShowImage(true);
   };
-  ;
+  
+
+  const {t} = useTranslation();
 
 
   const deleteMessage = async () => {

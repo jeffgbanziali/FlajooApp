@@ -29,6 +29,7 @@ import AddRéelsComment from "./AddRéelsComment";
 import LikeRéelsButton from "./LikeRéelsButton";
 import RéelsAnimation from "./RéelsAnimation";
 import { LinearGradient } from "react-native-linear-gradient";
+import { useTranslation } from "react-i18next";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -163,6 +164,7 @@ const VideoRéels = ({ item, isActive }) => {
     musicNoteAnimatedValue2,
   ]);
 
+  const { t } = useTranslation();
 
 
   const bottomTabHeight = useBottomTabBarHeight();
@@ -537,11 +539,11 @@ const VideoRéels = ({ item, isActive }) => {
       </View>
       <Modal
         isVisible={showComments}
-        onBackdropPress={toggleComments} 
-        style={{ margin: 0, justifyContent: "flex-end" }} 
-        backdropOpacity={0.5} 
-        animationIn="slideInUp" 
-        animationOut="slideOutDown" 
+        onBackdropPress={toggleComments}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         useNativeDriverForBackdrop
       >
         <View
@@ -568,7 +570,7 @@ const VideoRéels = ({ item, isActive }) => {
                 marginTop: 10,
               }}
             >
-              {item.comments.length} Comment
+              {item.comments.length} {t('PostsComment')}
             </Text>
           </View>
           <ScrollView>

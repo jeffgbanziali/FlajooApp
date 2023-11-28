@@ -1,92 +1,201 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchUsers } from '../../actions/user.action';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { useSelector } from 'react-redux';
+import { UidContext, useDarkMode } from '../Context/AppContext';
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from 'react-i18next';
+
 
 const Search = () => {
     const [searchText, setSearchText] = useState('');
     const [loading, setLoading] = useState(false);
+    const { isDarkMode } = useDarkMode();
+    const searchResults = useSelector((state) => state.usersReducer);
+    const [filteredUsers, setFilteredUser] = useState(searchResults);
+    const { uid } = useContext(UidContext);
+    const navigation = useNavigation();
 
-    const dispatch = useDispatch();
-    const searchResults = useSelector((state) => state.userReducer.searchResults);
 
-    const performSearch = () => {
-        if (searchText.length > 2) {
-            setLoading(true);
-            dispatch(searchUsers(searchText))
-                .finally(() => {
-                    setLoading(false);
-                });
+    const goProfil = (id) => {
+        if (uid === id) {
+            console.log("go to my profil", id);
+            navigation.navigate("Profile", { id });
+        } else {
+            navigation.navigate("ProfilFriends", { id });
+            console.log("go to profile friends", id);
         }
     };
 
+    const { t } = useTranslation();
+
     useEffect(() => {
-        performSearch();
-    }, [searchText]);
+        setLoading(true)
+        try {
+            const newContacs = searchResults.filter(
+                users =>
+                    users.pseudo.toLowerCase() === searchText.toLowerCase()
+            )
+            setFilteredUser(newContacs);
+        } catch {
+            console.log("error")
+        }
+        finally {
+            setLoading(false)
+        }
+
+
+    }, [searchText])
+
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Recherche</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Rechercher..."
-                onChangeText={setSearchText}
-                value={searchText}
-                onSubmitEditing={performSearch}
-            />
+        <>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: isDarkMode ? "#171717" : "white",
+                }}>
+                <View
+                    style={{
+                        padding: 10,
 
-            {loading ? (
-                <Text style={styles.loadingText}>Chargement en cours...</Text>
-            ) : (
-                <FlatList
-                    data={searchResults}
-                    keyExtractor={(item) => item._id}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            style={styles.item}
-                        >
-                            <Text>{item.pseudo}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
-            )}
-        </View>
-    );
-};
+                    }}
+                >
+                    <View
+                        style={{
+                            height: 45,
+                            borderColor: 'gray',
+                            fontSize: 16,
+                            color: 'white',
+                            borderRadius: 8,
+                            marginTop: "2%"
+                        }}
+                    >
+                        <TextInput
+                            style={{
+                                backgroundColor: '#2C2C2C',
+                                paddingLeft: 16,
+                                height: 45,
+                                fontSize: 16,
+                                color: 'white',
+                                borderRadius: 8,
+                            }}
+                            placeholder={t('Research')}
+                            placeholderTextColor="white"
+                            onChangeText={setSearchText}
+                            value={searchText}
+                        />
+                    </View>
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-        backgroundColor: "#2C2828",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        marginTop: 30,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 16,
-        paddingHorizontal: 8,
-        fontSize: 16,
-        color: 'white',
-        borderRadius: 8,
-    },
-    loadingText: {
-        fontSize: 18,
-        textAlign: 'center',
-    },
-    item: {
-        padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-        color: 'white',
-        backgroundColor: 'red',
-    },
-});
+                    <View
+                        style={{
+                            width: '100%',
+                            height: "100%",
+                            marginTop: "4%",
+                        }}
+                    >
+                        {
+                            loading ?
+                                (
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            textAlign: 'center',
+                                        }}>{t('Loading')}</Text>
+                                ) : (
+                                    <FlatList
+                                        data={filteredUsers}
+                                        keyExtractor={(item) => item._id}
+                                        renderItem={({ item }) => (
+                                            <TouchableOpacity
+                                                onPress={() => goProfil(item._id)}
+                                                style={{
+                                                    width: "100%",
+                                                    height: 80,
+                                                    flexDirection: "row",
+                                                    alignItems: "center",
+                                                    padding: 2
+                                                }}
+                                            >
+                                                <View
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        alignItems: "center",
+                                                        flexDirection: "row",
+                                                    }}
+                                                >
+                                                    <View
+                                                        style={{
+                                                            width: 60,
+                                                            height: 60,
+                                                            borderRadius: 100,
+                                                        }}
+                                                    >
+                                                        <Image
+                                                            source={{ uri: item.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                borderRadius: 100,
+                                                                marginLeft: 10,
+                                                                resizeMode: "cover",
+                                                            }}
+                                                        />
+                                                    </View>
+                                                    <View
+                                                        style={{
+                                                            marginLeft: '5%',
+                                                        }}>
+                                                        <Text
+                                                            style={{
+                                                                fontWeight: "500",
+                                                                fontSize: 16,
+                                                                color: isDarkMode ? "white" : "black"
+                                                            }}
+                                                        >
+                                                            {item.pseudo}
+                                                        </Text>
+                                                        <Text
+                                                            style={{
+                                                                fontSize: 14,
+                                                                marginTop: "2%",
+                                                                color: isDarkMode ? "white" : "black"
+                                                            }}
+                                                        >
+                                                            {t('Friends')}
+                                                        </Text>
+                                                    </View>
+
+                                                </View>
+                                            </TouchableOpacity>
+                                        )}
+
+                                    />
+                                )}
+
+                    </View>
+                </View>
+
+
+
+
+            </SafeAreaView >
+
+
+
+
+
+        </>
+    )
+
+
+}
+
+
+
+
+
 
 export default Search;

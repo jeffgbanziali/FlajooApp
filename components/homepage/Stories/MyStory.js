@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Video from 'react-native-video';
 import { getStories } from "../../../actions/story.action";
+import { useTranslation } from "react-i18next";
 
 const MyStory = () => {
   const navigation = useNavigation();
@@ -14,12 +15,13 @@ const MyStory = () => {
   const userStories = useSelector((state) => state.storyReducer).filter(item => item.container.posterId === userData._id);
 
 
+  const { t } = useTranslation()
+
+
   const handleCreateStory = () => {
     console.log("Create Story");
     navigation.navigate("StoryCreate");
   };
-
-  console.log(userStories.map(item => item.container.stories));
 
   const handleViewStory = (id, media_type) => {
     console.log("Clicked story ID:", id);
@@ -106,21 +108,21 @@ const MyStory = () => {
                           />
                         )}
                         {item.container.stories[item.container.stories.length - 1].media_type === "video" && (
-                        <Video
-                        source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={true}
-                        isLooping
-                        resizeMode="cover"
-                        paused={true}  
-                        style={{
-                          width: 100,
-                          height: 140,
-                          borderRadius: 10,
-                          resizeMode: "cover",
-                        }}
-                      />
+                          <Video
+                            source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
+                            rate={1.0}
+                            volume={1.0}
+                            isMuted={true}
+                            isLooping
+                            resizeMode="cover"
+                            paused={true}
+                            style={{
+                              width: 100,
+                              height: 140,
+                              borderRadius: 10,
+                              resizeMode: "cover",
+                            }}
+                          />
                         )}
 
 
@@ -274,7 +276,7 @@ const MyStory = () => {
                         textAlign: "center",
                       }}
                     >
-                      Create Your Story
+                      {t('CreateStory')}
                     </Text>
                   </View>
                 </View>

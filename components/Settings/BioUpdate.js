@@ -1,31 +1,55 @@
 import { View, Text, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Image } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SafeAreaView } from "react-native";
+import { useDarkMode } from "../Context/AppContext";
+import { getUser, updateBio } from "../../actions/user.action";
+import { useTranslation } from "react-i18next";
 
 const BioUpdate = () => {
   const [text, setText] = useState("");
   const userData = useSelector((state) => state.userReducer);
-
+  const { isDarkMode } = useDarkMode();
+  const [loadUsers, setLoadUSers] = useState(true);
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const { t } = useTranslation();
+
+
+  const handleUpdate = () => {
+    dispatch(updateBio(text, userData._id));
+    handleClickReturnProfile()
+    setLoadUSers(true);
+  };
+
+
+  useEffect(() => {
+    if (loadUsers) {
+      dispatch(getUser(userData._id));
+      setLoadUSers(false);
+    }
+  }, [loadUsers, dispatch]);
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
     navigation.navigate("EditProfil");
+    setLoadUSers(true);
   };
+
+
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: isDarkMode ? '#0D0C0C' : '#FFFFFF',
       }}
     >
       <View
         style={{
-          marginTop: 50,
           paddingBottom: 2,
           marginLeft: 10,
           marginRight: 10,
@@ -56,30 +80,39 @@ const BioUpdate = () => {
               <MaterialIcons
                 name="arrow-back-ios"
                 size={28}
-                color="white"
+                color={isDarkMode ? "white" : "black"}
               />
             </TouchableOpacity>
           </View>
           <Text
             style={{
               fontSize: 25,
-              color: "#fff",
+              color: isDarkMode ? "white" : "black",
               fontWeight: "normal",
             }}
           >
-            ProfileEdit
+            {t('ProfileEdit')}
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleUpdate}
+          style={{
+            width: 90,
+            height: 40,
+            backgroundColor: "red",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 15
+          }}
+        >
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 18,
               color: "#fff",
               fontWeight: "500",
-              marginRight: 10,
             }}
           >
-            To Save
+            {t('To-Save')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -113,7 +146,7 @@ const BioUpdate = () => {
           <Text
             style={{
               fontSize: 20,
-              color: "white",
+              color: isDarkMode ? "white" : "black",
               fontWeight: "600",
               marginLeft: 10,
             }}
@@ -128,16 +161,17 @@ const BioUpdate = () => {
             borderRadius: 14,
             padding: 10,
             marginTop: 10,
+            backgroundColor: isDarkMode ? "#141419" : "#ECECEC"
           }}
         >
           <Text
             style={{
               fontSize: 18,
-              color: "lightblue",
+              color: isDarkMode ? "lightblue" : "#0765D5",
               fontWeight: "normal",
             }}
           >
-            You can add a short bio to tell more about yourself.
+            {t('bio-save')}
           </Text>
           <TextInput
             style={{
@@ -145,21 +179,22 @@ const BioUpdate = () => {
               height: "60%",
               paddingLeft: 12,
               marginTop: 10,
+              color: isDarkMode ? "white" : "black"
             }}
             editable
             multiline
             numberOfLines={4}
-            maxLength={40}
+            maxLength={140}
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholder="Write your bio"
-            placeholderTextColor="white"
+            placeholder={t('bio-placeholder')}
+            placeholderTextColor={isDarkMode ? "white" : "black"}
             fontSize="22"
             color="white"
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -64,8 +64,8 @@ const StoriesStreamUser = () => {
         navigation.navigate("TabNavigation",);
     };
 
-    const goProfil = (id) => {
-        navigation.navigate("Profile", { id });
+    const goProfil = (uid) => {
+        navigation.navigate("Profile", { uid });
     };
 
     const goToNextStory = () => {
@@ -141,7 +141,6 @@ const StoriesStreamUser = () => {
     useEffect(() => {
         resetAnimation();
         start();
-
     });
 
 
@@ -223,7 +222,6 @@ const StoriesStreamUser = () => {
                         <View
                             style={{
                                 width: '88%',
-                                alignItems: "center",
                                 justifyContent: "space-evenly ",
                                 alignItems: "center",
                                 flexDirection: "row"

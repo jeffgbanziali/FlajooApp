@@ -17,6 +17,7 @@ import { addStory, getStories } from '../../../actions/story.action';
 import Video from 'react-native-video';
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -43,6 +44,12 @@ const CreateStory = () => {
     const [addEffect, setAddEffect] = useState(false);
     const [selectedEffect, setSelectedEffect] = useState(null);
     const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
+
+
+    const { t } = useTranslation();
+
+
+
 
     const surfaceRef = useRef(null);
 
@@ -183,6 +190,8 @@ const CreateStory = () => {
     const closeImageModal = () => {
         setShowImage(false);
     };
+
+
     const handleText = () => {
         setShowText(!showText);
     };
@@ -334,7 +343,7 @@ const CreateStory = () => {
                                 marginLeft: "3.5%",
                                 alignSelf: 'center'
                             }}>
-                            Create Your Story
+                            {t('CreateStory')}
                         </Text>
 
                     </View>
@@ -387,7 +396,7 @@ const CreateStory = () => {
                                 marginTop: 10,
                             }}
                         >
-                            Write a text
+                            {t("WriteText")}
                         </Text>
 
                     </TouchableOpacity>
@@ -420,7 +429,7 @@ const CreateStory = () => {
 
                             }}
                         >
-                            Music
+                            {t(' Music')}
                         </Text>
 
                     </TouchableOpacity>
@@ -454,7 +463,7 @@ const CreateStory = () => {
                                 fontSize: 16
                             }}
                         >
-                            Selfie
+                            {t('Selfie')}
                         </Text>
 
                     </TouchableOpacity>
@@ -495,7 +504,7 @@ const CreateStory = () => {
                                     marginLeft: "3.5%",
                                     alignSelf: 'center'
                                 }}>
-                                Pellicule
+                                {t('Film')}
                             </Text>
                             <View
                                 style={{
@@ -542,7 +551,7 @@ const CreateStory = () => {
                                     marginLeft: "3.5%",
                                     alignSelf: 'center'
                                 }}>
-                                Multiple choices
+                                {t('Multi')}
                             </Text>
 
 
@@ -680,7 +689,7 @@ const CreateStory = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Text
+                                {t('Text')}
                             </Text>
                             <Ionicons
                                 name="text"
@@ -709,7 +718,7 @@ const CreateStory = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Song
+                                 {t('Song')}
                             </Text>
                             <Ionicons
                                 name="musical-notes"
@@ -737,7 +746,7 @@ const CreateStory = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Effects
+                                {t('Effects')}
                             </Text>
                             <Entypo
                                 name="adjust"
@@ -779,26 +788,7 @@ const CreateStory = () => {
                                 color={isDarkMode ? "#F5F5F5" : "white"} />
                         </View>
                     )}
-                    {addEffect && (
-                        <View
-                            style={{
-                                width: "100%",
-                                height: "20%",
-                                position: "absolute",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                padding: 5,
-                                bottom: "20%",
-                            }}
-                        >
-                            <ImageCustum
-                                onSelectEffect={handleSelectEffect}
-                                selectedImage={selectedImage}
-                                selectedEffect={selectedEffect}
-                            />
 
-                        </View>
-                    )}
                     <View
                         style={{
                             width: "100%",
@@ -895,7 +885,7 @@ const CreateStory = () => {
                             onChangeText={(nouveauText) => setPostText(nouveauText)}
                             value={postText}
                             editable
-                            placeholder="Leave a short text..."
+                            placeholder={t('TextInputStory')}
                             placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
                             fontSize="30"
                             color={isDarkMode ? "#F5F5F5" : "white"} />
@@ -930,7 +920,7 @@ const CreateStory = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                Police
+                                {t('Police')}
                             </Text>
                             <Ionicons
                                 name="text"

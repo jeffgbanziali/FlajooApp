@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { commentVideoReels, getVideoReels } from "../../actions/réels.action";
 import { useDarkMode } from "../Context/AppContext";
+import { useTranslation } from "react-i18next";
 
 const AddRéelsComment = ({ réels }) => {
   const [text, setText] = useState("");
@@ -25,7 +26,7 @@ const AddRéelsComment = ({ réels }) => {
   const handleComment = () => {
     console.log('Text:', text);
     console.log('User Data:', userData);
-  
+
     if (userData._id && text) {
       dispatch(commentVideoReels(réels._id, userData._id, text, userData.pseudo))
         .then(() => {
@@ -36,8 +37,9 @@ const AddRéelsComment = ({ réels }) => {
         .catch((error) => console.error('Error adding comment:', error));
     }
   };
-  
 
+  const { t } = useTranslation();
+  
   useEffect(() => {
     if (loadRéels) {
       dispatch(getVideoReels());
@@ -47,7 +49,7 @@ const AddRéelsComment = ({ réels }) => {
 
   return (
     <View
-    keyboardShouldPersistTaps="always"
+      keyboardShouldPersistTaps="always"
     >
       {userData._id && (
         <View
@@ -83,7 +85,7 @@ const AddRéelsComment = ({ réels }) => {
             }}
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholder="Leave a comment"
+            placeholder={t('TextInputPost')}
             placeholderTextColor={isDarkMode ? "#F5F5F5" : "black"}
             fontSize="16"
             color={isDarkMode ? "#F5F5F5" : "black"}

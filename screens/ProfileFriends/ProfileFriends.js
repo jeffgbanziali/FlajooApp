@@ -19,6 +19,7 @@ import PostsFriendsUser from "../../components/ProfileFriendsUtils/PostsFriendsU
 import { useDarkMode } from "../../components/Context/AppContext";
 import VideoRéelsFriendsUser from "../../components/ProfileFriendsUtils/VideoRéelsFriendsUser";
 import { SafeAreaView } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const ProfileFriends = () => {
   const route = useRoute();
@@ -27,6 +28,10 @@ const ProfileFriends = () => {
   const [selectedSwitchValue, setSelectedSwitchValue] = useState();
 
   const navigation = useNavigation();
+  const { t } = useTranslation();
+
+
+
   const usersData = useSelector((state) => state.usersReducer);
   const handleClickReturnHome = () => {
     console.log("clicked");
@@ -269,7 +274,7 @@ const ProfileFriends = () => {
                   color: isDarkMode ? "white" : "black",
                 }}
               >
-                Follow by
+                {t('Followby')}
               </Text>
               <Image
                 source={{
@@ -301,7 +306,7 @@ const ProfileFriends = () => {
                   color: isDarkMode ? "white" : "black",
                 }}
               >
-                and 54 other persons
+                {t('AndOth')}
               </Text>
             </View>
           </View>

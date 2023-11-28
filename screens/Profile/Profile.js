@@ -18,11 +18,14 @@ import { useDarkMode } from "../../components/Context/AppContext";
 import { KeyboardAvoidingView } from "react-native";
 import VideoRéelsUser from "../../components/ProfileUtils.js/VideoRéelsUser";
 import { SafeAreaView } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
+
+  
   const [selectedSwitchValue, setSelectedSwitchValue] = useState();
 
   const handleClickReturnHome = () => {
@@ -33,6 +36,9 @@ const Profile = () => {
     console.log("clicked");
     navigation.navigate("Settings");
   };
+
+
+  const { t } = useTranslation();
 
 
   const MAX_MESSAGE_LENGTH = 55;

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDarkMode } from "../../Context/AppContext";
 import { addComment, getPosts } from "../../../actions/post.actions";
+import { useTranslation } from "react-i18next";
 
 const AddCommentButton = ({ post }) => {
   const { isDarkMode } = useDarkMode();
@@ -32,8 +33,6 @@ const AddCommentButton = ({ post }) => {
     }
   };
 
-  console.log(userData)
-
   useEffect(() => {
     if (loadPost) {
       dispatch(getPosts());
@@ -41,6 +40,7 @@ const AddCommentButton = ({ post }) => {
     }
   }, [loadPost, dispatch]);
 
+  const { t } = useTranslation();
 
   return (
     <View keyboardShouldPersistTaps="always">
@@ -78,7 +78,7 @@ const AddCommentButton = ({ post }) => {
             }}
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholder="Leave a comment..."
+            placeholder={t('TextInputPost')}
             placeholderTextColor={isDarkMode ? "#F5F5F5" : "black"}
             fontSize="16"
             color={isDarkMode ? "#F5F5F5" : "black"}

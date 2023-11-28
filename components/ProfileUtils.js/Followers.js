@@ -4,11 +4,12 @@ import React, { useContext, useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useDarkMode } from "../Context/AppContext";
+import { useTranslation } from "react-i18next";
 
 const Followers = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
-
+  const { t } = useTranslation();
   const userData = useSelector((state) => state.userReducer);
 
 
@@ -55,7 +56,7 @@ const Followers = () => {
               textAlign: "center",
             }}
           >
-            Post
+           {t('Post')}
           </Text>
         </View>
         <View
@@ -80,7 +81,7 @@ const Followers = () => {
                 color: "#787373",
               }}
             >
-              Followers
+             {t('Followers')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -106,7 +107,7 @@ const Followers = () => {
                 color: "#787373",
               }}
             >
-              Following
+              {t('Followeds')}
             </Text>
           </TouchableOpacity>
         </View>

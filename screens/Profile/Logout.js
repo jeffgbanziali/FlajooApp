@@ -55,9 +55,6 @@ const Logout = () => {
       onPress={handleLogout}
     >
 
-
-
-
       {isLoadingSignOut ? (
 
         <>

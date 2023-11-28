@@ -6,6 +6,7 @@ import {
   Animated,
   Easing,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
@@ -21,6 +22,7 @@ import AddCommentButton from "./AddCommentButton";
 import AllCommentView from "./AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
+import { useTranslation } from "react-i18next";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +43,9 @@ const Posts = ({ post }) => {
       console.log("go to profile friends", id);
     }
   };
+
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
@@ -90,16 +95,45 @@ const Posts = ({ post }) => {
           }}
         >
           {isLoading ? (
-            <Text
+            <View
               style={{
-                textAlign: "center",
-                marginTop: 20,
-                marginBottom: 20,
-                color: "red",
+                width: "100%",
+                height: "50%",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column"
               }}
             >
-              <FontAwesome name="spinner" size={24} color="red" />
-            </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  width: "30%",
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    color: isDarkMode ? "white" : "black",
+                  }}
+                >
+                  Loading
+                </Text>
+                <ActivityIndicator size="large" color="white" />
+              </View>
+              <Text
+                style={{
+                  fontSize: 26,
+                  marginTop: "5%",
+                  textAlign: "center",
+                  color: isDarkMode ? "white" : "black",
+                }}
+              >
+                Please wait
+              </Text>
+            </View>
           ) : (
             <>
               <View
@@ -171,19 +205,6 @@ const Posts = ({ post }) => {
                             else return null;
                           })}
                       </Text>
-                      <View
-                        style={{
-                          marginLeft: 8,
-                          justifyContent: "center",
-                        }}
-                      >
-                        {post.posterId !== userData._id && (
-                          <FollowHandler
-                            idToFollow={post.posterId}
-                            type={"friends"}
-                          />
-                        )}
-                      </View>
                     </View>
                     <Text
                       style={{
@@ -428,16 +449,45 @@ const Posts = ({ post }) => {
           }}
         >
           {isLoading ? (
-            <Text
+            <View
               style={{
-                textAlign: "center",
-                marginTop: 20,
-                marginBottom: 20,
-                color: "red",
+                width: "100%",
+                height: "50%",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column"
               }}
             >
-              <FontAwesome name="spinner" size={24} color="red" />
-            </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  width: "30%",
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    color: isDarkMode ? "white" : "black",
+                  }}
+                >
+                  Loading
+                </Text>
+                <ActivityIndicator size="large" color="white" />
+              </View>
+              <Text
+                style={{
+                  fontSize: 26,
+                  marginTop: "5%",
+                  textAlign: "center",
+                  color: isDarkMode ? "white" : "black",
+                }}
+              >
+                Please wait
+              </Text>
+            </View>
           ) : (
             <>
               <View
@@ -466,7 +516,7 @@ const Posts = ({ post }) => {
                           usersData
                             .map((user) => {
                               if (user._id === post.posterId)
-                                return user.picture;
+                                return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                               else return null;
                             })
                             .join(""),
@@ -507,19 +557,6 @@ const Posts = ({ post }) => {
                             else return null;
                           })}
                       </Text>
-                      <View
-                        style={{
-                          marginLeft: 8,
-                          justifyContent: "center",
-                        }}
-                      >
-                        {post.posterId !== userData._id && (
-                          <FollowHandler
-                            idToFollow={post.posterId}
-                            type={"friends"}
-                          />
-                        )}
-                      </View>
                     </View>
                     <Text
                       style={{
@@ -720,7 +757,7 @@ const Posts = ({ post }) => {
                 marginTop: 10,
               }}
             >
-              {post.comments.length} Comments
+              {post.comments.length} {t('Comments')}
             </Text>
           </View>
           <ScrollView>

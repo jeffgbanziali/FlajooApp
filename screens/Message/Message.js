@@ -16,16 +16,18 @@ import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
 import { SafeAreaView } from "react-native";
-import { USER } from "../../Data/Users";
 import { initializeUseSelector } from "react-redux/es/hooks/useSelector";
 import { isEmpty } from "../../components/Context/Utils";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
 const Message = () => {
   const [conver, setConver] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [isPressed, setIsPressed] = useState(false);
   const { isDarkMode } = useDarkMode();
   const usersData = initializeUseSelector((state) => state.usersReducer);
+  const userData = useSelector((state) => state.userReducer);
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
 
@@ -69,6 +71,19 @@ const Message = () => {
     console.warn("newMEssage");
   };
 
+
+  const MAX_MESSAGE_LENGTH = 15;
+  const renderLimitedMessage = (message) => {
+    if (message && message.length <= MAX_MESSAGE_LENGTH) {
+      return message;
+    } else if (message) {
+      return message.substring(0, MAX_MESSAGE_LENGTH) + "...";
+    } else {
+      return "";
+    }
+  };
+
+
   return (
 
     <SafeAreaView
@@ -90,7 +105,7 @@ const Message = () => {
             flexDirection: "row",
             justifyContent: "flex-start",
             alignItems: "center",
-            width: "30%",
+            width: "40%",
 
           }}
         >
@@ -104,7 +119,8 @@ const Message = () => {
               marginLeft: "3.5%",
             }}
           >
-            <TouchableOpacity onPress={handleClickReturnHome}>
+            <TouchableOpacity
+              onPress={handleClickReturnHome}>
               <AntDesign
                 name="arrowleft"
                 size={28}
@@ -114,9 +130,9 @@ const Message = () => {
           </View>
           <View
             style={{
-              width: "50%",
+              width: "100%",
               height: "80%",
-              marginLeft: "3.5%",
+              marginLeft: "1.5%",
             }}
           >
             <Text
@@ -125,9 +141,8 @@ const Message = () => {
                 color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
               }}
             >
-              {t('Chat')}
+              {renderLimitedMessage(userData.pseudo)}
             </Text>
-
           </View>
         </View>
         <View

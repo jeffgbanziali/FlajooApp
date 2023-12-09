@@ -573,9 +573,7 @@ const VideoRéels = ({ item, isActive }) => {
               {item.comments.length} {t('PostsComment')}
             </Text>
           </View>
-          <ScrollView>
-            <RéelsComment réels={item} />
-          </ScrollView>
+          <RéelsComment réels={item} />
           <View
             style={{
               width: "100%",

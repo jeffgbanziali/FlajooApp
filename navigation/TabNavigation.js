@@ -242,8 +242,6 @@ const TabNavigation = () => {
           alignItems: "center",
           backgroundColor: isDarkMode ? "rgba(0, 1, 1, 0.5)" : "rgba(0, 0, 0, 0.5)",
         }}>
-
-
           <View style={{
             borderRadius: 10,
             width: "60%",
@@ -276,8 +274,6 @@ const TabNavigation = () => {
                 backgroundColor: isPressed ? "#F5F5F5" : "#FFFFFF",
                 backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
 
-
-
               }}>
               <AntDesign name="picture" size={30} color={isDarkMode ? "white" : "black"} />
               <Text
@@ -285,7 +281,6 @@ const TabNavigation = () => {
                   color: isDarkMode ? "#F5F5F5" : "black",
                   fontSize: 24,
                   marginLeft: 14
-
                 }}
               >
                 {t('AddPosting')}

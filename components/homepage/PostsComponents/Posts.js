@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
-  ScrollView,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
@@ -23,11 +23,11 @@ import AllCommentView from "./AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const usersData = useSelector((state) => state.usersReducer);
-  const userData = useSelector((state) => state.userReducer);
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
@@ -733,47 +733,67 @@ const Posts = ({ post }) => {
         animationOut="slideOutDown"
         useNativeDriverForBackdrop
       >
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "null"}
           style={{
             backgroundColor: isDarkMode ? "#171717" : "white",
             height: "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
+            paddingBottom: 10,
           }}
         >
-          <View
-            style={{
-              borderBottomWidth: 1,
-              borderColor: isDarkMode ? "#343232" : "lightgray",
-              height: 50,
-            }}
-          >
-            <Text
+          <SafeAreaView>
+            <View
               style={{
-                color: isDarkMode ? "#F5F5F5" : "black",
-                textAlign: "center",
-                fontSize: 16,
-                fontWeight: "bold",
-                marginTop: 10,
+                borderBottomWidth: 1,
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+                height: "6%",
+                width: "100%",
+                justifyContent: "center",
+                alignContent: "center",
+                borderTopLeftRadius: 40,
+                borderTopRightRadius: 40,
               }}
             >
-              {post.comments.length} {t('Comments')}
-            </Text>
-          </View>
-          <ScrollView>
-            <AllCommentView post={post} />
-          </ScrollView>
-          <View
-            style={{
-              width: "100%",
-              height: "15%",
-              borderTopWidth: 1,
-              borderColor: isDarkMode ? "#343232" : "lightgray",
-            }}
-          >
-            <AddCommentButton post={post} />
-          </View>
-        </View>
+              <Text
+                style={{
+                  color: isDarkMode ? "#F5F5F5" : "black",
+                  textAlign: "center",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                {post.comments.length} {t('PostsComment')}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "84%",
+                borderTopWidth: 1,
+                paddingBottom: "2%",
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              <AllCommentView post={post} />
+
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "10%",
+                borderTopWidth: 1,
+                justifyContent: "center",
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              <AddCommentButton post={post} />
+            </View>
+
+          </SafeAreaView>
+
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );

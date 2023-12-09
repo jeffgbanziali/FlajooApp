@@ -1,12 +1,9 @@
 import {
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   TextInput,
   Pressable,
-  SafeAreaView,
-  Easing,
   Modal,
   Image,
   Dimensions,
@@ -447,6 +444,18 @@ const Message = () => {
   };
 
 
+  const MAX_MESSAGE_LENGTH = 15;
+  const renderLimitedMessage = (message) => {
+    if (message && message.length <= MAX_MESSAGE_LENGTH) {
+      return message;
+    } else if (message) {
+      return message.substring(0, MAX_MESSAGE_LENGTH) + "...";
+    } else {
+      return "";
+    }
+  };
+
+
   return (
     <>
       <View
@@ -464,13 +473,13 @@ const Message = () => {
             marginTop: "12%",
             width: "100%",
             height: "6%",
-
           }}
         >
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
+              height: "100%",
             }}
           >
             <TouchableOpacity
@@ -503,23 +512,24 @@ const Message = () => {
               style={{
                 justifyContent: "center",
                 flexDirection: "column",
-                marginLeft: "4%"
-
+                marginLeft: "4%",
+                width: 180,
+                height: "90%",
               }}
             >
               <Text
                 style={{
                   fontWeight: "bold",
-                  fontSize: 16,
+                  fontSize: 18,
                   color: "#FFFFFF",
                 }}
               >
-                {user.pseudo}
+                {renderLimitedMessage(user.pseudo)}
               </Text>
               <Text
                 style={{
                   fontWeight: "normal",
-                  fontSize: 14,
+                  fontSize: 12,
                   color: "#FFFFFF",
                 }}
               >

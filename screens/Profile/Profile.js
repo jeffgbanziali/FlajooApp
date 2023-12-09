@@ -25,7 +25,7 @@ const Profile = () => {
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
 
-  
+
   const [selectedSwitchValue, setSelectedSwitchValue] = useState();
 
   const handleClickReturnHome = () => {
@@ -146,11 +146,11 @@ const Profile = () => {
                       : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
                   }}
                   style={{
-                    width: 160,
-                    height: 160,
+                    width: 130,
+                    height: 130,
                     borderRadius: 100,
-                    borderWidth: 5,
-                    borderColor: "#3B4FB8",
+                    //borderWidth: 5,
+                    //borderColor: isDarkMode ? "#3B4FB8" : "white"
                   }}
                 />
 
@@ -158,12 +158,12 @@ const Profile = () => {
                   style={{
                     backgroundColor: "#09C03C",
                     position: "absolute",
-                    left: 65,
+                    left: 22,
                     width: 20,
                     height: 20,
                     borderRadius: 25,
-                    borderWidth: 2,
-                    borderColor: "#000000",
+                    borderWidth: 3,
+                    borderColor: isDarkMode ?  "#0D0C0C" : "#F3F2F2",
                     justifyContent: "center",
                     alignSelf: "center",
                     alignItems: "center",

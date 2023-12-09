@@ -82,9 +82,6 @@ const MessagesUser = ({ message, own, user }) => {
   };
 
   console.log(message)
-
-  let opacity = new Animated.Value(0);
-
   
 
 
@@ -109,7 +106,6 @@ const MessagesUser = ({ message, own, user }) => {
                       marginRight: 10,
                     }}
                   />
-
                   <Pressable
                     onLongPress={messageTools}
                   >

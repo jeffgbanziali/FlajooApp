@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert } from 'react-native';
-import InputPage from '../../components/InputPage/InputPage';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert, TextInput } from 'react-native';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Pressable } from 'react-native';
 
 
 
@@ -18,6 +19,8 @@ const SignUpScreen = () => {
     const [pseudo, setPseudo] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [showPass, setShowPass] = useState(false)
+    const [showConfirmPass, setShowConfirmPass] = useState(false)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -106,6 +109,14 @@ const SignUpScreen = () => {
         }
     };
 
+    const showConfirmPassword = () => {
+        setShowConfirmPass(!showConfirmPass);
+    }
+    const showPassword = () => {
+        setShowPass(!showPass);
+    }
+
+
 
     return (
         <KeyboardAvoidingView
@@ -150,7 +161,7 @@ const SignUpScreen = () => {
                             borderRadius: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            marginTop: "2%"
+                            marginTop: "4%"
                         }}
                     >
 
@@ -159,82 +170,200 @@ const SignUpScreen = () => {
                             color: isDarkMode ? "#FFFFFF" : "black",
                             fontWeight: 'bold',
                             marginVertical: 2,
-                            marginBottom: 10
+                            marginBottom: 16
                         }}>
                             {t('CreateAccount')}
                         </Text>
+                        <View style={styles.input}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('Pseudo')}
+                                placeholderTextColor='gray'
+                                value={pseudo}
+                                onChangeText={(text) => setPseudo(text)}
+                                keyboardType='none'
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                        </View>
 
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('Pseudo')}
-                            placeholderTextColor='gray'
-                            value={pseudo}
-                            onChangeText={(text) => setPseudo(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('FirstName')}
-                            placeholderTextColor='gray'
-                            value={firstName}
-                            onChangeText={(text) => setFirstName(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t("LastName")}
-                            placeholderTextColor='gray'
-                            value={lastName}
-                            onChangeText={(text) => setLastName(text)}
-                            keyboardType='none'
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('Email')}
-                            placeholderTextColor='gray'
-                            onChangeText={(text) => setEmail(text)}
-                            value={email}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                        <View style={styles.input}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('FirstName')}
+                                placeholderTextColor='gray'
+                                value={firstName}
+                                onChangeText={(text) => setFirstName(text)}
+                                keyboardType='none'
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                        </View>
 
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('Password')}
-                            placeholderTextColor='gray'
-                            onChangeText={(text) => setPassword(text)}
-                            value={password}
-                            secureTextEntry={true}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('ConfirmPass')}
-                            placeholderTextColor='gray'
-                            value={confirmPassword}
-                            onChangeText={(text) => setConfirmPassword(text)}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                        />
-                        <InputPage
-                            style={styles.input}
-                            placeholder={t('PhoneNumb')}
-                            placeholderTextColor='gray'
-                            value={phoneNumber}
-                            onChangeText={(text) => setPhoneNumber(text)}
-                            keyboardType="phone-pad"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
+
+                        <View style={styles.input}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t("LastName")}
+                                placeholderTextColor='gray'
+                                value={lastName}
+                                onChangeText={(text) => setLastName(text)}
+                                keyboardType='none'
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                        </View>
+
+                        <View style={styles.input}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('Email')}
+                                placeholderTextColor='gray'
+                                onChangeText={(text) => setEmail(text)}
+                                value={email}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+
+                            />
+                        </View >
+                        <View
+                            style={{
+                                height: 48,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                justifyContent: "center",
+                                paddingLeft: 14,
+                                width: 320,
+                                flexDirection: "row"
+                            }}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('Password')}
+                                placeholderTextColor='gray'
+                                onChangeText={(text) => setPassword(text)}
+                                value={password}
+                                secureTextEntry={!showPass}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                            <View
+                                style={{
+                                    width: '15%',
+                                    height: 48,
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}
+                            >
+
+                                <Pressable
+                                    onPress={showPassword}
+                                >
+                                    {
+                                        showPass ?
+                                            <Ionicons name="eye-off" size={22} color="gray" /> :
+                                            <Ionicons name="eye" size={22} color="gray" />
+                                    }
+                                </Pressable>
+
+                            </View>
+                        </View>
+                        <View
+                            style={{
+                                height: 48,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                justifyContent: "center",
+                                paddingLeft: 14,
+                                width: 320,
+                                flexDirection: "row"
+                            }}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('ConfirmPass')}
+                                placeholderTextColor='gray'
+                                value={confirmPassword}
+                                onChangeText={(text) => setConfirmPassword(text)}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                secureTextEntry={!showConfirmPass}
+                            />
+                            <View
+                                style={{
+                                    width: '15%',
+                                    height: 48,
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}
+                            >
+
+                                <Pressable
+                                    onPress={showConfirmPassword}
+                                >
+                                    {
+                                        showConfirmPass ?
+                                            <Ionicons name="eye-off" size={22} color="gray" /> :
+                                            <Ionicons name="eye" size={22} color="gray" />
+                                    }
+                                </Pressable>
+
+                            </View>
+                        </View>
+                        <View style={styles.input}>
+                            <TextInput
+                                style={{
+                                    width: '85%',
+                                    height: 48,
+                                    fontSize: 16
+                                }}
+                                placeholder={t('PhoneNumb')}
+                                placeholderTextColor='gray'
+                                value={phoneNumber}
+                                onChangeText={(text) => setPhoneNumber(text)}
+                                keyboardType="phone-pad"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                            />
+                        </View>
+
                         <TouchableOpacity
                             style={{
                                 backgroundColor: darkRose,
@@ -303,14 +432,16 @@ const styles = StyleSheet.create({
     input: {
         height: 48,
         borderRadius: 10,
-        borderColor: '#2e2e2d',
+        borderColor: "#2e2e2d",
         borderWidth: 1,
-        overflow: 'hidden',
-        backgroundColor: 'white',
+        overflow: "hidden",
+        backgroundColor: "white",
+        marginTop: 6,
+        marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16,
-        width: 300
+        paddingLeft: 14,
+        width: 320,
     },
     button: {
         backgroundColor: "red",

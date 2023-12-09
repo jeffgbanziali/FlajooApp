@@ -180,8 +180,9 @@ const ButtonColor = () => {
         </View>
 
 
-
-        <Modal visible={visible} onRequestClose={() => setVisible(false)}>
+        <Modal
+          visible={visible}
+          onRequestClose={() => setVisible(false)}>
           <SafeAreaView style={{
             flex: 1,
             justifyContent: 'center',

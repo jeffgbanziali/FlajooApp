@@ -9,6 +9,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Animated,
+  Easing,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -17,12 +20,22 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { Modal } from "react-native";
 import { getUser, updateProfile } from "../../actions/user.action";
 import { firestore, uploadProfileToFirebase } from "../../Data/FireStore";
 import { addDoc, collection, getDoc } from "firebase/firestore";
 import { useDarkMode } from "../Context/AppContext";
 import { useTranslation } from 'react-i18next'
+import Modal from "react-native-modal";
+import ImagePicker from 'react-native-image-crop-picker';
+import RNFS from 'react-native-fs';
+
+
+
+
+
+
+
+
 
 const ProfileEdit = () => {
   const navigation = useNavigation();
@@ -32,7 +45,13 @@ const ProfileEdit = () => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const { isDarkMode } = useDarkMode();
+  const [showTools, setShowTools] = useState(false);
+  const [toolsHeight, setToolsHeight] = useState(new Animated.Value(0));
   const { t } = useTranslation();
+
+
+
+
 
   const handleUpdateBio = () => {
     console.log("clicked");
@@ -53,30 +72,22 @@ const ProfileEdit = () => {
 
   };
 
-  const handleSelectImage = async () => {
-    try {
-      console.log('Ouverture de la bibliothèque de médias...');
-      const result = await launchImageLibrary({
-        mediaType: 'photo',
-        allowsEditing: false,
-        quality: 1,
-      });
 
-      if (!result.didCancel) {
-        if (result.assets && result.assets.length > 0) {
-          const selectedAsset = result.assets[0];
-          setSelectedImage(selectedAsset);
-          setShowImage(true);
-          console.log('Image sélectionnée :', selectedAsset);
-        }
 
-      } else {
-        console.log('Sélection annulée');
-      }
-    } catch (error) {
-      console.error('Erreur lors de la sélection du média :', error);
-      Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection du média.');
-    }
+
+
+  const saveMediaLocally = async (uri, fileName, mediaType) => {
+    return new Promise((resolve, reject) => {
+      RNFS.copyFile(uri, `${RNFS.DocumentDirectoryPath}/${fileName}`)
+        .then(() => {
+          console.log(`${mediaType} sauvegardé avec succès !`);
+          resolve(`${RNFS.DocumentDirectoryPath}/${fileName}`);
+        })
+        .catch((error) => {
+          console.error(`Erreur lors de la sauvegarde du ${mediaType}.`, error);
+          reject(error);
+        });
+    });
   };
 
 
@@ -87,10 +98,9 @@ const ProfileEdit = () => {
       let imageUrl = null;
 
       if (selectedImage) {
-        const imageName = `profile-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-        imageUrl = await uploadProfileToFirebase(selectedImage.uri, imageName);
+        const imageName = `profile-${Date.now()}.${selectedImage.path.split('.').pop()}`;
+        imageUrl = await saveMediaLocally(selectedImage.path, imageName);
       }
-
       const updatedProfileData = {
         picture: imageUrl,
       };
@@ -99,10 +109,8 @@ const ProfileEdit = () => {
         dispatch(updateProfile(updatedProfileData, userData._id));
         const docRef = await addDoc(collection(firestore, 'profile'), updatedProfileData);
         const docSnapshot = await getDoc(docRef);
-        console.log('Profule créée avec succès! Document ID:', docRef.id);
+        console.log('Profile créée avec succès! Document ID:', docRef.id);
         console.log('Document data:', docSnapshot.data());
-        // Effectue d'autres actions si nécessaires
-        alert('Profile picture updated successfully');
         navigation.goBack();
         setLoadUSers(true);
       } else {
@@ -117,6 +125,52 @@ const ProfileEdit = () => {
 
   const closeImageModal = () => {
     setShowImage(false);
+  };
+
+
+
+  const handleSelectImage = async () => {
+    try {
+      console.log('Ouverture de la bibliothèque de médias...');
+      const result = await ImagePicker.openPicker({
+        width: 300,
+        height: 300,
+        cropping: true,
+        cropperCircleOverlay: true,
+      });
+
+      if (result.path) {
+        setSelectedImage(result);
+        setShowImage(true);
+        console.log('Image sélectionnée :', result);
+      } else {
+        console.log('Sélection annulée');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la sélection du média :', error);
+      Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection du média.');
+    }
+  };
+
+
+
+  const toggleProfile = () => {
+    if (showTools) {
+      Animated.timing(toolsHeight, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => setShowTools(false));
+    } else {
+      setShowTools(true);
+      Animated.timing(toolsHeight, {
+        toValue: 200,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
   };
 
 
@@ -312,7 +366,7 @@ const ProfileEdit = () => {
             style={{
               marginTop: 10,
               width: "100%",
-              height: 120,
+              height: 160,
               flexDirection: "column",
               borderBottomColor: "gray",
               borderBottomWidth: 1,
@@ -343,6 +397,7 @@ const ProfileEdit = () => {
                     color: isDarkMode ? "white" : "black",
                     fontWeight: "normal",
                     marginRight: 10,
+
                   }}
                 >
                   {t('Update')}
@@ -354,7 +409,7 @@ const ProfileEdit = () => {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  height: "80%",
+                  height: 60,
                   padding: 4,
                 }}
               >
@@ -404,7 +459,54 @@ const ProfileEdit = () => {
                 </View>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  height: 60,
+                  padding: 4,
+                }}
+              >
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#3D3939",
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    marginLeft: 10,
+                  }}
+                >
+                  <MaterialIcons
+                    name="email"
+                    size={30}
+                    color={isDarkMode ? "white" : "black"}
+                  />
+                </View>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: isDarkMode ? "white" : "black",
+                      fontWeight: "400",
+                      marginLeft: 10,
+                    }}
+                  >
+                    {userData.email}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
+
+
           <View
             style={{
               marginTop: 10,
@@ -709,6 +811,7 @@ const ProfileEdit = () => {
         </ScrollView>
       </SafeAreaView>
 
+
       <Modal
         visible={showImage}
         transparent={true}
@@ -720,46 +823,28 @@ const ProfileEdit = () => {
           width: "100%",
           height: "100%",
           alignItems: "center",
+          justifyContent: "center",
           backgroundColor: "black"
         }}>
+
           <View
             style={{
-              width: "100%",
-              height: 40,
-              marginTop: "12%",
-              justifyContent: "center",
-              position: "absolute",
-              zIndex: 2,
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                width: 40,
-                height: 40,
-                justifyContent: "center",
-                alignItems: "center",
-                marginLeft: "2%",
-              }}
-              onPress={closeImageModal}
-            >
-              <Entypo name="cross" size={36} color="white" />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              width: "100%",
-              height: "90%",
+              width: 300,
+              height: 300,
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "red",
+              borderRadius: 400
             }}
           >
             {selectedImage && (
               <Image
-                source={{ uri: selectedImage.uri }}
+                source={{ uri: selectedImage.path }}
                 style={{
                   width: "100%",
                   height: "100%",
-                  resizeMode: "contain",
+                  resizeMode: "cover",
+                  borderRadius: 400
                 }}
               />
             )}
@@ -793,17 +878,166 @@ const ProfileEdit = () => {
               <Text
                 style={{
                   fontSize: 18,
-                  color: "white",
+                  color: isDarkMode ? "white" : "black",
                   fontWeight: "500"
                 }}
               >
-                Upload picture
+                {t('Upload ')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "40%",
+                height: "60%",
+                backgroundColor: "#FF0F0F",
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center",
+                borderRadius: 100,
+                marginTop: "5%",
+                flexDirection: "row",
+                zIndex: 1,
+              }}
+              onPress={closeImageModal}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "500"
+                }}
+              >
+                {t('Cancel')}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
+
+      {/* <Modal
+        isVisible={showTools}
+        onBackdropPress={toggleProfile}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        useNativeDriverForBackdrop
+      >
+        <View
+          style={{
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            height: "50%",
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "80%",
+              height: "30%",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+
+          >
+            <View
+              style={{
+                width: "80%",
+                height: "60%",
+                alignItems: "center",
+                justifyContent: "center"
+              }}>
+
+              <Text
+                style={{
+                  fontSize: 40,
+                  color: isDarkMode ? "white" : "black",
+                }}
+              >
+                {t('Upload')}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "gray" : "black",
+                }}>
+                {t('Choose')}
+              </Text>
+            </View>
+
+          </View>
+          <View
+            style={{
+              width: "90%",
+              height: "50%",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <TouchableOpacity
+              onPress={handleSelectImage}
+              style={{
+                width: "90%",
+                height: "24%",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#053BF7",
+                borderRadius: 20
+              }}
+
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "white" : "black",
+                }}>
+                {t('TakePhoto')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleSelectImage}
+              style={{
+                width: "90%",
+                height: "24%",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#7AF350",
+                borderRadius: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "white" : "black",
+                }}>
+                {t('ChooseFrom')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+
+              onPress={toggleProfile}
+              style={{
+                width: "90%",
+                height: "24%",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#FF0F0F",
+                borderRadius: 20
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "white" : "black",
+                }}>
+                {t('Cancel')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>*/}
     </>
 
   );

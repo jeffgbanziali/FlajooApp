@@ -66,7 +66,6 @@ const MyStory = () => {
       {
         userStories.length > 0 ? (
           <View>
-
             {
               userStories.map((item) => (
 
@@ -124,21 +123,15 @@ const MyStory = () => {
                             }}
                           />
                         )}
-
-
                       </View>
                     )}
-
                     {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
-
                       <View
                         style={{
                           width: 100,
                           height: 140,
                           borderRadius: 10,
-                          borderWidth: 3,
                           padding: 5,
-                          borderColor: "#494747",
                           backgroundColor: "green",
                           alignItems: "center",
                           justifyContent: "center",

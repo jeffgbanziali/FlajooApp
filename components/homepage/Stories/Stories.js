@@ -111,9 +111,7 @@ const Stories = () => {
                 width: 100,
                 height: 140,
                 borderRadius: 10,
-                borderWidth: 3,
                 padding: 5,
-                borderColor: "#494747",
                 backgroundColor: "green",
                 marginLeft: 10,
                 alignItems: "center",
@@ -139,7 +137,7 @@ const Stories = () => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: -70,
-          }}
+          }}ƒ
         >
           <Image
             source={{

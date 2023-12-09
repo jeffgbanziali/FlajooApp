@@ -103,8 +103,6 @@ const StackNavigation = () => {
             </>
           ) : (
             <>
-            < Stack.Screen name="Start" component={StartPage} />
-
               <Stack.Screen name="Signin" component={SignInScreen} />
               <Stack.Screen name="Signup" component={SignUpScreen} />
               <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />

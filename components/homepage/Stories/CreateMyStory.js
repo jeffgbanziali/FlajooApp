@@ -514,7 +514,7 @@ const CreateStory = () => {
                                 <MaterialIcons
                                     name="keyboard-arrow-down"
                                     size={24}
-                                    color="black" />
+                                    color={isDarkMode ? "#F5F5F5" : "black"} />
                             </View>
 
                         </TouchableOpacity>
@@ -593,7 +593,6 @@ const CreateStory = () => {
                 </View>
 
             </View>
-
 
             <Modal
                 visible={showImage}
@@ -718,7 +717,7 @@ const CreateStory = () => {
                                     fontWeight: "600",
                                 }}
                             >
-                                 {t('Song')}
+                                {t('Song')}
                             </Text>
                             <Ionicons
                                 name="musical-notes"
@@ -784,7 +783,7 @@ const CreateStory = () => {
                                 editable
                                 placeholder="Leave a short text..."
                                 placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
-                                fontSize="20"
+                                fontSize="40"
                                 color={isDarkMode ? "#F5F5F5" : "white"} />
                         </View>
                     )}
@@ -880,14 +879,14 @@ const CreateStory = () => {
                                 color: "white",
                             }}
                             multiline
-                            numberOfLines={4}
+                            numberOfLines={4}  
                             maxLength={40}
                             onChangeText={(nouveauText) => setPostText(nouveauText)}
                             value={postText}
                             editable
                             placeholder={t('TextInputStory')}
                             placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
-                            fontSize="30"
+                            fontSize="40"
                             color={isDarkMode ? "#F5F5F5" : "white"} />
                     </View>
 

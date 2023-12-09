@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDarkMode } from "../../Context/AppContext";
 import { addComment, getPosts } from "../../../actions/post.actions";
 import { useTranslation } from "react-i18next";
+import { isEmpty } from "../../Context/Utils";
 
 const AddCommentButton = ({ post }) => {
   const { isDarkMode } = useDarkMode();
@@ -33,6 +34,8 @@ const AddCommentButton = ({ post }) => {
     }
   };
 
+
+
   useEffect(() => {
     if (loadPost) {
       dispatch(getPosts());
@@ -43,13 +46,14 @@ const AddCommentButton = ({ post }) => {
   const { t } = useTranslation();
 
   return (
-    <View keyboardShouldPersistTaps="always">
+    <>
+
       {userData._id && (
         <View
           style={{
             flexDirection: "row",
-            marginTop: 20,
-            marginBottom: 10,
+            width: "100%",
+            alignItems: "center"
           }}
         >
           <View
@@ -72,15 +76,15 @@ const AddCommentButton = ({ post }) => {
           <TextInput
             style={{
               width: "78%",
-              height: 50,
+              height: "100%",
               paddingLeft: 12,
               marginLeft: 2,
+              fontSize: 16
             }}
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholder={t('TextInputPost')}
+            placeholder={`${t('TextInputPost')} ${post.pseudo}`}
             placeholderTextColor={isDarkMode ? "#F5F5F5" : "black"}
-            fontSize="16"
             color={isDarkMode ? "#F5F5F5" : "black"}
           />
           {isButtonVisible && (
@@ -104,13 +108,14 @@ const AddCommentButton = ({ post }) => {
                 }}
                 onPress={handleComment}
               >
-                <Ionicons name="send" size={30} color="blue" />
+                <Ionicons name="send" size={30} color="red" />
               </TouchableOpacity>
             </View>
           )}
         </View>
       )}
-    </View>
+    </>
+
   );
 };
 

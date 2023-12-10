@@ -100,13 +100,11 @@ const Profile = () => {
                   marginTop: "1.5%",
                 }}
               >
-                <View>
-                  <MaterialIcons
-                    name="arrow-back-ios"
-                    size={28}
-                    color={isDarkMode ? "#5F5858" : "black"}
-                  />
-                </View>
+                <MaterialIcons
+                  name="arrow-back-ios"
+                  size={28}
+                  color={isDarkMode ? "#5F5858" : "black"}
+                />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleClickSettings}>
                 <View
@@ -163,7 +161,7 @@ const Profile = () => {
                     height: 20,
                     borderRadius: 25,
                     borderWidth: 3,
-                    borderColor: isDarkMode ?  "#0D0C0C" : "#F3F2F2",
+                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
                     justifyContent: "center",
                     alignSelf: "center",
                     alignItems: "center",

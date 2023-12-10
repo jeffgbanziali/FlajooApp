@@ -18,10 +18,16 @@ const AllCommentView = ({ post }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const [loadPost, setLoadPost] = useState(true);
+  const [toAnswer, setToAnswer] = useState()
   const dispatch = useDispatch();
 
 
   const { t } = useTranslation();
+
+  const answer = () => {
+    //setToAnswer(!toAnswer)
+    console.warn("kizouuuu")
+  }
 
 
 
@@ -123,16 +129,17 @@ const AllCommentView = ({ post }) => {
                 maxHeight: 300,
                 maxWidth: 340,
                 minHeight: 30,
-                backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F2F2",
+                minWidth: 200,
+                //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
                 borderRadius: 15,
                 padding: 10,
                 marginTop: "2%",
                 shadowColor: isDarkMode ? "white " : "#000",
                 shadowOffset: {
                   width: 0,
-                  height: isDarkMode ? 1 : 2,
+                  height: isDarkMode ? 1 : 1,
                 },
-                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowOpacity: isDarkMode ? 0.16 : 0.2,
                 shadowRadius: 3.84,
                 elevation: 2,
               }}
@@ -148,7 +155,9 @@ const AllCommentView = ({ post }) => {
               >
                 {comment.text}
               </Text>
+
             </View>
+
           </View>
 
         </View>
@@ -159,7 +168,6 @@ const AllCommentView = ({ post }) => {
           height: 40,
           flexDirection: "row",
           justifyContent: "space-between",
-          marginTop: "2%",
         }}
       >
         <View
@@ -172,6 +180,7 @@ const AllCommentView = ({ post }) => {
 
           }}>
           <TouchableOpacity
+            onPress={answer}
             style={{
               justifyContent: "center",
               justifyContent: "center",
@@ -221,6 +230,7 @@ const AllCommentView = ({ post }) => {
       </View>
 
 
+    
     </View >
 
 

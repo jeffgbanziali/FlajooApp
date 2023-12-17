@@ -12,7 +12,7 @@ import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import { dateParser, isEmpty, formatPostDate } from "../../Context/Utils";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Modal from "react-native-modal";
 import LikeButton from "./LikeButton";
@@ -29,7 +29,9 @@ const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const usersData = useSelector((state) => state.usersReducer);
   const [showComments, setShowComments] = useState(false);
+  const [showToolings, setShowToolings] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
+  const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
@@ -69,9 +71,28 @@ const Posts = ({ post }) => {
       }).start();
     }
   };
+  const toggleToolings = () => {
+    if (showToolings) {
+      Animated.timing(toolingsHeight, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => setShowToolings(false));
+    } else {
+      setShowToolings(true);
+      Animated.timing(toolingsHeight, {
+        toValue: 200,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
 
   return (
     <>
+    
       {post.picture && post.message && !post.video && (
         <View
           key={post._id}
@@ -222,10 +243,10 @@ const Posts = ({ post }) => {
                   </View>
                 </View>
                 <TouchableOpacity
+                  onPress={toggleToolings}
                   style={{
-                    backgroundColor: "#302929",
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
@@ -234,7 +255,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="more-horizontal"
-                    size={18}
+                    size={25}
                     color="white"
 
                   />
@@ -426,7 +447,7 @@ const Posts = ({ post }) => {
         </View>
       )}
 
-      {!post.picture && post.message && (
+      {!post.picture && post.message && !post.video && (
         <View
           key={post._id}
           style={{
@@ -575,10 +596,10 @@ const Posts = ({ post }) => {
                   </View>
                 </View>
                 <TouchableOpacity
+                  onPress={toggleToolings}
                   style={{
-                    backgroundColor: "#302929",
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     borderRadius: 30,
                     marginRight: 10,
                     justifyContent: "center",
@@ -587,7 +608,7 @@ const Posts = ({ post }) => {
                 >
                   <Feather
                     name="more-horizontal"
-                    size={18}
+                    size={25}
                     color="white"
 
                   />
@@ -795,6 +816,172 @@ const Posts = ({ post }) => {
 
         </KeyboardAvoidingView>
       </Modal>
+      <Modal
+        isVisible={showToolings}
+        onBackdropPress={toggleToolings}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        useNativeDriverForBackdrop
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "null"}
+          style={{
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            height: "70%",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            paddingBottom: 10,
+            justifyContent: "center"
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              height: "90%",
+            }}>
+            <View
+              style={{
+                width: "100%",
+                height: "25%",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-around",
+                borderTopWidth: 2,
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  alignItems: "center",
+                  justifyContent: "space-between"
+
+                }}>
+                <View
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 100,
+                    //backgroundColor: "blue",
+                    borderWidth: 3,
+                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    alignItems: "center",
+                    justifyContent: "center"
+
+                  }}>
+                  <Fontisto
+                    name="heart-alt"
+                    size={24}
+                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: 14
+                  }}
+                >
+                  Enregistrer
+                </Text>
+
+              </View>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  alignItems: "center",
+                  justifyContent: "space-between"
+
+                }}>
+                <View
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 100,
+                    //backgroundColor: "blue",
+                    borderWidth: 3,
+                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    alignItems: "center",
+                    justifyContent: "center"
+
+                  }}>
+                  <Fontisto
+                    name="heart-alt"
+                    size={24}
+                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: 14
+                  }}
+                >
+                  Enregistrer
+                </Text>
+
+              </View>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  alignItems: "center",
+                  justifyContent: "space-between"
+
+                }}>
+                <View
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 100,
+                    //backgroundColor: "blue",
+                    borderWidth: 3,
+                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    alignItems: "center",
+                    justifyContent: "center"
+
+                  }}>
+                  <Fontisto
+                    name="heart-alt"
+                    size={24}
+                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: 14
+                  }}
+                >
+                  Enregistrer
+                </Text>
+
+              </View>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "15%",
+                borderTopWidth: 2,
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+
+            </View>
+
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+
     </>
   );
 };

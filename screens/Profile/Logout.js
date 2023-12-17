@@ -48,9 +48,9 @@ const Logout = () => {
         alignItems: "center",
         padding: 6,
         width: "35%",
-        height: "60%",
+        height: "50%",
         backgroundColor: isDarkMode ? "#D13333" : "#72ACF1",
-        borderRadius: 10,
+        borderRadius: 20,
       }}
       onPress={handleLogout}
     >
@@ -73,7 +73,9 @@ const Logout = () => {
         </>
 
       ) : (
+
         <>
+
           <AntDesign name="logout"
             size={24}
             color={isDarkMode ? "blue" : "red"}
@@ -88,12 +90,10 @@ const Logout = () => {
             }}
           >
             Logout
-
           </Text>
         </>
-      )
 
-      }
+      )}
 
     </TouchableOpacity>
   );

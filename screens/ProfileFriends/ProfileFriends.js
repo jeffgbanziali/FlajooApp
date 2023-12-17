@@ -234,7 +234,7 @@ const ProfileFriends = () => {
                         flexDirection: "row",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "blue",
+                        backgroundColor: "red",
                         borderRadius: 10,
                         height: 38,
                         width: 170,

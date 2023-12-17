@@ -182,7 +182,8 @@ const SignInScreen = () => {
                     style={{
                       width: '90%',
                       height: 48,
-                      fontSize: 16
+                      fontSize: 16,
+                      borderColor: "white"
                     }}
                     placeholder={t("Email")}
                     placeholderTextColor="gray"

@@ -62,23 +62,31 @@ const AppW = () => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            await axios({
-                method: "get",
-                url: `${APP_API_URL}/jwtid`,
-                withCredentials: true,
-            })
-                .then((res) => {
-                    console.log(res);
-                    setUid(res.data);
-                    AsyncStorage.setItem('uid', res.data);
-                    AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
-                })
-                .catch((err) => console.log("No token", err));
+            try {
+                const response = await axios({
+                    method: "get",
+                    url: `${APP_API_URL}/jwtid`,
+                    withCredentials: true,
+                });
+                console.log(response);
+                setUid(response.data);
+                AsyncStorage.setItem('uid', response.data);
+                AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+            } catch (error) {
+                console.log("No token", error);
+            }
         };
-       
-        fetchToken();
-        if (uid) dispatch(getUser(uid))
+
+        const fetchData = async () => {
+            await fetchToken();
+            if (uid) {
+                dispatch(getUser(uid));
+            }
+        };
+
+        fetchData();
     }, [isDarkMode, uid, dispatch]);
+
 
     return (
 

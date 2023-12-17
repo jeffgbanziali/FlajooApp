@@ -83,7 +83,13 @@ const AddCommentButton = ({ post }) => {
             }}
             onChangeText={(text) => setText(text)}
             value={text}
-            placeholder={`${t('TextInputPost')} ${post.pseudo}`}
+            placeholder={`${t('TextInputPost')} ${!isEmpty(usersData[0]) &&
+              (() => {
+                const user = usersData.find((user) => user._id === post.posterId);
+                return user ? user.pseudo : '';
+              })()
+              }`}
+
             placeholderTextColor={isDarkMode ? "#F5F5F5" : "black"}
             color={isDarkMode ? "#F5F5F5" : "black"}
           />

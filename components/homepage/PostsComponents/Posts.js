@@ -797,7 +797,7 @@ const Posts = ({ post }) => {
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
             >
-              <AllCommentView post={post} />
+              <AllCommentView post={post} toggle={toggleComments} />
 
             </View>
             <View

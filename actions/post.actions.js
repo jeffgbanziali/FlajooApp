@@ -7,6 +7,7 @@ export const GET_ADD_POSTS = "GET_ADD_POSTS";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const ADD_REPLY = 'ADD_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
 
@@ -80,8 +81,30 @@ export const addComment = (postId, commenterId, text, commenterPseudo) => {
             data: { commenterId, text, commenterPseudo },
         })
             .then((res) => {
-                const comment = res.data.comment; 
+                const comment = res.data.comment;
                 dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
+            })
+            .catch((err) => console.log(err));
+    };
+};
+
+
+export const replyComment = (postId, commentId, replierId, replierPseudo, text, repliedTo) => {
+    return (dispatch) => {
+        return axios({
+            method: 'post',
+            url: `${APP_API_URL}/api/post/comment-post/${postId}/reply`,
+            data: {
+                commentId,
+                replierId,
+                replierPseudo,
+                text,
+                repliedTo,
+            },
+        })
+            .then((res) => {
+                const reply = res.data;
+                dispatch({ type: ADD_REPLY, payload: { postId, commentId, reply } });
             })
             .catch((err) => console.log(err));
     };

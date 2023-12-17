@@ -35,6 +35,7 @@ const Posts = ({ post }) => {
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
+  const addCommentButtonRef = useRef();
 
   const goProfil = (id) => {
     if (uid === id) {
@@ -92,7 +93,7 @@ const Posts = ({ post }) => {
 
   return (
     <>
-    
+
       {post.picture && post.message && !post.video && (
         <View
           key={post._id}
@@ -382,7 +383,7 @@ const Posts = ({ post }) => {
                         fontWeight: "normal",
                       }}
                     >
-                      {post.comments.length}
+                      {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
                     </Text>
                   </View>
                   <TouchableOpacity
@@ -701,7 +702,7 @@ const Posts = ({ post }) => {
                         fontWeight: "normal",
                       }}
                     >
-                      {post.comments.length}
+                      {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
                     </Text>
                   </View>
                   <TouchableOpacity
@@ -785,7 +786,7 @@ const Posts = ({ post }) => {
                   fontWeight: "bold",
                 }}
               >
-                {post.comments.length} {t('PostsComment')}
+                {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)} {t('PostsComment')}
               </Text>
             </View>
             <View

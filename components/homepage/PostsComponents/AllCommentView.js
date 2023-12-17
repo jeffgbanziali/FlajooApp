@@ -13,11 +13,12 @@ import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { getPosts } from "../../../actions/post.actions";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import AddCommentButton from "./AddCommentButton";
 
 const AllCommentView = ({ post, toggle }) => {
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
-  const userData = useSelector((state) => state.userReducer);
+  const [response, setResponse] = useState(true)
   const [loadPost, setLoadPost] = useState(true);
   const [toAnswer, setToAnswer] = useState()
   const { uid } = useContext(UidContext);
@@ -27,9 +28,15 @@ const AllCommentView = ({ post, toggle }) => {
 
   const { t } = useTranslation();
 
-  const answer = (commentId) => {
-    setToAnswer(commentId, !toAnswer);
+  const answer = (commentId, commenterPseudo) => {
     console.warn("kizouuuu");
+    setResponse(!response);
+  };
+
+
+
+  const resetToAnswer = () => {
+    setToAnswer(null);
   };
 
 
@@ -54,604 +61,683 @@ const AllCommentView = ({ post, toggle }) => {
 
   const renderItem = ({ item: comment }) => (
 
-    <View
-      style={{
-        flexDirection: "column",
-        width: "100%",
-        marginTop: "3%"
-      }}
-    >
+    <>
       <View
         style={{
+          flexDirection: "column",
           width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          marginLeft: "3%",
+          marginTop: "3%"
         }}
       >
         <View
           style={{
-            width: "85%",
+            width: "100%",
             flexDirection: "row",
-          }}>
-
-          <Pressable
-            onPress={() => goProfil(comment.commenterId)}
-            style={{
-              width: 45,
-              height: 45,
-            }}
-          >
-            <Image
-              source={{
-                uri:
-                  !isEmpty(usersData[0]) &&
-                  usersData
-                    .map((user) => {
-                      if (user._id === comment.commenterId)
-                        return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                      else return null;
-                    })
-                    .join("")
-              }}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: 100,
-              }}
-              alt="commenter-pic"
-            />
-          </Pressable>
-
+            alignItems: "center",
+            marginLeft: "3%",
+          }}
+        >
           <View
             style={{
-              width: "100%",
-              marginLeft: "4%",
-
+              width: "85%",
+              flexDirection: "row",
             }}>
+
+            <Pressable
+              onPress={() => goProfil(comment.commenterId)}
+              style={{
+                width: 45,
+                height: 45,
+              }}
+            >
+              <Image
+                source={{
+                  uri:
+                    !isEmpty(usersData[0]) &&
+                    usersData
+                      .map((user) => {
+                        if (user._id === comment.commenterId)
+                          return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                        else return null;
+                      })
+                      .join("")
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 100,
+                }}
+                alt="commenter-pic"
+              />
+            </Pressable>
 
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                width: "80%",
-                //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
-                //padding: 10,
+                width: "100%",
+                marginLeft: "4%",
+
+              }}>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "80%",
+                  //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
+                  //padding: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    marginRight: 5,
+                    fontSize: 14,
+                    color: isDarkMode ? "#F5F5F5" : "black",
+                  }}
+                >
+                  {comment.commenterPseudo}
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: "normal",
+                    marginRight: 5,
+                    color: isDarkMode ? "#F5F5F5" : "black",
+
+                  }}
+                >
+                  {formatPostDate(comment.timestamp)}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "column",
+                  maxHeight: 300,
+                  maxWidth: 340,
+                  minHeight: 30,
+                  minWidth: 200,
+                  //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
+                  borderRadius: 15,
+                  marginTop: "1%",
+                  //padding: 10,
+                  shadowColor: isDarkMode ? "white " : "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: isDarkMode ? 1 : 1,
+                  },
+                  shadowOpacity: isDarkMode ? 0.16 : 0.2,
+                  shadowRadius: 3.84,
+                  elevation: 2,
+                }}
+              >
+                <Text
+                  style={{
+                    color: isDarkMode ? "#F5F5F5" : "black",
+                    fontSize: 18,
+                    fontFamily: '',
+                    fontWeight: "400",
+                    lineHeight: 22
+                  }}
+                >
+                  {comment.text}
+                </Text>
+
+              </View>
+
+            </View>
+
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: 30,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            //backgroundColor:"blue"
+          }}
+        >
+          <View
+            style={{
+              width: "44%",
+              height: "100%",
+              marginLeft: "3%",
+              justifyContent: "center",
+              alignItems: "center",
+
+            }}>
+            <TouchableOpacity
+              onPress={() => answer(comment._id)}
+              style={{
+                justifyContent: "center",
+                justifyContent: "center",
+                alignItems: "center"
               }}
             >
               <Text
                 style={{
                   fontWeight: "bold",
-                  marginRight: 5,
-                  fontSize: 14,
-                  color: isDarkMode ? "#F5F5F5" : "black",
-                }}
-              >
-                {comment.commenterPseudo}
+                  color: "gray",
+                }}>
+                {t("Reply")}
               </Text>
-              <Text
-                style={{
-                  fontWeight: "normal",
-                  marginRight: 5,
-                  color: isDarkMode ? "#F5F5F5" : "black",
-
-                }}
-              >
-                {formatPostDate(comment.timestamp)}
-              </Text>
-            </View>
-
-            <View
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              width: 40,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginRight: 10
+            }}
+          >
+            <TouchableOpacity
               style={{
-                flexDirection: "column",
-                maxHeight: 300,
-                maxWidth: 340,
-                minHeight: 30,
-                minWidth: 200,
-                //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
-                borderRadius: 15,
-                marginTop: "1%",
-                //padding: 10,
-                shadowColor: isDarkMode ? "white " : "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: isDarkMode ? 1 : 1,
-                },
-                shadowOpacity: isDarkMode ? 0.16 : 0.2,
-                shadowRadius: 3.84,
-                elevation: 2,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Text
-                style={{
-                  color: isDarkMode ? "#F5F5F5" : "black",
-                  fontSize: 18,
-                  fontFamily: '',
-                  fontWeight: "400",
-                  lineHeight: 22
-                }}
-              >
-                {comment.text}
-              </Text>
+              <Feather
+                name="heart"
+                size={20}
+                color={isDarkMode ? "#F5F5F5" : "black"}
 
-            </View>
-
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontWeight: "normal",
+                color: isDarkMode ? "#F5F5F5" : "black",
+                marginTop: "2%",
+              }}>
+              12
+            </Text>
           </View>
-
         </View>
-      </View>
-      <View
-        style={{
-          width: "100%",
-          height: 30,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          //backgroundColor:"blue"
-        }}
-      >
-        <View
-          style={{
-            width: "44%",
-            height: "100%",
-            marginLeft: "3%",
-            justifyContent: "center",
-            alignItems: "center",
-
-          }}>
-          <TouchableOpacity
-            onPress={() => answer(comment._id)}
+        {toAnswer !== comment._id && comment.replies && comment.replies.length > 0 && (
+          <View
             style={{
-              justifyContent: "center",
+              width: "100%",
+              height: 30,
+              flexDirection: "row",
+              //backgroundColor: "blue",
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            <Text
+            <View
               style={{
-                fontWeight: "bold",
-                color: "gray",
-              }}>
-              {t("Reply")}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            width: 40,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginRight: 10
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Feather
-              name="heart"
-              size={20}
-              color={isDarkMode ? "#F5F5F5" : "black"}
+                width: "44%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => setToAnswer(comment._id, !toAnswer)}
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "gray",
+                  }}
+                >
+                  {t("Getting")} {comment.replies.length} {t("Response")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
 
-            />
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontWeight: "normal",
-              color: isDarkMode ? "#F5F5F5" : "black",
-              marginTop: "2%",
-            }}>
-            12
-          </Text>
-        </View>
-      </View>
-      {toAnswer === comment._id && (
-        <View
-          style={{
-            width: "100%",
-            height: 400,
-            alignItems: "flex-end",
-            //backgroundColor:"red"
-          }}
-        >
-          <View
-            style={{
-              width: "80%",
-              height: "100%",
-              // backgroundColor:"green"
-            }}
-          >
-            {comment.replies.map((reply, index) => {
-              const replier = usersData.find((user) => user._id === reply.replierId);
-              const replierImage = replier ? replier.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
-              console.log("reply", reply);
-              console.log("usersData", usersData);
-              console.log("tu es où", replier)
-              return (
 
-                <>
-                  {!reply.repliedTo && (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "column",
-                        width: "100%",
-                        marginTop: "2%",
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: "100%",
-                          flexDirection: "row",
-                          alignItems: "center"
-                        }}
-                      >
+        {
+          toAnswer === comment._id && comment.replies && comment.replies.length > 0 && (
+            <View
+              style={{
+                width: "100%",
+                alignItems: "flex-end",
+                // backgroundColor:"red"
+              }}
+            >
+              <View
+                style={{
+                  width: "80%",
+                  // backgroundColor:"green"
+                }}
+              >
+                {comment.replies.map((reply, index) => {
+                  const replier = usersData.find((user) => user._id === reply.replierId);
+                  const replierImage = replier ? replier.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
+                  console.log("reply", reply);
+                  console.log("usersData", usersData);
+                  console.log("tu es où", replier)
+                  return (
+
+                    <>
+                      {!reply.repliedTo && (
                         <View
+                          key={index}
                           style={{
-                            width: "85%",
-                            flexDirection: "row"
+                            flexDirection: "column",
+                            width: "100%",
+                            marginTop: "2%",
                           }}
                         >
-                          <Pressable
-                            onPress={() => goProfil(reply.replierId)}
-                            style={{
-                              width: 45,
-                              height: 45,
-                            }}
-                          >
-
-                            <Image
-                              source={{
-                                uri: replierImage
-                              }}
-                              onError={(error) => console.error('Erreur de chargement de l\'image', error)}
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: 100,
-                              }}
-                              alt="commenter-pic"
-                            />
-
-                          </Pressable>
                           <View
                             style={{
                               width: "100%",
-                              marginLeft: "4%"
+                              flexDirection: "row",
+                              alignItems: "center"
                             }}
                           >
                             <View
                               style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                width: "80%"
+                                width: "85%",
+                                flexDirection: "row"
                               }}
                             >
-                              <Text
+                              <Pressable
+                                onPress={() => goProfil(reply.replierId)}
                                 style={{
-                                  fontWeight: "bold",
-                                  marginRight: 5,
-                                  fontSize: 14,
-                                  color: isDarkMode ? "#F5F5F5" : "black"
+                                  width: 45,
+                                  height: 45,
                                 }}
                               >
-                                {reply.replierPseudo}
-                              </Text>
+
+                                <Image
+                                  source={{
+                                    uri: replierImage
+                                  }}
+                                  onError={(error) => console.error('Erreur de chargement de l\'image', error)}
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: 100,
+                                  }}
+                                  alt="commenter-pic"
+                                />
+
+                              </Pressable>
+                              <View
+                                style={{
+                                  width: "100%",
+                                  marginLeft: "4%"
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    width: "80%"
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      fontWeight: "bold",
+                                      marginRight: 5,
+                                      fontSize: 14,
+                                      color: isDarkMode ? "#F5F5F5" : "black"
+                                    }}
+                                  >
+                                    {reply.replierPseudo}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      fontWeight: "normal",
+                                      marginRight: 5,
+                                      color: isDarkMode ? "#F5F5F5" : "black"
+                                    }}
+                                  >
+                                    {formatPostDate(reply.timestamp)}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: "column",
+                                    maxHeight: 300,
+                                    maxWidth: 340,
+                                    minHeight: 30,
+                                    minWidth: 200,
+                                    borderRadius: 15,
+                                    marginTop: "1%",
+                                    shadowColor: isDarkMode ? "white" : "#000",
+                                    shadowOffset: {
+                                      width: 0,
+                                      height: isDarkMode ? 1 : 1
+                                    },
+                                    shadowOpacity: isDarkMode ? 0.16 : 0.2,
+                                    shadowRadius: 3.84,
+                                    elevation: 2
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: isDarkMode ? "#F5F5F5" : "black",
+                                      fontSize: 18,
+                                      fontFamily: "",
+                                      fontWeight: "400",
+                                      lineHeight: 22
+                                    }}
+                                  >
+                                    {reply.text}
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              width: "100%",
+                              height: 30,
+                              flexDirection: "row",
+                              justifyContent: "space-between"
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: "44%",
+                                height: "100%",
+                                marginLeft: "3%",
+                                justifyContent: "center",
+                                alignItems: "center"
+                              }}
+                            >
+                              <TouchableOpacity
+                                onPress={() => answer(comment._id)}
+                                style={{
+                                  justifyContent: "center",
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontWeight: "bold",
+                                    color: "gray"
+                                  }}
+                                >
+                                  {t("Reply")}
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+                            <View
+                              style={{
+                                width: 40,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginRight: 10
+                              }}
+                            >
+                              <TouchableOpacity
+                                style={{
+                                  alignItems: "center",
+                                  justifyContent: "center"
+                                }}
+                              >
+                                <Feather
+                                  name="heart"
+                                  size={20}
+                                  color={isDarkMode ? "#F5F5F5" : "black"}
+                                />
+                              </TouchableOpacity>
                               <Text
                                 style={{
                                   fontWeight: "normal",
-                                  marginRight: 5,
-                                  color: isDarkMode ? "#F5F5F5" : "black"
-                                }}
-                              >
-                                {formatPostDate(reply.timestamp)}
-                              </Text>
-                            </View>
-                            <View
-                              style={{
-                                flexDirection: "column",
-                                maxHeight: 300,
-                                maxWidth: 340,
-                                minHeight: 30,
-                                minWidth: 200,
-                                borderRadius: 15,
-                                marginTop: "1%",
-                                shadowColor: isDarkMode ? "white" : "#000",
-                                shadowOffset: {
-                                  width: 0,
-                                  height: isDarkMode ? 1 : 1
-                                },
-                                shadowOpacity: isDarkMode ? 0.16 : 0.2,
-                                shadowRadius: 3.84,
-                                elevation: 2
-                              }}
-                            >
-                              <Text
-                                style={{
                                   color: isDarkMode ? "#F5F5F5" : "black",
-                                  fontSize: 18,
-                                  fontFamily: "",
-                                  fontWeight: "400",
-                                  lineHeight: 22
+                                  marginTop: "2%"
                                 }}
                               >
-                                {reply.text}
+                                12
                               </Text>
                             </View>
                           </View>
                         </View>
-                      </View>
-                      <View
-                        style={{
-                          width: "100%",
-                          height: 30,
-                          flexDirection: "row",
-                          justifyContent: "space-between"
-                        }}
-                      >
+                      )
+                      }
+                      {reply.repliedTo && (
                         <View
+                          key={index}
                           style={{
-                            width: "44%",
-                            height: "100%",
-                            marginLeft: "3%",
-                            justifyContent: "center",
-                            alignItems: "center"
+                            flexDirection: "column",
+                            width: "100%",
+                            marginTop: "2%",
                           }}
                         >
-                          <TouchableOpacity
-                            onPress={() => answer(comment._id)}
-                            style={{
-                              justifyContent: "center",
-                              justifyContent: "center",
-                              alignItems: "center"
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontWeight: "bold",
-                                color: "gray"
-                              }}
-                            >
-                              {t("Reply")}
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                        <View
-                          style={{
-                            width: 40,
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginRight: 10
-                          }}
-                        >
-                          <TouchableOpacity
-                            style={{
-                              alignItems: "center",
-                              justifyContent: "center"
-                            }}
-                          >
-                            <Feather
-                              name="heart"
-                              size={20}
-                              color={isDarkMode ? "#F5F5F5" : "black"}
-                            />
-                          </TouchableOpacity>
-                          <Text
-                            style={{
-                              fontWeight: "normal",
-                              color: isDarkMode ? "#F5F5F5" : "black",
-                              marginTop: "2%"
-                            }}
-                          >
-                            12
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  )
-                  }
-                  {reply.repliedTo && (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "column",
-                        width: "100%",
-                        marginTop: "2%",
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: "100%",
-                          flexDirection: "row",
-                          alignItems: "center"
-                        }}
-                      >
-                        <View
-                          style={{
-                            width: "85%",
-                            flexDirection: "row"
-                          }}
-                        >
-                          <Pressable
-                            onPress={() => goProfil(reply.replierId)}
-                            style={{
-                              width: 45,
-                              height: 45,
-                            }}
-                          >
-
-                            <Image
-                              source={{
-                                uri: replierImage
-                              }}
-                              onError={(error) => console.error('Erreur de chargement de l\'image', error)}
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: 100,
-                              }}
-                              alt="commenter-pic"
-                            />
-
-                          </Pressable>
                           <View
                             style={{
                               width: "100%",
-                              marginLeft: "4%"
+                              flexDirection: "row",
+                              alignItems: "center"
                             }}
                           >
                             <View
                               style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                width: "80%"
+                                width: "85%",
+                                flexDirection: "row"
                               }}
                             >
-                              <Text
+                              <Pressable
+                                onPress={() => goProfil(reply.replierId)}
                                 style={{
-                                  fontWeight: "bold",
-                                  fontSize: 14,
-                                  color: isDarkMode ? "#F5F5F5" : "black"
+                                  width: 45,
+                                  height: 45,
                                 }}
                               >
-                                {reply.replierPseudo}
-                              </Text>
-                              <MaterialIcons
-                                name="arrow-right"
-                                size={25}
-                                color={isDarkMode ? "#F5F5F5" : "black"} />
-                              <Text
+
+                                <Image
+                                  source={{
+                                    uri: replierImage
+                                  }}
+                                  onError={(error) => console.error('Erreur de chargement de l\'image', error)}
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: 100,
+                                  }}
+                                  alt="commenter-pic"
+                                />
+
+                              </Pressable>
+                              <View
                                 style={{
-                                  fontWeight: "bold",
-                                  fontSize: 14,
-                                  color: isDarkMode ? "#F5F5F5" : "black"
+                                  width: "100%",
+                                  marginLeft: "4%"
                                 }}
                               >
-                                {reply.repliedTo.replierToPseudo}
-                              </Text>
+                                <View
+                                  style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    width: "80%"
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      fontWeight: "bold",
+                                      fontSize: 14,
+                                      color: isDarkMode ? "#F5F5F5" : "black"
+                                    }}
+                                  >
+                                    {reply.replierPseudo}
+                                  </Text>
+                                  <MaterialIcons
+                                    name="arrow-right"
+                                    size={25}
+                                    color={isDarkMode ? "#F5F5F5" : "black"} />
+                                  <Text
+                                    style={{
+                                      fontWeight: "bold",
+                                      fontSize: 14,
+                                      color: isDarkMode ? "#F5F5F5" : "black"
+                                    }}
+                                  >
+                                    {reply.repliedTo.replierToPseudo}
+                                  </Text>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: "column",
+                                    maxHeight: 300,
+                                    maxWidth: 340,
+                                    minHeight: 30,
+                                    minWidth: 200,
+                                    borderRadius: 15,
+                                    marginTop: "1%",
+                                    shadowColor: isDarkMode ? "white" : "#000",
+                                    shadowOffset: {
+                                      width: 0,
+                                      height: isDarkMode ? 1 : 1
+                                    },
+                                    shadowOpacity: isDarkMode ? 0.16 : 0.2,
+                                    shadowRadius: 3.84,
+                                    elevation: 2
+                                  }}
+                                >
+                                  <Text
+                                    style={{
+                                      color: isDarkMode ? "#F5F5F5" : "black",
+                                      fontSize: 18,
+                                      fontFamily: "",
+                                      fontWeight: "400",
+                                      lineHeight: 22
+                                    }}
+                                  >
+                                    {reply.text}
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              width: "100%",
+                              height: 30,
+                              flexDirection: "row",
+                              justifyContent: "space-between"
+                            }}
+                          >
+                            <View
+                              style={{
+                                width: "44%",
+                                height: "100%",
+                                marginLeft: "3%",
+                                justifyContent: "center",
+                                alignItems: "center"
+                              }}
+                            >
+                              <TouchableOpacity
+                                onPress={() => answer(comment._id)}
+                                style={{
+                                  justifyContent: "center",
+                                  justifyContent: "center",
+                                  alignItems: "center"
+                                }}
+                              >
+                                <Text
+                                  style={{
+                                    fontWeight: "bold",
+                                    color: "gray"
+                                  }}
+                                >
+                                  {t("Reply")}
+                                </Text>
+                              </TouchableOpacity>
                             </View>
                             <View
                               style={{
-                                flexDirection: "column",
-                                maxHeight: 300,
-                                maxWidth: 340,
-                                minHeight: 30,
-                                minWidth: 200,
-                                borderRadius: 15,
-                                marginTop: "1%",
-                                shadowColor: isDarkMode ? "white" : "#000",
-                                shadowOffset: {
-                                  width: 0,
-                                  height: isDarkMode ? 1 : 1
-                                },
-                                shadowOpacity: isDarkMode ? 0.16 : 0.2,
-                                shadowRadius: 3.84,
-                                elevation: 2
+                                width: 40,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginRight: 10
                               }}
                             >
-                              <Text
+                              <TouchableOpacity
                                 style={{
-                                  color: isDarkMode ? "#F5F5F5" : "black",
-                                  fontSize: 18,
-                                  fontFamily: "",
-                                  fontWeight: "400",
-                                  lineHeight: 22
+                                  alignItems: "center",
+                                  justifyContent: "center"
                                 }}
                               >
-                                {reply.text}
+                                <Feather
+                                  name="heart"
+                                  size={20}
+                                  color={isDarkMode ? "#F5F5F5" : "black"}
+                                />
+                              </TouchableOpacity>
+                              <Text
+                                style={{
+                                  fontWeight: "normal",
+                                  color: isDarkMode ? "#F5F5F5" : "black",
+                                  marginTop: "2%"
+                                }}
+                              >
+                                12
                               </Text>
                             </View>
                           </View>
                         </View>
-                      </View>
-                      <View
-                        style={{
-                          width: "100%",
-                          height: 30,
-                          flexDirection: "row",
-                          justifyContent: "space-between"
-                        }}
-                      >
-                        <View
-                          style={{
-                            width: "44%",
-                            height: "100%",
-                            marginLeft: "3%",
-                            justifyContent: "center",
-                            alignItems: "center"
-                          }}
-                        >
-                          <TouchableOpacity
-                            onPress={() => answer(comment._id)}
-                            style={{
-                              justifyContent: "center",
-                              justifyContent: "center",
-                              alignItems: "center"
-                            }}
-                          >
-                            <Text
-                              style={{
-                                fontWeight: "bold",
-                                color: "gray"
-                              }}
-                            >
-                              {t("Reply")}
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                        <View
-                          style={{
-                            width: 40,
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginRight: 10
-                          }}
-                        >
-                          <TouchableOpacity
-                            style={{
-                              alignItems: "center",
-                              justifyContent: "center"
-                            }}
-                          >
-                            <Feather
-                              name="heart"
-                              size={20}
-                              color={isDarkMode ? "#F5F5F5" : "black"}
-                            />
-                          </TouchableOpacity>
-                          <Text
-                            style={{
-                              fontWeight: "normal",
-                              color: isDarkMode ? "#F5F5F5" : "black",
-                              marginTop: "2%"
-                            }}
-                          >
-                            12
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
+                      )
+                      }
+                    </>
+
+
+
                   )
-                  }
-                </>
 
+                }
 
+                )}
+              </View>
+            </View>
+          )
+        }
 
-              )
-
-            }
-
-            )}
+        {toAnswer === comment._id && (
+          <View
+            style={{
+              width: "100%",
+              height: 30,
+              flexDirection: "row",
+              //backgroundColor: "blue",
+              justifyContent: "flex-end",
+              alignItems: "center"
+            }}
+          >
+            <View
+              style={{
+                width: "44%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={resetToAnswer}
+                style={{
+                  justifyContent: "center",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "gray",
+                  }}>
+                  {t("ToMasker")}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      )}
-
-
-    </View >
+        )}
+      </View>
+    </>
 
 
 

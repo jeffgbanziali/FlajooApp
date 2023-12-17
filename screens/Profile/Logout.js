@@ -83,10 +83,10 @@ const Logout = () => {
           <Text
             style={{
               color: isDarkMode ? "white" : "#0A0D10",
-              fontWeight: "bold",
+              fontWeight: "600",
               textTransform: "uppercase",
               marginLeft: 10,
-              fontSize: 18,
+              fontSize: 16,
             }}
           >
             Logout

@@ -257,16 +257,20 @@ const AllCommentView = ({ post, toggle, toAnswering, toReplying }) => {
 
                 />
               </TouchableOpacity>
-              <Text
-                style={{
-                  fontWeight: "normal",
-                  color: isDarkMode ? "#F5F5F5" : "black",
-                  marginTop: "2%",
-                }}>
-                12
-              </Text>
+              {comment.commentLikers && comment.commentLikers.length > 0 && (
+                <Text
+                  style={{
+                    fontWeight: "normal",
+                    color: isDarkMode ? "#F5F5F5" : "black",
+                    marginTop: "2%",
+                  }}>
+                  {comment.commentLikers.length}
+                </Text>
+              )}
+
             </View>
           </View>
+
           {toAnswer !== comment._id && comment.replies && comment.replies.length > 0 && (
             <View
               style={{
@@ -747,8 +751,6 @@ const AllCommentView = ({ post, toggle, toAnswering, toReplying }) => {
           )}
         </View>
       </>
-
-
 
     )
   }

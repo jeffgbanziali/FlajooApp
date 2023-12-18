@@ -49,19 +49,18 @@ const Posts = ({ post }) => {
       console.log("go to profile friends", id);
     }
   };
-
   const answer = (comment) => {
     setResponse(!response);
+    setResponseToResponse(false); 
     setSelectedComment(comment);
   };
-
+  
   const toReplying = (comment) => {
     setResponseToResponse(!responseToResponse);
+    setResponse(false); 
     setSelectedComment(comment);
   };
-
-
-
+  
 
 
   const { t } = useTranslation();
@@ -89,6 +88,8 @@ const Posts = ({ post }) => {
       }).start();
     }
   };
+
+
   const toggleToolings = () => {
     if (showToolings) {
       Animated.timing(toolingsHeight, {

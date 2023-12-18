@@ -16,7 +16,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Modal from "react-native-modal";
 import LikeButton from "./LikeButton";
-import FollowHandler from "../../ProfileUtils.js/FollowHandler";
 import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./AddCommentButton";
 import AllCommentView from "./AllCommentView";
@@ -24,18 +23,20 @@ import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
+import AddReplyComment from "./AddRepyComment";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const usersData = useSelector((state) => state.usersReducer);
   const [showComments, setShowComments] = useState(false);
   const [showToolings, setShowToolings] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
+  const [response, setResponse] = useState(false)
   const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
-  const addCommentButtonRef = useRef();
 
   const goProfil = (id) => {
     if (uid === id) {
@@ -47,12 +48,21 @@ const Posts = ({ post }) => {
     }
   };
 
+  const answer = (comment) => {
+    setResponse(!response);
+    setSelectedComment(comment);
+  };
+
+
+
+
 
   const { t } = useTranslation();
 
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
+
 
   const toggleComments = () => {
     if (showComments) {
@@ -795,23 +805,44 @@ const Posts = ({ post }) => {
                 height: "84%",
                 borderTopWidth: 1,
                 paddingBottom: "2%",
+                backgroundColor: isDarkMode ? "#171717" : "white",
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
             >
-              <AllCommentView post={post} toggle={toggleComments} />
+              <AllCommentView post={post} toggle={toggleComments} toAnswering={answer} />
 
             </View>
-            <View
-              style={{
-                width: "100%",
-                height: "10%",
-                borderTopWidth: 1,
-                justifyContent: "center",
-                borderColor: isDarkMode ? "#343232" : "lightgray",
-              }}
-            >
-              <AddCommentButton post={post} />
-            </View>
+
+            {response ? (
+              <View
+                style={{
+                  width: "100%",
+                  height: "10%",
+                  backgroundColor: "blue",
+                  borderTopWidth: 1,
+                  justifyContent: "center",
+                  borderColor: isDarkMode ? "#343232" : "lightgray",
+                }}
+              >
+                <AddReplyComment
+                  post={post}
+                  selectedComment={selectedComment} />
+              </View>
+            ) : (
+              <View
+                style={{
+                  width: "100%",
+                  height: "10%",
+                  borderTopWidth: 1,
+                  justifyContent: "center",
+                  borderColor: isDarkMode ? "#343232" : "lightgray",
+                }}
+              >
+                <AddCommentButton post={post} />
+              </View>
+            )
+
+            }
 
           </SafeAreaView>
 

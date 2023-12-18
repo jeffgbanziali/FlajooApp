@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 
 
-const AllCommentView = ({ post, toggle, toAnswering }) => {
+const AllCommentView = ({ post, toggle, toAnswering, toReplying }) => {
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
   const [loadPost, setLoadPost] = useState(true);
@@ -36,6 +36,11 @@ const AllCommentView = ({ post, toggle, toAnswering }) => {
 
   const handleReply = (commentId,) => {
     toAnswering(commentId);
+  };
+
+
+  const replying = (reply) => {
+    toReplying(reply);
   };
 
 
@@ -452,7 +457,7 @@ const AllCommentView = ({ post, toggle, toAnswering }) => {
                                 }}
                               >
                                 <TouchableOpacity
-                                  onPress={() => handleReply(comment)}
+                                  onPress={() => replying(reply)}
                                   style={{
                                     justifyContent: "center",
                                     justifyContent: "center",
@@ -636,7 +641,7 @@ const AllCommentView = ({ post, toggle, toAnswering }) => {
                                 }}
                               >
                                 <TouchableOpacity
-                                  onPress={() => handleReply(comment)}
+                                  onPress={() => replying(reply)}
                                   style={{
                                     justifyContent: "center",
                                     justifyContent: "center",

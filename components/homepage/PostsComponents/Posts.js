@@ -24,6 +24,7 @@ import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
 import AddReplyComment from "./AddRepyComment";
+import AddReplyToReply from "./AddReplyToReply";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +36,7 @@ const Posts = ({ post }) => {
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
   const [response, setResponse] = useState(false)
+  const [responseToResponse, setResponseToResponse] = useState(false)
   const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
 
@@ -50,6 +52,11 @@ const Posts = ({ post }) => {
 
   const answer = (comment) => {
     setResponse(!response);
+    setSelectedComment(comment);
+  };
+
+  const toReplying = (comment) => {
+    setResponseToResponse(!responseToResponse);
     setSelectedComment(comment);
   };
 
@@ -809,7 +816,7 @@ const Posts = ({ post }) => {
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
             >
-              <AllCommentView post={post} toggle={toggleComments} toAnswering={answer} />
+              <AllCommentView post={post} toggle={toggleComments} toAnswering={answer} toReplying={toReplying} />
 
             </View>
 
@@ -828,19 +835,37 @@ const Posts = ({ post }) => {
                   post={post}
                   selectedComment={selectedComment} />
               </View>
-            ) : (
-              <View
-                style={{
-                  width: "100%",
-                  height: "10%",
-                  borderTopWidth: 1,
-                  justifyContent: "center",
-                  borderColor: isDarkMode ? "#343232" : "lightgray",
-                }}
-              >
-                <AddCommentButton post={post} />
-              </View>
-            )
+
+
+            ) : responseToResponse ?
+              (
+                <View
+                  style={{
+                    width: "100%",
+                    height: "10%",
+                    backgroundColor: "green",
+                    borderTopWidth: 1,
+                    justifyContent: "center",
+                    borderColor: isDarkMode ? "#343232" : "lightgray",
+                  }}
+                >
+                  <AddReplyToReply
+                    post={post}
+                    selectedComment={selectedComment} />
+                </View>
+              ) : (
+                <View
+                  style={{
+                    width: "100%",
+                    height: "10%",
+                    borderTopWidth: 1,
+                    justifyContent: "center",
+                    borderColor: isDarkMode ? "#343232" : "lightgray",
+                  }}
+                >
+                  <AddCommentButton post={post} />
+                </View>
+              )
 
             }
 

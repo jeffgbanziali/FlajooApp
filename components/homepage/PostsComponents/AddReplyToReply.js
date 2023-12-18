@@ -7,7 +7,7 @@ import { addComment, getPosts, replyComment } from "../../../actions/post.action
 import { useTranslation } from "react-i18next";
 import { isEmpty } from "../../Context/Utils";
 
-const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
+const AddReplyToReply = ({ post, selectedComment }) => {
     const { isDarkMode } = useDarkMode();
 
     const [text, setText] = useState("");
@@ -25,24 +25,44 @@ const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
             setIsButtonVisible(false);
         }
     }, [text]);
-    console.log("Tu pourrais te montrer :", selectedComment);
+
+    const commenter = post.comments.find((comment) => comment._id)
+
+    console.log("Tu pourrais te montrer efficace, Comment ID:", commenter._id);
+
+
+
+
 
     const handleComment = () => {
         if (userData._id && text && selectedComment) {
+            const replyData = {
+                commentId: commenter._id,
+                replierId: userData._id,
+                replierPseudo: userData.pseudo,
+                text: text,
+                repliedTo: {
+                    replierToId: selectedComment.replierId,
+                    replierToPseudo: selectedComment.replierPseudo,
+                }
+            };
+
             dispatch(
                 replyComment(
                     post._id,
-                    selectedComment._id,
-                    userData._id,
-                    userData.pseudo,
-                    text,
-                    null
+                    replyData.commentId,
+                    replyData.replierId,
+                    replyData.replierPseudo,
+                    replyData.text,
+                    replyData.repliedTo
                 )
             )
                 .then(() => dispatch(getPosts()))
                 .then(() => setText(''));
         }
     };
+
+
 
 
 
@@ -95,7 +115,7 @@ const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
                         value={text}
                         placeholder={`${t('TextInputPost')} ${!isEmpty(usersData[0]) &&
                             (() => {
-                                const user = usersData.find((user) => user._id === selectedComment.commenterId);
+                                const user = usersData.find((user) => user._id === selectedComment.replierId);
                                 return user ? user.pseudo : '';
                             })()
                             }`}
@@ -135,4 +155,4 @@ const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
     );
 };
 
-export default AddReplyComment;
+export default AddReplyToReply;

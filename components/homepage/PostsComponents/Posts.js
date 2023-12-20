@@ -17,14 +17,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Modal from "react-native-modal";
 import LikeButton from "./LikeButton";
 import { useNavigation } from "@react-navigation/native";
-import AddCommentButton from "./AddCommentButton";
+import AddCommentButton from "./AddButtom/AddCommentButton";
 import AllCommentView from "./AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
-import AddReplyComment from "./AddRepyComment";
-import AddReplyToReply from "./AddReplyToReply";
+import AddReplyComment from "./AddButtom/AddRepyComment";
+import AddReplyToReply from "./AddButtom/AddReplyToReply";
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,16 +51,16 @@ const Posts = ({ post }) => {
   };
   const answer = (comment) => {
     setResponse(!response);
-    setResponseToResponse(false); 
+    setResponseToResponse(false);
     setSelectedComment(comment);
   };
-  
+
   const toReplying = (comment) => {
     setResponseToResponse(!responseToResponse);
-    setResponse(false); 
+    setResponse(false);
     setSelectedComment(comment);
   };
-  
+
 
 
   const { t } = useTranslation();

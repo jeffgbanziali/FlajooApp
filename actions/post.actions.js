@@ -69,16 +69,18 @@ export const unlikePost = (postId, userId) => {
     };
 };
 
-export const addComment = (postId, commenterId, text, commenterPseudo) => {
+
+export const addComment = (postId, commenterId, text, commenterPseudo, commentType) => {
     console.log("postId:", postId);
     console.log("userId:", commenterId);
     console.log("text:", text);
     console.log("pseudo:", commenterPseudo);
+    console.log("commentType:", commentType);
     return (dispatch) => {
         return axios({
             method: "patch",
             url: `${APP_API_URL}/api/post/comment-post/${postId}`,
-            data: { commenterId, text, commenterPseudo },
+            data: { commenterId, text, commenterPseudo, commentType }, // Inclut commentType ici
         })
             .then((res) => {
                 const comment = res.data.comment;
@@ -89,7 +91,7 @@ export const addComment = (postId, commenterId, text, commenterPseudo) => {
 };
 
 
-export const replyComment = (postId, commentId, replierId, replierPseudo, text, repliedTo) => {
+export const replyComment = (postId, commentId, replierId, replierPseudo, text, repliedTo, replyType) => {
     return (dispatch) => {
         return axios({
             method: 'post',
@@ -100,6 +102,7 @@ export const replyComment = (postId, commentId, replierId, replierPseudo, text, 
                 replierPseudo,
                 text,
                 repliedTo,
+                replyType, // Inclut replyType ici
             },
         })
             .then((res) => {
@@ -109,3 +112,4 @@ export const replyComment = (postId, commentId, replierId, replierPseudo, text, 
             .catch((err) => console.log(err));
     };
 };
+

@@ -2,10 +2,10 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDarkMode } from "../../Context/AppContext";
-import { addComment, getPosts } from "../../../actions/post.actions";
+import { useDarkMode } from "../../../Context/AppContext";
+import { addComment, getPosts } from "../../../../actions/post.actions";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "../../Context/Utils";
+import { isEmpty } from "../../../Context/Utils";
 
 const AddCommentButton = ({ post }) => {
   const { isDarkMode } = useDarkMode();
@@ -28,7 +28,8 @@ const AddCommentButton = ({ post }) => {
 
   const handleComment = () => {
     if (userData._id && text) {
-      dispatch(addComment(post._id, userData._id, text, userData.pseudo))
+      dispatch(addComment(post._id, userData._id, text, userData.pseudo, //commentType,
+      ))
         .then(() => dispatch(getPosts()))
         .then(() => setText(""));
     }

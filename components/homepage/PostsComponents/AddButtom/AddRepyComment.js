@@ -2,12 +2,12 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDarkMode } from "../../Context/AppContext";
-import { addComment, getPosts, replyComment } from "../../../actions/post.actions";
+import { useDarkMode } from "../../../Context/AppContext";
+import { addComment, getPosts, replyComment } from "../../../../actions/post.actions";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "../../Context/Utils";
+import { isEmpty } from "../../../Context/Utils";
 
-const AddReplyToReply = ({ post, selectedComment }) => {
+const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
     const { isDarkMode } = useDarkMode();
 
     const [text, setText] = useState("");
@@ -25,44 +25,25 @@ const AddReplyToReply = ({ post, selectedComment }) => {
             setIsButtonVisible(false);
         }
     }, [text]);
-
-    const commenter = post.comments.find((comment) => comment._id)
-
-    console.log("Tu pourrais te montrer efficace, Comment ID:", commenter._id);
-
-
-
-
+    console.log("Tu pourrais te montrer :", selectedComment);
 
     const handleComment = () => {
         if (userData._id && text && selectedComment) {
-            const replyData = {
-                commentId: commenter._id,
-                replierId: userData._id,
-                replierPseudo: userData.pseudo,
-                text: text,
-                repliedTo: {
-                    replierToId: selectedComment.replierId,
-                    replierToPseudo: selectedComment.replierPseudo,
-                }
-            };
-
             dispatch(
                 replyComment(
                     post._id,
-                    replyData.commentId,
-                    replyData.replierId,
-                    replyData.replierPseudo,
-                    replyData.text,
-                    replyData.repliedTo
+                    selectedComment._id,
+                    userData._id,
+                    userData.pseudo,
+                    text,
+                    null,
+                    //replyType
                 )
             )
                 .then(() => dispatch(getPosts()))
                 .then(() => setText(''));
         }
     };
-
-
 
 
 
@@ -115,7 +96,7 @@ const AddReplyToReply = ({ post, selectedComment }) => {
                         value={text}
                         placeholder={`${t('TextInputPost')} ${!isEmpty(usersData[0]) &&
                             (() => {
-                                const user = usersData.find((user) => user._id === selectedComment.replierId);
+                                const user = usersData.find((user) => user._id === selectedComment.commenterId);
                                 return user ? user.pseudo : '';
                             })()
                             }`}
@@ -155,4 +136,4 @@ const AddReplyToReply = ({ post, selectedComment }) => {
     );
 };
 
-export default AddReplyToReply;
+export default AddReplyComment;

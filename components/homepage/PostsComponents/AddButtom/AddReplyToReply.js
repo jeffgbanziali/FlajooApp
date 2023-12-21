@@ -7,7 +7,7 @@ import { addComment, getPosts, replyComment } from "../../../../actions/post.act
 import { useTranslation } from "react-i18next";
 import { isEmpty } from "../../../Context/Utils";
 
-const AddReplyToReply = ({ post, selectedComment }) => {
+const AddReplyToReply = ({ post, selectedComment, selectedReply }) => {
     const { isDarkMode } = useDarkMode();
 
     const [text, setText] = useState("");
@@ -26,24 +26,26 @@ const AddReplyToReply = ({ post, selectedComment }) => {
         }
     }, [text]);
 
-    const commenter = post.comments.find((comment) => comment._id)
+    const commenterId = selectedComment._id
 
-    console.log("Tu pourrais te montrer efficace, Comment ID:", commenter._id);
+
+
+    console.log("Tu pourrais te montrer efficace, Comment ID:", selectedReply);
 
 
 
 
 
     const handleComment = () => {
-        if (userData._id && text && selectedComment) {
+        if (userData._id && text && selectedReply) {
             const replyData = {
-                commentId: commenter._id,
+                commentId: commenterId,
                 replierId: userData._id,
                 replierPseudo: userData.pseudo,
                 text: text,
                 repliedTo: {
-                    replierToId: selectedComment.replierId,
-                    replierToPseudo: selectedComment.replierPseudo,
+                    replierToId: selectedReply.replierId,
+                    replierToPseudo: selectedReply.replierPseudo,
                 },
                 //replyType
             };
@@ -116,7 +118,7 @@ const AddReplyToReply = ({ post, selectedComment }) => {
                         value={text}
                         placeholder={`${t('TextInputPost')} ${!isEmpty(usersData[0]) &&
                             (() => {
-                                const user = usersData.find((user) => user._id === selectedComment.replierId);
+                                const user = usersData.find((user) => user._id === selectedReply.replierId);
                                 return user ? user.pseudo : '';
                             })()
                             }`}

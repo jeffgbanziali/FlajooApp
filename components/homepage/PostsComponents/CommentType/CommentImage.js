@@ -181,8 +181,10 @@ const CommentImage = ({ comment, toggle, toAnswering, toReplying }) => {
                                     width: "100%",
                                     height: "100%",
                                     objectFit: "contain",
-                                    borderRadius:10
+                                    borderRadius: 10,
+                                    resizeMode: "contain"
                                 }}
+
 
                             />
 
@@ -199,7 +201,7 @@ const CommentImage = ({ comment, toggle, toAnswering, toReplying }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     //backgroundColor:"blue",
-                    
+
                 }}
             >
                 <View

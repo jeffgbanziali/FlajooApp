@@ -43,7 +43,6 @@ const LikeButton = () => {
                         color={"black"}
                     />
                 </Animated.View>
-                
                 <Animated.View style={fillStyle}>
                     <MaterialCommunityIcons name={"heart"} size={32} color={"red"} />
                 </Animated.View>

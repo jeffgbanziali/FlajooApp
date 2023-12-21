@@ -155,13 +155,13 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                         <View
                             style={{
                                 flexDirection: "column",
-                                maxHeight: 300,
-                                maxWidth: 340,
+                                maxHeight: 200,
+                                maxWidth: 200,
                                 minHeight: 30,
                                 minWidth: 200,
                                 //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
-                                borderRadius: 15,
-                                marginTop: "1%",
+                                borderRadius: 10,
+                                marginTop: "2%",
                                 //padding: 10,
                                 shadowColor: isDarkMode ? "white " : "#000",
                                 shadowOffset: {
@@ -173,17 +173,18 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                                 elevation: 2,
                             }}
                         >
-                            <Text
-                                style={{
-                                    color: isDarkMode ? "#F5F5F5" : "black",
-                                    fontSize: 18,
-                                    fontFamily: '',
-                                    fontWeight: "400",
-                                    lineHeight: 22
+                            <Image
+                                source={{
+                                    uri: comment.commentMedia
                                 }}
-                            >
-                                {comment.text}
-                            </Text>
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    resizeMode: "contain"
+                                }}
+
+
+                            />
 
                         </View>
 
@@ -321,7 +322,6 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                             {comment.replies.map((reply, index) => {
                                 const replier = usersData.find((user) => user._id === reply.replierId);
                                 const replierImage = replier ? replier.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
-
                                 return (
 
                                     <>

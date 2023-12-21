@@ -32,6 +32,7 @@ const Posts = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [showToolings, setShowToolings] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
+  const [selectedReply, setSelectedReply] = useState(null);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
@@ -55,11 +56,13 @@ const Posts = ({ post }) => {
     setSelectedComment(comment);
   };
 
-  const toReplying = (comment) => {
+  const toReplying = (comment, reply) => {
     setResponseToResponse(!responseToResponse);
     setResponse(false);
     setSelectedComment(comment);
+    setSelectedReply(reply);
   };
+
 
 
 
@@ -840,7 +843,7 @@ const Posts = ({ post }) => {
 
             ) : responseToResponse ?
               (
-                <View
+                < View
                   style={{
                     width: "100%",
                     height: "10%",
@@ -852,7 +855,9 @@ const Posts = ({ post }) => {
                 >
                   <AddReplyToReply
                     post={post}
-                    selectedComment={selectedComment} />
+                    selectedComment={selectedComment}
+                    selectedReply={selectedReply}
+                  />
                 </View>
               ) : (
                 <View
@@ -873,7 +878,7 @@ const Posts = ({ post }) => {
           </SafeAreaView>
 
         </KeyboardAvoidingView>
-      </Modal>
+      </Modal >
       <Modal
         isVisible={showToolings}
         onBackdropPress={toggleToolings}

@@ -112,7 +112,8 @@ const AddReplyToReply = ({ post, selectedComment, selectedReply }) => {
                             height: "100%",
                             paddingLeft: 12,
                             marginLeft: 2,
-                            fontSize: 16
+                            fontSize: 16,
+                            fontWeight:"500"
                         }}
                         onChangeText={(text) => setText(text)}
                         value={text}

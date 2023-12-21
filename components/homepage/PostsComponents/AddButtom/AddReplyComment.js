@@ -90,7 +90,8 @@ const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
                             height: "100%",
                             paddingLeft: 12,
                             marginLeft: 2,
-                            fontSize: 16
+                            fontSize: 16,
+                            fontWeight:"600"
                         }}
                         onChangeText={(text) => setText(text)}
                         value={text}
@@ -100,7 +101,6 @@ const AddReplyComment = ({ post, selectedComment, selectedReply }) => {
                                 return user ? user.pseudo : '';
                             })()
                             }`}
-
                         placeholderTextColor={isDarkMode ? "#F5F5F5" : "black"}
                         color={isDarkMode ? "#F5F5F5" : "black"}
                     />

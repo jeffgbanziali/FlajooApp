@@ -80,7 +80,8 @@ const AddCommentButton = ({ post }) => {
               height: "100%",
               paddingLeft: 12,
               marginLeft: 2,
-              fontSize: 16
+              fontSize: 16,
+              //backgroundColor:"red"
             }}
             onChangeText={(text) => setText(text)}
             value={text}

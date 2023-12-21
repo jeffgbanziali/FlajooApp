@@ -23,7 +23,7 @@ import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
-import AddReplyComment from "./AddButtom/AddRepyComment";
+import AddReplyComment from "./AddButtom/AddReplyComment";
 import AddReplyToReply from "./AddButtom/AddReplyToReply";
 
 const Posts = ({ post }) => {
@@ -829,7 +829,7 @@ const Posts = ({ post }) => {
                 style={{
                   width: "100%",
                   height: "10%",
-                  backgroundColor: "blue",
+                  //backgroundColor: "gray",
                   borderTopWidth: 1,
                   justifyContent: "center",
                   borderColor: isDarkMode ? "#343232" : "lightgray",
@@ -847,7 +847,7 @@ const Posts = ({ post }) => {
                   style={{
                     width: "100%",
                     height: "10%",
-                    backgroundColor: "green",
+                    //backgroundColor: "green",
                     borderTopWidth: 1,
                     justifyContent: "center",
                     borderColor: isDarkMode ? "#343232" : "lightgray",

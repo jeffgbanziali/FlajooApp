@@ -7,6 +7,8 @@ import {
   Easing,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
@@ -33,6 +35,7 @@ const Posts = ({ post }) => {
   const [showToolings, setShowToolings] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [selectedReply, setSelectedReply] = useState(null);
+  const [isKeyboardActive, setKeyboardActive] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const navigation = useNavigation();
@@ -64,6 +67,29 @@ const Posts = ({ post }) => {
   };
 
 
+  /*useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardActive(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardActive(false);
+      }
+    );
+
+    // Nettoyez les écouteurs lorsqu'ils ne sont plus nécessaires
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);*/
+
+
+
 
 
   const { t } = useTranslation();
@@ -77,9 +103,9 @@ const Posts = ({ post }) => {
     if (showComments) {
       Animated.timing(commentsHeight, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         easing: Easing.linear,
-        useNativeDriver: false,
+        useNativeDriver: true
       }).start(() => setShowComments(false));
     } else {
       setShowComments(true);
@@ -87,7 +113,7 @@ const Posts = ({ post }) => {
         toValue: 200,
         duration: 300,
         easing: Easing.linear,
-        useNativeDriver: false,
+        useNativeDriver: true
       }).start();
     }
   };
@@ -97,7 +123,7 @@ const Posts = ({ post }) => {
     if (showToolings) {
       Animated.timing(toolingsHeight, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         easing: Easing.linear,
         useNativeDriver: false,
       }).start(() => setShowToolings(false));
@@ -777,13 +803,13 @@ const Posts = ({ post }) => {
         useNativeDriverForBackdrop
       >
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "null"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
             backgroundColor: isDarkMode ? "#171717" : "white",
             height: "85%",
+            height: isKeyboardActive ? "auto" : "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
-            paddingBottom: 10,
           }}
         >
           <SafeAreaView>
@@ -813,9 +839,8 @@ const Posts = ({ post }) => {
             <View
               style={{
                 width: "100%",
-                height: "84%",
+                height: "78%",
                 borderTopWidth: 1,
-                paddingBottom: "2%",
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
@@ -823,57 +848,43 @@ const Posts = ({ post }) => {
               <AllCommentView post={post} toggle={toggleComments} toAnswering={answer} toReplying={toReplying} />
 
             </View>
-
-            {response ? (
-              <View
-                style={{
-                  width: "100%",
-                  height: "10%",
-                  //backgroundColor: "gray",
-                  borderTopWidth: 1,
-                  justifyContent: "center",
-                  borderColor: isDarkMode ? "#343232" : "lightgray",
-                }}
-              >
-                <AddReplyComment
-                  post={post}
-                  selectedComment={selectedComment} />
-              </View>
-
-
-            ) : responseToResponse ?
-              (
-                < View
-                  style={{
-                    width: "100%",
-                    height: "10%",
-                    //backgroundColor: "green",
-                    borderTopWidth: 1,
-                    justifyContent: "center",
-                    borderColor: isDarkMode ? "#343232" : "lightgray",
-                  }}
-                >
-                  <AddReplyToReply
+            <View
+              style={{
+                width: "100%",
+                height: "16%",
+                //backgroundColor: "gray",
+                borderTopWidth: 1,
+                justifyContent: "center",
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              {response ? (
+                <>
+                  <AddReplyComment
                     post={post}
-                    selectedComment={selectedComment}
-                    selectedReply={selectedReply}
-                  />
-                </View>
-              ) : (
-                <View
-                  style={{
-                    width: "100%",
-                    height: "10%",
-                    borderTopWidth: 1,
-                    justifyContent: "center",
-                    borderColor: isDarkMode ? "#343232" : "lightgray",
-                  }}
-                >
-                  <AddCommentButton post={post} />
-                </View>
-              )
+                    selectedComment={selectedComment} />
 
-            }
+                </>
+
+              ) : responseToResponse ?
+                (
+                  <>
+                    <AddReplyToReply
+                      post={post}
+                      selectedComment={selectedComment}
+                      selectedReply={selectedReply}
+                    />
+                  </>
+
+                ) : (
+                  <>
+                    <AddCommentButton post={post} />
+                  </>
+
+                )
+
+              }
+            </View>
 
           </SafeAreaView>
 

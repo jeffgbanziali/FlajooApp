@@ -31,8 +31,11 @@ const ReplyAudio = ({ comment, reply, toggle, replierImage, toReplying }) => {
 
 
 
-    const replying = (reply) => {
-        toReplying(reply);
+    const replying = (comment, reply) => {
+        toReplying(comment, reply);
+
+        console.log("tu es là ", comment)
+        console.log("tu es là là là là  ", reply)
     };
 
 
@@ -167,7 +170,7 @@ const ReplyAudio = ({ comment, reply, toggle, replierImage, toReplying }) => {
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => replying(reply)}
+                        onPress={() => replying(comment, reply)}
                         style={{
                             justifyContent: "center",
                             justifyContent: "center",

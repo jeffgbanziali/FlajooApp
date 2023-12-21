@@ -1,8 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext } from "react";
-import {
-    formatPostDate,
-} from "../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { UidContext, useDarkMode } from "../../../Context/AppContext";

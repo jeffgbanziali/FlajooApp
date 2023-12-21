@@ -1,8 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext } from "react";
-import {
-    formatPostDate,
-} from "../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
@@ -32,8 +29,10 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
 
 
 
-    const replying = (reply) => {
-        toReplying(reply);
+    const replying = (comment, reply) => {
+        toReplying(comment, reply);
+        console.log("tu es là ", comment)
+        console.log("tu es là là là là  ", reply)
     };
 
     return (
@@ -168,7 +167,7 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => replying(reply)}
+                        onPress={() => replying(comment, reply)}
                         style={{
                             justifyContent: "center",
                             justifyContent: "center",

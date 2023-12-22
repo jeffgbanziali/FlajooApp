@@ -40,7 +40,7 @@ import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
-  const { uid } = useContext(UidContext)
+  const uid = useContext(UidContext)
 
   const [isFirstTime, setIsFirstTime] = useState(true);
 

@@ -841,6 +841,7 @@ const Posts = ({ post }) => {
                 width: "100%",
                 height: "78%",
                 borderTopWidth: 1,
+                paddingBottom: 10,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}

@@ -879,7 +879,7 @@ const CreateStory = () => {
                                 color: "white",
                             }}
                             multiline
-                            numberOfLines={4}  
+                            numberOfLines={4}
                             maxLength={40}
                             onChangeText={(nouveauText) => setPostText(nouveauText)}
                             value={postText}

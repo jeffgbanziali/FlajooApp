@@ -145,7 +145,6 @@ const ReplyAudio = ({ comment, reply, toggle, replierImage, toReplying }) => {
                                     height: "100%",
                                     resizeMode: "contain"
                                 }}
-
                             />
 
                         </View>

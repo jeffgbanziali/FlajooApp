@@ -123,6 +123,8 @@ const ProfileEdit = () => {
     }
   };
 
+
+  
   const closeImageModal = () => {
     setShowImage(false);
   };

@@ -6,7 +6,7 @@ import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
-const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }) => {
+const ReplyToGif = ({ comment, reply, toggle, replierImage, toReplying, index }) => {
     const { uid } = useContext(UidContext);
     const navigation = useNavigation();
     const { t } = useTranslation();
@@ -170,7 +170,7 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
                     }}
                 >
                     <TouchableOpacity
-                         onPress={() => replying(comment,reply)}
+                        onPress={() => replying(comment, reply)}
                         style={{
                             justifyContent: "center",
                             justifyContent: "center",
@@ -224,4 +224,4 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
     )
 }
 
-export default ReplyToText
+export default ReplyToGif

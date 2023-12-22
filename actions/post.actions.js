@@ -70,7 +70,7 @@ export const unlikePost = (postId, userId) => {
 };
 
 
-export const addComment = (postId, commenterId, text, commenterPseudo, commentType) => {
+export const addComment = (postId, commenterId, text, commenterPseudo, commentMedia, commentType) => {
     console.log("postId:", postId);
     console.log("userId:", commenterId);
     console.log("text:", text);
@@ -80,7 +80,7 @@ export const addComment = (postId, commenterId, text, commenterPseudo, commentTy
         return axios({
             method: "patch",
             url: `${APP_API_URL}/api/post/comment-post/${postId}`,
-            data: { commenterId, text, commenterPseudo, commentType }, // Inclut commentType ici
+            data: { commenterId, text, commenterPseudo, commentMedia, commentType },
         })
             .then((res) => {
                 const comment = res.data.comment;
@@ -91,7 +91,16 @@ export const addComment = (postId, commenterId, text, commenterPseudo, commentTy
 };
 
 
-export const replyComment = (postId, commentId, replierId, replierPseudo, text, repliedTo, replyType) => {
+export const replyComment = (postId, commentId, replierId, replierPseudo, text, replyMedia, replyType, repliedTo) => {
+
+    console.log("postId:", postId);
+    console.log("commentId:", commentId);
+    console.log("userId:", replierId);
+    console.log("pseudo:", replierPseudo);
+    console.log("text:", text);
+    console.log("pseudo:", replierPseudo);
+    console.log("replies:", repliedTo);
+
     return (dispatch) => {
         return axios({
             method: 'post',
@@ -101,8 +110,9 @@ export const replyComment = (postId, commentId, replierId, replierPseudo, text, 
                 replierId,
                 replierPseudo,
                 text,
+                replyMedia,
+                replyType,
                 repliedTo,
-                replyType, // Inclut replyType ici
             },
         })
             .then((res) => {

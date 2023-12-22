@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, TextInput, Pressable, Dimensions, Modal, Alert } from "react-native";
+import { View, Text, Image, Keyboard, TouchableOpacity, TextInput, Pressable, Dimensions, Modal, Alert, Platform } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
-const AddCommentButton = ({ post, isKeyboardActive }) => {
+const AddCommentButton = ({ post, partVisible }) => {
   const { isDarkMode } = useDarkMode();
 
   const [text, setText] = useState("");
@@ -191,6 +191,7 @@ const AddCommentButton = ({ post, isKeyboardActive }) => {
 
 
 
+  
 
 
 
@@ -225,90 +226,90 @@ const AddCommentButton = ({ post, isKeyboardActive }) => {
 
       {userData._id && (
         <>
-          <View
-            style={{
-              paddingTop: 10,
-              flexDirection: "row",
-              width: "100%",
-              alignItems: "center",
-              //backgroundColor: "red",
-              height: "40%"
-            }}>
+          {partVisible && (
             <View
               style={{
+                paddingTop: 10,
                 flexDirection: "row",
-                width: "45%",
+                width: "100%",
                 alignItems: "center",
-                justifyContent: "space-around",
-                //backgroundColor: "black",
-                marginLeft: "12%",
-                height: "100%"
+                //backgroundColor: "red",
+                height: "40%"
               }}>
-              <Pressable
-                onPress={addImageComment}
+              <View
                 style={{
                   flexDirection: "row",
-                  width: 40,
+                  width: "45%",
                   alignItems: "center",
-                  //backgroundColor: "green",
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name="images-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
+                  justifyContent: "space-around",
+                  //backgroundColor: "black",
+                  marginLeft: "12%",
+                  height: "100%"
+                }}>
+                <Pressable
+                  onPress={addImageComment}
+                  style={{
+                    flexDirection: "row",
+                    width: 40,
+                    alignItems: "center",
+                    //backgroundColor: "green",
+                    height: 40,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Ionicons name="images-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
 
-              </Pressable>
-              <Pressable
-                onPress={addGifComment}
-                style={{
-                  flexDirection: "row",
-                  width: 40,
-                  alignItems: "center",
-                  //backgroundColor: "green",
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <MaterialCommunityIcons name="file-gif-box" size={35} color={isDarkMode ? "#F5F5F5" : "black"} />
+                </Pressable>
+                <Pressable
+                  onPress={addGifComment}
+                  style={{
+                    flexDirection: "row",
+                    width: 40,
+                    alignItems: "center",
+                    //backgroundColor: "green",
+                    height: 40,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <MaterialCommunityIcons name="file-gif-box" size={35} color={isDarkMode ? "#F5F5F5" : "black"} />
 
-              </Pressable>
-              <Pressable
-                onPress={addAudioComment}
-                style={{
-                  flexDirection: "row",
-                  width: 40,
-                  alignItems: "center",
-                  //backgroundColor: "green",
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name="mic-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
+                </Pressable>
+                <Pressable
+                  onPress={addAudioComment}
+                  style={{
+                    flexDirection: "row",
+                    width: 40,
+                    alignItems: "center",
+                    //backgroundColor: "green",
+                    height: 40,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Ionicons name="mic-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
 
-              </Pressable>
-              <Pressable
-                onPress={addUserComment}
-                style={{
-                  flexDirection: "row",
-                  width: 40,
-                  alignItems: "center",
-                  //backgroundColor: "green",
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Fontisto name="hashtag" size={20} color={isDarkMode ? "#F5F5F5" : "black"} />
+                </Pressable>
+                <Pressable
+                  onPress={addUserComment}
+                  style={{
+                    flexDirection: "row",
+                    width: 40,
+                    alignItems: "center",
+                    //backgroundColor: "green",
+                    height: 40,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Fontisto name="hashtag" size={20} color={isDarkMode ? "#F5F5F5" : "black"} />
 
-              </Pressable>
+                </Pressable>
+              </View>
+
             </View>
-
-
-
-          </View>
+          )}
 
 
           <View

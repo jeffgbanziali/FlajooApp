@@ -38,6 +38,8 @@ const Posts = ({ post }) => {
   const [isKeyboardActive, setKeyboardActive] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
+  const [partVisible, setPartVisible] = useState(true);
+
   const navigation = useNavigation();
   const [response, setResponse] = useState(false)
   const [responseToResponse, setResponseToResponse] = useState(false)
@@ -87,6 +89,32 @@ const Posts = ({ post }) => {
       keyboardDidHideListener.remove();
     };
   }, []);*/
+
+
+
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // Le clavier est ouvert, masquez votre partie
+        setPartVisible(false);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        // Le clavier est fermé, affichez votre partie
+        setPartVisible(true);
+      }
+    );
+
+    // Nettoyez les écouteurs lorsque le composant est démonté
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
 
 
@@ -863,7 +891,9 @@ const Posts = ({ post }) => {
                 <>
                   <AddReplyComment
                     post={post}
-                    selectedComment={selectedComment} />
+                    selectedComment={selectedComment}
+                    partVisible={partVisible}
+                  />
 
                 </>
 
@@ -874,12 +904,16 @@ const Posts = ({ post }) => {
                       post={post}
                       selectedComment={selectedComment}
                       selectedReply={selectedReply}
+                      partVisible={partVisible}
                     />
                   </>
 
                 ) : (
                   <>
-                    <AddCommentButton post={post} />
+                    <AddCommentButton
+                      post={post}
+                      partVisible={partVisible}
+                    />
                   </>
 
                 )

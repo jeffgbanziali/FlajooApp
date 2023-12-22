@@ -13,8 +13,10 @@ import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
+import Video from 'react-native-video';
 
-const Media = ({ post, item, toggleToolings, toggleComments }) => {
+
+const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
 
     const navigation = useNavigation();
@@ -24,14 +26,11 @@ const Media = ({ post, item, toggleToolings, toggleComments }) => {
     const goProfil = (id) => {
         if (uid === id) {
             console.log("go to my profil", id);
-            navigation.navigate("Profile", { id });
         } else {
             navigation.navigate("ProfilFriends", { id });
-            console.log("go to profile friends", id);
         }
     };
 
-    console.log("c'est toi là ", item);
 
 
 
@@ -150,7 +149,6 @@ const Media = ({ post, item, toggleToolings, toggleComments }) => {
 
             <View
                 style={{
-                    borderColor: "red",
                     width: "100%",
                     height: 500,
                     justifyContent: "center",
@@ -172,19 +170,46 @@ const Media = ({ post, item, toggleToolings, toggleComments }) => {
                         borderTopRightRadius: 20,
                     }}
                 />
-                <Image
-                    source={{
-                        uri: item.mediaUrl,
-                    }}
-                    style={{
-                        borderColor: "red",
-                        width: "100%",
-                        height: "100%",
-                        resizeMode: "cover",
-                        borderRadius: 20,
-                        opacity: isDarkMode ? 0.7 : 1,
-                    }}
-                />
+                {
+                    item.mediaType === "image" && (
+                        <Image
+                            source={{
+                                uri: item.mediaUrl,
+                            }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                resizeMode: "cover",
+                                borderRadius: 20,
+                                opacity: isDarkMode ? 0.7 : 1,
+                            }}
+                        />
+                    )
+                }
+                {
+                    item.mediaType === "video" && (
+
+
+                        <Video
+                            source={{
+                                uri: item.mediaUrl,
+                            }}
+                            rate={1.0}
+                            volume={1.0}
+                            isMuted={false}
+                            resizeMode="cover"
+                            isLooping
+                            paused={true}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                resizeMode: "cover",
+                                borderRadius: 20,
+                                opacity: isDarkMode ? 0.7 : 1,
+                            }}
+                        />
+                    )
+                }
 
                 <LinearGradient
                     colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
@@ -313,4 +338,4 @@ const Media = ({ post, item, toggleToolings, toggleComments }) => {
     )
 }
 
-export default Media
+export default PostMedia

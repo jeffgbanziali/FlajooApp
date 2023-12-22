@@ -29,6 +29,7 @@ import AddReplyComment from "./AddButtom/AddReplyComment";
 import AddReplyToReply from "./AddButtom/AddReplyToReply";
 import PostText from "./PostType/PostText";
 import PostMedia from "./PostType/PostMedia";
+import PostTwoMedia from "./PostType/PostTwoMedia";
 import PostTextAndMedia from "./PostType/PostTextAndMedia";
 
 const Posts = ({ post }) => {
@@ -58,6 +59,8 @@ const Posts = ({ post }) => {
       console.log("go to profile friends", id);
     }
   };
+
+
 
 
   const answer = (comment) => {
@@ -174,231 +177,393 @@ const Posts = ({ post }) => {
   };
 
 
-  const mediaDate = post.media.find(mediaItem => mediaItem);
 
-  // Exemple d'affichage des dates dans la console
-  console.log('Dates from media:', mediaDate);
+  const mediaData = post.media?.map(mediaItem => mediaItem);
+
+
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(
+    post.media
+  );
+
+  const mediaDate = post.media?.find(mediaItem => mediaItem);
+
+
+
+
 
 
 
   return (
     <>
 
-      {mediaDate && post.message && (
-        <View
-          key={post._id}
-          style={{
-            marginTop: 8,
-            marginBottom: 5,
-            backgroundColor: isDarkMode ? "#171717" : "white",
-            position: "relative",
-            width: "96%",
-            height: 500,
-            borderRadius: 20,
-            zIndex: 1,
-            shadowColor: isDarkMode ? "white " : "#000",
-            shadowOffset: {
-              width: 0,
-              height: isDarkMode ? 1 : 2,
-            },
-            shadowOpacity: isDarkMode ? 0.16 : 0.6,
-            shadowRadius: 3.84,
-            elevation: 2,
-          }}
-        >
-          {isLoading ? (
+      {currentMediaIndex?.length > 1 ? (
+        <>
+          {mediaData && post.message && (
             <View
+              key={post._id}
               style={{
-                width: "100%",
-                height: "50%",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column"
+                marginTop: 8,
+                marginBottom: 5,
+                backgroundColor: isDarkMode ? "#171717" : "white",
+                position: "relative",
+                width: "96%",
+                height: 500,
+                borderRadius: 20,
+                zIndex: 1,
+                shadowColor: isDarkMode ? "white " : "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: isDarkMode ? 1 : 2,
+                },
+                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowRadius: 3.84,
+                elevation: 2,
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "30%",
-                }}
-              >
-                <Text
+              {isLoading ? (
+                <View
                   style={{
-                    textAlign: "center",
-                    fontSize: 16,
-                    color: isDarkMode ? "white" : "black",
+                    width: "100%",
+                    height: "50%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column"
                   }}
                 >
-                  Loading
-                </Text>
-                <ActivityIndicator size="large" color="white" />
-              </View>
-              <Text
-                style={{
-                  fontSize: 26,
-                  marginTop: "5%",
-                  textAlign: "center",
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                Please wait
-              </Text>
-            </View>
-          ) : (
-            <>
-              {mediaDate.mediaType === "image" && (
-                <PostTextAndMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                      width: "30%",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 16,
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      Loading
+                    </Text>
+                    <ActivityIndicator size="large" color="white" />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 26,
+                      marginTop: "5%",
+                      textAlign: "center",
+                      color: isDarkMode ? "white" : "black",
+                    }}
+                  >
+                    Please wait
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <PostTwoMedia post={post} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
 
+                </>
               )}
-            </>
+            </View>
           )}
-        </View>
-      )}
 
-      {mediaDate && !post.message && (
-        <View
-          key={post._id}
-          style={{
-            marginTop: 8,
-            marginBottom: 5,
-            backgroundColor: isDarkMode ? "#171717" : "white",
-            position: "relative",
-            width: "96%",
-            height: 500,
-            borderRadius: 20,
-            zIndex: 1,
-            shadowColor: isDarkMode ? "white " : "#000",
-            shadowOffset: {
-              width: 0,
-              height: isDarkMode ? 1 : 2,
-            },
-            shadowOpacity: isDarkMode ? 0.16 : 0.6,
-            shadowRadius: 3.84,
-            elevation: 2,
-          }}
-        >
-          {isLoading ? (
+          {mediaData && !post.message && (
             <View
+              key={post._id}
               style={{
-                width: "100%",
-                height: "50%",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column"
+                marginTop: 8,
+                marginBottom: 5,
+                backgroundColor: isDarkMode ? "#171717" : "white",
+                position: "relative",
+                width: "96%",
+                height: 500,
+                borderRadius: 20,
+                zIndex: 1,
+                shadowColor: isDarkMode ? "white " : "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: isDarkMode ? 1 : 2,
+                },
+                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowRadius: 3.84,
+                elevation: 2,
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "30%",
-                }}
-              >
-                <Text
+              {isLoading ? (
+                <View
                   style={{
-                    textAlign: "center",
-                    fontSize: 16,
-                    color: isDarkMode ? "white" : "black",
+                    width: "100%",
+                    height: "50%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column"
                   }}
                 >
-                  Loading
-                </Text>
-                <ActivityIndicator size="large" color="white" />
-              </View>
-              <Text
-                style={{
-                  fontSize: 26,
-                  marginTop: "5%",
-                  textAlign: "center",
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                Please wait
-              </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                      width: "30%",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 16,
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      Loading
+                    </Text>
+                    <ActivityIndicator size="large" color="white" />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 26,
+                      marginTop: "5%",
+                      textAlign: "center",
+                      color: isDarkMode ? "white" : "black",
+                    }}
+                  >
+                    Please wait
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <PostTwoMedia post={post} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+                </>
+              )}
             </View>
-          ) : (
-            <>
-              <PostMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
-
-            </>
           )}
-        </View>
-      )}
+        </>
+      ) :
+        currentMediaIndex?.length === 1 ? (
+          <>
 
-      {!mediaDate && post.message && (
-        <View
-          key={post._id}
-          style={{
-            marginTop: 8,
-            marginBottom: 5,
-            backgroundColor: isDarkMode ? "#171717" : "white",
-            position: "relative",
-            width: "96%",
-            height: 200,
-            borderRadius: 20,
-            zIndex: 1,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.4,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}
-        >
-          {isLoading ? (
-            <View
-              style={{
-                width: "100%",
-                height: "50%",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column"
-              }}
-            >
+            {mediaDate && post.message && (
               <View
+                key={post._id}
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: "30%",
+                  marginTop: 8,
+                  marginBottom: 5,
+                  backgroundColor: isDarkMode ? "#171717" : "white",
+                  position: "relative",
+                  width: "96%",
+                  height: 500,
+                  borderRadius: 20,
+                  zIndex: 1,
+                  shadowColor: isDarkMode ? "white " : "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: isDarkMode ? 1 : 2,
+                  },
+                  shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                  shadowRadius: 3.84,
+                  elevation: 2,
                 }}
               >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 16,
-                    color: isDarkMode ? "white" : "black",
-                  }}
-                >
-                  Loading
-                </Text>
-                <ActivityIndicator size="large" color="white" />
+                {isLoading ? (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: "50%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column"
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        width: "30%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 16,
+                          color: isDarkMode ? "white" : "black",
+                        }}
+                      >
+                        Loading
+                      </Text>
+                      <ActivityIndicator size="large" color="white" />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: 26,
+                        marginTop: "5%",
+                        textAlign: "center",
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      Please wait
+                    </Text>
+                  </View>
+                ) : (
+                  <>
+                    <PostTextAndMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+                  </>
+                )}
               </View>
-              <Text
+            )}
+
+            {mediaDate && !post.message && (
+              <View
+                key={post._id}
                 style={{
-                  fontSize: 26,
-                  marginTop: "5%",
-                  textAlign: "center",
-                  color: isDarkMode ? "white" : "black",
+                  marginTop: 8,
+                  marginBottom: 5,
+                  backgroundColor: isDarkMode ? "#171717" : "white",
+                  position: "relative",
+                  width: "96%",
+                  height: 500,
+                  borderRadius: 20,
+                  zIndex: 1,
+                  shadowColor: isDarkMode ? "white " : "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: isDarkMode ? 1 : 2,
+                  },
+                  shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                  shadowRadius: 3.84,
+                  elevation: 2,
                 }}
               >
-                Please wait
-              </Text>
-            </View>
-          ) : (
-            <>
-              <PostText post={post} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+                {isLoading ? (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: "50%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column"
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        width: "30%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 16,
+                          color: isDarkMode ? "white" : "black",
+                        }}
+                      >
+                        Loading
+                      </Text>
+                      <ActivityIndicator size="large" color="white" />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: 26,
+                        marginTop: "5%",
+                        textAlign: "center",
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      Please wait
+                    </Text>
+                  </View>
+                ) : (
+                  <>
+                    <PostMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+
+                  </>
+                )}
+              </View>
+            )}
+          </>
+        ) : (
+          <>
+            {!mediaDate && post.message && (
+              <View
+                key={post._id}
+                style={{
+                  marginTop: 8,
+                  marginBottom: 5,
+                  backgroundColor: isDarkMode ? "#171717" : "white",
+                  position: "relative",
+                  width: "96%",
+                  height: 200,
+                  borderRadius: 20,
+                  zIndex: 1,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.4,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}
+              >
+                {isLoading ? (
+                  <View
+                    style={{
+                      width: "100%",
+                      height: "50%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column"
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        width: "30%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 16,
+                          color: isDarkMode ? "white" : "black",
+                        }}
+                      >
+                        Loading
+                      </Text>
+                      <ActivityIndicator size="large" color="white" />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: 26,
+                        marginTop: "5%",
+                        textAlign: "center",
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      Please wait
+                    </Text>
+                  </View>
+                ) : (
+                  <>
+                    <PostText post={post} toggleToolings={toggleToolings} toggleComments={toggleComments} />
 
 
-            </>
-          )}
-        </View>
-      )}
+                  </>
+                )}
+              </View>
+            )}
+
+          </>
+        )
+      }
+
+
+
 
 
       <Modal

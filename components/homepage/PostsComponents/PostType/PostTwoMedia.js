@@ -3,9 +3,11 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    FlatList,
+    Animated,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useContext, } from "react";
+import React, { useContext, useRef, useState, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LikeButton from "../LikeButton";
@@ -13,25 +15,60 @@ import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
+import { Dimensions } from "react-native";
+import Pagination from "../CustomPostCard/Pagination"
 import Video from 'react-native-video';
 
 
-const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
-    const usersData = useSelector((state) => state.usersReducer);
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
+
+
+
+const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
+    const usersData = useSelector((state) => state.usersReducer);
+    const [index, setIndex] = useState(0);
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
     const { isDarkMode } = useDarkMode();
 
+    const scrollX = useRef(new Animated.Value(0)).current
+
     const goProfil = (id) => {
         if (uid === id) {
             console.log("go to my profil", id);
+            navigation.navigate("Profile", { id });
         } else {
             navigation.navigate("ProfilFriends", { id });
+            console.log("go to profile friends", id);
         }
     };
 
+    const handleOnScroll = event => {
+        Animated.event(
+            [
+                {
+                    nativeEvent: {
+                        contentOffset: {
+                            x: scrollX,
+                        },
+                    },
+                },
+            ],
+            {
+                useNativeDriver: false,
+            },
+        )(event);
+    };
 
+    const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
+        // console.log('viewableItems', viewableItems);
+        setIndex(viewableItems[0].index);
+    }).current;
+
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 50,
+    }).current;
 
 
     return (
@@ -41,6 +78,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                 height: "100%",
             }}
         >
+
             <View
                 style={{
                     flexDirection: "row",
@@ -145,83 +183,99 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
+            <View style={{
+                borderColor: "red",
+                width: windowWidth,
+                height: 500,
+                justifyContent: "center",
+                alignItems: "center",
+                position: "absolute",
+                overflow: "hidden",
 
-            <View
-                style={{
-                    borderColor: "red",
-                    width: "100%",
-                    height: 500,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "absolute",
-                    overflow: "hidden",
-                }}
-            >
-                <LinearGradient
-                    colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 1,
-                        height: 100,
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 20,
-                    }}
-                />
-                {
-                    item.mediaType === "image" && (
-                        <Image
-                            source={{
-                                uri: item.mediaUrl,
-                            }}
-                            style={{
-                                borderColor: "red",
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "cover",
-                                borderRadius: 20,
-                                opacity: isDarkMode ? 0.7 : 1,
-                            }}
-                        />
-                    )
-                }
-                {
-                    item.mediaType === "video" && (
-                        <Video
-                            source={{
-                                uri: item.mediaUrl,
-                            }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping
-                            paused={true}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "cover",
-                                borderRadius: 20,
-                                opacity: isDarkMode ? 0.7 : 1,
-                            }}
-                        />
-                    )
-                }
+            }}>
+                <FlatList
+                    data={mediaItem}
+                    horizontal
+                    pagingEnabled
+                    snapToAlignment="center"
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={handleOnScroll}
+                    onViewableItemsChanged={handleOnViewableItemsChanged}
+                    viewabilityConfig={viewabilityConfig}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <>
+                            <LinearGradient
+                                colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    zIndex: 1,
+                                    height: 100,
+                                    borderTopLeftRadius: 20,
+                                    borderTopRightRadius: 20,
+                                }}
+                            />
+                            {
+                                item.mediaType === "image" && (
+                                    <Image
+                                        source={{
+                                            uri: item.mediaUrl,
+                                        }}
+                                        style={{
+                                            borderColor: "red",
+                                            width: windowWidth,
+                                            height: "100%",
+                                            resizeMode: "cover",
+                                            borderRadius: 20,
+                                            opacity: isDarkMode ? 0.7 : 1,
+                                        }}
+                                    />
+                                )
+                            }
+                            {
+                                item.mediaType === "video" && (
+                                    <Video
+                                        source={{
+                                            uri: item.mediaUrl,
+                                        }}
+                                        rate={1.0}
+                                        volume={1.0}
+                                        isMuted={false}
+                                        resizeMode="cover"
+                                        isLooping
+                                        paused={true}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            resizeMode: "cover",
+                                            borderRadius: 20,
+                                            opacity: isDarkMode ? 0.7 : 1,
+                                        }}
+                                    />
+                                )
+                            }
 
-                <LinearGradient
-                    colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
-                    style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: 200,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-                    }}
+                            <LinearGradient
+                                colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                                style={{
+                                    position: "absolute",
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: 200,
+                                    borderBottomLeftRadius: 20,
+                                    borderBottomRightRadius: 20,
+                                }}
+                            />
+                        </>
+
+
+                    )}
                 />
+                <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
             </View>
 
             <View
@@ -229,9 +283,9 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "relative",
+                    position: "absolute",
                     marginVertical: 10,
-                    top: "70%",
+                    bottom: "5%",
                     width: "100%",
                     //backgroundColor: "red"
                 }}
@@ -333,30 +387,11 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
-            <View
-                style={{
-                    zIndex: 1,
-                    height: "12%",
-                    width: "90%",
-                    marginLeft: 10,
-                    top: "56%",
-                    //backgroundColor:"red"
-                }}
-            >
-                <Text
-                    style={{
-                        color: isDarkMode ? "white" : "#F5F5F5",
-                        fontSize: 16,
-                        fontWeight: "400",
-                        textAlign: "justify",
-                        lineHeight: 20,
-                    }}
-                >
-                    {post.message}
-                </Text>
-            </View>
         </View>
     )
 }
 
-export default PostTextAndMedia
+
+
+
+export default PostTwoMedia

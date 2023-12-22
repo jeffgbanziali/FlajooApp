@@ -16,6 +16,7 @@ import { collection, addDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '../../Data/FireStore';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
+import Video from 'react-native-video';
 
 
 
@@ -51,38 +52,57 @@ const NewPostScreen = () => {
 
 
     const handlePostSubmit = async () => {
-        if (postText.trim() === '') {
-            Alert.alert('Erreur', 'Veuillez entrer du texte pour votre post.');
-            return;
-        }
 
-        const postData = {
-            posterId: userData._id,
-            message: postText,
-            imageFileName: null,
-        };
 
         try {
+
+            let mediaUrl = null;
+            let mediaType = null;
+
+
+
             if (selectedImage) {
-                const imageName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                const imageUrl = await uploadImageToFirebase(selectedImage.uri, imageName);
-                postData.imageFileName = imageUrl;
+                const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
+                mediaUrl = await uploadImageToFirebase(selectedImage.uri, mediaName);
+                mediaType = 'image';
+            } else if (selectedVideo) {
+                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
+                mediaUrl = await uploadImageToFirebase(selectedVideo.uri, mediaName, 'video');
+                mediaType = 'video';
             }
 
-            // Utilise le dispatch pour ajouter le post au store Redux
-            dispatch(addPosts(postData));
 
-            // Ajoute le document à la collection "posts" dans Firestore
-            const docRef = await addDoc(collection(firestore, 'posts'), postData);
-            const docSnapshot = await getDoc(docRef);
+            const postData = {
+                posterId: userData._id,
+                message: postText,
+                media: [
+                    {
+                        mediaUrl,
+                        mediaType
+                    }
+                ]
+            };
 
-            console.log('Post créé avec succès! Document ID:', docRef.id);
-            console.log('Document data:', docSnapshot.data());
-            Alert.alert('Succès', 'Votre post a été publié avec succès !');
-            setPostText('');
-            setSelectedImage(null);
-            setLoadPost(true);
-            navigation.goBack('TabNavigation');
+
+            if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
+
+                // Utilise le dispatch pour ajouter le post au store Redux
+                dispatch(addPosts(postData));
+
+                // Ajoute le document à la collection "posts" dans Firestore
+                const docRef = await addDoc(collection(firestore, 'posts'), postData);
+                const docSnapshot = await getDoc(docRef);
+
+                console.log('Post créé avec succès! Document ID:', docRef.id);
+                console.log('Document data:', docSnapshot.data());
+                Alert.alert('Succès', 'Votre post a été publié avec succès !');
+                setPostText('');
+                setSelectedImage(null);
+                setLoadPost(true);
+                navigation.goBack('TabNavigation');
+            } else {
+                Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
+            }
         } catch (error) {
             console.error('Erreur lors de la création du post :', error);
 
@@ -96,6 +116,8 @@ const NewPostScreen = () => {
         }
     };
 
+
+
     const selectImage = async () => {
         try {
             console.log('Ouverture de la bibliothèque de médias...');
@@ -104,15 +126,26 @@ const NewPostScreen = () => {
                 allowsEditing: false,
                 quality: 1,
             });
-
             if (!result.didCancel) {
                 if (result.assets && result.assets.length > 0) {
                     const selectedAsset = result.assets[0];
-                    setSelectedImage(selectedAsset);
-                    setShowImage(true);
+
+                    if (selectedAsset.uri.endsWith('.mp4')) {
+                        setSelectedVideo(selectedAsset);
+                        setSelectedImage(null);
+                        setShowImage(true);
+                        console.log('Vidéo sélectionnée :', selectedAsset);
+                    } else {
+                        setSelectedImage(selectedAsset);
+                        setSelectedVideo(null);
+                        setShowImage(true);
+                        console.log('Image sélectionnée :', selectedAsset);
+                    }
+                } else {
+                    console.log('Aucun média sélectionné');
                 }
             } else {
-                console.log('Aucun média sélectionné');
+                console.log('Sélection annulée');
             }
         } catch (error) {
             console.error('Erreur lors de la sélection de l\'image :', error);
@@ -398,7 +431,7 @@ const NewPostScreen = () => {
                             <Entypo name="cross" size={36} color="white" />
                         </TouchableOpacity>
                     </View>
-                    {selectedImage && !selectedVideo && (
+                    {selectedImage && (
 
                         <Image
                             source={{ uri: selectedImage.uri }}
@@ -408,6 +441,24 @@ const NewPostScreen = () => {
                                 resizeMode: "contain"
                             }}
                         />
+                    )}
+
+                    {selectedVideo && (
+
+                        <Video
+                            source={{ uri: selectedVideo.uri }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                            }}
+                            rate={1.0}
+                            volume={1.0}
+                            isMuted={false}
+                            resizeMode="contain"
+                            shouldPlay
+                            isLooping
+                        />
+
                     )}
 
 

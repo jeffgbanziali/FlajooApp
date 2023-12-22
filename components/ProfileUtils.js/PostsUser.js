@@ -25,6 +25,9 @@ const PostsUser = () => {
     }, [uid]);
 
 
+    console.log("Cadeau", user)
+
+
 
 
     const renderPost = ({ item, index }) => (
@@ -36,8 +39,9 @@ const PostsUser = () => {
                 borderColor: "white",
                 backgroundColor: "white"
             }}>
+                
                 <Image
-                    source={{ uri: item.picture }}
+                    source={{ uri: item.media }}
                     style={{
                         width: 135,
                         height: 200,

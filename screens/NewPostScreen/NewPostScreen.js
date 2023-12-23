@@ -17,6 +17,7 @@ import { firestore } from '../../Data/FireStore';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Video from 'react-native-video';
+import { FlatList } from 'react-native';
 
 
 
@@ -26,6 +27,7 @@ const NewPostScreen = () => {
     const [postText, setPostText] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedVideo, setSelectedVideo] = useState(null);
+    const [selectedMediaArray, setSelectedMediaArray] = useState([]);
     const [showImage, setShowImage] = useState(false);
     const [addText, setAddText] = useState(false);
     const dispatch = useDispatch();
@@ -51,45 +53,59 @@ const NewPostScreen = () => {
     };
 
 
+
+
+    const processMedia = async (selectedMedia) => {
+        let mediaType = null;
+
+        if (selectedMedia.type.includes('image')) {
+            mediaType = 'image';
+        } else if (selectedMedia.type.includes('video')) {
+            mediaType = 'video';
+        }
+
+        if (mediaType) {
+            const mediaName = `${mediaType}-${Date.now()}.${selectedMedia.uri.split('.').pop()}`;
+            const mediaUrl = await uploadImageToFirebase(selectedMedia.uri, mediaName, mediaType);
+            return {
+                mediaUrl,
+                mediaType,
+            };
+        }
+
+        return null;
+    };
+
+    const handlePostSubmitError = (error) => {
+        console.error('Erreur lors de la création du post :', error);
+
+        let errorMessage = 'Une erreur s\'est produite lors de la création du post.';
+
+        if (error.response && error.response.data && error.response.data.errors) {
+            errorMessage = Object.values(error.response.data.errors).join('\n');
+        }
+
+        Alert.alert('Erreur', errorMessage);
+    };
+
     const handlePostSubmit = async () => {
-
-
         try {
+            let mediaArray = [];
 
-            let mediaUrl = null;
-            let mediaType = null;
-
-
-
-            if (selectedImage) {
-                const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await uploadImageToFirebase(selectedImage.uri, mediaName);
-                mediaType = 'image';
-            } else if (selectedVideo) {
-                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await uploadImageToFirebase(selectedVideo.uri, mediaName, 'video');
-                mediaType = 'video';
+            if (selectedMediaArray.length > 0) {
+                mediaArray = await Promise.all(selectedMediaArray.map(processMedia));
+                mediaArray = mediaArray.filter(Boolean); // Filtre les valeurs null
             }
-
 
             const postData = {
                 posterId: userData._id,
                 message: postText,
-                media: [
-                    {
-                        mediaUrl,
-                        mediaType
-                    }
-                ]
+                media: mediaArray,
             };
 
-
-            if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
-
-                // Utilise le dispatch pour ajouter le post au store Redux
+            if ((postText && mediaArray.length > 0) || (!postText && mediaArray.length > 0) || (postText && !mediaArray.length)) {
                 dispatch(addPosts(postData));
 
-                // Ajoute le document à la collection "posts" dans Firestore
                 const docRef = await addDoc(collection(firestore, 'posts'), postData);
                 const docSnapshot = await getDoc(docRef);
 
@@ -104,27 +120,59 @@ const NewPostScreen = () => {
                 Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
             }
         } catch (error) {
-            console.error('Erreur lors de la création du post :', error);
-
-            let errorMessage = 'Une erreur s\'est produite lors de la création du post.';
-
-            if (error.response && error.response.data && error.response.data.errors) {
-                errorMessage = Object.values(error.response.data.errors).join('\n');
-            }
-
-            Alert.alert('Erreur', errorMessage);
+            handlePostSubmitError(error);
         }
     };
 
 
 
+
     const selectImage = async () => {
+        try {
+            const result = await launchImageLibrary({
+                mediaType: 'mixed',
+                allowsEditing: false,
+                quality: 1,
+                selectionLimit: 5,  // Autorise la sélection de jusqu'à 5 médias
+            });
+
+            if (!result.didCancel) {
+                if (result.assets && result.assets.length > 0) {
+                    // Met à jour l'état selectedMediaArray avec les médias sélectionnés
+                    setSelectedMediaArray(result.assets);
+                    // Affiche les miniatures des images sélectionnées dans ton interface utilisateur
+                    setShowImage(true);
+
+                } else {
+                    console.log('Aucun média sélectionné');
+                }
+            } else {
+                console.log('Sélection annulée');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la sélection de l\'image :', error);
+            Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'image.');
+        }
+    };
+
+
+
+
+
+
+
+
+    console.log('Image sélectionnée :', selectedMediaArray);
+
+
+    /*const selectImage = async () => {
         try {
             console.log('Ouverture de la bibliothèque de médias...');
             const result = await launchImageLibrary({
                 mediaType: 'mixed',
                 allowsEditing: false,
                 quality: 1,
+                selectionLimit: 5,
             });
             if (!result.didCancel) {
                 if (result.assets && result.assets.length > 0) {
@@ -151,7 +199,7 @@ const NewPostScreen = () => {
             console.error('Erreur lors de la sélection de l\'image :', error);
             Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'image.');
         }
-    };
+    };*/
 
 
     const handlePress = () => {
@@ -431,35 +479,48 @@ const NewPostScreen = () => {
                             <Entypo name="cross" size={36} color="white" />
                         </TouchableOpacity>
                     </View>
-                    {selectedImage && (
-
-                        <Image
-                            source={{ uri: selectedImage.uri }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "contain"
-                            }}
-                        />
-                    )}
-
-                    {selectedVideo && (
-
-                        <Video
-                            source={{ uri: selectedVideo.uri }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                            }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            resizeMode="contain"
-                            shouldPlay
-                            isLooping
-                        />
-
-                    )}
+                    <FlatList
+                        horizontal
+                        data={selectedMediaArray}
+                        keyExtractor={(item, index) => index}
+                        renderItem={({ item }) => (
+                            <View
+                                style={{
+                                    width: windowWidth,
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    //backgroundColor: "red"
+                                }}
+                            >
+                                {(item.type === 'image/jpg' || item.type === 'image/png') && (
+                                    <Image
+                                        source={{ uri: item.uri }}
+                                        style={{
+                                            width: windowWidth,
+                                            height: "100%",
+                                            resizeMode: "contain"
+                                        }}
+                                    />
+                                )}
+                                {(item.type === 'video/mp4' || item.type === "video/mp3") && (
+                                    <Video
+                                        source={{ uri: item.uri }}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                        }}
+                                        rate={1.0}
+                                        volume={1.0}
+                                        isMuted={false}
+                                        resizeMode="contain"
+                                        shouldPlay
+                                        isLooping
+                                    />
+                                )}
+                            </View>
+                        )}
+                    />
 
 
                     <View
@@ -604,22 +665,24 @@ const NewPostScreen = () => {
                         <TouchableOpacity
                             onPress={handlePostSubmit}
                             style={{
-                                width: "14%",
-                                height: "60%",
-                                backgroundColor: "#80BCF3",
+                                width: 100,
+                                height: 40,
+                                backgroundColor: isDarkMode ? "#E52C2C" : "#2B60E8",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                alignContent: "center",
-                                borderRadius: 100,
+                                borderRadius: 15,
                                 flexDirection: "row",
                                 zIndex: 1,
                             }}
                         >
-                            <Ionicons
-                                name="send"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
+                            <Text
+                                style={{
+                                    fontSize: 15,
+                                    fontWeight: 'bold',
+                                    color: "white"
+                                }}>
+                                {t('AddPost')}
+                            </Text>
                         </TouchableOpacity>
                     </View>
 

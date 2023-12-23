@@ -244,13 +244,12 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                         rate={1.0}
                                         volume={1.0}
                                         isMuted={false}
-                                        resizeMode="cover"
+                                        resizeMode="contain"
                                         isLooping
                                         paused={true}
                                         style={{
-                                            width: "100%",
+                                            width:windowWidth,
                                             height: "100%",
-                                            resizeMode: "cover",
                                             borderRadius: 20,
                                             opacity: isDarkMode ? 0.7 : 1,
                                         }}

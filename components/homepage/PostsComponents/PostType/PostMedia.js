@@ -25,7 +25,7 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
     const goProfil = (id) => {
         if (uid === id) {
-            console.log("go to my profil", id);
+            navigation.navigate("Profile", { id });
         } else {
             navigation.navigate("ProfilFriends", { id });
         }

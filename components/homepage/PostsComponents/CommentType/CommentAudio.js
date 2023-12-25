@@ -332,7 +332,7 @@ const CommentAudio = ({ comment, toggle, toAnswering, toReplying }) => {
 
                                 return (
 
-                                    <>
+                                    <View key={reply._id}>
                                         {!reply.repliedTo && reply.replyMedia && (
 
                                             <>
@@ -374,7 +374,7 @@ const CommentAudio = ({ comment, toggle, toAnswering, toReplying }) => {
                                             </>
                                         )
                                         }
-                                    </>
+                                    </View>
 
                                 )
 

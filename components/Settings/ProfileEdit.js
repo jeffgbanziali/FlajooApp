@@ -58,6 +58,8 @@ const ProfileEdit = () => {
     navigation.navigate("BioUpdate");
   };
 
+
+
   useEffect(() => {
     if (loadUsers) {
       dispatch(getUser(userData._id));
@@ -65,6 +67,10 @@ const ProfileEdit = () => {
     }
   }, [loadUsers, dispatch]);
 
+
+
+
+  
   const handleClickReturnProfile = () => {
     console.log("clicked home");
     navigation.navigate("Settings");
@@ -99,7 +105,7 @@ const ProfileEdit = () => {
 
       if (selectedImage) {
         const imageName = `profile-${Date.now()}.${selectedImage.path.split('.').pop()}`;
-        imageUrl = await saveMediaLocally(selectedImage.path, imageName);
+        imageUrl = await uploadProfileToFirebase(selectedImage.path, imageName);
       }
       const updatedProfileData = {
         picture: imageUrl,

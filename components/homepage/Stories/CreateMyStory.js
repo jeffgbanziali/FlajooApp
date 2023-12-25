@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, FlatList, Alert, Animated, Easing, Dimensions } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, FlatList, Alert, Animated, Easing, Dimensions, Platform, Keyboard, SafeAreaView } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from "../../Context/AppContext"
@@ -18,7 +18,7 @@ import Video from 'react-native-video';
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
-
+import { KeyboardAvoidingView } from 'react-native';
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -43,8 +43,7 @@ const CreateStory = () => {
     const [addText, setAddText] = useState(false);
     const [addEffect, setAddEffect] = useState(false);
     const [selectedEffect, setSelectedEffect] = useState(null);
-    const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
-
+    const [media, setMedia] = useState([]);
 
     const { t } = useTranslation();
 
@@ -78,11 +77,11 @@ const CreateStory = () => {
 
             if (selectedImage) {
                 const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await saveMediaLocally(selectedImage.uri, mediaName, 'image');
+                mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
                 mediaType = 'image';
             } else if (selectedVideo) {
                 const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await saveMediaLocally(selectedVideo.uri, mediaName, 'video');
+                mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
                 mediaType = 'video';
             }
 
@@ -206,29 +205,10 @@ const CreateStory = () => {
     }
 
 
-    { /* useEffect(() => {
-        const fetchMedia = async () => {
-            try {
-                // Demander l'autorisation d'accéder à la bibliothèque multimédia
-                const { status } = await MediaLibrary.requestPermissionsAsync();
 
-                if (status !== 'granted') {
-                    // Si l'autorisation n'est pas accordée, afficher une alerte ou prendre d'autres mesures
-                    console.error('Permission refusée pour accéder à la bibliothèque multimédia.');
-                    return;
-                }
 
-                // L'autorisation est accordée, récupérer les médias
-                const { assets } = await MediaLibrary.getAssetsAsync({ mediaType: 'all' });
-                console.log('Médias récupérés avec succès:', assets);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des médias :', error);
-            }
-        };
 
-        // Appeler la fonction pour récupérer les médias
-        fetchMedia();
-    }, []);*/}
+
 
 
 
@@ -474,6 +454,7 @@ const CreateStory = () => {
                         height: "100%",
                         marginTop: 10,
                         flexDirection: "column",
+                        //backgroundColor: "red"
                     }}
                 >
                     <View
@@ -600,229 +581,248 @@ const CreateStory = () => {
                 animationType="slide"
                 onRequestClose={closeImageModal}
             >
-                <View style={{
-                    flex: 1,
-                    alignItems: "center",
-                    backgroundColor: isDarkMode ? "black" : "black",
-                    width: windowWidth,
-                    height: windowHeight
-                }}>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 40,
-                            marginTop: "12%",
-                            justifyContent: "center",
-                            position: "absolute",
-                            zIndex: 2,
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginLeft: "2%",
-                            }}
-                            onPress={closeImageModal}
-                        >
-                            <Entypo name="cross" size={36} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                    {selectedImage && !selectedVideo && (
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={{
+                        flex: 1,
+                        backgroundColor: isDarkMode ? "black" : "black",
+                        width: windowWidth,
+                        height: windowHeight
+                    }}>
 
-                        <Image
-                            source={{ uri: selectedImage.uri }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "contain"
-                            }}
-                        />
-                    )}
 
-                    {selectedVideo && (
-
-                        <Video
-                            source={{ uri: selectedVideo.uri }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                            }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            resizeMode="contain"
-                            shouldPlay
-                            isLooping
-                        />
-
-                    )}
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "20%",
-                            marginTop: "20%",
-                            alignItems: "flex-end",
-                            position: "absolute",
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={handlePress}
-                            style={{
-                                width: "25%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "2%",
-                                flexDirection: "row",
-                                padding: 12,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 18,
-                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-                                    marginRight: 12,
-                                    fontWeight: "600",
-                                }}
-                            >
-                                {t('Text')}
-                            </Text>
-                            <Ionicons
-                                name="text"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={{
-                                width: "25%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "2%",
-                                marginTop: "2%",
-                                flexDirection: "row",
-                                padding: 12,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 18,
-                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-                                    marginRight: 12,
-                                    fontWeight: "600",
-                                }}
-                            >
-                                {t('Song')}
-                            </Text>
-                            <Ionicons
-                                name="musical-notes"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={handleAddEffect}
-                            style={{
-                                width: "30%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "2%",
-                                marginTop: "2%",
-                                flexDirection: "row",
-                                padding: 12,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 18,
-                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-                                    marginRight: 12,
-                                    fontWeight: "600",
-                                }}
-                            >
-                                {t('Effects')}
-                            </Text>
-                            <Entypo
-                                name="adjust"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    {addText && (
+                    <SafeAreaView>
                         <View
                             style={{
                                 width: "100%",
-                                height: "20%",
-                                position: "absolute",
+                                height: "5%",
                                 justifyContent: "center",
-                                padding: 5,
-                                bottom: "20%",
+                                //backgroundColor: "blue",
                             }}
                         >
-                            <TextInput
+                            <TouchableOpacity
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginLeft: "2%",
+                                }}
+                                onPress={closeImageModal}
+                            >
+                                <Entypo name="cross" size={36} color="white" />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View
+                            style={{
+                                //backgroundColor: "red",
+                                width: "100%",
+                                height: "85%",
+                                alignItems: "center",
+
+                            }}>
+                            {selectedImage && !selectedVideo && (
+
+                                <Image
+                                    source={{ uri: selectedImage.uri }}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        resizeMode: "contain"
+                                    }}
+                                />
+                            )}
+
+                            {selectedVideo && (
+
+                                <Video
+                                    source={{ uri: selectedVideo.uri }}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                    }}
+                                    rate={1.0}
+                                    volume={1.0}
+                                    isMuted={false}
+                                    resizeMode="contain"
+                                    shouldPlay
+                                    isLooping
+                                />
+
+                            )}
+                            <View
                                 style={{
                                     width: "100%",
-                                    height: "100%",
-                                    paddingLeft: 12,
-                                    fontSize: 10,
-                                    fontWeight: "normal",
-                                    overflow: "hidden",
-                                    color: "white",
+                                    height: "20%",
+                                    marginTop: "20%",
+                                    alignItems: "flex-end",
+                                    position: "absolute",
+                                    zIndex: 1,
                                 }}
-                                multiline
-                                numberOfLines={4}
-                                maxLength={40}
-                                value={postText}
-                                onChangeText={(text) => setPostText(text)}
-                                editable
-                                placeholder="Leave a short text..."
-                                placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
-                                fontSize="40"
-                                color={isDarkMode ? "#F5F5F5" : "white"} />
-                        </View>
-                    )}
+                            >
+                                <TouchableOpacity
+                                    onPress={handlePress}
+                                    style={{
+                                        width: "25%",
+                                        justifyContent: "space-around",
+                                        alignItems: "center",
+                                        marginRight: "2%",
+                                        flexDirection: "row",
+                                        padding: 12,
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                                            marginRight: 12,
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        {t('Text')}
+                                    </Text>
+                                    <Ionicons
+                                        name="text"
+                                        size={30}
+                                        color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                                    />
 
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "10%",
-                            bottom: "3%",
-                            position: "absolute",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            paddingRight: 14,
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={handleStorySubmit}
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={{
+                                        width: "25%",
+                                        justifyContent: "space-around",
+                                        alignItems: "center",
+                                        marginRight: "2%",
+                                        marginTop: "2%",
+                                        flexDirection: "row",
+                                        padding: 12,
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                                            marginRight: 12,
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        {t('Song')}
+                                    </Text>
+                                    <Ionicons
+                                        name="musical-notes"
+                                        size={30}
+                                        color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={handleAddEffect}
+                                    style={{
+                                        width: "30%",
+                                        justifyContent: "space-around",
+                                        alignItems: "center",
+                                        marginRight: "2%",
+                                        marginTop: "2%",
+                                        flexDirection: "row",
+                                        padding: 12,
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                                            marginRight: 12,
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        {t('Effects')}
+                                    </Text>
+                                    <Entypo
+                                        name="adjust"
+                                        size={30}
+                                        color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            {addText && (
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        height: "20%",
+                                        position: "absolute",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        padding: 5,
+                                        //backgroundColor: "green",
+                                        bottom: "10%",
+                                    }}
+                                >
+                                    <TextInput
+                                        style={{
+                                            width: "100%",
+                                            padding: 5,
+                                            //backgroundColor: "red",
+                                            height: "80%",
+                                            paddingLeft: 12,
+                                            fontSize: 10,
+                                            fontWeight: "normal",
+                                            overflow: "hidden",
+                                            color: "white",
+                                        }}
+                                        multiline
+                                        numberOfLines={4}
+                                        maxLength={40}
+                                        value={postText}
+                                        onChangeText={(text) => setPostText(text)}
+                                        editable
+                                        placeholder="Leave a short text..."
+                                        placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
+                                        fontSize={20}
+                                        color={isDarkMode ? "#F5F5F5" : "white"} />
+                                </View>
+                            )}
+
+                        </View>
+
+                        <View
                             style={{
-                                width: "14%",
-                                height: "60%",
-                                backgroundColor: "#80BCF3",
+                                width: "100%",
+                                height: "10%",
                                 justifyContent: "center",
-                                alignItems: "center",
-                                alignContent: "center",
-                                borderRadius: 100,
-                                flexDirection: "row",
+                                position: "relative",
+                                alignItems: "flex-end",
+                                paddingRight: 14,
+                                //backgroundColor: "blue",
                                 zIndex: 1,
                             }}
                         >
-                            <Ionicons
-                                name="send"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
+                            <TouchableOpacity
+                                onPress={handleStorySubmit}
+                                style={{
+                                    width: 100,
+                                    height: 40,
+                                    backgroundColor: isDarkMode ? "#E52C2C" : "#2B60E8",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: 15,
+                                    flexDirection: "row",
+                                    zIndex: 1,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        fontWeight: 'bold',
+                                        color: "white"
+                                    }}>
+                                    {t('AddPost')}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </SafeAreaView>
+                </KeyboardAvoidingView>
             </Modal>
 
             <Modal
@@ -830,139 +830,118 @@ const CreateStory = () => {
                 transparent={true}
                 animationType="slide"
                 onRequestClose={closeModalText}>
-                <View style={{
-                    flex: 1,
-                    alignItems: "center",
-                    backgroundColor: isDarkMode ? "red" : "gray",
-                }}>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 40,
-                            marginTop: "12%",
-                            justifyContent: "center",
-                            position: "absolute",
-                            zIndex: 2,
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginLeft: "2%",
-                            }}
-                            onPress={closeModalText}
-                        >
-                            <Entypo name="cross" size={36} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "50%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            top: "30%"
 
-                        }}>
-                        <TextInput
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : null}
+                    style={{
+                        flex: 1,
+                        backgroundColor: isDarkMode ? "black" : "gray",
+                        height: "100%"
+                    }}>
+                    <SafeAreaView>
+                        <View
                             style={{
                                 width: "100%",
-                                height: "100%",
-                                paddingLeft: 12,
-                                fontSize: 40,
-                                fontFamily: policeActuelle,
-                                fontWeight: "normal",
-                                overflow: "hidden",
-                                color: "white",
-                            }}
-                            multiline
-                            numberOfLines={4}
-                            maxLength={40}
-                            onChangeText={(nouveauText) => setPostText(nouveauText)}
-                            value={postText}
-                            editable
-                            placeholder={t('TextInputStory')}
-                            placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
-                            fontSize="40"
-                            color={isDarkMode ? "#F5F5F5" : "white"} />
-                    </View>
-
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "20%",
-                            marginTop: "20%",
-                            alignItems: "flex-end",
-                            position: "absolute",
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={changerPoliceText}
-                            style={{
-                                width: "25%",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "2%",
-                                flexDirection: "row",
-                                padding: 12,
+                                height: "5%",
+                                justifyContent: "center",
+                                //backgroundColor: "blue",
+                                zIndex: 2,
                             }}
                         >
-                            <Text
+                            <TouchableOpacity
                                 style={{
-                                    fontSize: 18,
-                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-                                    marginRight: 12,
-                                    fontWeight: "600",
+                                    width: 40,
+                                    height: 40,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginLeft: "2%",
                                 }}
+                                onPress={closeModalText}
                             >
-                                {t('Police')}
-                            </Text>
-                            <Ionicons
-                                name="text"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "10%",
-                            bottom: "5%",
-                            position: "absolute",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            paddingRight: 14,
-                            zIndex: 1,
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={handleStorySubmit}
+                                <Entypo name="cross" size={36} color="white" />
+                            </TouchableOpacity>
+                        </View>
+                        <View
                             style={{
-                                width: "14%",
-                                height: "60%",
-                                backgroundColor: "#80BCF3",
+                                //backgroundColor: "red",
+                                width: "100%",
+                                height: "85%",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                borderRadius: 100,
-                                flexDirection: "row",
+
+                            }}>
+                            <View
+                                style={{
+                                    width: "100%",
+                                    height: "50%",
+                                    //backgroundColor: "blue"
+
+                                }}
+                            >
+                                <TextInput
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        paddingLeft: 12,
+                                        marginTop: "10%",
+                                        fontSize: 40,
+                                        fontFamily: policeActuelle,
+                                        fontWeight: "normal",
+                                        overflow: "hidden",
+                                        color: "white",
+                                    }}
+                                    multiline
+                                    numberOfLines={4}
+                                    maxLength={40}
+                                    onChangeText={(nouveauText) => setPostText(nouveauText)}
+                                    value={postText}
+                                    editable
+                                    placeholder={t('TextInputStory')}
+                                    placeholderTextColor={isDarkMode ? "#F5F5F5" : "white"}
+                                    fontSize={20}
+                                    color={isDarkMode ? "#F5F5F5" : "white"} />
+                            </View>
+
+                        </View>
+
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "10%",
+                                justifyContent: "center",
+                                alignItems: "flex-end",
+                                paddingRight: 14,
+                                //backgroundColor: "blue",
                                 zIndex: 1,
                             }}
                         >
-                            <Ionicons
-                                name="send"
-                                size={30}
-                                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity
+                                onPress={handleStorySubmit}
+                                style={{
+                                    width: 100,
+                                    height: 40,
+                                    backgroundColor: isDarkMode ? "#E52C2C" : "#2B60E8",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: 15,
+                                    flexDirection: "row",
+                                    zIndex: 1,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        fontWeight: 'bold',
+                                        color: "white"
+                                    }}>
+                                    {t('AddPost')}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </SafeAreaView>
 
-                </View>
+
+                </KeyboardAvoidingView>
 
             </Modal>
 

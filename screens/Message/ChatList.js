@@ -45,7 +45,7 @@ const Message = () => {
   const [arrivalChat, setArrivalChat] = useState([]);
   const [height, setHeight] = useState(40);
   const [selectTools, setSelectTools] = useState();
-  const socket = useRef(io("ws://localhost:8900"));
+  const socket = useRef(io("ws://192.168.1.73:8900"));
   const { uid } = useContext(UidContext);
   const scrollRef = useRef();
   const route = useRoute();
@@ -282,7 +282,7 @@ const Message = () => {
 
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("ws://192.168.1.73:8900");
     socket.current.on("connect", () => {
       console.log("Utilisateur connecté !!!!", socket.current.id);
       socket.current.emit("addUser", uid);

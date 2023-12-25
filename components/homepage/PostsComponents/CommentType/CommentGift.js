@@ -332,7 +332,7 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                                 const replierImage = replier ? replier.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
                                 return (
 
-                                    <>
+                                    <View key={reply._id}>
                                         {!reply.repliedTo && reply.replyMedia && (
 
                                             <>
@@ -374,7 +374,7 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                                             </>
                                         )
                                         }
-                                    </>
+                                    </View>
 
                                 )
 

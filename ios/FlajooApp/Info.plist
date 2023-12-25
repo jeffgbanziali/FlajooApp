@@ -35,6 +35,8 @@
 	<string>Flajoo app requires camera to take photo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location access is required to run the app.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Flajoo app needs access to your Microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Flajoo app requires photo library access.</string>
 	<key>UIAppFonts</key>

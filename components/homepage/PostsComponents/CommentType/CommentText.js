@@ -332,49 +332,49 @@ const CommentText = ({ comment, toggle, toAnswering, toReplying }) => {
 
                                 return (
 
-                                    <>
-                                    {!reply.repliedTo && reply.replyMedia && (
+                                    <View key={reply._id}>
+                                        {!reply.repliedTo && reply.replyMedia && (
 
-                                        <>
-                                            {reply.replyType === "gif" && (
-                                                <ReplyGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                            {reply.replyType === "image" && (
-                                                <ReplyImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                            {reply.replyType === "audio" && (
-                                                <ReplyAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                        </>
-                                    )
-                                    }
-                                    {!reply.repliedTo && reply.text && (
+                                            <>
+                                                {reply.replyType === "gif" && (
+                                                    <ReplyGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "image" && (
+                                                    <ReplyImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "audio" && (
+                                                    <ReplyAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                            </>
+                                        )
+                                        }
+                                        {!reply.repliedTo && reply.text && (
 
-                                        <ReplyText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            <ReplyText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
 
-                                    )
-                                    }
-                                    {reply.repliedTo && reply.text && (
-                                        <ReplyToText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                    )
-                                    }
+                                        )
+                                        }
+                                        {reply.repliedTo && reply.text && (
+                                            <ReplyToText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                        )
+                                        }
 
-                                    {reply.repliedTo && reply.replyMedia && (
+                                        {reply.repliedTo && reply.replyMedia && (
 
-                                        <>
-                                            {reply.replyType === "gif" && (
-                                                <ReplyToGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                            {reply.replyType === "image" && (
-                                                <ReplyToImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                            {reply.replyType === "audio" && (
-                                                <ReplyToAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
-                                            )}
-                                        </>
-                                    )
-                                    }
-                                </>
+                                            <>
+                                                {reply.replyType === "gif" && (
+                                                    <ReplyToGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "image" && (
+                                                    <ReplyToImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "audio" && (
+                                                    <ReplyToAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                            </>
+                                        )
+                                        }
+                                    </View>
 
                                 )
 

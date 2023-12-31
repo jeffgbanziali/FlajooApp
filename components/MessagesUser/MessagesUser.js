@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Animated, Dimensions, Easing, KeyboardAvoidingView, Platform, Pressable, Text } from "react-native";
 import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { formatPostDate } from "../Context/Utils";
+import { formatPostDate, dateParser, timestampStoryParser } from "../Context/Utils";
 import Modal from "react-native-modal";
 import { useDarkMode } from "../Context/AppContext";
 import { TouchableOpacity } from "react-native";
@@ -54,9 +54,9 @@ const MessagesUser = ({ message, own, user }) => {
     setSelectedImage(message.attachment.url);
     setShowImage(true);
   };
-  
 
-  const {t} = useTranslation();
+
+  const { t } = useTranslation();
 
 
   const deleteMessage = async () => {
@@ -82,7 +82,7 @@ const MessagesUser = ({ message, own, user }) => {
   };
 
   console.log(message)
-  
+
 
 
   return (
@@ -112,12 +112,13 @@ const MessagesUser = ({ message, own, user }) => {
                     <View
                       style={{
                         backgroundColor: "#F80303",
-                        borderRadius: 20,
+                        borderRadius: 10,
                         maxWidth: 300,
                         maxHeight: 200,
                         padding: 10,
+
                         justifyContent: "center",
-                        flexDirection: "column",
+                        flexDirection: "row",
                         shadowColor: "#000",
                         shadowOffset: {
                           width: 0,
@@ -141,24 +142,22 @@ const MessagesUser = ({ message, own, user }) => {
                           }
                         }>
                         {message.text}
+                        {" "}
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: 14,
+                            color: "lightgray",
+                          }}
+                        >
+                          22:30
+                        </Text>
                       </Text>
+
                     </View>
                   </Pressable>
                 </View >
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 10,
-                      color: "gray",
-                      marginLeft: 5,
-                      marginRight: 5,
-                      marginTop: 5,
-                    }}
-                  >
-                    {formatPostDate(message.createdAt)}
-                  </Text>
-                </View>
+
               </>
 
             )}
@@ -228,27 +227,22 @@ const MessagesUser = ({ message, own, user }) => {
                                 }
                               }>
                               {message.text}
+                              {" "}
+                              <Text
+                                style={{
+                                  fontWeight: "bold",
+                                  fontSize: 14,
+                                  color: "lightgray",
+                                }}
+                              >
+                                22:30
+                              </Text>
                             </Text>
                           </View>
                         )
                       }
-
                     </Pressable>
                   </View >
-                  <View>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 10,
-                        color: "gray",
-                        marginLeft: 5,
-                        marginRight: 5,
-                        marginTop: 5,
-                      }}
-                    >
-                      {formatPostDate(message.createdAt)}
-                    </Text>
-                  </View>
                 </>
               )
             }
@@ -358,7 +352,7 @@ const MessagesUser = ({ message, own, user }) => {
                         style={{
                           backgroundColor: isDarkMode ? "#403F3F" : "#FDFDFD",
                           flexDirection: "column",
-                          borderRadius: 20,
+                          borderRadius: 10,
                           maxWidth: 300,
                           padding: 10,
                           maxHeight: 200,
@@ -378,31 +372,28 @@ const MessagesUser = ({ message, own, user }) => {
                           style={
                             {
                               fontSize: 18,
-                              color: isDarkMode ? "#FFFFFF" : "#5E5E5E",
+                              color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                               textAlign: 'justify',
                               fontFamily: 'Roboto',
                               fontWeight: "500",
                               lineHeight: 24
-                            }}>
+                            }
+                          }>
                           {message.text}
+                          {" "}
+                          <Text
+                            style={{
+                              fontWeight: "bold",
+                              fontSize: 14,
+                              color: "lightgray",
+                            }}
+                          >
+                            22:30
+                          </Text>
                         </Text>
                       </View>
                     </Pressable>
                   </View >
-                  <View>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 10,
-                        color: "gray",
-                        marginLeft: 5,
-                        marginRight: 5,
-                        marginTop: 5,
-                      }}
-                    >
-                      {formatPostDate(message.createdAt)}
-                    </Text>
-                  </View>
                 </>
               )
             }
@@ -464,7 +455,7 @@ const MessagesUser = ({ message, own, user }) => {
                               style={
                                 {
                                   fontSize: 18,
-                                  color: isDarkMode ? "#FFFFFF" : "#5E5E5E",
+                                  color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                                   textAlign: 'justify',
                                   fontFamily: 'Roboto',
                                   fontWeight: "500",
@@ -472,26 +463,22 @@ const MessagesUser = ({ message, own, user }) => {
                                 }
                               }>
                               {message.text}
+                              {" "}
+                              <Text
+                                style={{
+                                  fontWeight: "bold",
+                                  fontSize: 14,
+                                  color: "lightgray",
+                                }}
+                              >
+                                22:30
+                              </Text>
                             </Text>
                           </View>
                         )
                       }
                     </Pressable>
                   </View >
-                  <View>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 10,
-                        color: "gray",
-                        marginLeft: 5,
-                        marginRight: 5,
-                        marginTop: 5,
-                      }}
-                    >
-                      {formatPostDate(message.createdAt)}
-                    </Text>
-                  </View>
                 </>
               )
             }
@@ -697,15 +684,17 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginRight: 10,
     marginLeft: 10,
-    marginTop: "2.5%",
+    marginTop: "4%",
+    //backgroundColor: "blue"
   },
   messageOther: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
     marginRight: 10,
-    marginTop: "2.5%",
+    marginTop: "4%",
     marginLeft: 10,
+    //backgroundColor: "green"
   },
 
 });

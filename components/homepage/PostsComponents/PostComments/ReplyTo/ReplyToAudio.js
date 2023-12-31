@@ -2,11 +2,12 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext } from "react";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { UidContext, useDarkMode } from "../../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../../../Context/AppContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import LikeReplyButton from "../../LikeButton/LikeReplyButton";
 
-const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }) => {
+const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, index }) => {
     const { uid } = useContext(UidContext);
     const navigation = useNavigation();
     const { t } = useTranslation();
@@ -186,33 +187,23 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
                 </View>
                 <View
                     style={{
-                        width: 40,
+                        width: "25%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        marginRight: 10
+                        //backgroundColor: "green"
+
                     }}
                 >
-                    <TouchableOpacity
-                        style={{
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
-                    >
-                        <Feather
-                            name="heart"
-                            size={20}
-                            color={isDarkMode ? "#F5F5F5" : "black"}
-                        />
-                    </TouchableOpacity>
-                    {comment.replies.replierLikers && comment.replies.replierLikers.length > 0 && (
+                    <LikeReplyButton post={post} reply={reply} comment={comment} type={"postPicture"} />
+                    {reply.replierLikers && reply.replierLikers.length > 0 && (
                         <Text
                             style={{
                                 fontWeight: "normal",
                                 color: isDarkMode ? "#F5F5F5" : "black",
                                 marginTop: "2%",
                             }}>
-                            {comment.replies.replierLikers.length}
+                            {reply.replierLikers.length}
                         </Text>
                     )}
                 </View>

@@ -1,4 +1,4 @@
-import { GET_POSTS, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR } from "../actions/post.actions";
+import { GET_POSTS, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR, LIKE_COMMENT, UNLIKE_COMMENT, LIKE_REPLY, UNLIKE_REPLY } from "../actions/post.actions";
 
 const initialState = {};
 
@@ -52,6 +52,94 @@ export default function postReducer(state = initialState, action) {
                             }
                             return comment;
                         })
+                    };
+                }
+                return post;
+            });
+        case LIKE_COMMENT:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.map((comment) => {
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    commentLikers: [action.payload.userId, ...comment.commentLikers],
+                                };
+                            }
+                            return comment;
+                        }),
+                    };
+                }
+                return post;
+            });
+        case UNLIKE_COMMENT:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.map((comment) => {
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    commentLikers: comment.commentLikers.filter((id) => id !== action.payload.userId),
+                                };
+                            }
+                            return comment;
+                        }),
+                    };
+                }
+                return post;
+            });
+        case LIKE_REPLY:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.map((comment) => {
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    replies: comment.replies.map((reply) => {
+                                        if (reply._id === action.payload.replyId) {
+                                            return {
+                                                ...reply,
+                                                replierLikers: [...reply.replierLikers, action.payload.userId],
+                                            };
+                                        }
+                                        return reply;
+                                    }),
+                                };
+                            }
+                            return comment;
+                        }),
+                    };
+                }
+                return post;
+            });
+        case UNLIKE_REPLY:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.map((comment) => {
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    replies: comment.replies.map((reply) => {
+                                        if (reply._id === action.payload.replyId) {
+                                            return {
+                                                ...reply,
+                                                replierLikers: reply.replierLikers.filter((id) => id !== action.payload.userId),
+                                            };
+                                        }
+                                        return reply;
+                                    }),
+                                };
+                            }
+                            return comment;
+                        }),
                     };
                 }
                 return post;

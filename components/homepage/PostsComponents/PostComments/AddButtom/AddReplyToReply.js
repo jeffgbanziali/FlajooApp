@@ -2,18 +2,19 @@ import { View, Text, Image, TouchableOpacity, TextInput, Pressable, Modal, Dimen
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDarkMode } from "../../../Context/AppContext";
-import { getPosts, replyComment } from "../../../../actions/post.actions";
+import { useDarkMode } from "../../../../Context/AppContext";
+import { getPosts, replyComment } from "../../../../../actions/post.actions";
 import { useTranslation } from "react-i18next";
-import { isEmpty } from "../../../Context/Utils";
+import { isEmpty } from "../../../../Context/Utils";
 import Video from 'react-native-video';
 import { launchImageLibrary } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { SafeAreaView } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { uploadMediaToFirebase } from '../../../../../Data/FireStore';
+
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -52,11 +53,11 @@ const AddReplyToReply = ({ post, selectedComment, selectedReply, partVisible }) 
 
             if (selectedImage) {
                 const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await saveMediaLocally(selectedImage.uri, mediaName, 'image');
+                mediaUrl = await uploadMediaToFirebase(selectedImage.uri, mediaName, 'image');
                 mediaType = 'image';
             } else if (selectedVideo) {
                 const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await saveMediaLocally(selectedVideo.uri, mediaName, 'video');
+                mediaUrl = await uploadMediaToFirebase(selectedVideo.uri, mediaName, 'video');
                 mediaType = 'video';
             }
 
@@ -121,19 +122,6 @@ const AddReplyToReply = ({ post, selectedComment, selectedReply, partVisible }) 
 
     };
 
-    const saveMediaLocally = async (uri, fileName, mediaType) => {
-        return new Promise((resolve, reject) => {
-            RNFS.copyFile(uri, `${RNFS.DocumentDirectoryPath}/${fileName}`)
-                .then(() => {
-                    console.log(`${mediaType} sauvegardé avec succès !`);
-                    resolve(`${RNFS.DocumentDirectoryPath}/${fileName}`);
-                })
-                .catch((error) => {
-                    console.error(`Erreur lors de la sauvegarde du ${mediaType}.`, error);
-                    reject(error);
-                });
-        });
-    };
 
     const saveCommentLocally = async (comment) => {
         try {

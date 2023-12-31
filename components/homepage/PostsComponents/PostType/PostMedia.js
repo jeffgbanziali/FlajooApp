@@ -3,12 +3,13 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    Dimensions,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useContext, } from "react";
+import React, { useContext, useState, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import LikeButton from "../LikeButton";
+import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
@@ -16,8 +17,13 @@ import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
 
 
-const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+
+
+const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
+    const [showImage, setShowImage] = useState(false);
 
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
@@ -29,6 +35,12 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
         } else {
             navigation.navigate("ProfilFriends", { id });
         }
+    };
+
+
+
+    const showModal = () => {
+        setShowImage(true);
     };
 
 
@@ -50,6 +62,7 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     position: "relative ",
                     zIndex: 1,
                     marginBottom: 10,
+                    //backgroundColor:"red"
                 }}
             >
                 <View
@@ -148,6 +161,7 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
             </View>
 
             <View
+                onPress={showModal}
                 style={{
                     width: "100%",
                     height: 500,
@@ -170,6 +184,8 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         borderTopRightRadius: 20,
                     }}
                 />
+
+
                 {
                     item.mediaType === "image" && (
                         <Image
@@ -211,6 +227,7 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     )
                 }
 
+
                 <LinearGradient
                     colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
                     style={{
@@ -218,7 +235,7 @@ const PostMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        height: 200,
+                        height: 100,
                         borderBottomLeftRadius: 20,
                         borderBottomRightRadius: 20,
                     }}

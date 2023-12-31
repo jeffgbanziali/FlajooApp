@@ -25,7 +25,6 @@ const PostsUser = () => {
     }, [uid]);
 
 
-    console.log("Cadeau", user)
 
 
 
@@ -39,7 +38,7 @@ const PostsUser = () => {
                 borderColor: "white",
                 backgroundColor: "white"
             }}>
-                
+
                 <Image
                     source={{ uri: item.media }}
                     style={{

@@ -5,13 +5,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { dateParser, isEmpty, formatPostDate } from "../../../Context/Utils";
 import { useNavigation } from "@react-navigation/native";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { useTranslation } from "react-i18next";
-import LikeButton from "../LikeButton";
+import LikeButton from "../LikeButton/LikeButton"
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

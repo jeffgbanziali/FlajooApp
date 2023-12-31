@@ -8,6 +8,10 @@ export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const ADD_REPLY = 'ADD_REPLY';
+export const LIKE_COMMENT = 'LIKE_COMMENT';
+export const UNLIKE_COMMENT = "UNLIKE_COMMENT";
+export const LIKE_REPLY = 'LIKE_REPLY';
+export const UNLIKE_REPLY = 'UNLIKE_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
 
@@ -68,6 +72,57 @@ export const unlikePost = (postId, userId) => {
         }
     };
 };
+
+
+
+export const likeComment = (postId, commentId, userId) => {
+    return async (dispatch) => {
+        try {
+            await axios.patch(`${APP_API_URL}/api/post/like-comment/${postId}/${commentId}`, { id: userId });
+            dispatch({ type: LIKE_COMMENT, payload: { postId, commentId, userId } });
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du like:', error);
+        }
+    };
+};
+
+
+export const unlikeComment = (postId, commentId, userId) => {
+    return async (dispatch) => {
+        try {
+            await axios.patch(`${APP_API_URL}/api/post/unlike-comment/${postId}/${commentId}`, { id: userId });
+            dispatch({ type: UNLIKE_COMMENT, payload: { postId, commentId, userId } });
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du unlike:', error);
+        }
+    };
+};
+
+
+
+export const likeReply = (postId, commentId, replyId, userId) => {
+    return async (dispatch) => {
+        try {
+            await axios.patch(`${APP_API_URL}/api/post/like-reply/${postId}/${commentId}/${replyId}`, { id: userId });
+            dispatch({ type: LIKE_REPLY, payload: { postId, commentId, replyId, userId } });
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du like pour la réponse au commentaire:', error);
+        }
+    };
+};
+
+export const unlikeReply = (postId, commentId, replyId, userId) => {
+    return async (dispatch) => {
+        try {
+            await axios.patch(`${APP_API_URL}/api/post/unlike-reply/${postId}/${commentId}/${replyId}`, { id: userId });
+            dispatch({ type: UNLIKE_REPLY, payload: { postId, commentId, replyId, userId } });
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du unlike pour la réponse au commentaire:', error);
+        }
+    };
+};
+
+
 
 
 export const addComment = (postId, commenterId, text, commenterPseudo, commentMedia, commentType) => {

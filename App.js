@@ -68,10 +68,10 @@ const AppW = () => {
                     url: `${APP_API_URL}/jwtid`,
                     withCredentials: true,
                 });
-                console.log(response);
-                setUid(response.data);
                 AsyncStorage.setItem('uid', response.data);
                 AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+                console.log(response);
+                setUid(response.data);
             } catch (error) {
                 console.log("No token", error);
             }

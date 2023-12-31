@@ -1,12 +1,17 @@
 import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext } from "react";
+import {
+    formatPostDate,
+} from "../../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { UidContext, useDarkMode } from "../../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../../../Context/AppContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import Video from 'react-native-video';
+import LikeReplyButton from "../../LikeButton/LikeReplyButton";
 
-const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }) => {
+
+const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) => {
     const { uid } = useContext(UidContext);
     const navigation = useNavigation();
     const { t } = useTranslation();
@@ -29,16 +34,16 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
 
 
 
-
     const replying = (comment, reply) => {
         toReplying(comment, reply);
+
         console.log("tu es là ", comment)
         console.log("tu es là là là là  ", reply)
     };
 
+
     return (
         <View
-            key={index}
             style={{
                 flexDirection: "column",
                 width: "100%",
@@ -96,56 +101,62 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
                             <Text
                                 style={{
                                     fontWeight: "bold",
+                                    marginRight: 5,
                                     fontSize: 14,
                                     color: isDarkMode ? "#F5F5F5" : "black"
                                 }}
                             >
                                 {reply.replierPseudo}
                             </Text>
-                            <MaterialIcons
-                                name="arrow-right"
-                                size={25}
-                                color={isDarkMode ? "#F5F5F5" : "black"} />
                             <Text
                                 style={{
-                                    fontWeight: "bold",
-                                    fontSize: 14,
+                                    fontWeight: "normal",
+                                    marginRight: 5,
                                     color: isDarkMode ? "#F5F5F5" : "black"
                                 }}
                             >
-                                {reply.repliedTo.replierToPseudo}
+                                {formatPostDate(reply.timestamp)}
                             </Text>
                         </View>
                         <View
                             style={{
                                 flexDirection: "column",
                                 maxHeight: 300,
-                                maxWidth: 340,
+                                maxWidth: 200,
                                 minHeight: 30,
                                 minWidth: 200,
-                                borderRadius: 15,
-                                marginTop: "1%",
-                                shadowColor: isDarkMode ? "white" : "#000",
+                                //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
+                                borderRadius: 10,
+                                marginTop: "2%",
+                                //padding: 10,
+                                shadowColor: isDarkMode ? "white " : "#000",
                                 shadowOffset: {
                                     width: 0,
-                                    height: isDarkMode ? 1 : 1
+                                    height: isDarkMode ? 1 : 1,
                                 },
                                 shadowOpacity: isDarkMode ? 0.16 : 0.2,
                                 shadowRadius: 3.84,
-                                elevation: 2
+                                elevation: 2,
                             }}
                         >
-                            <Text
-                                style={{
-                                    color: isDarkMode ? "#F5F5F5" : "black",
-                                    fontSize: 18,
-                                    fontFamily: "",
-                                    fontWeight: "400",
-                                    lineHeight: 22
+                            <Video
+                                source={{
+                                    uri: reply.replyMedia
                                 }}
-                            >
-                                {reply.text}
-                            </Text>
+                                rate={1.0}
+                                volume={1.0}
+                                isMuted={false}
+                                resizeMode="cover"
+                                isLooping
+                                paused={false}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    resizeMode: "contain",
+                                    borderRadius: 20
+                                }}
+                            />
+
                         </View>
                     </View>
                 </View>
@@ -187,33 +198,23 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
                 </View>
                 <View
                     style={{
-                        width: 40,
+                        width: "25%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        marginRight: 10
+                        //backgroundColor: "green"
+
                     }}
                 >
-                    <TouchableOpacity
-                        style={{
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
-                    >
-                        <Feather
-                            name="heart"
-                            size={20}
-                            color={isDarkMode ? "#F5F5F5" : "black"}
-                        />
-                    </TouchableOpacity>
-                    {comment.replies.replierLikers && comment.replies.replierLikers.length > 0 && (
+                    <LikeReplyButton post={post} reply={reply} comment={comment} type={"postPicture"} />
+                    {reply.replierLikers && reply.replierLikers.length > 0 && (
                         <Text
                             style={{
                                 fontWeight: "normal",
                                 color: isDarkMode ? "#F5F5F5" : "black",
                                 marginTop: "2%",
                             }}>
-                            {comment.replies.replierLikers.length}
+                            {reply.replierLikers.length}
                         </Text>
                     )}
                 </View>
@@ -222,4 +223,4 @@ const ReplyToText = ({ comment, reply, toggle, replierImage, toReplying, index }
     )
 }
 
-export default ReplyToText
+export default ReplyAudio

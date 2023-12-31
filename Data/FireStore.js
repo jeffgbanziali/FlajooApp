@@ -26,7 +26,7 @@ const uploadToFirebase = async (localUri, storagePath) => {
 
 // Fonctions spécifiques d'upload
 const uploadImageToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `PostImages/${imageName}`);
-const uploadMediaToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `PostImages/${imageName}`);
+const uploadMediaToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `MediaImages/${imageName}`);
 const uploadProfileToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `ProfileImage/${imageName}`);
 const uploadStoryToFirebase = (localUri, imageName) => uploadToFirebase(localUri, `StoryContainer/${imageName}`);
 const uploadRéelsToFirebase = (localUri, fileName) => uploadToFirebase(localUri, `VideoRéelsContainer/${fileName}`);
@@ -71,7 +71,7 @@ const app = initializeApp(firebaseConfig);
 
 // Initialisez Firebase Auth avec la persistence AsyncStorage
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
+    persistence: getReactNativePersistence(AsyncStorage),
 });
 
 // Obtenez des références vers les services dont vous avez besoin

@@ -49,9 +49,6 @@ const CreateStory = () => {
 
 
 
-
-    const surfaceRef = useRef(null);
-
     useEffect(() => {
         if (loadStories) {
             dispatch(getStories());
@@ -70,49 +67,60 @@ const CreateStory = () => {
     };
 
 
+    /*************************** système de création d'une story ********************************************/
+
+    // Fonction pour gérer l'envoi de l'image
+    const handleImageSubmit = async () => {
+        const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
+        const mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
+        return { mediaType: 'image', mediaUrl };
+    };
+
+    // Fonction pour gérer l'envoi de la vidéo
+    const handleVideoSubmit = async () => {
+        const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
+        const mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
+        return { mediaType: 'video', mediaUrl };
+    };
+
+    // Fonction pour gérer la soumission de l'histoire
+    const submitStory = async (mediaType, mediaUrl) => {
+        const storyData = {
+            posterId: userData._id,
+            text: postText,
+            media: {
+                type: mediaType,
+                url: mediaUrl,
+            },
+        };
+
+        // Sauvegarde localement avant l'envoi au serveur
+        saveStoryLocally(storyData);
+
+        // Envoyer la story au serveur ou à d'autres utilisateurs
+        dispatch(addStory(storyData));
+        Alert.alert('Succès', 'Votre story a été publiée avec succès !');
+        setPostText('');
+        setSelectedImage(null);
+        setSelectedVideo(null);
+        setLoadStories(true);
+        navigation.goBack('TabNavigation');
+    };
+
+    // Fonction principale pour gérer la soumission de l'histoire
     const handleStorySubmit = async () => {
         try {
-            let mediaUrl = null;
             let mediaType = null;
+            let mediaUrl = null;
 
             if (selectedImage) {
-                const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
-                mediaType = 'image';
+                ({ mediaType, mediaUrl } = await handleImageSubmit());
             } else if (selectedVideo) {
-                const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-                mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
-                mediaType = 'video';
+                ({ mediaType, mediaUrl } = await handleVideoSubmit());
             }
 
-            const storyData = {
-                posterId: userData._id,
-                text: postText,
-                media: {
-                    type: mediaType,
-                    url: mediaUrl,
-                },
-            };
-
-            // Condition pour la soumission
             if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
-                // Sauvegarde localement avant l'envoi au serveur
-                saveStoryLocally(storyData);
-
-                // Envoyer la story au serveur ou à d'autres utilisateurs
-                dispatch(addStory(storyData));
-                const docRef = await addDoc(collection(firestore, 'stories'), storyData);
-                const docSnapshot = await getDoc(docRef);
-
-                console.log('Story créée avec succès! Document ID:', docRef.id);
-                console.log('Document data:', docSnapshot.data());
-
-                Alert.alert('Succès', 'Votre story a été publiée avec succès !');
-                setPostText('');
-                setSelectedImage(null);
-                setSelectedVideo(null);
-                setLoadStories(true);
-                navigation.goBack('TabNavigation');
+                submitStory(mediaType, mediaUrl);
             } else {
                 Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
             }
@@ -123,20 +131,7 @@ const CreateStory = () => {
         }
     };
 
-    const saveMediaLocally = async (uri, fileName, mediaType) => {
-        return new Promise((resolve, reject) => {
-            // Utiliser RNFS pour sauvegarder localement
-            RNFS.copyFile(uri, `${RNFS.DocumentDirectoryPath}/${fileName}`)
-                .then(() => {
-                    console.log(`${mediaType} sauvegardé avec succès localement !`);
-                    resolve(`${RNFS.DocumentDirectoryPath}/${fileName}`);
-                })
-                .catch((error) => {
-                    console.error(`Erreur lors de la sauvegarde locale du ${mediaType}.`, error);
-                    reject(error);
-                });
-        });
-    };
+
 
     const saveStoryLocally = async (story) => {
         try {
@@ -156,9 +151,6 @@ const CreateStory = () => {
             throw error;
         }
     };
-
-
-
 
 
     const handleModalImage = async (item) => {
@@ -185,30 +177,6 @@ const CreateStory = () => {
             Alert.alert('Erreur', 'Une erreur s\'est produite lors de la sélection de l\'élément multimédia.');
         }
     };
-
-    const closeImageModal = () => {
-        setShowImage(false);
-    };
-
-
-    const handleText = () => {
-        setShowText(!showText);
-    };
-
-    const closeModalText = () => {
-        setShowText(false);
-    };
-
-    const goCamera = () => {
-        console.log('camera');
-        navigation.navigate("StoryCamera")
-    }
-
-
-
-
-
-
 
 
 
@@ -248,7 +216,26 @@ const CreateStory = () => {
         }
     };
 
+/*************************** système de création d'une story ********************************************/
 
+
+    const closeImageModal = () => {
+        setShowImage(false);
+    };
+
+
+    const handleText = () => {
+        setShowText(!showText);
+    };
+
+    const closeModalText = () => {
+        setShowText(false);
+    };
+
+    const goCamera = () => {
+        console.log('camera');
+        navigation.navigate("StoryCamera")
+    }
 
 
 

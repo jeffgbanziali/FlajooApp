@@ -2,13 +2,14 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext } from "react";
 import {
     formatPostDate,
-} from "../../../Context/Utils";
+} from "../../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
-import { UidContext, useDarkMode } from "../../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../../../Context/AppContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import LikeReplyButton from "../../LikeButton/LikeReplyButton";
 
-const ReplyGif = ({ comment, reply, toggle, replierImage, toReplying }) => {
+const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) => {
     const { uid } = useContext(UidContext);
     const navigation = useNavigation();
     const { t } = useTranslation();
@@ -145,7 +146,6 @@ const ReplyGif = ({ comment, reply, toggle, replierImage, toReplying }) => {
                                     height: "100%",
                                     resizeMode: "contain"
                                 }}
-
                             />
 
                         </View>
@@ -170,7 +170,7 @@ const ReplyGif = ({ comment, reply, toggle, replierImage, toReplying }) => {
                     }}
                 >
                     <TouchableOpacity
-                   onPress={() => replying(comment, reply)}
+                        onPress={() => replying(comment, reply)}
                         style={{
                             justifyContent: "center",
                             justifyContent: "center",
@@ -189,33 +189,23 @@ const ReplyGif = ({ comment, reply, toggle, replierImage, toReplying }) => {
                 </View>
                 <View
                     style={{
-                        width: 40,
+                        width: "25%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        marginRight: 10
+                        //backgroundColor: "green"
+
                     }}
                 >
-                    <TouchableOpacity
-                        style={{
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}
-                    >
-                        <Feather
-                            name="heart"
-                            size={20}
-                            color={isDarkMode ? "#F5F5F5" : "black"}
-                        />
-                    </TouchableOpacity>
-                    {comment.replies.replierLikers && comment.replies.replierLikers.length > 0 && (
+                    <LikeReplyButton post={post} reply={reply} comment={comment} type={"postPicture"} />
+                    {reply.replierLikers && reply.replierLikers.length > 0 && (
                         <Text
                             style={{
                                 fontWeight: "normal",
                                 color: isDarkMode ? "#F5F5F5" : "black",
                                 marginTop: "2%",
                             }}>
-                            {comment.replies.replierLikers.length}
+                            {reply.replierLikers.length}
                         </Text>
                     )}
                 </View>
@@ -224,4 +214,4 @@ const ReplyGif = ({ comment, reply, toggle, replierImage, toReplying }) => {
     )
 }
 
-export default ReplyGif
+export default ReplyAudio

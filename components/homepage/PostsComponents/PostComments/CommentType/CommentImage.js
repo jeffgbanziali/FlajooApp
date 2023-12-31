@@ -1,28 +1,28 @@
-import { View, Text, Image, TouchableOpacity, FlatList, Pressable } from "react-native";
+import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    dateParser,
     formatPostDate,
     isEmpty,
-    timestampParser,
-} from "../../../Context/Utils";
+} from "../../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { UidContext, useDarkMode } from "../../../Context/AppContext";
-import { getPosts } from "../../../../actions/post.actions";
+import { UidContext, useDarkMode } from "../../../../Context/AppContext";
+import { getPosts } from "../../../../../actions/post.actions";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import ReplyText from "../ReplyType/ReplyText";
 import ReplyGif from "../ReplyType/ReplyGif";
 import ReplyImage from "../ReplyType/ReplyImage";
+import ReplyVideo from "../ReplyType/ReplyVideo";
 import ReplyAudio from "../ReplyType/ReplyAudio";
 import ReplyToText from "../ReplyTo/ReplyToText";
 import ReplyToGif from "../ReplyTo/ReplyToGif";
 import ReplyToImage from "../ReplyTo/ReplyToImage";
+import ReplyToVideo from "../ReplyTo/ReplyToVideo";
 import ReplyToAudio from "../ReplyTo/ReplyToAudio";
+import LikeCommentButton from "../../LikeButton/LikeCommentButton";
 
-const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
+const CommentImage = ({ post, comment, toggle, toAnswering, toReplying }) => {
     const { isDarkMode } = useDarkMode();
     const usersData = useSelector((state) => state.usersReducer);
     const [loadPost, setLoadPost] = useState(true);
@@ -168,7 +168,7 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                                 minHeight: 30,
                                 minWidth: 200,
                                 //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
-                                borderRadius: 10,
+                                borderRadius: 15,
                                 marginTop: "2%",
                                 //padding: 10,
                                 shadowColor: isDarkMode ? "white " : "#000",
@@ -188,6 +188,8 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                                 style={{
                                     width: "100%",
                                     height: "100%",
+                                    objectFit: "contain",
+                                    borderRadius: 10,
                                     resizeMode: "contain"
                                 }}
 
@@ -203,10 +205,11 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
             <View
                 style={{
                     width: "100%",
-                    height: 30,
+                    height: 40,
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    //backgroundColor:"blue"
+                    //backgroundColor: "blue",
+
                 }}
             >
                 <View
@@ -216,6 +219,7 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                         marginLeft: "3%",
                         justifyContent: "center",
                         alignItems: "center",
+                        //backgroundColor: "green"
 
                     }}>
                     <TouchableOpacity
@@ -239,32 +243,22 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                 </View>
                 <View
                     style={{
-                        width: 40,
+                        width: "20%",
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        marginRight: 10
+                        //backgroundColor: "green"
+
                     }}
                 >
-                    <TouchableOpacity
-                        style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Feather
-                            name="heart"
-                            size={20}
-                            color={isDarkMode ? "#F5F5F5" : "black"}
-
-                        />
-                    </TouchableOpacity>
+                    <LikeCommentButton post={post} comment={comment} type={"postPicture"} />
                     {comment.commentLikers && comment.commentLikers.length > 0 && (
                         <Text
                             style={{
                                 fontWeight: "normal",
                                 color: isDarkMode ? "#F5F5F5" : "black",
                                 marginTop: "2%",
+                                fontSize: 16
                             }}>
                             {comment.commentLikers.length}
                         </Text>
@@ -330,6 +324,7 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
                             {comment.replies.map((reply, index) => {
                                 const replier = usersData.find((user) => user._id === reply.replierId);
                                 const replierImage = replier ? replier.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
+
                                 return (
 
                                     <View key={reply._id}>
@@ -337,25 +332,28 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
 
                                             <>
                                                 {reply.replyType === "gif" && (
-                                                    <ReplyGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                                 {reply.replyType === "image" && (
-                                                    <ReplyImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "video" && (
+                                                    <ReplyVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                                 {reply.replyType === "audio" && (
-                                                    <ReplyAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                             </>
                                         )
                                         }
                                         {!reply.repliedTo && reply.text && (
 
-                                            <ReplyText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            <ReplyText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
 
                                         )
                                         }
                                         {reply.repliedTo && reply.text && (
-                                            <ReplyToText index={index} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            <ReplyToText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                         )
                                         }
 
@@ -363,13 +361,16 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
 
                                             <>
                                                 {reply.replyType === "gif" && (
-                                                    <ReplyToGif index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyToGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                                 {reply.replyType === "image" && (
-                                                    <ReplyToImage index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyToImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                )}
+                                                {reply.replyType === "video" && (
+                                                    <ReplyToVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                                 {reply.replyType === "audio" && (
-                                                    <ReplyToAudio index={index} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <ReplyToAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                 )}
                                             </>
                                         )
@@ -428,4 +429,4 @@ const CommentGift = ({ comment, toggle, toAnswering, toReplying }) => {
     )
 }
 
-export default CommentGift;
+export default CommentImage;

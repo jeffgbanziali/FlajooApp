@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Pressable
+  Pressable,
+  Platform
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -89,7 +90,7 @@ const SignInScreen = () => {
       {isLoadingSignIn ? (
         <Loading />
       ) : (
-        <View
+        <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
             flex: 1,
@@ -106,41 +107,57 @@ const SignInScreen = () => {
               width: "100%",
 
             }}>
-            <Text style={{
-              fontSize: 30,
-              color: isDarkMode ? "#FFFFFF" : "black",
-            }}
-            >
-              Sign into your account
-            </Text>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                height: "10%",
+                width: "100%",
+
+              }}>
+              <Text style={{
+                fontSize: 30,
+                color: isDarkMode ? "#FFFFFF" : "black",
+              }}
+              >
+                Sign into your account
+              </Text>
+            </View>
 
             <View
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: 100,
-                marginTop: "10%",
-                justifyContent: "center",
                 alignItems: "center",
+                height: "25%",
+                width: "100%",
+                justifyContent: "center",
 
-              }}
-            >
-              <Image
+              }}>
+              <View
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: 80,
+                  height: 80,
                   borderRadius: 100,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                source={isDarkMode ? require("../../assets/Logos/ios/1212.png") : require("../../assets/Logos/ios/1212.png")}
-              />
+              >
+                <Image
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 100,
+                  }}
+                  source={isDarkMode ? require("../../assets/Logos/ios/1212.png") : require("../../assets/Logos/ios/1212.png")}
+                />
+              </View>
             </View>
+
             <View
               style={{
                 width: '90%',
-                height: '50%',
+                height: '55%',
                 borderRadius: 20,
                 backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
-                marginTop: "10%",
                 alignItems: "center",
                 justifyContent: "center",
                 shadowColor: isDarkMode ? "white" : "black",
@@ -153,14 +170,28 @@ const SignInScreen = () => {
                 elevation: 2,
               }}
             >
-              <View>
-                <Image
-                  source={require("../../assets/Logos/my_flajooo.png")}
+              <View
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  //backgroundColor: "green",
+
+                }}
+              >
+                <View
                   style={{
                     width: 150,
-                    height: 90,
-                    marginLeft: 10
-                  }} />
+                    height: 95,
+                  }}
+                >
+                  <Image
+                    source={require("../../assets/Logos/my_flajooo.png")}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      marginLeft: 10
+                    }} />
+                </View>
                 {errors.email && <Text style={styles.error}>{errors.email}</Text>}
                 <View
                   style={{
@@ -275,7 +306,7 @@ const SignInScreen = () => {
               </View>
             </View>
           </SafeAreaView>
-        </View >
+        </KeyboardAvoidingView >
       )}
     </>
   );

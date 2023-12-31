@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   Animated,
   Easing,
   ActivityIndicator,
@@ -10,23 +9,19 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector } from "react-redux";
-import { dateParser, isEmpty, formatPostDate } from "../../Context/Utils";
+import { isEmpty } from "../../Context/Utils";
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Modal from "react-native-modal";
-import LikeButton from "./LikeButton";
 import { useNavigation } from "@react-navigation/native";
-import AddCommentButton from "./AddButtom/AddCommentButton";
-import AllCommentView from "./AllCommentView";
+import AddCommentButton from "./PostComments/AddButtom/AddCommentButton";
+import AllCommentView from "./PostComments/AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
-import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
-import AddReplyComment from "./AddButtom/AddReplyComment";
-import AddReplyToReply from "./AddButtom/AddReplyToReply";
+import AddReplyComment from "./PostComments/AddButtom/AddCommentButton";
+import AddReplyToReply from "./PostComments/AddButtom/AddReplyToReply";
 import PostText from "./PostType/PostText";
 import PostMedia from "./PostType/PostMedia";
 import PostTwoMedia from "./PostType/PostTwoMedia";
@@ -50,15 +45,8 @@ const Posts = ({ post }) => {
   const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
 
-  const goProfil = (id) => {
-    if (uid === id) {
-      console.log("go to my profil", id);
-      navigation.navigate("Profile", { id });
-    } else {
-      navigation.navigate("ProfilFriends", { id });
-      console.log("go to profile friends", id);
-    }
-  };
+
+
 
 
 
@@ -562,10 +550,6 @@ const Posts = ({ post }) => {
         )
       }
 
-
-
-
-
       <Modal
         isVisible={showComments}
         onBackdropPress={toggleComments}
@@ -670,6 +654,8 @@ const Posts = ({ post }) => {
 
         </KeyboardAvoidingView>
       </Modal >
+
+
       <Modal
         isVisible={showToolings}
         onBackdropPress={toggleToolings}
@@ -824,9 +810,130 @@ const Posts = ({ post }) => {
             <View
               style={{
                 width: "100%",
-                height: "15%",
+                height: "10%",
                 borderTopWidth: 2,
                 borderColor: isDarkMode ? "#343232" : "lightgray",
+                justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: "80%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingLeft: 20
+                }}>
+
+
+
+
+                {post.likers && post.likers.length > 0 ? (
+                  post.likers.length === 1 ? (
+                    <>
+                      <View
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 30
+                        }}
+                      >
+                        <Image
+                          source={{ uri: !isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.picture }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 30
+                          }}
+                        />
+
+                      </View>
+                      <Text
+                        style={{
+                          paddingLeft: 10,
+                          fontSize: 16,
+                          color: isDarkMode ? "#F5F5F5" : "black",
+                        }}>
+                        {t("LikeThat")} {""}
+                        <Text
+                          style={{
+                            paddingLeft: 10,
+                            fontSize: 16,
+                            fontWeight: "600"
+                          }}
+                        >
+                          {!isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.pseudo}
+
+                        </Text>
+                      </Text>
+                    </>
+
+
+                  ) : (
+                    <>
+
+                      <View
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 30
+                        }}
+                      >
+                        <Image
+                          source={{ uri: !isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.picture }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 30
+                          }}
+                        />
+
+                      </View>
+                      <Text
+                        style={{
+                          paddingLeft: 10,
+                          fontSize: 16,
+                          color: isDarkMode ? "#F5F5F5" : "black",
+                        }}>
+                        {t("LikeThat")} {""}
+                        <Text
+                          style={{
+                            paddingLeft: 10,
+                            fontSize: 16,
+                            fontWeight: "600"
+                          }}
+                        >
+                          {!isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.pseudo}
+                        </Text>
+                        {" "}
+
+                        {t("And")} {post.likers.length - 1} {t("OtherPerso")}
+                      </Text>
+                    </>
+                  )
+                ) : (
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      fontSize: 16,
+                      fontWeight: "400",
+                      color: isDarkMode ? "#F5F5F5" : "black",
+                    }}
+                  >
+                    {t("NoOneLikedYet")}
+                  </Text>
+                )}
+
+              </View>
+
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "10%",
+                borderTopWidth: 2,
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+                justifyContent: "center",
               }}
             >
 

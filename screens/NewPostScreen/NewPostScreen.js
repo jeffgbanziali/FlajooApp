@@ -6,14 +6,9 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { uploadImageToFirebase } from '../../Data/FireStore';
-import { collection, addDoc, getDoc } from 'firebase/firestore';
-import { firestore } from '../../Data/FireStore';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Video from 'react-native-video';
@@ -25,8 +20,6 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const NewPostScreen = () => {
     const [postText, setPostText] = useState('');
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [selectedVideo, setSelectedVideo] = useState(null);
     const [selectedMediaArray, setSelectedMediaArray] = useState([]);
     const [showImage, setShowImage] = useState(false);
     const [addText, setAddText] = useState(false);
@@ -45,6 +38,8 @@ const NewPostScreen = () => {
             setLoadPost(false);
         }
     }, [loadPost, dispatch]);
+
+
     const handleClickReturnHome = () => {
         navigation.navigate('TabNavigation');
     };
@@ -53,7 +48,7 @@ const NewPostScreen = () => {
     };
 
 
-
+    /*************************** système de création d'un post ********************************************/
 
     const processMedia = async (selectedMedia) => {
         let mediaType = null;
@@ -75,6 +70,25 @@ const NewPostScreen = () => {
 
         return null;
     };
+
+    /* const processMedia = async (selectedMedia) => {
+         let mediaType = null;
+ 
+         if (selectedMedia.type.includes('image')) {
+             mediaType = 'image';
+         } else if (selectedMedia.type.includes('video')) {
+             mediaType = 'video';
+         }
+ 
+         if (mediaType) {
+             return {
+                 mediaType,
+                 mediaUrl: selectedMedia.uri,
+             };
+         }
+ 
+         return null;
+     };*/
 
     const handlePostSubmitError = (error) => {
         console.error('Erreur lors de la création du post :', error);
@@ -105,15 +119,9 @@ const NewPostScreen = () => {
 
             if ((postText && mediaArray.length > 0) || (!postText && mediaArray.length > 0) || (postText && !mediaArray.length)) {
                 dispatch(addPosts(postData));
-
-                const docRef = await addDoc(collection(firestore, 'posts'), postData);
-                const docSnapshot = await getDoc(docRef);
-
-                console.log('Post créé avec succès! Document ID:', docRef.id);
-                console.log('Document data:', docSnapshot.data());
                 Alert.alert('Succès', 'Votre post a été publié avec succès !');
                 setPostText('');
-                setSelectedImage(null);
+                setSelectedMediaArray(null)
                 setLoadPost(true);
                 navigation.goBack('TabNavigation');
             } else {
@@ -155,7 +163,8 @@ const NewPostScreen = () => {
         }
     };
 
-    console.log('Image sélectionnée :', selectedMediaArray);
+    /*************************** système de création d'un post ********************************************/
+
 
 
 

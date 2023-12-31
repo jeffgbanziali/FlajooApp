@@ -570,7 +570,7 @@ const CreateRéels = () => {
                             rate={1.0}
                             volume={1.0}
                             isMuted={false}
-                            resizeMode="cover"
+                            resizeMode="contain"
                             shouldPlay
                             isLooping
                             onError={(error) => console.error('Erreur de lecture de la vidéo :', error)}

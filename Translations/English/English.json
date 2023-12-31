@@ -70,6 +70,10 @@
     "ReplyTo":"Reply to",
     "Camera":"Camera",
     "Reply":"Reply",
+    "LikeThat":"Liked by",
+    "And":"and",
+    "OtherPerso":"other people",
+    "NoOneLikedYet":"No one liked yet",
 
     "Loading":"Loading...",
     "Research":"Research ...",

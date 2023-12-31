@@ -42,6 +42,8 @@ const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const { uid } = useContext(UidContext)
 
+  console.log("`je suis le uid :", uid)
+
   const [isFirstTime, setIsFirstTime] = useState(true);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const StackNavigation = () => {
           setIsFirstTime(false);
         }
       });
-  }, []);
+  }, [isFirstTime]);
 
   return (
     <Stack.Navigator
@@ -62,14 +64,13 @@ const StackNavigation = () => {
       {
         isFirstTime ? (
           <>
-            < Stack.Screen name="Start" component={StartPage} />
+            <Stack.Screen name="Start" component={StartPage} />
             <Stack.Screen name="Signin" component={SignInScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
           </>
         ) :
           uid ? (
             <>
-
               <Stack.Screen name="TabNavigation" component={TabNavigation} />
               <Stack.Screen name="Réels" component={Réels} />
               <Stack.Screen name="createRéels" component={CreateRéels} />

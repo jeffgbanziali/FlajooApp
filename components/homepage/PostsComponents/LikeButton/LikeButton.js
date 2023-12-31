@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, TouchableOpacity, } from "react-native";
 import { useDispatch } from "react-redux";
-import { likePost, unlikePost } from "../../../actions/post.actions";
-import { UidContext, useDarkMode } from "../../Context/AppContext";
+import { likePost, unlikePost } from "../../../../actions/post.actions";
+import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -15,19 +15,18 @@ const LikeButton = ({ post, type }) => {
   const like = () => {
     dispatch(likePost(post._id, uid));
     setLiked(true);
-    console.log(post._id);
-    console.log(uid);
   };
 
   const unlike = () => {
     dispatch(unlikePost(post._id, uid));
     setLiked(false);
-    console.log(post._id);
   };
 
   useEffect(() => {
-    if (post.likers.includes(uid)) setLiked(true);
-    else setLiked(false);
+    if (post.likers.includes(uid))
+      setLiked(true);
+    else
+      setLiked(false);
   }, [uid, post.likers, liked]);
 
   return (

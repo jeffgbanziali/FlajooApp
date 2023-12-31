@@ -8,7 +8,7 @@ import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import LikeButton from "../LikeButton";
+import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";

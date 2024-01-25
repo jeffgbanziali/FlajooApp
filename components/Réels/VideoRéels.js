@@ -7,7 +7,10 @@ import {
   Animated,
   Easing,
   Dimensions,
-  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  SafeAreaView
 } from "react-native";
 import Video from 'react-native-video';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -24,30 +27,50 @@ import { getVideoReels } from "../../actions/réels.action";
 import { isEmpty } from "../Context/Utils";
 import { useNavigation } from "@react-navigation/native";
 import { UidContext, useDarkMode } from "../Context/AppContext";
-import RéelsComment from "./RéelsComment";
-import AddRéelsComment from "./AddRéelsComment";
-import LikeRéelsButton from "./LikeRéelsButton";
+import RéelsComment from "./RéelsComments/RéelsComment";
+import LikeRéelsButton from "./LikeButton/LikeRéelsButton";
 import RéelsAnimation from "./RéelsAnimation";
 import { LinearGradient } from "react-native-linear-gradient";
 import { useTranslation } from "react-i18next";
+import AddCommentButton from "./RéelsComments/AddButtom/AddCommentButton"
+import AddReplyToReply from "./RéelsComments/AddButtom/AddReplyToReply"
+import AddReplyComment from "./RéelsComments/AddButtom/AddReplyComment"
+
+
+
+
+
+
+
+
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-const VideoRéels = ({ item, isActive }) => {
+const VideoRéels = ({ réels, isActive }) => {
   const video = useRef(null);
   const [activeVideo, setActiveVideo] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [lastViewedVideo, setLastViewedVideo] = useState(0);
   const [status, setStatus] = useState({});
+  const [isKeyboardActive, setKeyboardActive] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [loadPosts, setLoadPosts] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [showToolings, setShowToolings] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [selectedReply, setSelectedReply] = useState(null);
   const dispatch = useDispatch();
   const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
   const { uid } = useContext(UidContext);
   const usersData = useSelector((state) => state.usersReducer);
+  const [response, setResponse] = useState(false)
+  const [responseToResponse, setResponseToResponse] = useState(false)
+  const [partVisible, setPartVisible] = useState(true);
+
+
+
 
   useEffect(() => {
     if (loadPosts) {
@@ -97,6 +120,46 @@ const VideoRéels = ({ item, isActive }) => {
 
 
 
+  const answer = (comment) => {
+    setResponse(!response);
+    setResponseToResponse(false);
+    setSelectedComment(comment);
+  };
+
+  const toReplying = (comment, reply) => {
+    setResponseToResponse(!responseToResponse);
+    setResponse(false);
+    setSelectedComment(comment);
+    setSelectedReply(reply);
+  };
+
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // Le clavier est ouvert, masquez votre partie
+        setPartVisible(false);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        // Le clavier est fermé, affichez votre partie
+        setPartVisible(true);
+      }
+    );
+
+    // Nettoyez les écouteurs lorsque le composant est démonté
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+ 
+  
+
+
   const discAnimatedValue = useRef(new Animated.Value(0)).current;
   const musicNoteAnimatedValue1 = useRef(new Animated.Value(0)).current;
   const musicNoteAnimatedValue2 = useRef(new Animated.Value(0)).current;
@@ -111,11 +174,20 @@ const VideoRéels = ({ item, isActive }) => {
       },
     ],
   };
+
+
   const musicNoteAnimation1 = RéelsAnimation(musicNoteAnimatedValue1, false);
   const musicNoteAnimation2 = RéelsAnimation(musicNoteAnimatedValue2, true);
 
+
+
   const discAnimLoopRef = useRef();
   const musicAnimLoopRef = useRef();
+
+
+
+
+
 
   const triggerAnimation = useCallback(() => {
     discAnimLoopRef.current = Animated.loop(
@@ -145,6 +217,9 @@ const VideoRéels = ({ item, isActive }) => {
     );
     musicAnimLoopRef.current.start();
   }, [discAnimatedValue, musicNoteAnimatedValue1, musicNoteAnimatedValue2]);
+
+
+
 
   useEffect(() => {
     if (isActive) {
@@ -190,7 +265,7 @@ const VideoRéels = ({ item, isActive }) => {
         />
         <Video
           ref={video}
-          source={{ uri: item.videoPath }}
+          source={{ uri: réels.videoPath }}
           style={{
             width: "100%",
             height: "100%",
@@ -252,7 +327,7 @@ const VideoRéels = ({ item, isActive }) => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onPress={() => goProfil(item.posterId)}>
+            <TouchableOpacity onPress={() => goProfil(réels.posterId)}>
               <View
                 style={{
                   width: 50,
@@ -270,7 +345,7 @@ const VideoRéels = ({ item, isActive }) => {
                       !isEmpty(usersData) &&
                       usersData
                         .map((user) => {
-                          if (user._id === item.posterId) return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                          if (user._id === réels.posterId) return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                           else return null;
                         })
                         .join(""),
@@ -294,7 +369,7 @@ const VideoRéels = ({ item, isActive }) => {
               <Text style={{ color: "white", fontSize: 18 }}>
                 {!isEmpty(usersData[0]) &&
                   usersData.map((user) => {
-                    if (user._id === item.posterId) return user.pseudo;
+                    if (user._id === réels.posterId) return user.pseudo;
                     else return null;
                   })}
               </Text>
@@ -322,7 +397,7 @@ const VideoRéels = ({ item, isActive }) => {
                 marginLeft: 6,
               }}
             >
-              {item.viewers.length}
+              {réels.viewers.length}
             </Text>
           </View>
         </View>
@@ -344,7 +419,7 @@ const VideoRéels = ({ item, isActive }) => {
                 fontWeight: "bold",
               }}
             >
-              {item.description}
+              {réels.description}
             </Text>
             <Text
               style={{
@@ -352,7 +427,7 @@ const VideoRéels = ({ item, isActive }) => {
                 marginVertical: 8,
               }}
             >
-              {item.description}
+              {réels.description}
             </Text>
             <View
               style={{
@@ -380,7 +455,7 @@ const VideoRéels = ({ item, isActive }) => {
                   textAlign: "center",
                 }}
               >
-                {item.title}
+                {réels.title}
               </Text>
             </View>
           </View>
@@ -461,7 +536,7 @@ const VideoRéels = ({ item, isActive }) => {
             alignItems: "center",
           }}
         >
-          <LikeRéelsButton réels={item} />
+          <LikeRéelsButton réels={réels} />
           <Text
             style={{
               color: "white",
@@ -469,7 +544,7 @@ const VideoRéels = ({ item, isActive }) => {
               textAlign: "center",
             }}
           >
-            {item.likers.length}
+            {réels.likers.length}
           </Text>
         </View>
 
@@ -479,7 +554,7 @@ const VideoRéels = ({ item, isActive }) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={() => toggleComments(item)}>
+          <TouchableOpacity onPress={() => toggleComments(réels)}>
             <View
               style={{
                 display: "flex",
@@ -501,7 +576,7 @@ const VideoRéels = ({ item, isActive }) => {
               textAlign: "center",
             }}
           >
-            {item.comments.length}
+            {réels.comments.length}
           </Text>
         </View>
         <View
@@ -537,7 +612,10 @@ const VideoRéels = ({ item, isActive }) => {
           </Text>
         </View>
       </View>
-      <Modal
+
+
+
+       <Modal
         isVisible={showComments}
         onBackdropPress={toggleComments}
         style={{ margin: 0, justifyContent: "flex-end" }}
@@ -546,46 +624,101 @@ const VideoRéels = ({ item, isActive }) => {
         animationOut="slideOutDown"
         useNativeDriverForBackdrop
       >
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
             backgroundColor: isDarkMode ? "#171717" : "white",
             height: "85%",
+            height: isKeyboardActive ? "auto" : "85%",
             borderTopLeftRadius: 40,
             borderTopRightRadius: 40,
           }}
         >
-          <View
-            style={{
-              borderBottomWidth: 1,
-              borderColor: isDarkMode ? "#343232" : "lightgray",
-              height: 50,
-            }}
-          >
-            <Text
+          <SafeAreaView>
+            <View
               style={{
-                color: isDarkMode ? "#F5F5F5" : "black",
-                textAlign: "center",
-                fontSize: 16,
-                fontWeight: "bold",
-                marginTop: 10,
+                borderBottomWidth: 1,
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+                height: "6%",
+                width: "100%",
+                justifyContent: "center",
+                alignContent: "center",
+                borderTopLeftRadius: 40,
+                borderTopRightRadius: 40,
               }}
             >
-              {item.comments.length} {t('PostsComment')}
-            </Text>
-          </View>
-          <RéelsComment réels={item} />
-          <View
-            style={{
-              width: "100%",
-              height: "15%",
-              borderTopWidth: 1,
-              borderColor: isDarkMode ? "#343232" : "lightgray",
-            }}
-          >
-            <AddRéelsComment réels={item} />
-          </View>
-        </View>
-      </Modal>
+              <Text
+                style={{
+                  color: isDarkMode ? "#F5F5F5" : "black",
+                  textAlign: "center",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                {réels.comments.length + réels.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)} {t('PostsComment')}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "78%",
+                borderTopWidth: 1,
+                paddingBottom: 10,
+                backgroundColor: isDarkMode ? "#171717" : "white",
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              <RéelsComment réels={réels} toggle={toggleComments} toAnswering={answer} toReplying={toReplying} />
+
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: "16%",
+                //backgroundColor: "gray",
+                borderTopWidth: 1,
+                justifyContent: "center",
+                borderColor: isDarkMode ? "#343232" : "lightgray",
+              }}
+            >
+              {response ? (
+                <>
+                  <AddReplyComment
+                    réels={réels}
+                    selectedComment={selectedComment}
+                    partVisible={partVisible}
+                  />
+
+                </>
+
+              ) : responseToResponse ?
+                (
+                  <>
+                    <AddReplyToReply
+                      réels={réels}
+                      selectedComment={selectedComment}
+                      selectedReply={selectedReply}
+                      partVisible={partVisible}
+                    />
+                  </>
+
+                ) : (
+                  <>
+                    <AddCommentButton
+                      réels={réels}
+                      partVisible={partVisible}
+                    />
+                  </>
+
+                )
+
+              }
+            </View>
+
+          </SafeAreaView>
+
+        </KeyboardAvoidingView>
+      </Modal >
     </>
   );
 };

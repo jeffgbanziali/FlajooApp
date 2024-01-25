@@ -70,7 +70,7 @@ const SignInScreen = () => {
         alert("An error occurred");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Donne moi l'erreur ",error);
     } finally {
       setTimeout(() => {
         setIsLoadingSignIn(false);

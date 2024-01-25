@@ -62,6 +62,7 @@ export const likePost = (postId, userId) => {
     };
 };
 
+
 export const unlikePost = (postId, userId) => {
     return async (dispatch) => {
         try {
@@ -72,7 +73,6 @@ export const unlikePost = (postId, userId) => {
         }
     };
 };
-
 
 
 export const likeComment = (postId, commentId, userId) => {
@@ -99,7 +99,6 @@ export const unlikeComment = (postId, commentId, userId) => {
 };
 
 
-
 export const likeReply = (postId, commentId, replyId, userId) => {
     return async (dispatch) => {
         try {
@@ -110,6 +109,7 @@ export const likeReply = (postId, commentId, replyId, userId) => {
         }
     };
 };
+
 
 export const unlikeReply = (postId, commentId, replyId, userId) => {
     return async (dispatch) => {
@@ -124,13 +124,8 @@ export const unlikeReply = (postId, commentId, replyId, userId) => {
 
 
 
-
 export const addComment = (postId, commenterId, text, commenterPseudo, commentMedia, commentType) => {
-    console.log("postId:", postId);
-    console.log("userId:", commenterId);
-    console.log("text:", text);
-    console.log("pseudo:", commenterPseudo);
-    console.log("commentType:", commentType);
+
     return (dispatch) => {
         return axios({
             method: "patch",
@@ -148,13 +143,6 @@ export const addComment = (postId, commenterId, text, commenterPseudo, commentMe
 
 export const replyComment = (postId, commentId, replierId, replierPseudo, text, replyMedia, replyType, repliedTo) => {
 
-    console.log("postId:", postId);
-    console.log("commentId:", commentId);
-    console.log("userId:", replierId);
-    console.log("pseudo:", replierPseudo);
-    console.log("text:", text);
-    console.log("pseudo:", replierPseudo);
-    console.log("replies:", repliedTo);
 
     return (dispatch) => {
         return axios({

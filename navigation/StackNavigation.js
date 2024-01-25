@@ -42,8 +42,6 @@ const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const { uid } = useContext(UidContext)
 
-  console.log("`je suis le uid :", uid)
-
   const [isFirstTime, setIsFirstTime] = useState(true);
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
 import { LinearGradient } from 'react-native-linear-gradient';
 import { useDarkMode } from '../Context/AppContext';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 const PostsFriendsUser = ({ users }) => {
@@ -27,55 +28,128 @@ const PostsFriendsUser = ({ users }) => {
 
     const renderPost = ({ item, index }) => (
         < TouchableOpacity key={index} >
-            <View style={{
-                borderRadius: 10,
-                overflow: "hidden",
-                borderWidth: 1,
-                borderColor: "white",
-                backgroundColor: "white"
-            }}>
-                <Image
-                    source={{ uri: item.picture }}
-                    style={{
-                        width: 135,
-                        height: 200,
-                        resizeMode: "cover",
-                    }}
-                />
-                <View
-                    style={{
-                        position: "absolute",
-                        width: "100%",
-                        bottom: 0,
-                        justifyContent: "center",
-                    }}
-                >
-                    <Text style={{
-                        marginLeft: "10%",
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        color: "white",
-                        zIndex: 4,
-                        bottom: "60%",
-
-                    }}>
-                        {item.likers ? item.likers.length : 0}
-                    </Text>
-                    <LinearGradient
-                        colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+            {item.media.length > 1 ? (
+                <View style={{
+                    borderRadius: 10,
+                    overflow: "hidden",
+                    borderWidth: 1,
+                    borderColor: "white",
+                    backgroundColor: "white"
+                }}>
+                    <View
                         style={{
+                            width: 25,
+                            height: 25,
                             position: "absolute",
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            height: 60,
-                            borderBottomLeftRadius: 10,
-                            borderBottomRightRadius: 10,
+                            top: 4,
+                            right: 5,
+                            zIndex: 2,
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <FontAwesome5
+                            name="layer-group"
+                            size={20}
+                            color={isDarkMode ? "#F5F5F5" : "black"} />
+
+                    </View>
+                    <Image
+                        source={{ uri: item.media[0]?.mediaUrl }}
+                        style={{
+                            width: 135,
+                            height: 200,
+                            resizeMode: "cover",
+                            opacity: 0.9,
                         }}
                     />
-                </View>
+                    <View
+                        style={{
+                            position: "absolute",
+                            width: "100%",
+                            bottom: 0,
+                            justifyContent: "center",
+                        }}
+                    >
+                        <Text style={{
+                            marginLeft: "10%",
+                            fontSize: 16,
+                            fontWeight: "bold",
+                            color: "white",
+                            zIndex: 4,
+                            bottom: "60%",
 
-            </View>
+                        }}>
+                            {item.likers ? item.likers.length : 0}
+                        </Text>
+                        <LinearGradient
+                            colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                            style={{
+                                position: "absolute",
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                height: 60,
+                                borderBottomLeftRadius: 10,
+                                borderBottomRightRadius: 10,
+                            }}
+                        />
+                    </View>
+
+                </View>
+            ) : (
+                <View style={{
+                    borderRadius: 10,
+                    overflow: "hidden",
+                    borderWidth: 1,
+                    borderColor: "white",
+                    backgroundColor: "white"
+                }}>
+                    <Image
+                        source={{ uri: item.media[0]?.mediaUrl }}
+                        style={{
+                            width: 135,
+                            height: 200,
+                            resizeMode: "cover",
+                        }}
+                    />
+                    <View
+                        style={{
+                            position: "absolute",
+                            width: "100%",
+                            bottom: 0,
+                            justifyContent: "center",
+                        }}
+                    >
+                        <Text style={{
+                            marginLeft: "10%",
+                            fontSize: 16,
+                            fontWeight: "bold",
+                            color: "white",
+                            zIndex: 4,
+                            bottom: "60%",
+
+                        }}>
+                            {item.likers ? item.likers.length : 0}
+                        </Text>
+                        <LinearGradient
+                            colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                            style={{
+                                position: "absolute",
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                height: 60,
+                                borderBottomLeftRadius: 10,
+                                borderBottomRightRadius: 10,
+                            }}
+                        />
+                    </View>
+
+                </View>
+            )
+            }
+
         </TouchableOpacity >
     );
 

@@ -8,11 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Pressable,
 } from "react-native";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useSelector } from "react-redux";
 import { isEmpty } from "../../Context/Utils";
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./PostComments/AddButtom/AddCommentButton";
@@ -38,8 +40,7 @@ const Posts = ({ post }) => {
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const [partVisible, setPartVisible] = useState(true);
-
-  const navigation = useNavigation();
+  const userData = useSelector((state) => state.userReducer);
   const [response, setResponse] = useState(false)
   const [responseToResponse, setResponseToResponse] = useState(false)
   const { uid } = useContext(UidContext);
@@ -87,8 +88,6 @@ const Posts = ({ post }) => {
   }, []);*/
 
 
-
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -115,7 +114,14 @@ const Posts = ({ post }) => {
 
 
 
+  const deletePost = () => {
+    console.warn("Mbi nga mbiké zo")
+  }
 
+
+  const savePost = () => {
+    console.warn("Mbi nga zo")
+  }
 
 
   const { t } = useTranslation();
@@ -550,6 +556,10 @@ const Posts = ({ post }) => {
         )
       }
 
+
+
+      
+
       <Modal
         isVisible={showComments}
         onBackdropPress={toggleComments}
@@ -681,132 +691,272 @@ const Posts = ({ post }) => {
               width: "100%",
               height: "90%",
             }}>
-            <View
-              style={{
-                width: "100%",
-                height: "25%",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-around",
-                borderTopWidth: 2,
-                borderColor: isDarkMode ? "#343232" : "lightgray",
-              }}
-            >
+
+
+            {post.posterId === userData._id ? (
               <View
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: "100%",
+                  height: "20%",
+                  flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between"
-
-                }}>
+                  justifyContent: "space-around",
+                  borderTopWidth: 2,
+                  borderColor: isDarkMode ? "#343232" : "lightgray",
+                }}
+              >
                 <View
                   style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 100,
-                    //backgroundColor: "blue",
-                    borderWidth: 3,
-                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    width: 90,
+                    height: 90,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "space-between",
+                  }}>
+                  <Pressable
+                    onPress={deletePost}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      backgroundColor: "red",
+                      borderWidth: 1,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
+
+                    }}>
+                    <AntDesign
+                      name="delete"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </Pressable>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    {t("Delete")}
+                  </Text>
+
+                </View>
+                <View
+                  style={{
+                    width: 90,
+                    height: 90,
+                    alignItems: "center",
+                    justifyContent: "space-between",
+
 
                   }}>
-                  <Fontisto
-                    name="heart-alt"
-                    size={24}
-                    color={isDarkMode ? "#F5F5F5" : "black"}
+                  <View
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      //backgroundColor: "blue",
+                      borderWidth: 3,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
 
-                  />
+                    }}>
+                    <Fontisto
+                      name="heart-alt"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    Enregistrer
+                  </Text>
+
                 </View>
-                <Text
+                <View
                   style={{
-                    color: "white",
-                    fontWeight: "600",
-                    fontSize: 14
-                  }}
-                >
-                  Enregistrer
-                </Text>
+                    width: 90,
+                    height: 90,
+                    alignItems: "center",
+                    justifyContent: "space-between",
 
+
+                  }}>
+                  <View
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      //backgroundColor: "blue",
+                      borderWidth: 3,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
+
+                    }}>
+                    <Fontisto
+                      name="heart-alt"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    Enregistrer
+                  </Text>
+
+                </View>
               </View>
+            ) : (
               <View
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: "100%",
+                  height: "25%",
+                  flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between"
-
-                }}>
+                  justifyContent: "space-around",
+                  borderTopWidth: 2,
+                  borderColor: isDarkMode ? "#343232" : "lightgray",
+                }}
+              >
                 <View
                   style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 100,
-                    //backgroundColor: "blue",
-                    borderWidth: 3,
-                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    width: 90,
+                    height: 90,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "space-between"
 
                   }}>
-                  <Fontisto
-                    name="heart-alt"
-                    size={24}
-                    color={isDarkMode ? "#F5F5F5" : "black"}
+                  <Pressable
+                    onPress={savePost}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      //backgroundColor: "blue",
+                      borderWidth: 3,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
 
-                  />
+                    }}>
+                    <Fontisto
+                      name="heart-alt"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </Pressable>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    Enregistrer
+                  </Text>
+
                 </View>
-                <Text
-                  style={{
-                    color: "white",
-                    fontWeight: "600",
-                    fontSize: 14
-                  }}
-                >
-                  Enregistrer
-                </Text>
-
-              </View>
-              <View
-                style={{
-                  width: 100,
-                  height: 100,
-                  alignItems: "center",
-                  justifyContent: "space-between"
-
-                }}>
                 <View
                   style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 100,
-                    //backgroundColor: "blue",
-                    borderWidth: 3,
-                    borderColor: isDarkMode ? "gray" : "lightgray",
+                    width: 90,
+                    height: 90,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "space-between"
 
                   }}>
-                  <Fontisto
-                    name="heart-alt"
-                    size={24}
-                    color={isDarkMode ? "#F5F5F5" : "black"}
+                  <View
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      //backgroundColor: "blue",
+                      borderWidth: 3,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
 
-                  />
+                    }}>
+                    <Fontisto
+                      name="heart-alt"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    Enregistrer
+                  </Text>
+
                 </View>
-                <Text
+                <View
                   style={{
-                    color: "white",
-                    fontWeight: "600",
-                    fontSize: 14
-                  }}
-                >
-                  Enregistrer
-                </Text>
+                    width: 90,
+                    height: 90,
+                    alignItems: "center",
+                    justifyContent: "space-between"
 
+                  }}>
+                  <View
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 100,
+                      //backgroundColor: "blue",
+                      borderWidth: 3,
+                      borderColor: isDarkMode ? "gray" : "lightgray",
+                      alignItems: "center",
+                      justifyContent: "center"
+
+                    }}>
+                    <Fontisto
+                      name="heart-alt"
+                      size={24}
+                      color={isDarkMode ? "#F5F5F5" : "black"}
+
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: 14
+                    }}
+                  >
+                    Enregistrer
+                  </Text>
+
+                </View>
               </View>
-            </View>
+            )}
+
+
+
+
+
+
             <View
               style={{
                 width: "100%",

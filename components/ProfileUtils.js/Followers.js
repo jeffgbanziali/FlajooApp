@@ -1,16 +1,38 @@
 import { Link, useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/base";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { useDarkMode } from "../Context/AppContext";
+import { UidContext, useDarkMode } from "../Context/AppContext";
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
+import { APP_API_URL } from "../../config";
+import { getPostsById } from "../../actions/post.actions";
+
 
 const Followers = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
   const { t } = useTranslation();
+  const [user, setUser] = useState([]);
   const userData = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
+  const { uid } = useContext(UidContext)
+
+ 
+  useEffect(() => {
+    const getPostUser = async () => {
+        try {
+            const response = await axios.get(`${APP_API_URL}/api/post/${uid}`);
+            setUser(response.data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    getPostUser();
+}, [uid]);
+
 
 
   const handleFollowing = () => {
@@ -20,6 +42,7 @@ const Followers = () => {
   const handleFollowers = () => {
     navigation.navigate("Myfollowers");
   };
+
 
 
 
@@ -48,7 +71,7 @@ const Followers = () => {
               textAlign: "center",
             }}
           >
-            {userData.posts ? userData.posts.length : 0}
+            {user ? user.length : 0}
           </Text>
           <Text
             style={{
@@ -56,7 +79,7 @@ const Followers = () => {
               textAlign: "center",
             }}
           >
-           {t('Post')}
+            {t('Post')}
           </Text>
         </View>
         <View
@@ -81,7 +104,7 @@ const Followers = () => {
                 color: "#787373",
               }}
             >
-             {t('Followers')}
+              {t('Followers')}
             </Text>
           </TouchableOpacity>
         </View>

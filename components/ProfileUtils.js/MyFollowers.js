@@ -40,7 +40,7 @@ const MyFollowers = () => {
         backgroundColor: "black",
       }}
     >
-      <SafeAreaView >
+      <SafeAreaView>
         <View
           style={{
             flexDirection: "row",

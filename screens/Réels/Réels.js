@@ -24,7 +24,7 @@ const Réels = () => {
         data={reelsData}
         renderItem={({ item, index }) => (
           <GestureHandlerRootView>
-            <VideoRéels item={item} isActive={activeVideoIndex === index} />
+            <VideoRéels réels={item} isActive={activeVideoIndex === index} />
           </GestureHandlerRootView>
         )}
         onScroll={(e) => {

@@ -32,7 +32,7 @@ const Followers = ({ users }) => {
     getPostUser();
   }, [users._id]);
 
-  console.log(user)
+  console.log("Kondo", user)
 
 
   const handleFollowing = () => {
@@ -69,7 +69,7 @@ const Followers = ({ users }) => {
               textAlign: "center",
             }}
           >
-            {user.posts ? user.posts.length : 0}
+            {user ? user.length : 0}
           </Text>
           <Text
             style={{

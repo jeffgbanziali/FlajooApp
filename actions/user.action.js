@@ -9,6 +9,8 @@ export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const ADD_FAVORITE_POST = "ADD_FAVORITE_POST"
+export const REMOVE_FAVORITE_POST = "REMOVE_FAVORITE_POST"
 export const UPDATE_BIO = "UPDATE_BIO";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
@@ -153,6 +155,53 @@ export const unfollowUser = (followerId, idToUnfollow) => {
             .catch((err) => console.log(err));
     };
 };
+
+
+
+export const addFavoPost = (userId, postId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post(
+                `${APP_API_URL}/api/user/addFavPost`,
+                { userId, postId } // Corps de la requête
+            );
+            if (response.status === 200) {
+                // Dispatch de l'action réussie
+                dispatch({ type: ADD_FAVORITE_POST, payload: { userId, postId } });
+            } else {
+                console.error("Erreur lors de l'ajout du post aux favoris. Le serveur a répondu avec le statut :", response.status);
+                alert(`Une erreur s'est produite lors de l'ajout du post aux favoris. Le serveur a répondu avec le statut : ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du post aux favoris :", error);
+            alert("Une erreur s'est produite lors de l'ajout du post aux favoris");
+        }
+    };
+};
+
+export const removeFavoPost = (userId, postId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post(
+                `${APP_API_URL}/api/user/removeFavPost`,
+                { userId, postId } // Corps de la requête
+            );
+            if (response.status === 200) {
+                // Dispatch de l'action réussie
+                dispatch({ type: REMOVE_FAVORITE_POST, payload: { userId, postId } });
+            } else {
+                console.error("Erreur lors du retrait du post des favoris. Le serveur a répondu avec le statut :", response.status);
+                alert(`Une erreur s'est produite lors du retrait du post des favoris. Le serveur a répondu avec le statut : ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Erreur lors du retrait du post des favoris :", error);
+            alert("Une erreur s'est produite lors du retrait du post des favoris");
+        }
+    };
+};
+
+
+
 
 
 export const searchUsers = () => {

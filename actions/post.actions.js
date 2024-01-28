@@ -53,6 +53,8 @@ export const addPosts = (data) => {
 
 
 
+
+
 export const deletePost = (postId) => {
     return async (dispatch) => {
         try {
@@ -73,7 +75,6 @@ export const deletePost = (postId) => {
         }
     };
 };
-
 
 
 

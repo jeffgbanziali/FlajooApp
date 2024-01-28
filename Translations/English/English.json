@@ -80,6 +80,9 @@
     "No":"No",
     "Yes":"Yes",
     "DeletePosting":"The post has been successfully deleted",
+    "AddFav":"Save",
+    "remoFav":"Remove",
+
 
     "Loading":"Loading...",
     "Research":"Research ...",

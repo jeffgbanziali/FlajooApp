@@ -4,6 +4,7 @@ import { APP_API_URL } from '../config';
 // Post actions
 export const GET_POSTS = "GET_POSTS";
 export const GET_ADD_POSTS = "GET_ADD_POSTS";
+export const DELETE_POST = "DELETE_POST";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
@@ -51,6 +52,31 @@ export const addPosts = (data) => {
 };
 
 
+
+export const deletePost = (postId) => {
+    return async (dispatch) => {
+        try {
+            // Envoyer une requête DELETE pour supprimer le post avec l'ID spécifié
+            const res = await axios.delete(`${APP_API_URL}/api/post/${postId}`);
+
+            // Si la suppression réussit, dispatchez une action DELETE_POST avec l'ID du post supprimé
+            if (res.data.errors) {
+                dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
+            } else {
+                dispatch({ type: DELETE_POST, payload: { postId } });
+            }
+        } catch (error) {
+            // En cas d'erreur, affichez l'erreur dans la console
+            console.error('Erreur lors de la suppression du post:', error);
+            // Dispatchez une action CREATE_POST_ERROR avec un message d'erreur approprié
+            dispatch({ type: CREATE_POST_ERROR, payload: 'Une erreur s\'est produite lors de la suppression du post.' });
+        }
+    };
+};
+
+
+
+
 export const likePost = (postId, userId) => {
     return async (dispatch) => {
         try {
@@ -61,6 +87,8 @@ export const likePost = (postId, userId) => {
         }
     };
 };
+
+
 
 
 export const unlikePost = (postId, userId) => {

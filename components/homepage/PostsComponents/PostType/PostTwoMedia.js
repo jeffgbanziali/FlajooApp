@@ -206,7 +206,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     renderItem={({ item }) => (
                         <>
                             <LinearGradient
-                                colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
+                                colors={[isDarkMode ? "black" : "#0F0F0F", "transparent"]}
                                 style={{
                                     position: "absolute",
                                     top: 0,
@@ -258,7 +258,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             }
 
                             <LinearGradient
-                                colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                                colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
                                 style={{
                                     position: "absolute",
                                     bottom: 0,

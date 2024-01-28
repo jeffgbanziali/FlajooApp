@@ -275,7 +275,8 @@ const VideoRéels = ({ réels, isActive }) => {
           isLooping
           shouldPlay={isVideoPlaying}
           repeat
-          paused={!isActive}
+          paused={true}
+          //paused={!isActive}
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           onLoad={handleVideoLoad}
           onError={(error) => console.error("Erreur de lecture vidéo :", error)}

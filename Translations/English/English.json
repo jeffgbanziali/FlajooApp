@@ -75,6 +75,11 @@
     "OtherPerso":"other people",
     "NoOneLikedYet":"No one liked yet",
     "Delete":"Delete",
+    "Modify":"Modify",
+    "AreYouSure":"Are you sure you want to delete this post ?",
+    "No":"No",
+    "Yes":"Yes",
+    "DeletePosting":"The post has been successfully deleted",
 
     "Loading":"Loading...",
     "Research":"Research ...",

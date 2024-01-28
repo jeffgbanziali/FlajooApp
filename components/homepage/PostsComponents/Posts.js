@@ -10,13 +10,10 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import { isEmpty } from "../../Context/Utils";
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from "react-native-modal";
-import { useNavigation } from "@react-navigation/native";
 import AddCommentButton from "./PostComments/AddButtom/AddCommentButton";
 import AllCommentView from "./PostComments/AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
@@ -28,6 +25,21 @@ import PostText from "./PostType/PostText";
 import PostMedia from "./PostType/PostMedia";
 import PostTwoMedia from "./PostType/PostTwoMedia";
 import PostTextAndMedia from "./PostType/PostTextAndMedia";
+import PostTools from "./CustomPostCard/PostTools/PostTools";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const Posts = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,13 +52,9 @@ const Posts = ({ post }) => {
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
   const [partVisible, setPartVisible] = useState(true);
-  const userData = useSelector((state) => state.userReducer);
   const [response, setResponse] = useState(false)
   const [responseToResponse, setResponseToResponse] = useState(false)
-  const { uid } = useContext(UidContext);
   const { isDarkMode } = useDarkMode();
-
-
 
 
 
@@ -114,14 +122,7 @@ const Posts = ({ post }) => {
 
 
 
-  const deletePost = () => {
-    console.warn("Mbi nga mbiké zo")
-  }
 
-
-  const savePost = () => {
-    console.warn("Mbi nga zo")
-  }
 
 
   const { t } = useTranslation();
@@ -209,7 +210,7 @@ const Posts = ({ post }) => {
                   width: 0,
                   height: isDarkMode ? 1 : 2,
                 },
-                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowOpacity: isDarkMode ? 0.16 : 0.3,
                 shadowRadius: 3.84,
                 elevation: 2,
               }}
@@ -354,7 +355,7 @@ const Posts = ({ post }) => {
                     width: 0,
                     height: isDarkMode ? 1 : 2,
                   },
-                  shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                  shadowOpacity: isDarkMode ? 0.16 : 0.4,
                   shadowRadius: 3.84,
                   elevation: 2,
                 }}
@@ -558,8 +559,6 @@ const Posts = ({ post }) => {
 
 
 
-      
-
       <Modal
         isVisible={showComments}
         onBackdropPress={toggleComments}
@@ -686,410 +685,8 @@ const Posts = ({ post }) => {
             justifyContent: "center"
           }}
         >
-          <View
-            style={{
-              width: "100%",
-              height: "90%",
-            }}>
+          <PostTools post={post} toggleToolings={toggleToolings} />
 
-
-            {post.posterId === userData._id ? (
-              <View
-                style={{
-                  width: "100%",
-                  height: "20%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  borderTopWidth: 2,
-                  borderColor: isDarkMode ? "#343232" : "lightgray",
-                }}
-              >
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}>
-                  <Pressable
-                    onPress={deletePost}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      backgroundColor: "red",
-                      borderWidth: 1,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <AntDesign
-                      name="delete"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </Pressable>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    {t("Delete")}
-                  </Text>
-
-                </View>
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-
-
-                  }}>
-                  <View
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      //backgroundColor: "blue",
-                      borderWidth: 3,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <Fontisto
-                      name="heart-alt"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    Enregistrer
-                  </Text>
-
-                </View>
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-
-
-                  }}>
-                  <View
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      //backgroundColor: "blue",
-                      borderWidth: 3,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <Fontisto
-                      name="heart-alt"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    Enregistrer
-                  </Text>
-
-                </View>
-              </View>
-            ) : (
-              <View
-                style={{
-                  width: "100%",
-                  height: "25%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  borderTopWidth: 2,
-                  borderColor: isDarkMode ? "#343232" : "lightgray",
-                }}
-              >
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between"
-
-                  }}>
-                  <Pressable
-                    onPress={savePost}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      //backgroundColor: "blue",
-                      borderWidth: 3,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <Fontisto
-                      name="heart-alt"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </Pressable>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    Enregistrer
-                  </Text>
-
-                </View>
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between"
-
-                  }}>
-                  <View
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      //backgroundColor: "blue",
-                      borderWidth: 3,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <Fontisto
-                      name="heart-alt"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    Enregistrer
-                  </Text>
-
-                </View>
-                <View
-                  style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between"
-
-                  }}>
-                  <View
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 100,
-                      //backgroundColor: "blue",
-                      borderWidth: 3,
-                      borderColor: isDarkMode ? "gray" : "lightgray",
-                      alignItems: "center",
-                      justifyContent: "center"
-
-                    }}>
-                    <Fontisto
-                      name="heart-alt"
-                      size={24}
-                      color={isDarkMode ? "#F5F5F5" : "black"}
-
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 14
-                    }}
-                  >
-                    Enregistrer
-                  </Text>
-
-                </View>
-              </View>
-            )}
-
-
-
-
-
-
-            <View
-              style={{
-                width: "100%",
-                height: "10%",
-                borderTopWidth: 2,
-                borderColor: isDarkMode ? "#343232" : "lightgray",
-                justifyContent: "center",
-              }}
-            >
-              <View
-                style={{
-                  width: "100%",
-                  height: "80%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingLeft: 20
-                }}>
-
-
-
-
-                {post.likers && post.likers.length > 0 ? (
-                  post.likers.length === 1 ? (
-                    <>
-                      <View
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 30
-                        }}
-                      >
-                        <Image
-                          source={{ uri: !isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.picture }}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 30
-                          }}
-                        />
-
-                      </View>
-                      <Text
-                        style={{
-                          paddingLeft: 10,
-                          fontSize: 16,
-                          color: isDarkMode ? "#F5F5F5" : "black",
-                        }}>
-                        {t("LikeThat")} {""}
-                        <Text
-                          style={{
-                            paddingLeft: 10,
-                            fontSize: 16,
-                            fontWeight: "600"
-                          }}
-                        >
-                          {!isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.pseudo}
-
-                        </Text>
-                      </Text>
-                    </>
-
-
-                  ) : (
-                    <>
-
-                      <View
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 30
-                        }}
-                      >
-                        <Image
-                          source={{ uri: !isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.picture }}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 30
-                          }}
-                        />
-
-                      </View>
-                      <Text
-                        style={{
-                          paddingLeft: 10,
-                          fontSize: 16,
-                          color: isDarkMode ? "#F5F5F5" : "black",
-                        }}>
-                        {t("LikeThat")} {""}
-                        <Text
-                          style={{
-                            paddingLeft: 10,
-                            fontSize: 16,
-                            fontWeight: "600"
-                          }}
-                        >
-                          {!isEmpty(usersData[0]) && usersData.find((user) => user._id === post.likers[0])?.pseudo}
-                        </Text>
-                        {" "}
-
-                        {t("And")} {post.likers.length - 1} {t("OtherPerso")}
-                      </Text>
-                    </>
-                  )
-                ) : (
-                  <Text
-                    style={{
-                      paddingLeft: 10,
-                      fontSize: 16,
-                      fontWeight: "400",
-                      color: isDarkMode ? "#F5F5F5" : "black",
-                    }}
-                  >
-                    {t("NoOneLikedYet")}
-                  </Text>
-                )}
-
-              </View>
-
-            </View>
-            <View
-              style={{
-                width: "100%",
-                height: "10%",
-                borderTopWidth: 2,
-                borderColor: isDarkMode ? "#343232" : "lightgray",
-                justifyContent: "center",
-              }}
-            >
-
-            </View>
-
-          </View>
         </KeyboardAvoidingView>
       </Modal>
 

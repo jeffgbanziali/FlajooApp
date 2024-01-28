@@ -139,7 +139,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           <Feather
             name="more-horizontal"
             size={25}
-            color="white"
+            color={isDarkMode ? "#F5F5F5" : "black"}
 
           />
         </TouchableOpacity>

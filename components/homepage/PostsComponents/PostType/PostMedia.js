@@ -168,18 +168,20 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                     justifyContent: "center",
                     alignItems: "center",
                     position: "absolute",
+                    borderRadius: 20,
+                    backgroundColor: 'rgba(0, 0, 0, 0.93)',
                     overflow: "hidden",
                 }}
             >
                 <LinearGradient
-                    colors={[isDarkMode ? "black" : "#4F4F4F", "transparent"]}
+                    colors={[isDarkMode ? "black" : "#0F0F0F", "transparent"]}
                     style={{
                         position: "absolute",
                         top: 0,
                         left: 0,
                         right: 0,
                         zIndex: 1,
-                        height: 100,
+                        height: 80,
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20,
                     }}
@@ -213,7 +215,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                             rate={1.0}
                             volume={1.0}
                             isMuted={false}
-                            resizeMode="cover"
+                            resizeMode="stretch"
                             isLooping
                             paused={true}
                             style={{
@@ -229,13 +231,13 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
 
 
                 <LinearGradient
-                    colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                    colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
                     style={{
                         position: "absolute",
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        height: 100,
+                        height: 80,
                         borderBottomLeftRadius: 20,
                         borderBottomRightRadius: 20,
                     }}

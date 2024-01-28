@@ -22,6 +22,10 @@ const MessagesUser = ({ message, own, user }) => {
   console.log(user)
   const userImageUri = own ? userData.picture : user.picture;
 
+
+
+
+  
   const messageTools = () => {
     if (showMessageTools) {
       Animated.timing(messageHeight, {

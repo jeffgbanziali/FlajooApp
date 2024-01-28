@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
-import { useNavigation } from "@react-navigation/native";
+//import { useNavigation } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { APP_API_URL } from "../../config";
 
@@ -15,7 +15,6 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       setIsLoadingSignOut(true);
-
       await AsyncStorage.removeItem("token");
       await AsyncStorage.removeItem("userId");
       await axios.get(`${APP_API_URL}/api/user/logout`);

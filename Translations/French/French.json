@@ -77,6 +77,11 @@
     "OtherPerso":"autres personnes",
     "NoOneLikedYet":"Personne a aimé ce post",
     "Delete":"Supprimer",
+    "Modify":"Modifier",
+    "AreYouSure":"Êtes-vous sûr de vouloir supprimer ce post ?",
+    "No":"Non",
+    "Yes":"Oui",
+    "DeletePosting":"Le post a été supprimé avec succès",
      
 
     "Loading":"Chargement...",

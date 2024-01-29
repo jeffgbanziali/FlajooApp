@@ -4,13 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "../Context/Utils";
 import { followUser, unfollowUser } from "../../actions/user.action";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
 import { TouchableOpacity } from "react-native";
-import { UidContext } from "../Context/AppContext";
+import { useDarkMode } from "../Context/AppContext";
+import { useTranslation } from "react-i18next";
+
+
+
 
 const FollowHandler = ({ idToFollow, type }) => {
   const userData = useSelector((state) => state.userReducer);
   const [isFollowed, setIsFollowed] = useState(false);
   const dispatch = useDispatch();
+  const { isDarkMode } = useDarkMode();
+  const { t } = useTranslation();
+
+
+
+
+
 
   const handleFollow = () => {
     dispatch(followUser(userData._id, idToFollow));
@@ -148,6 +160,44 @@ const FollowHandler = ({ idToFollow, type }) => {
               </Text>
             </View>
           )}
+          {type === "PostTools" && (
+            <View
+              style={{
+                width: "100%",
+                height: "100%",
+                //backgroundColor: "green",
+                alignItems: "center",
+                flexDirection: "row"
+              }}
+            >
+              <View
+                style={{
+                  width: "50%",
+                  height: "100%",
+                  //backgroundColor: "red",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  paddingLeft: 22,
+                }}>
+                <Feather
+                  name="user-minus"
+                  size={30}
+                  color={isDarkMode ? "gray" : "lightgray"}
+                />
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    color: isDarkMode ? "gray" : "lightgray",
+                    fontSize: 20,
+                    paddingLeft: 10,
+                  }}
+                >
+                  {t("UnFollow")}
+                </Text>
+              </View>
+
+            </View>
+          )}
         </TouchableOpacity>
       )}
       {isFollowed === false && !isEmpty(userData) && (
@@ -268,6 +318,45 @@ const FollowHandler = ({ idToFollow, type }) => {
               >
                 Follow
               </Text>
+            </View>
+          )}
+          {type === "PostTools" && (
+            <View
+              style={{
+                width: "100%",
+                height: "100%",
+                //backgroundColor: "blue",
+                alignItems: "center",
+                //justifyContent: "center",
+                flexDirection: "row"
+              }}
+            >
+              <View
+                style={{
+                  width: "40%",
+                  height: "100%",
+                  // backgroundColor: "red",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  paddingLeft: 22,
+                }}>
+                <Feather
+                  name="user-plus"
+                  size={30}
+                  color={isDarkMode ? "gray" : "lightgray"}
+                />
+
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    color: isDarkMode ? "gray" : "lightgray",
+                    fontSize: 20,
+                    paddingLeft: 10,
+                  }}
+                >
+                  {t("Follow")}
+                </Text>
+              </View>
             </View>
           )}
         </TouchableOpacity>

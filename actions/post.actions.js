@@ -24,10 +24,10 @@ export const getPosts = (num) => {
     return async (dispatch) => {
         try {
             const response = await axios.get(`${APP_API_URL}/api/post`);
-            const array = response.data.slice(0, num);
+            const array = response.data.slice(0, num); // Slice the response data to get the specified number of posts
             dispatch({ type: GET_POSTS, payload: array });
         } catch (error) {
-            console.error('Erreur lors de la récupération des publications:', error);
+            console.error('Error while fetching posts:', error);
         }
     };
 };

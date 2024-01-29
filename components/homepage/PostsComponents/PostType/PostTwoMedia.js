@@ -87,6 +87,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     position: "relative ",
                     zIndex: 1,
                     marginBottom: 10,
+                    top: "2%",
                 }}
             >
                 <View
@@ -183,14 +184,17 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
+
+
             <View style={{
                 borderColor: "red",
                 width: windowWidth,
-                height: 500,
+                height: "100%",
                 justifyContent: "center",
                 alignItems: "center",
                 position: "absolute",
                 overflow: "hidden",
+                borderRadius: 20,
 
             }}>
                 <FlatList
@@ -277,6 +281,8 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                 <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
             </View>
 
+            
+
             <View
                 style={{
                     flexDirection: "row",
@@ -286,6 +292,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     marginVertical: 10,
                     bottom: "5%",
                     width: "100%",
+                    
                     //backgroundColor: "red"
                 }}
             >
@@ -293,6 +300,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
+                        paddingLeft: 12
                     }}
                 >
                     <View

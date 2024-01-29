@@ -177,6 +177,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
+            paddingLeft: 12
           }}
         >
           <View

@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { UidContext, useDarkMode } from '../../../../Context/AppContext';
 import { useTranslation } from 'react-i18next';
@@ -51,88 +51,92 @@ const SavePost = ({ post }) => {
     return (
         <>
             {uid && favorite == false && (
-                <View
+                <TouchableOpacity
+                    onPress={addFavorite}
                     style={{
-                        width: 90,
-                        height: 90,
+                        width: "100%",
+                        height: "10%",
+                        //borderTopWidth: 2,
+                        borderColor: isDarkMode ? "#343232" : "lightgray",
+                        //backgroundColor: "red",
                         alignItems: "center",
-                        justifyContent: "space-between"
+                        flexDirection: "row"
 
-                    }}>
-
-                    <Pressable
-                        onPress={addFavorite}
+                    }}
+                >
+                    <View
                         style={{
-                            width: 60,
-                            height: 60,
-                            borderRadius: 100,
-                            //backgroundColor: "blue",
-                            borderWidth: 3,
-                            borderColor: isDarkMode ? "gray" : "lightgray",
+                            width: "100%",
+                            height: "100%",
+                            //backgroundColor: "green",
                             alignItems: "center",
-                            justifyContent: "center"
+                            flexDirection: "row",
+                            paddingLeft: 20,
 
                         }}>
+
                         <AntDesign
                             name="staro"
                             size={30}
-                            color={isDarkMode ? "#F5F5F5" : "black"}
+                            color={isDarkMode ? "gray" : "lightgray"} />
+                        <Text
+                            style={{
+                                color: isDarkMode ? "gray" : "lightgray",
+                                fontWeight: "500",
+                                fontSize: 20,
+                                paddingLeft: 10,
+                            }}
+                        >
+                            {t("AddFavo")}
+                        </Text>
+                    </View>
 
-                        />
-                    </Pressable>
-                    <Text
-                        style={{
-                            color: "white",
-                            fontWeight: "600",
-                            fontSize: 14
-                        }}
-                    >
-                        {t("AddFav")}
-                    </Text>
 
-                </View>
+                </TouchableOpacity>
             )}
             {uid && favorite && (
-                <View
+                <TouchableOpacity
+                    onPress={removeFavorite}
                     style={{
-                        width: 90,
-                        height: 90,
+                        width: "100%",
+                        height: "10%",
+                        //borderTopWidth: 2,
+                        borderColor: isDarkMode ? "#343232" : "lightgray",
+                        //backgroundColor: "red",
                         alignItems: "center",
-                        justifyContent: "space-between"
+                        flexDirection: "row"
 
-                    }}>
-
-                    <Pressable
-                        onPress={removeFavorite}
+                    }}
+                >
+                    <View
                         style={{
-                            width: 60,
-                            height: 60,
-                            borderRadius: 100,
-                            //backgroundColor: "blue",
-                            borderWidth: 3,
-                            borderColor: isDarkMode ? "gray" : "lightgray",
+                            width: "100%",
+                            height: "100%",
+                            //backgroundColor: "green",
                             alignItems: "center",
-                            justifyContent: "center"
+                            flexDirection: "row",
+                            paddingLeft: 20,
 
                         }}>
+
                         <AntDesign
                             name="star"
                             size={30}
-                            color={isDarkMode ? "yellow" : "yellow"}
+                            color={isDarkMode ? "gray" : "lightgray"} />
+                        <Text
+                            style={{
+                                color: isDarkMode ? "gray" : "lightgray",
+                                fontWeight: "500",
+                                fontSize: 20,
+                                paddingLeft: 10,
+                            }}
+                        >
+                            {t("RemoveFavo")}
+                        </Text>
+                    </View>
 
-                        />
-                    </Pressable>
-                    <Text
-                        style={{
-                            color: "white",
-                            fontWeight: "600",
-                            fontSize: 14
-                        }}
-                    >
-                        {t("remoFav")}
-                    </Text>
 
-                </View>
+                </TouchableOpacity>
             )}
 
 

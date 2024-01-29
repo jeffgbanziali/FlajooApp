@@ -11,11 +11,14 @@ import {
     UNFOLLOW_USER,
     UPDATE_PROFILE,
     ADD_FAVORITE_POST,
-    REMOVE_FAVORITE_POST
+    REMOVE_FAVORITE_POST,
+    REMOVE_SAVED_POST,
+    SAVED_POST
 } from '../actions/user.action';
 
 const initialState = {
-    favoritePost: []
+    favoritePost: [],
+    savedPost: []
 };
 
 export default function userReducer(state = initialState, action) {
@@ -80,6 +83,17 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 favoritePost: state.favoritePost.filter(postId => postId !== action.payload.postId)
+            };
+        case SAVED_POST:
+            return {
+                ...state,
+                savedPost: [...state.savedPost, action.payload.postId]
+            };
+
+        case REMOVE_SAVED_POST:
+            return {
+                ...state,
+                savedPost: state.savedPost.filter(postId => postId !== action.payload.postId)
             };
         default:
             return state;

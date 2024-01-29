@@ -60,6 +60,7 @@
     "Text":"Text", 
     "Song":"Song",
 
+
     "PostsComment":"Comments",
     "TextInputPost":"Leave a comment for",
     "CreateRéels":"Create Your Réels",
@@ -82,6 +83,17 @@
     "DeletePosting":"The post has been successfully deleted",
     "AddFav":"Save",
     "remoFav":"Remove",
+    "Follow" :"Follow",
+    "UnFollow":"Unfollow him",
+    "AccountInfos":"About this account",
+    "WhatSeePub":"Why are you seeing this post ?",
+    "SignalPub":"Report",
+    "ToMask":"Hide",
+    "AddFavo":"Add to favorites",
+    "RemoveFavo":"Remove favorites",
+    "Share":"Share your post",
+    "Identify":"Identify someone",
+
 
 
     "Loading":"Loading...",

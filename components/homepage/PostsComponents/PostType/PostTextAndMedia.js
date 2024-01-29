@@ -46,9 +46,12 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "relative ",
+                    position: "absolute ",
                     zIndex: 1,
-                    marginBottom: 10,
+                    marginBottom: 8,
+                    top: "2%",
+                    //backgroundColor:"blue"
+
                 }}
             >
                 <View
@@ -150,7 +153,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                 style={{
                     borderColor: "red",
                     width: "100%",
-                    height: 500,
+                    height: "100%",
                     justifyContent: "center",
                     alignItems: "center",
                     position: "absolute",
@@ -224,14 +227,40 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                 />
             </View>
 
+
+            <View
+                style={{
+                    zIndex: 1,
+                    height: "12%",
+                    width: "90%",
+                    marginLeft: 10,
+                    bottom: "14%",
+                    position: "absolute",
+                    //backgroundColor:"blue"
+                    justifyContent: "center"
+                }}
+            >
+                <Text
+                    style={{
+                        color: isDarkMode ? "white" : "#F5F5F5",
+                        fontSize: 16,
+                        fontWeight: "400",
+                        textAlign: "justify",
+                        lineHeight: 20,
+                    }}
+                >
+                    {post.message}
+                </Text>
+            </View>
+
+
             <View
                 style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "relative",
-                    marginVertical: 10,
-                    top: "70%",
+                    position: "absolute",
+                    bottom: "6%",
                     width: "100%",
                     //backgroundColor: "red"
                 }}
@@ -240,6 +269,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
+                        paddingLeft: 12
                     }}
                 >
                     <View
@@ -333,28 +363,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
-            <View
-                style={{
-                    zIndex: 1,
-                    height: "12%",
-                    width: "90%",
-                    marginLeft: 10,
-                    top: "56%",
-                    //backgroundColor:"red"
-                }}
-            >
-                <Text
-                    style={{
-                        color: isDarkMode ? "white" : "#F5F5F5",
-                        fontSize: 16,
-                        fontWeight: "400",
-                        textAlign: "justify",
-                        lineHeight: 20,
-                    }}
-                >
-                    {post.message}
-                </Text>
-            </View>
+
         </View>
     )
 }

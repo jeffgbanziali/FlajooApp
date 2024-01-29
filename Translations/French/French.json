@@ -46,7 +46,7 @@
     "Followeds":"Suivi(e)s",
     "Myfollowers":"Mes Followers",
     "Myfollowed":"Mes Suivi(e)s",
-    "You":"You",
+    "You":"Vous",
 
 
 
@@ -84,6 +84,17 @@
     "DeletePosting":"Le post a été supprimé avec succès",
     "AddFav":"Enregistrer",
     "remoFav":"Supprimer",
+    "Follow" :"Follow",
+    "UnFollow":"Ne plus le suivre",
+    "AccountInfos":"À propos de ce compte",
+    "WhatSeePub":"Pourquoi vous voyez cette publication ?",
+    "SignalPub":"Signaler",
+    "ToMask":"Masquer",
+    "AddFavo":"Ajouter aux favoris",
+    "RemoveFavo":"Enlever des favoris",
+    "Share":"Partager votre publication",
+    "Identify":"Identifier quelq'un",
+
      
 
     "Loading":"Chargement...",

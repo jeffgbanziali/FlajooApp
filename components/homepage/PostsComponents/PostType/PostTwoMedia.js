@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     FlatList,
     Animated,
+    Pressable,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useRef, useState, } from "react";
@@ -18,6 +19,7 @@ import { LinearGradient } from "react-native-linear-gradient";
 import { Dimensions } from "react-native";
 import Pagination from "../CustomPostCard/Pagination"
 import Video from 'react-native-video';
+import { Modal } from "react-native";
 
 
 
@@ -27,6 +29,8 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
 
 const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
+    const [showImage, setShowImage] = useState(false);
+
     const [index, setIndex] = useState(0);
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
@@ -43,6 +47,14 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
             console.log("go to profile friends", id);
         }
     };
+
+
+    const showModal = () => {
+        setShowImage(!showImage);
+    };
+
+
+
 
     const handleOnScroll = event => {
         Animated.event(
@@ -186,17 +198,20 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
             </View>
 
 
-            <View style={{
-                borderColor: "red",
-                width: windowWidth,
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "absolute",
-                overflow: "hidden",
-                borderRadius: 20,
+            <Pressable
+                onPress={showModal}
 
-            }}>
+                style={{
+                    borderColor: "red",
+                    width: windowWidth,
+                    height: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    overflow: "hidden",
+                    borderRadius: 20,
+
+                }}>
                 <FlatList
                     data={mediaItem}
                     horizontal
@@ -252,7 +267,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                         isLooping
                                         paused={true}
                                         style={{
-                                            width:windowWidth,
+                                            width: windowWidth,
                                             height: "100%",
                                             borderRadius: 20,
                                             opacity: isDarkMode ? 0.7 : 1,
@@ -273,15 +288,124 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                     borderBottomRightRadius: 20,
                                 }}
                             />
+
                         </>
 
 
                     )}
                 />
-                <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
-            </View>
 
-            
+                <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
+            </Pressable>
+            <Modal
+                visible={showImage}
+                transparent={true}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onRequestClose={showModal}
+            >
+                <View
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: isDarkMode ? "black" : "black",
+
+                    }}>
+
+                    <View
+                        style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "10%",
+                            marginTop: "4%",
+                            //backgroundColor: "red",
+                            zIndex: 3
+                        }}
+                    >
+
+                        <Pressable
+
+                            onPress={showModal}
+
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                //backgroundColor: "blue",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                        </Pressable>
+
+                    </View>
+
+                    <FlatList
+                        data={mediaItem}
+                        horizontal
+                        pagingEnabled
+                        snapToAlignment="center"
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={handleOnScroll}
+                        onViewableItemsChanged={handleOnViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <>
+
+                                {
+                                    item.mediaType === "image" && (
+                                        <Image
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            style={{
+                                                borderColor: "red",
+                                                width: windowWidth,
+                                                height: "100%",
+                                                resizeMode: "contain",
+                                                borderRadius: 20,
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+                                {
+                                    item.mediaType === "video" && (
+                                        <Video
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            rate={1.0}
+                                            volume={1.0}
+                                            isMuted={false}
+                                            resizeMode="contain"
+                                            isLooping
+                                            paused={true}
+                                            style={{
+                                                width: windowWidth,
+                                                height: "100%",
+                                                borderRadius: 20,
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+
+
+                            </>
+
+
+                        )}
+                    />
+
+                    <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
+
+                </View>
+            </Modal>
+
 
             <View
                 style={{
@@ -292,7 +416,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     marginVertical: 10,
                     bottom: "5%",
                     width: "100%",
-                    
+
                     //backgroundColor: "red"
                 }}
             >

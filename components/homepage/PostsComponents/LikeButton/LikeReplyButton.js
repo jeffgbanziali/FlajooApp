@@ -13,15 +13,12 @@ const LikeReplyButton = ({ post, comment, reply, type }) => {
     const { isDarkMode } = useDarkMode();
 
     const like = () => {
-        console.log("Like reply button pressed" + reply);
         dispatch(likeReply(post._id, comment._id, reply._id, uid));
         setLiked(true);
     };
 
-    console.log("Like like likee", comment);
 
     const unlike = () => {
-        console.log("Unlike reply button pressed");
         dispatch(unlikeReply(post._id, comment._id, reply._id, uid));
         setLiked(false);
     };

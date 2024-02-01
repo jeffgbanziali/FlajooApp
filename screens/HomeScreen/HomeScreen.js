@@ -37,11 +37,8 @@ const HomeScreen = () => {
                     }
                     }
                 >
-                    <ScrollView>
-                        <Header />
-                        <Stories />
-                        <Thread />
-                    </ScrollView>
+
+                    <Thread />
                 </SafeAreaView>
             </KeyboardAvoidingView>
         </>

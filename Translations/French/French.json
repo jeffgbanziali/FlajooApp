@@ -76,6 +76,7 @@
     "And":"et",
     "OtherPerso":"autres personnes",
     "NoOneLikedYet":"Personne a aimé ce post",
+    "NoFollowAccount":"Personne suit ce compte",
     "Delete":"Supprimer",
     "Modify":"Modifier",
     "AreYouSure":"Êtes-vous sûr de vouloir supprimer ce post ?",
@@ -94,6 +95,16 @@
     "RemoveFavo":"Enlever des favoris",
     "Share":"Partager votre publication",
     "Identify":"Identifier quelq'un",
+    "TheFirsComment":"Soyez la première personne à commenter ce post",
+    "SendFriends":"Envoyer à des amis",
+    "ToTrad":"Traduire",
+    "Copy":"Copier",
+    "ToBlock":"Bloquer",
+    "ToRest":"Resteindre",
+    "ToShare":"Partager ce profil",
+    "ToPoperst":"À propos de ce compte",
+    "ToShow":"Afficher le code QR",
+
 
      
 

@@ -78,10 +78,10 @@ const SavePost = ({ post }) => {
                         <AntDesign
                             name="staro"
                             size={30}
-                            color={isDarkMode ? "gray" : "lightgray"} />
+                            color={isDarkMode ? "gray" : "black"} />
                         <Text
                             style={{
-                                color: isDarkMode ? "gray" : "lightgray",
+                                color: isDarkMode ? "gray" : "black",
                                 fontWeight: "500",
                                 fontSize: 20,
                                 paddingLeft: 10,
@@ -122,10 +122,10 @@ const SavePost = ({ post }) => {
                         <AntDesign
                             name="star"
                             size={30}
-                            color={isDarkMode ? "gray" : "lightgray"} />
+                            color={isDarkMode ? "gray" : "black"} />
                         <Text
                             style={{
-                                color: isDarkMode ? "gray" : "lightgray",
+                                color: isDarkMode ? "gray" : "black",
                                 fontWeight: "500",
                                 fontSize: 20,
                                 paddingLeft: 10,

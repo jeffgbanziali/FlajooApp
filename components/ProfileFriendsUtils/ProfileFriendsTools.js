@@ -15,7 +15,7 @@ const ProfileFriendsTools = ({ users }) => {
         flex: 1,
         backgroundColor: isDarkMode ? "#171717" : "white",
         borderRadius: 30,
-        marginTop: -40,
+        marginTop: -30,
         display: "flex",
         borderWidth: 1,
         borderColor: "#EFEAEA",

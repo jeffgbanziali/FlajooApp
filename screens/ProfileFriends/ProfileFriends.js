@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
+  Animated, Easing
 } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -20,6 +21,11 @@ import { useDarkMode } from "../../components/Context/AppContext";
 import VideoRéelsFriendsUser from "../../components/ProfileFriendsUtils/VideoRéelsFriendsUser";
 import { SafeAreaView } from "react-native";
 import { useTranslation } from "react-i18next";
+import Modal from "react-native-modal";
+import FriendsSettings from "../../components/ProfileFriendsUtils/FriendsSettings";
+import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
+import { isEmpty } from "../../components/Context/Utils";
+
 
 const ProfileFriends = () => {
   const route = useRoute();
@@ -33,13 +39,19 @@ const ProfileFriends = () => {
 
 
   const usersData = useSelector((state) => state.usersReducer);
+  const userData = useSelector((state) => state.userReducer);
+
+
+
+
+
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
   };
-  const handleClickSettings = () => {
-    console.log("clicked");
-  };
+
+
+
 
   const handleSendMEssage = (id) => {
     console.log("clicked");
@@ -47,7 +59,7 @@ const ProfileFriends = () => {
   };
 
   const users = usersData.find((user) => user._id === id);
-  console.log(users)
+
 
 
 
@@ -64,16 +76,86 @@ const ProfileFriends = () => {
   };
 
 
+
+
+
+
+
+
+
+
+
+  const [pressComment, setPressComment] = useState(new Animated.Value(0));
+  const [pressInComments, setPressInComments] = useState(false);
+
+
+  const areYouPressComment = () => {
+    if (pressInComments) {
+      Animated.timing(pressComment, {
+        toValue: 0,
+        duration: 200,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }).start(() => setPressInComments(false));
+    } else {
+      setPressInComments(true);
+      Animated.timing(pressComment, {
+        toValue: 200,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }).start();
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
         flex: 1,
+        width: "100%",
+        height: "100%"
       }}
     >
-      <SafeAreaView>
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}
+      >
         <ScrollView>
+
+
+
+
           <View
             style={{
               flex: 1,
@@ -90,6 +172,11 @@ const ProfileFriends = () => {
               elevation: 5,
             }}
           >
+
+
+
+
+
             <View
               style={{
                 flexDirection: "row",
@@ -113,11 +200,13 @@ const ProfileFriends = () => {
                 <AntDesign
                   name="arrowleft"
                   size={28}
-                  color={isDarkMode ? "#5F5858" : "black"}
+                  color={isDarkMode ? "white" : "black"}
                 />
               </TouchableOpacity>
+
+
               <TouchableOpacity
-                onPress={handleClickSettings}
+                onPress={areYouPressComment}
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
@@ -132,10 +221,12 @@ const ProfileFriends = () => {
                 <Entypo
                   name="dots-three-horizontal"
                   size={28}
-                  color={isDarkMode ? "#5F5858" : "black"}
+                  color={isDarkMode ? "white" : "black"}
                 />
               </TouchableOpacity>
             </View>
+
+
 
             <View
               style={{
@@ -147,18 +238,23 @@ const ProfileFriends = () => {
                 padding: 5,
               }}
             >
-              <TouchableOpacity>
+              <View
+                style={{
+                  width: 160,
+                  height: 160,
+                  borderRadius: 100,
+                  objectFit: "cover",
+                }}
+              >
                 <Image
                   source={{
                     uri: users.picture,
                   }}
                   style={{
-                    width: 160,
-                    height: 160,
+                    width: "100%",
+                    height: "100%",
                     borderRadius: 100,
                     objectFit: "cover",
-                    borderWidth: 5,
-                    borderColor: "red",
                   }}
                 />
 
@@ -180,7 +276,7 @@ const ProfileFriends = () => {
                     zIndex: 100,
                   }}
                 ></View>
-              </TouchableOpacity>
+              </View>
 
               <Text
                 style={{
@@ -213,7 +309,7 @@ const ProfileFriends = () => {
                   width: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
               >
                 <View
@@ -256,61 +352,150 @@ const ProfileFriends = () => {
                 </View>
               </View>
             </View>
+
+
+
+
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
                 position: "relative",
-                marginTop: 12,
-                flex: 1,
                 width: "100%",
+                height: "10%",
               }}
+
             >
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "normal",
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                {t('Followby')}
-              </Text>
-              <Image
-                source={{
-                  uri: "https://i.pinimg.com/originals/53/d8/07/53d807f07a035d81ce767abd44c98e13.png",
-                }}
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: 100,
-                  objectFit: "cover",
-                  marginLeft: 8,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 8,
-                  fontWeight: "normal",
-                  color: "gray",
-                }}
-              >
-                @Ferran_Torres
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 8,
-                  fontWeight: "normal",
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                {t('AndOth')}
-              </Text>
+              {users.followers && users.followers.length > 0 && (
+                users.followers.length === 1 ? (
+                  <>
+
+                    {
+                      users.followers[0] === userData._id ? (
+                        <>
+
+
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "normal",
+                              color: isDarkMode ? "white" : "black",
+                            }}
+                          >
+                            {t('Followby')}{" "}
+                          </Text>
+                          <Text
+                            style={{
+                              color: isDarkMode ? "gray" : "black",
+                              fontSize: 16,
+                              fontWeight: "normal"
+                            }}
+                          >
+                            {t("You")}
+
+                          </Text>
+                        </>
+
+                      ) : (
+                        <>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "normal",
+                              color: isDarkMode ? "white" : "black",
+                            }}
+                          >
+                            {t('Followby')}{" "}
+                          </Text>
+                          <Text
+                            style={{
+                              color: isDarkMode ? "gray" : "black",
+                              fontSize: 16,
+                              fontWeight: "normal"
+                            }}
+                          >
+                            {/*t("You")*/}
+                            {!isEmpty(usersData[0]) && usersData.find((user) => user._id === users.followers[0])?.pseudo}
+
+                          </Text>
+                        </>
+                      )
+                    }
+
+                  </>
+                ) : users.followers.length > 1 ? (
+
+                  <>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: "normal",
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      {t('Followby')}
+                    </Text>
+                    <Image
+                      source={{
+                        uri: !isEmpty(usersData[0]) && usersData.find((user) => user._id === users.followers[0])?.picture ? !isEmpty(usersData[0]) && usersData.find((user) => user._id === users.followers[0])?.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
+                      }}
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 100,
+                        objectFit: "cover",
+                        marginLeft: 8,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        paddingLeft: 8,
+                        fontWeight: "normal",
+                        color: "gray",
+                      }}
+                    >
+                      {!isEmpty(usersData[0]) && usersData.find((user) => user._id === users.followers[0])?.pseudo}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        paddingLeft: 8,
+                        fontWeight: "normal",
+                        color: isDarkMode ? "white" : "black",
+                      }}
+                    >
+                      {t("And")} {users.followers.length - 1} {t("OtherPerso")}
+                    </Text>
+                  </>
+                ) :
+                  (
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        color: isDarkMode ? "gray" : "black",
+                        fontSize: 18,
+                        fontWeight: "400",
+                        color: isDarkMode ? "#F5F5F5" : "black",
+                      }}
+                    >
+                      {t("NoFollowAccount")}
+                    </Text>
+                  )
+
+              )}
+
             </View>
+
+
+
+
+
+
           </View>
           <ProfileFriendsTools users={users} />
+
           <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
           {selectedSwitchValue === "P" && (
             <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
@@ -326,10 +511,48 @@ const ProfileFriends = () => {
               <VideoRéelsFriendsUser users={users} />
             </View>
           )}
+
+
+
+
         </ScrollView>
       </SafeAreaView>
 
-    </KeyboardAvoidingView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <Modal
+        isVisible={pressInComments}
+        onBackdropPress={areYouPressComment}
+        //transparent={true}
+        backdropOpacity={0.5}
+        animationIn="pulse"
+        animationOut="fadeOut"
+        useNativeDriverForBackdrop
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <FriendsSettings areYouPressComment={areYouPressComment} users={users} />
+
+      </Modal>
+
+    </KeyboardAvoidingView >
   );
 };
 

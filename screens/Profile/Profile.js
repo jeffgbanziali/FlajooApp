@@ -101,9 +101,9 @@ const Profile = () => {
                 }}
               >
                 <MaterialIcons
-                  name="arrow-back-ios"
+                  name="arrow-back"
                   size={28}
-                  color={isDarkMode ? "#5F5858" : "black"}
+                  color={isDarkMode ? "white" : "black"}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={handleClickSettings}>
@@ -122,7 +122,7 @@ const Profile = () => {
                   <Entypo
                     name="dots-three-horizontal"
                     size={28}
-                    color={isDarkMode ? "#5F5858" : "black"}
+                    color={isDarkMode ? "white" : "black"}
                   />
                 </View>
               </TouchableOpacity>

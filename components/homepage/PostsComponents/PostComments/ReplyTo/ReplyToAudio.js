@@ -32,8 +32,6 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
 
     const replying = (comment, reply) => {
         toReplying(comment, reply);
-        console.log("tu es là ", comment)
-        console.log("tu es là là là là  ", reply)
     };
 
     return (

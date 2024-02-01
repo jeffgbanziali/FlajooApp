@@ -9,6 +9,7 @@ export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const ADD_REPLY = 'ADD_REPLY';
+export const DELETE_COMMENT = "DELETE_COMMENT"
 export const LIKE_COMMENT = 'LIKE_COMMENT';
 export const UNLIKE_COMMENT = "UNLIKE_COMMENT";
 export const LIKE_REPLY = 'LIKE_REPLY';
@@ -88,6 +89,10 @@ export const likePost = (postId, userId) => {
         }
     };
 };
+
+
+
+
 
 
 
@@ -194,4 +199,47 @@ export const replyComment = (postId, commentId, replierId, replierPseudo, text, 
             .catch((err) => console.log(err));
     };
 };
+
+
+
+
+
+export const deleteComment = (postId, commentId) => {
+    return async (dispatch) => {
+        try {
+            // Envoyer une requête DELETE pour supprimer le post avec l'ID spécifié
+            const res = axios.delete(`${APP_API_URL}api/post/delete-comment-post/${postId}`, { data: { commentId } });
+
+            // Si la suppression réussit, dispatchez une action DELETE_POST avec l'ID du commentaire supprimé
+            if (res.data && res.data.errors) {
+                dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
+            } else {
+                dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
+            }
+
+        } catch (error) {
+            // En cas d'erreur, affichez l'erreur dans la console
+            console.error('Erreur lors de la suppression du commentaire:', error);
+            // Dispatchez une action CREATE_POST_ERROR avec un message d'erreur approprié
+            dispatch({ type: CREATE_POST_ERROR, payload: 'Une erreur s\'est produite lors de la suppression du commentaire.' });
+        }
+    };
+};
+
+
+
+
+/*export const eleteComment = (postId, commentId) => {
+    return (dispatch) => {
+        return axios({
+            method: "patch",
+            url: `${APP_API_URL}api/post/delete-comment-post/${postId}`,
+            data: { commentId },
+        })
+            .then((res) => {
+                dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
+            })
+            .catch((err) => console.log(err));
+    };
+};*/
 

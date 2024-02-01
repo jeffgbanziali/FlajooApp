@@ -70,7 +70,7 @@ const SignInScreen = () => {
         alert("An error occurred");
       }
     } catch (error) {
-      console.log("Donne moi l'erreur ",error);
+      console.log("Donne moi l'erreur ", error);
     } finally {
       setTimeout(() => {
         setIsLoadingSignIn(false);
@@ -272,8 +272,8 @@ const SignInScreen = () => {
                     >
                       {
                         showPass ?
-                          <Ionicons name="eye-off" size={22} color="gray" /> :
-                          <Ionicons name="eye" size={22} color="gray" />
+                          <Ionicons name="eye" size={22} color="gray" /> :
+                          <Ionicons name="eye-off" size={22} color="gray" />
                       }
                     </Pressable>
 

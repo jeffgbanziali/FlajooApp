@@ -249,6 +249,7 @@ const Stories = () => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
         ListHeaderComponent={<MyStory />}
+       
       />
     </View>
   );

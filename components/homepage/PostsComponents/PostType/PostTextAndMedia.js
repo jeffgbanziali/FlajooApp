@@ -3,9 +3,11 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    Modal,
+    Pressable,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useContext, } from "react";
+import React, { useContext, useState, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LikeButton from "../LikeButton/LikeButton"
@@ -18,6 +20,9 @@ import Video from 'react-native-video';
 
 const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
+    const [showImage, setShowImage] = useState(false);
+
+
 
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
@@ -30,6 +35,11 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
             navigation.navigate("ProfilFriends", { id });
         }
     };
+
+    const showModal = () => {
+        setShowImage(!showImage);
+    };
+
 
 
 
@@ -149,7 +159,8 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                 </TouchableOpacity>
             </View>
 
-            <View
+            <Pressable
+                onPress={showModal}
                 style={{
                     borderColor: "red",
                     width: "100%",
@@ -225,9 +236,100 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         borderBottomRightRadius: 20,
                     }}
                 />
-            </View>
+            </Pressable>
+
+            <Modal
+                visible={showImage}
+                transparent={true}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onRequestClose={showModal}
+            >
+                <View
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: isDarkMode ? "black" : "black",
+
+                    }}>
+
+                    <View
+                        style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "10%",
+                            marginTop: "4%",
+                            //backgroundColor: "red",
+                            zIndex: 3
+                        }}
+                    >
+
+                        <Pressable
+
+                            onPress={showModal}
+
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                //backgroundColor: "blue",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                        </Pressable>
+
+                    </View>
 
 
+                    {
+                        item.mediaType === "image" && (
+                            <Image
+                                source={{
+                                    uri: item.mediaUrl,
+                                }}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    resizeMode: "contain",
+                                    borderRadius: 20,
+                                    opacity: isDarkMode ? 0.7 : 1,
+                                }}
+                            />
+                        )
+                    }
+
+
+
+                    {
+                        item.mediaType === "video" && (
+
+                            <Video
+                                source={{
+                                    uri: item.mediaUrl,
+                                }}
+                                rate={1.0}
+                                volume={1.0}
+                                isMuted={false}
+                                isLooping
+                                paused={true}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    resizeMode: "contain",
+                                    borderRadius: 20,
+                                    opacity: isDarkMode ? 0.7 : 1,
+                                }}
+                            />
+                        )
+
+                    }
+
+
+                </View>
+            </Modal>
             <View
                 style={{
                     zIndex: 1,

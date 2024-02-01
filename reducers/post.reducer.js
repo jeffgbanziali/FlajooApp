@@ -1,4 +1,4 @@
-import { GET_POSTS, DELETE_POST, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR, LIKE_COMMENT, UNLIKE_COMMENT, LIKE_REPLY, UNLIKE_REPLY } from "../actions/post.actions";
+import { GET_POSTS, DELETE_POST, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR, LIKE_COMMENT, UNLIKE_COMMENT, LIKE_REPLY, UNLIKE_REPLY, DELETE_COMMENT } from "../actions/post.actions";
 
 const initialState = {};
 
@@ -58,6 +58,17 @@ export default function postReducer(state = initialState, action) {
                     };
                 }
                 return post;
+            });
+        case DELETE_COMMENT:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.filter(
+                            (comment) => comment._id !== action.payload.commentId
+                        ),
+                    };
+                } else return post;
             });
         case LIKE_COMMENT:
             return state.map((post) => {

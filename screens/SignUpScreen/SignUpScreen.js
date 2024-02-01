@@ -288,8 +288,8 @@ const SignUpScreen = () => {
                                 >
                                     {
                                         showPass ?
-                                            <Ionicons name="eye-off" size={22} color="gray" /> :
-                                            <Ionicons name="eye" size={22} color="gray" />
+                                            <Ionicons name="eye" size={22} color="gray" /> :
+                                            <Ionicons name="eye-off" size={22} color="gray" />
                                     }
                                 </Pressable>
 
@@ -340,8 +340,8 @@ const SignUpScreen = () => {
                                 >
                                     {
                                         showConfirmPass ?
-                                            <Ionicons name="eye-off" size={22} color="gray" /> :
-                                            <Ionicons name="eye" size={22} color="gray" />
+                                            <Ionicons name="eye" size={22} color="gray" /> :
+                                            <Ionicons name="eye-off" size={22} color="gray" />
                                     }
                                 </Pressable>
 

@@ -45,16 +45,17 @@ const Settings = () => {
 
       }}
     >
-      <View style={{
-        marginTop: 50,
-        paddingBottom: 2,
-        marginLeft: 10,
-        marginRight: 10,
-        flexDirection: "row",
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
-        justifyContent: "space-between",
-      }}>
+      <View
+        style={{
+          marginTop: 50,
+          paddingBottom: 2,
+          marginLeft: 10,
+          marginRight: 10,
+          flexDirection: "row",
+          borderBottomColor: "gray",
+          borderBottomWidth: 1,
+          justifyContent: "space-between",
+        }}>
         <TouchableOpacity onPress={() => handleClickReturnProfile()}>
           <View
             style={{
@@ -66,7 +67,7 @@ const Settings = () => {
             }}
           >
             <MaterialIcons
-              name="arrow-back-ios"
+              name="arrow-back"
               size={28}
               color={isDarkMode ? "white" : "black"}
             />
@@ -82,6 +83,7 @@ const Settings = () => {
           {t('Settings')}
         </Text>
       </View>
+
       <View
         style={{
           width: "100%",
@@ -123,7 +125,7 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-          {t('Account')}
+              {t('Account')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -160,7 +162,7 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-                {t('Application-Settings')}
+              {t('Application-Settings')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -196,7 +198,7 @@ const Settings = () => {
                 fontSize: 20,
               }}
             >
-            {t('Edit-Profile')}
+              {t('Edit-Profile')}
             </Text>
           </View>
         </TouchableOpacity>

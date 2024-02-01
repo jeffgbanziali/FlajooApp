@@ -38,7 +38,7 @@ const QRCode = () => {
             </View>
             <Text
                 style={{
-                    color: "white",
+                    color: isDarkMode ? "gray" : "black",
                     fontWeight: "600",
                     fontSize: 14
                 }}

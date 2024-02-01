@@ -182,12 +182,12 @@ const FollowHandler = ({ idToFollow, type }) => {
                 <Feather
                   name="user-minus"
                   size={30}
-                  color={isDarkMode ? "gray" : "lightgray"}
+                  color={isDarkMode ? "gray" : "black"}
                 />
                 <Text
                   style={{
                     fontWeight: "600",
-                    color: isDarkMode ? "gray" : "lightgray",
+                    color: isDarkMode ? "gray" : "black",
                     fontSize: 20,
                     paddingLeft: 10,
                   }}
@@ -343,13 +343,13 @@ const FollowHandler = ({ idToFollow, type }) => {
                 <Feather
                   name="user-plus"
                   size={30}
-                  color={isDarkMode ? "gray" : "lightgray"}
+                  color={isDarkMode ? "gray" : "black"}
                 />
 
                 <Text
                   style={{
                     fontWeight: "600",
-                    color: isDarkMode ? "gray" : "lightgray",
+                    color: isDarkMode ? "gray" : "black",
                     fontSize: 20,
                     paddingLeft: 10,
                   }}

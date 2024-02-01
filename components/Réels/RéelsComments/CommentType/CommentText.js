@@ -216,9 +216,8 @@ const CommentText = ({ réels, comment, toggle, toAnswering, toReplying }) => {
 
                     }}>
                     <TouchableOpacity
-                        onPress={() => handleReply(comment)
-
-                        }
+                        onPress={() => handleReply(comment)}
+                        
                         style={{
                             justifyContent: "center",
                             justifyContent: "center",

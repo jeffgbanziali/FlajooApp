@@ -11,8 +11,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Octicons from 'react-native-vector-icons/Octicons';
-
-
+import Modal from "react-native-modal";
 
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import Réels from "../screens/Réels/Réels";
@@ -20,8 +19,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  Button,
+  Animated,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
@@ -33,6 +31,7 @@ import CallScreen from "../screens/CallScreen/CallScreen";
 import IncomingCall from "../screens/CallScreen/IncomingCall";
 import VoiceCall from "../screens/CallScreen/VoiceCall";
 import { useTranslation } from "react-i18next";
+import { Easing } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,12 +41,11 @@ const TabNavigation = () => {
   const navigation = useNavigation();
   const [showOptions, setShowOptions] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const [pressComment, setPressComment] = useState(new Animated.Value(0));
 
 
-  const handleToggleOptions = () => {
-    setShowOptions(!showOptions);
-  };
+
 
   const closeModal = () => {
     setShowOptions(false);
@@ -77,6 +75,30 @@ const TabNavigation = () => {
     closeModal()
 
   }
+
+  const arePress = () => {
+    if (showOptions) {
+      Animated.timing(pressComment, {
+        toValue: 0,
+        duration: 200,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }).start(() => setShowOptions(false));
+    } else {
+      setShowOptions(true);
+      Animated.timing(pressComment, {
+        toValue: 200,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }).start();
+    }
+  };
+
+
+
+
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -144,7 +166,7 @@ const TabNavigation = () => {
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               <View style={styles.tabIconContainer}>
-                <TouchableOpacity onPress={handleToggleOptions} style={styles.addButton}>
+                <TouchableOpacity onPress={arePress} style={styles.addButton}>
                   <Feather name="plus" size={40} style={styles.addButtonText} color="black" />
                 </TouchableOpacity>
               </View>
@@ -206,59 +228,44 @@ const TabNavigation = () => {
 
 
       <Modal
-        visible={showOptions}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={closeModal}>
+        isVisible={showOptions}
+        //transparent={true}
+        backdropOpacity={0.5}
+        animationIn="pulse"
+        animationOut="fadeOut"
+        useNativeDriverForBackdrop
+        onBackdropPress={arePress}
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+
+
+
         <View
           style={{
-            position: "absolute",
-            width: "100%",
-            height: "10%",
-            marginTop: "4%",
-            zIndex: 3
-          }}
-        >
-          <TouchableOpacity
-            onPress={closeModal}
-            style={{
-              width: '10%',
-              height: '100%',
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Entypo
-              size={35}
-              name='cross'
-              color="white" />
-          </TouchableOpacity>
-
-        </View>
-        <View style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: isDarkMode ? "rgba(0, 1, 1, 0.5)" : "rgba(0, 0, 0, 0.5)",
-        }}>
-          <View style={{
-            borderRadius: 10,
-            width: "60%",
-            height: "30%",
-            borderRadius: 20,
-            padding: 2,
-            backgroundColor: isDarkMode ? "#171717" : "white",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: isDarkMode ? 1 : 2,
-            },
-            shadowOpacity: isDarkMode ? 0.16 : 0.6,
-            shadowRadius: 3.84,
-            elevation: 2,
-
+            justifyContent: "center",
+            alignItems: "center",
           }}>
+          <View
+            style={{
+              borderRadius: 10,
+              width: 260,
+              height: 260,
+              borderRadius: 20,
+              padding: 2,
+              backgroundColor: isDarkMode ? "#171717" : "white",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: isDarkMode ? 1 : 2,
+              },
+              shadowOpacity: isDarkMode ? 0.16 : 0.6,
+              shadowRadius: 3.84,
+              elevation: 2,
+
+            }}>
             <TouchableOpacity
               onPress={AddPost}
               style={{

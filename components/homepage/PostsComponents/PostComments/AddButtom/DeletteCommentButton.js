@@ -1,21 +1,24 @@
-import { View, Text, Pressable, TouchableOpacity, Alert, Animated, Easing } from 'react-native'
+import { View, Text, TouchableOpacity, Pressable, Alert, Animated, Easing } from 'react-native'
+import Modal from "react-native-modal";
 import React, { useEffect, useState } from 'react'
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDarkMode } from '../../../../Context/AppContext';
 import { useTranslation } from 'react-i18next';
+import { deleteComment, getPosts } from '../../../../../actions/post.actions';
 import { useDispatch, useSelector } from "react-redux";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Modal from "react-native-modal";
-import { deletePost, getPosts } from '../../../../../actions/post.actions';
 
 
 
 
 
 
-const DeleteButton = ({ post, toggleToolings }) => {
+const DeletteCommentButton = ({ post, comment, areYouPressComment }) => {
+
+
+
+
+
 
     const { isDarkMode } = useDarkMode();
     const dispatch = useDispatch();
@@ -25,6 +28,7 @@ const DeleteButton = ({ post, toggleToolings }) => {
     const [pressComment, setPressComment] = useState(new Animated.Value(0));
 
 
+    
     useEffect(() => {
         if (loadPost) {
             dispatch(getPosts());
@@ -34,17 +38,17 @@ const DeleteButton = ({ post, toggleToolings }) => {
 
     const areYouDelete = () => {
         setDeleting(!deleting);
-
+        console.log("deleting")
     }
 
 
 
     const handleDeletePost = async () => {
         try {
-            dispatch(deletePost(post._id));
+            dispatch(deleteComment(post._id, comment._id));
             setLoadPost(true);
             areYouDelete();
-            toggleToolings();
+            areYouPressComment()
             Alert.alert(`${t("DeletePosting")}`)
         } catch (error) {
             console.error('Error deleting post', error);
@@ -73,51 +77,32 @@ const DeleteButton = ({ post, toggleToolings }) => {
     };
 
 
-
     return (
         <>
-            <View
+            <TouchableOpacity
+                onPress={arePressComment}
                 style={{
-                    width: 90,
-                    height: 90,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                }}>
-
-
-                <TouchableOpacity
-                    onPress={arePressComment}
-                    style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: 100,
-                        backgroundColor: isDarkMode ? "#3F3F3F" : "#F9F8F8",
-                        borderWidth: 1,
-                        borderColor: isDarkMode ? "gray" : "lightgray",
-                        alignItems: "center",
-                        justifyContent: "center"
-
-                    }}>
-                    <MaterialCommunityIcons
-                        name="delete"
-                        size={28}
-                        color={isDarkMode ? "red" : "red"}
-                    />
-
-                </TouchableOpacity>
-
-
+                    width: "100%",
+                    height: "20%",
+                    flexDirection: "row",
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    paddingLeft: 20
+                }}
+            >
                 <Text
                     style={{
                         color: isDarkMode ? "#F5F5F5" : "black",
-                        fontWeight: "600",
-                        fontSize: 16
+                        textAlign: "center",
+                        fontSize: 20,
+                        fontWeight: "500",
                     }}
+
                 >
-                    {t("Delete")}
+                    {t("remoFav")}
                 </Text>
 
-            </View>
+            </TouchableOpacity>
 
 
             <Modal
@@ -128,13 +113,11 @@ const DeleteButton = ({ post, toggleToolings }) => {
                 animationIn="pulse"
                 animationOut="fadeOut"
                 useNativeDriverForBackdrop
-                style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
             >
                 <View
                     style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}
@@ -266,9 +249,7 @@ const DeleteButton = ({ post, toggleToolings }) => {
             </Modal>
         </>
 
-
-
     )
 }
 
-export default DeleteButton
+export default DeletteCommentButton

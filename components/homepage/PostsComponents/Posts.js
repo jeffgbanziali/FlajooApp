@@ -19,7 +19,7 @@ import AllCommentView from "./PostComments/AllCommentView";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";
-import AddReplyComment from "./PostComments/AddButtom/AddCommentButton";
+import AddReplyComment from "./PostComments/AddButtom/AddReplyComment";
 import AddReplyToReply from "./PostComments/AddButtom/AddReplyToReply";
 import PostText from "./PostType/PostText";
 import PostMedia from "./PostType/PostMedia";
@@ -39,7 +39,7 @@ const Posts = ({ post }) => {
 
 
 
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const usersData = useSelector((state) => state.usersReducer);
   const [showComments, setShowComments] = useState(false);
@@ -65,6 +65,8 @@ const Posts = ({ post }) => {
     setResponseToResponse(false);
     setSelectedComment(comment);
   };
+
+
 
   const toReplying = (comment, reply) => {
     setResponseToResponse(!responseToResponse);
@@ -180,6 +182,10 @@ const Posts = ({ post }) => {
   );
 
   const mediaDate = post.media?.find(mediaItem => mediaItem);
+
+  const commentary = post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
+
+
 
 
 
@@ -601,7 +607,7 @@ const Posts = ({ post }) => {
                   fontWeight: "bold",
                 }}
               >
-                {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)} {t('PostsComment')}
+                {commentary} {t('PostsComment')}
               </Text>
             </View>
             <View
@@ -611,10 +617,48 @@ const Posts = ({ post }) => {
                 borderTopWidth: 1,
                 paddingBottom: 10,
                 backgroundColor: isDarkMode ? "#171717" : "white",
+                //backgroundColor: "red",
+
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
             >
-              <AllCommentView post={post} toggle={toggleComments} toAnswering={answer} toReplying={toReplying} />
+              {
+                commentary === 0 ? (
+                  <>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: "80%",
+                        //backgroundColor: "red",
+                        alignItems: "center",
+                        justifyContent: 'center',
+
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: isDarkMode ? "#F5F5F5" : "black",
+                          textAlign: "center",
+                          fontSize: 16,
+                          fontWeight: "bold",
+                        }}>
+                        {t("TheFirsComment")}
+                      </Text>
+                    </View>
+
+                  </>
+                ) : (
+                  <>
+                    <AllCommentView
+                      post={post}
+                      toggle={toggleComments}
+                      toAnswering={answer}
+                      toReplying={toReplying} />
+
+                  </>
+                )
+              }
+
 
             </View>
             <View
@@ -627,36 +671,37 @@ const Posts = ({ post }) => {
                 borderColor: isDarkMode ? "#343232" : "lightgray",
               }}
             >
-              {response ? (
-                <>
-                  <AddReplyComment
-                    post={post}
-                    selectedComment={selectedComment}
-                    partVisible={partVisible}
-                  />
-
-                </>
-
-              ) : responseToResponse ?
-                (
+              {
+                response ? (
                   <>
-                    <AddReplyToReply
+                    <AddReplyComment
                       post={post}
                       selectedComment={selectedComment}
-                      selectedReply={selectedReply}
                       partVisible={partVisible}
                     />
+
                   </>
 
-                ) : (
-                  <>
-                    <AddCommentButton
-                      post={post}
-                      partVisible={partVisible}
-                    />
-                  </>
+                ) : responseToResponse ?
+                  (
+                    <>
+                      <AddReplyToReply
+                        post={post}
+                        selectedComment={selectedComment}
+                        selectedReply={selectedReply}
+                        partVisible={partVisible}
+                      />
+                    </>
 
-                )
+                  ) : (
+                    <>
+                      <AddCommentButton
+                        post={post}
+                        partVisible={partVisible}
+                      />
+                    </>
+
+                  )
 
               }
             </View>

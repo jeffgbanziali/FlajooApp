@@ -4,11 +4,14 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
+    Modal,
+    Pressable,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useState, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
@@ -40,7 +43,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
 
 
     const showModal = () => {
-        setShowImage(true);
+        setShowImage(!showImage);
     };
 
 
@@ -165,7 +168,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                     </TouchableOpacity>
                 </View>
 
-                <View
+                <Pressable
                     onPress={showModal}
                     style={{
                         width: "100%",
@@ -247,7 +250,99 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                             borderBottomRightRadius: 20,
                         }}
                     />
-                </View>
+                </Pressable>
+
+                <Modal
+                    visible={showImage}
+                    transparent={true}
+                    animationIn="pulse"
+                    animationOut="fadeOut"
+                    onRequestClose={showModal}
+                >
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: isDarkMode ? "black" : "black",
+
+                        }}>
+
+                        <View
+                            style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "10%",
+                                marginTop: "4%",
+                                zIndex: 3
+                            }}
+                        >
+
+                            <Pressable
+
+                                onPress={showModal}
+
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    //backgroundColor: "blue",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                            </Pressable>
+
+                        </View>
+
+
+                        {
+                            item.mediaType === "image" && (
+                                <Image
+                                    source={{
+                                        uri: item.mediaUrl,
+                                    }}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        resizeMode: "contain",
+                                        borderRadius: 20,
+                                        opacity: isDarkMode ? 0.7 : 1,
+                                    }}
+                                />
+                            )
+                        }
+
+
+
+                        {
+                            item.mediaType === "video" && (
+
+                                <Video
+                                    source={{
+                                        uri: item.mediaUrl,
+                                    }}
+                                    rate={1.0}
+                                    volume={1.0}
+                                    isMuted={false}
+                                    isLooping
+                                    paused={true}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        resizeMode: "contain",
+                                        borderRadius: 20,
+                                        opacity: isDarkMode ? 0.7 : 1,
+                                    }}
+                                />
+                            )
+
+                        }
+
+
+                    </View>
+                </Modal>
 
                 <View
                     style={{
@@ -361,7 +456,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                 </View>
             </View>
 
-           
+
 
         </>
     )

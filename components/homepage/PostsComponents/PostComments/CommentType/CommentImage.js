@@ -22,7 +22,7 @@ import ReplyToVideo from "../ReplyTo/ReplyToVideo";
 import ReplyToAudio from "../ReplyTo/ReplyToAudio";
 import LikeCommentButton from "../../LikeButton/LikeCommentButton";
 
-const CommentImage = ({ post, comment, toggle, toAnswering, toReplying }) => {
+const CommentImage = ({ areYouPressComment, post, comment, toggle, toAnswering, toReplying }) => {
     const { isDarkMode } = useDarkMode();
     const usersData = useSelector((state) => state.usersReducer);
     const [loadPost, setLoadPost] = useState(true);
@@ -47,7 +47,6 @@ const CommentImage = ({ post, comment, toggle, toAnswering, toReplying }) => {
     const replying = (reply) => {
         toReplying(reply);
     };
-
 
 
 
@@ -332,28 +331,54 @@ const CommentImage = ({ post, comment, toggle, toAnswering, toReplying }) => {
 
                                             <>
                                                 {reply.replyType === "gif" && (
-                                                    <ReplyGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "image" && (
-                                                    <ReplyImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "video" && (
-                                                    <ReplyVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+
+                                                        <ReplyVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "audio" && (
-                                                    <ReplyAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                             </>
                                         )
                                         }
                                         {!reply.repliedTo && reply.text && (
+                                            <TouchableOpacity
+                                                onLongPress={areYouPressComment}
+                                            >
+                                                <ReplyText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
 
-                                            <ReplyText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            </TouchableOpacity>
+
 
                                         )
                                         }
                                         {reply.repliedTo && reply.text && (
-                                            <ReplyToText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            <TouchableOpacity
+                                                onLongPress={areYouPressComment}
+                                            >
+                                                <ReplyToText index={index} post={post} comment={comment} reply={reply} replierImage={replierImage} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                            </TouchableOpacity>
                                         )
                                         }
 
@@ -361,17 +386,34 @@ const CommentImage = ({ post, comment, toggle, toAnswering, toReplying }) => {
 
                                             <>
                                                 {reply.replyType === "gif" && (
-                                                    <ReplyToGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyToGif index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "image" && (
-                                                    <ReplyToImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyToImage index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "video" && (
-                                                    <ReplyToVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyToVideo index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
                                                 {reply.replyType === "audio" && (
-                                                    <ReplyToAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    <TouchableOpacity
+                                                        onLongPress={areYouPressComment}
+                                                    >
+                                                        <ReplyToAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
+                                                    </TouchableOpacity>
                                                 )}
+                                               
                                             </>
                                         )
                                         }

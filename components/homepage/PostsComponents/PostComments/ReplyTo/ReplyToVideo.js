@@ -1,5 +1,5 @@
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
-import React, { useContext } from "react";
+import { View, Text, Image, TouchableOpacity, Pressable, Animated, Easing } from "react-native";
+import React, { useContext, useState } from "react";
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { UidContext, useDarkMode } from "../../../../Context/AppContext";
@@ -7,6 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import Video from 'react-native-video';
 import LikeReplyButton from "../../LikeButton/LikeReplyButton";
+import Modal from "react-native-modal";
+import CommentTools from "../CommentTools/CommentTools";
+
+
+
+
 
 
 const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, index }) => {
@@ -28,14 +34,34 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
         toggle()
     };
 
+    const [pressComment, setPressComment] = useState(new Animated.Value(0));
+    const [pressInComments, setPressInComments] = useState(false);
+
+
+    const areYouPressComment = () => {
+        if (pressInComments) {
+            Animated.timing(pressComment, {
+                toValue: 0,
+                duration: 200,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }).start(() => setPressInComments(false));
+        } else {
+            setPressInComments(true);
+            Animated.timing(pressComment, {
+                toValue: 200,
+                duration: 300,
+                easing: Easing.linear,
+                useNativeDriver: true
+            }).start();
+        }
+    };
 
 
 
 
     const replying = (comment, reply) => {
         toReplying(comment, reply);
-        console.log("tu es là ", comment)
-        console.log("tu es là là là là  ", reply)
     };
 
     return (
@@ -219,6 +245,24 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
                     )}
                 </View>
             </View>
+            <Modal
+                isVisible={pressInComments}
+                onBackdropPress={areYouPressComment}
+                //transparent={true}
+                backdropOpacity={0.5}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                useNativeDriverForBackdrop
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+
+
+                <CommentTools comment={comment} reply={reply} />
+
+            </Modal>
         </View>
     )
 }

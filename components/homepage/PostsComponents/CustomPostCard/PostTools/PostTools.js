@@ -92,7 +92,7 @@ const PostTools = ({ post, toggleToolings }) => {
                             </View>
                             <Text
                                 style={{
-                                    color: "white",
+                                    color: isDarkMode ? "#F5F5F5" : "black",
                                     fontWeight: "600",
                                     fontSize: 14
                                 }}
@@ -146,11 +146,12 @@ const PostTools = ({ post, toggleToolings }) => {
                                             style={{
                                                 paddingLeft: 10,
                                                 fontSize: 18,
-                                                color: isDarkMode ? "gray" : "lightgray",
+                                                color: isDarkMode ? "gray" : "black",
                                             }}>
                                             {t("LikeThat")} {""}
                                             <Text
                                                 style={{
+                                                    color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
                                                     fontSize: 18,
                                                     fontWeight: "600"
@@ -185,6 +186,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                         </View>
                                         <Text
                                             style={{
+                                                color: isDarkMode ? "gray" : "black",
                                                 paddingLeft: 10,
                                                 fontSize: 18,
                                                 color: isDarkMode ? "gray" : "lightgray"
@@ -192,6 +194,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                             {t("LikeThat")} {""}
                                             <Text
                                                 style={{
+                                                    color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
                                                     fontSize: 16,
                                                     fontWeight: "600"
@@ -209,6 +212,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                 <Text
                                     style={{
                                         paddingLeft: 10,
+                                        color: isDarkMode ? "gray" : "black",
                                         fontSize: 18,
                                         fontWeight: "400",
                                         color: isDarkMode ? "#F5F5F5" : "black",
@@ -246,10 +250,10 @@ const PostTools = ({ post, toggleToolings }) => {
                             <Feather
                                 name="share-2"
                                 size={30}
-                                color={isDarkMode ? "gray" : "lightgray"} />
+                                color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -285,10 +289,10 @@ const PostTools = ({ post, toggleToolings }) => {
                             <FontAwesome5
                                 name="user-friends"
                                 size={30}
-                                color={isDarkMode ? "gray" : "lightgray"} />
+                                color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -326,10 +330,10 @@ const PostTools = ({ post, toggleToolings }) => {
                             <Ionicons
                                 name="information-circle-outline"
                                 size={30}
-                                color={isDarkMode ? "gray" : "lightgray"} />
+                                color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -370,7 +374,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                 color={isDarkMode ? "red" : "red"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -455,6 +459,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                             {t("LikeThat")} {""}
                                             <Text
                                                 style={{
+                                                    color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
                                                     fontSize: 18,
                                                     fontWeight: "600"
@@ -491,11 +496,12 @@ const PostTools = ({ post, toggleToolings }) => {
                                             style={{
                                                 paddingLeft: 10,
                                                 fontSize: 18,
-                                                color: isDarkMode ? "gray" : "lightgray"
+                                                color: isDarkMode ? "gray" : "black",
                                             }}>
                                             {t("LikeThat")} {""}
                                             <Text
                                                 style={{
+                                                    color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
                                                     fontSize: 16,
                                                     fontWeight: "600"
@@ -513,6 +519,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                 <Text
                                     style={{
                                         paddingLeft: 10,
+                                        color: isDarkMode ? "gray" : "black",
                                         fontSize: 18,
                                         fontWeight: "400",
                                         color: isDarkMode ? "#F5F5F5" : "black",
@@ -585,10 +592,10 @@ const PostTools = ({ post, toggleToolings }) => {
                                 <Feather
                                     name="user"
                                     size={30}
-                                    color={isDarkMode ? "gray" : "lightgray"} />
+                                    color={isDarkMode ? "gray" : "black"} />
                                 <Text
                                     style={{
-                                        color: isDarkMode ? "gray" : "lightgray",
+                                        color: isDarkMode ? "gray" : "black",
                                         fontWeight: "500",
                                         fontSize: 20,
                                         paddingLeft: 10,
@@ -642,10 +649,10 @@ const PostTools = ({ post, toggleToolings }) => {
                             <Feather
                                 name="eye-off"
                                 size={30}
-                                color={isDarkMode ? "gray" : "lightgray"} />
+                                color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -683,10 +690,10 @@ const PostTools = ({ post, toggleToolings }) => {
                             <Ionicons
                                 name="information-circle-outline"
                                 size={30}
-                                color={isDarkMode ? "gray" : "lightgray"} />
+                                color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,
@@ -727,7 +734,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                 color={isDarkMode ? "red" : "red"} />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "gray" : "lightgray",
+                                    color: isDarkMode ? "gray" : "black",
                                     fontWeight: "500",
                                     fontSize: 20,
                                     paddingLeft: 10,

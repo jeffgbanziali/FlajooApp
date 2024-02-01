@@ -82,7 +82,7 @@ const RegisterSaved = ({ post }) => {
                     </Pressable>
                     <Text
                         style={{
-                            color: "white",
+                            color: isDarkMode ? "gray" : "black",
                             fontWeight: "600",
                             fontSize: 14
                         }}
@@ -124,7 +124,7 @@ const RegisterSaved = ({ post }) => {
                     </Pressable>
                     <Text
                         style={{
-                            color: "white",
+                            color: isDarkMode ? "gray" : "black",
                             fontWeight: "600",
                             fontSize: 14
                         }}

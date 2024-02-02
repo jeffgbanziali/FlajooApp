@@ -11,7 +11,6 @@ const ProfileUtils = () => {
         position: "relative",
         width: 371,
         height: 80,
-        flex: 1,
         backgroundColor: isDarkMode ? "#171717" : "white",
         borderRadius: 30,
         marginTop: -40,
@@ -20,7 +19,6 @@ const ProfileUtils = () => {
         borderColor: "#EFEAEA",
         borderStyle: "solid",
         zIndex: 1,
-        alignContent: "center",
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {

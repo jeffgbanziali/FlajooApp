@@ -1,21 +1,22 @@
 import React from "react";
-
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import HomeScreen from "../screens/HomeScreen/HomeScreen";
-import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
-import { View } from "react-native";
+import Profile from "../screens/Profile/Profile";
+import Settings from "../screens/Settings/Settings";
+import CreateStory from "../components/homepage/Stories/CreateMyStory";
+import { View } from "react-native-animatable";
 
 const Tab = createMaterialTopTabNavigator();
 
-const MaterialTopNavigation = () => {
+function MaterialTopNavigation() {
     return (
-        <View style={{ flex: 1 }}>
-
+        <View>
             <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeScreen} />
-                <Tab.Screen name="NewPostScreen" component={NewPostScreen} />
+                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen name="Settings" component={Settings} />
+                <Tab.Screen name="StoryCreate" component={CreateStory} />
             </Tab.Navigator>
         </View>
+
 
     );
 }

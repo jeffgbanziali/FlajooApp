@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Pressable,
 } from "react-native";
 import { useSelector } from "react-redux";
 import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
@@ -41,7 +42,7 @@ const Profile = () => {
   const { t } = useTranslation();
 
 
-  const MAX_MESSAGE_LENGTH = 55;
+  const MAX_MESSAGE_LENGTH = 180;
   const renderLimitedMessage = (message) => {
     if (message && message.length <= MAX_MESSAGE_LENGTH) {
       return message;
@@ -55,153 +56,199 @@ const Profile = () => {
 
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <SafeAreaView
       style={{
         backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
         flex: 1,
+        width: "100%",
+        height: "100%",
       }}
     >
-      <SafeAreaView>
-        <ScrollView>
+
+
+
+      <View
+        style={{
+          //backgroundColor: "red",
+          width: "100%",
+          maxHeight: 380,
+        }}>
+
+        <View
+          style={{
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            borderRadius: 30,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.4,
+            shadowRadius: 3.84,
+            elevation: 5,
+          }}
+        >
           <View
             style={{
-              flex: 1,
-              backgroundColor: isDarkMode ? "#171717" : "white",
-              borderRadius: 30,
-              paddingBottom: 90,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.4,
-              shadowRadius: 3.84,
-              elevation: 5,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              //backgroundColor: "red",
+              paddingTop: "1.5%",
             }}
           >
-            <View
+            <TouchableOpacity
+              onPress={handleClickReturnHome}
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={handleClickReturnHome}
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  marginLeft: "3.5%",
-                  marginTop: "1.5%",
-                }}
-              >
-                <MaterialIcons
-                  name="arrow-back"
-                  size={28}
-                  color={isDarkMode ? "white" : "black"}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleClickSettings}>
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                    width: 50,
-                    height: 50,
-                    borderRadius: 30,
-                    marginRight: "3.5%",
-                    marginTop: "1.5%",
-                  }}
-                >
-                  <Entypo
-                    name="dots-three-horizontal"
-                    size={28}
-                    color={isDarkMode ? "white" : "black"}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
                 justifyContent: "center",
-                marginTop: -16,
+                alignItems: "center",
+                backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginLeft: "3.5%",
               }}
             >
-              <TouchableOpacity>
-                <Image
-                  source={{
-                    uri: userData?.picture
-                      ? userData.picture
-                      : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
-                  }}
-                  style={{
-                    width: 130,
-                    height: 130,
-                    borderRadius: 100,
-                    //borderWidth: 5,
-                    //borderColor: isDarkMode ? "#3B4FB8" : "white"
-                  }}
-                />
-
-                <View
-                  style={{
-                    backgroundColor: "#09C03C",
-                    position: "absolute",
-                    left: 22,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 25,
-                    borderWidth: 3,
-                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                    justifyContent: "center",
-                    alignSelf: "center",
-                    alignItems: "center",
-                    marginLeft: 80,
-                    marginTop: 100,
-                    zIndex: 100,
-                  }}
-                ></View>
-              </TouchableOpacity>
-
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginTop: 10,
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                {userData.pseudo}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: "#5F5858",
-                  fontWeight: "bold",
-                  marginTop: 10,
-                }}
-              >
-                {renderLimitedMessage(userData.bio)}
-              </Text>
-            </View>
+              <MaterialIcons
+                name="arrow-back"
+                size={28}
+                color={isDarkMode ? "white" : "black"}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleClickSettings}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginRight: "3.5%",
+              }}
+            >
+              <Entypo
+                name="dots-three-horizontal"
+                size={28}
+                color={isDarkMode ? "white" : "black"}
+              />
+            </TouchableOpacity>
           </View>
-          <ProfileUtils />
-          <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
-          {selectedSwitchValue === "P" && (
-            <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
+
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              //backgroundColor: "red"
+            }}
+          >
+            <Pressable
+              style={{
+                width: 130,
+                height: 130,
+                borderRadius: 100,
+              }}>
+              <Image
+                source={{
+                  uri: userData?.picture
+                    ? userData.picture
+                    : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 100,
+                }}
+              />
+
+              <View
+                style={{
+                  backgroundColor: "#09C03C",
+                  position: "absolute",
+                  left: 22,
+                  width: 20,
+                  height: 20,
+                  borderRadius: 25,
+                  borderWidth: 3,
+                  borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  alignItems: "center",
+                  marginLeft: 80,
+                  marginTop: 100,
+                  zIndex: 100,
+                }}
+              ></View>
+            </Pressable>
+
+          </View>
+
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              //height: "10%",
+              //backgroundColor: "red",
+              marginTop: 10
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                textAlign: "justify",
+                color: isDarkMode ? "white" : "black",
+              }}
+            >
+              {userData.pseudo}
+            </Text>
+
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              width: "60%",
+              maxHeight: 200,
+              // backgroundColor: "black",
+              marginTop: 10
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                textAlign: "left",
+                color: "#5F5858",
+                fontWeight: "500",
+              }}
+            >
+              {renderLimitedMessage(userData.bio)}
+            </Text>
+          </View>
+        </View>
+        <ProfileUtils />
+      </View>
+
+      <View
+        style={{
+          //backgroundColor: "red",
+          width: "100%",
+          height: "100%",
+          marginTop: "10%"
+        }}>
+        <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
+        {
+          selectedSwitchValue === "P" && (
+            <View style={{ flex: 1, width: '100%', }}>
               <PostsUser />
             </View>
-          )}
-          {selectedSwitchValue === "V" && (
+          )
+        }
+        {
+          selectedSwitchValue === "V" && (
             <View style={{
               flex: 1,
               width: '100%',
@@ -209,13 +256,14 @@ const Profile = () => {
             }}>
               <VideoRéelsUser />
             </View>
-          )}
-        </ScrollView>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+          )
+        }
+      </View>
+
+
+    </SafeAreaView >
   );
 };
 
-const styles = StyleSheet.create({});
 
 export default Profile;

@@ -13,6 +13,8 @@ const ChatOnline = ({ user }) => {
             {
                 USER.map((user, index) => (
                     <View
+                        key={index}
+
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -25,7 +27,6 @@ const ChatOnline = ({ user }) => {
 
                         <>
                             <View
-                                key={user.id}
                                 style={{
                                     width: 70,
                                     height: 70,

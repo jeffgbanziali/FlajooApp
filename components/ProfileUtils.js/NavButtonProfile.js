@@ -10,11 +10,12 @@ const NavButtonProfile = ({ onSwitchChange }) => {
     }, [onSwitchChange]);
 
     return (
-        <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}
+        <View
+            style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                //backgroundColor: "red"
+            }}
         >
 
             <SwitchSelector
@@ -33,7 +34,7 @@ const NavButtonProfile = ({ onSwitchChange }) => {
                 options={[
                     { label: "Post ", value: "P" },
                     { label: "Video", value: "V" },
-                    { label: "Audio", value: "A" }
+                    { label: "Audio", value: "A" },
                 ]}
                 testID="gender-switch-selector"
                 accessibilityLabel="gender-switch-selector"

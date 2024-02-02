@@ -63,7 +63,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                   textAlign: "center",
                 }}
               >
-                Following
+                {t("Following")}
               </Text>
             </View>
           )}
@@ -89,7 +89,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                     fontSize: 20,
                   }}
                 >
-                  Following
+                  {t("Following")}
                 </Text>
               </View>
             </View>
@@ -156,7 +156,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                   fontSize: 13,
                 }}
               >
-                Following
+                {t("UnFollow")}
               </Text>
             </View>
           )}
@@ -219,7 +219,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                   textAlign: "center",
                 }}
               >
-                Follow
+                {t("Follow")}
               </Text>
             </View>
           )}
@@ -245,7 +245,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                     fontSize: 20,
                   }}
                 >
-                  Follow
+                  {t("Follow")}
                 </Text>
               </View>
             </View>
@@ -275,7 +275,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                     marginLeft: 6,
                   }}
                 >
-                  Follow
+                  {t("Follow")}
                 </Text>
               </View>
             </View>
@@ -316,7 +316,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                   fontSize: 16,
                 }}
               >
-                Follow
+                {t("Follow")}
               </Text>
             </View>
           )}

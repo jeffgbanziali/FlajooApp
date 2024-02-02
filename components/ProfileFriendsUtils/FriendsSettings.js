@@ -57,30 +57,6 @@ const FriendsSettings = ({ areYouPressComment, users }) => {
 
 
 
-                    <TouchableOpacity
-                        style={{
-                            width: "100%",
-                            height: 60,
-                            flexDirection: "row",
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: isDarkMode ? "red" : "red",
-                                textAlign: "center",
-                                fontSize: 20,
-                                fontWeight: "500",
-                            }}
-
-                        >
-                            {t("ToBlock")}
-                        </Text>
-
-                    </TouchableOpacity>
-
-
 
                     <TouchableOpacity
                         style={{
@@ -89,60 +65,7 @@ const FriendsSettings = ({ areYouPressComment, users }) => {
                             flexDirection: "row",
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderTopWidth: 2,
-                            borderColor: isDarkMode ? "#343232" : "lightgray",
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: isDarkMode ? "red" : "red",
-                                textAlign: "center",
-                                fontSize: 20,
-                                fontWeight: "500",
-                            }}
-
-                        >
-                            {t("ToRest")}
-                        </Text>
-
-                    </TouchableOpacity>
-
-
-
-                    <TouchableOpacity
-                        style={{
-                            width: "100%",
-                            height: 60,
-                            borderTopWidth: 2,
-                            borderColor: isDarkMode ? "#343232" : "lightgray",
-                            flexDirection: "row",
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: isDarkMode ? "red" : "red",
-                                textAlign: "center",
-                                fontSize: 20,
-                                fontWeight: "500",
-                            }}
-
-                        >
-                            {t("SignalPub")}
-                        </Text>
-
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity
-                        style={{
-                            width: "100%",
-                            height: 60,
-                            flexDirection: "row",
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderTopWidth: 2,
+                            //borderTopWidth: 2,
                             borderColor: isDarkMode ? "#343232" : "lightgray",
                         }}
                     >
@@ -216,6 +139,85 @@ const FriendsSettings = ({ areYouPressComment, users }) => {
                     </TouchableOpacity>
 
 
+
+                    <TouchableOpacity
+                        style={{
+                            width: "100%",
+                            height: 60,
+                            flexDirection: "row",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderTopWidth: 2,
+                            borderColor: isDarkMode ? "#343232" : "lightgray",
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: isDarkMode ? "red" : "red",
+                                textAlign: "center",
+                                fontSize: 20,
+                                fontWeight: "500",
+                            }}
+
+                        >
+                            {t("ToBlock")}
+                        </Text>
+
+                    </TouchableOpacity>
+
+
+
+                    <TouchableOpacity
+                        style={{
+                            width: "100%",
+                            height: 60,
+                            flexDirection: "row",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderTopWidth: 2,
+                            borderColor: isDarkMode ? "#343232" : "lightgray",
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: isDarkMode ? "red" : "red",
+                                textAlign: "center",
+                                fontSize: 20,
+                                fontWeight: "500",
+                            }}
+
+                        >
+                            {t("ToRest")}
+                        </Text>
+
+                    </TouchableOpacity>
+
+
+
+                    <TouchableOpacity
+                        style={{
+                            width: "100%",
+                            height: 60,
+                            borderTopWidth: 2,
+                            borderColor: isDarkMode ? "#343232" : "lightgray",
+                            flexDirection: "row",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: isDarkMode ? "red" : "red",
+                                textAlign: "center",
+                                fontSize: 20,
+                                fontWeight: "500",
+                            }}
+
+                        >
+                            {t("SignalPub")}
+                        </Text>
+
+                    </TouchableOpacity>
 
 
 

@@ -9837,7 +9837,7 @@ react-native-modal@^13.0.1:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
-react-native-pager-view@*, react-native-pager-view@^6.2.2, "react-native-pager-view@>= 4.0.0":
+react-native-pager-view@*, react-native-pager-view@^6.2.3, "react-native-pager-view@>= 4.0.0":
   version "6.2.3"
   resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.3.tgz"
   integrity sha512-dqVpXWFtPNfD3D2QQQr8BP+ullS5MhjRJuF8Z/qml4QTILcrWaW8F5iAxKkQR3Jl0ikcEryG/+SQlNcwlo0Ggg==

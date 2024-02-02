@@ -85,7 +85,7 @@
     "DeletePosting":"Le post a été supprimé avec succès",
     "AddFav":"Enregistrer",
     "remoFav":"Supprimer",
-    "Follow" :"Follow",
+    "Follow" :"Suivre",
     "UnFollow":"Ne plus le suivre",
     "AccountInfos":"À propos de ce compte",
     "WhatSeePub":"Pourquoi vous voyez cette publication ?",
@@ -104,6 +104,8 @@
     "ToShare":"Partager ce profil",
     "ToPoperst":"À propos de ce compte",
     "ToShow":"Afficher le code QR",
+    "Following":"Suivi(e)",
+    "Writing":"Ecrire",
 
 
      

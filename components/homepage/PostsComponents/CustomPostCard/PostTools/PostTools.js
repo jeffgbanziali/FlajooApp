@@ -17,6 +17,8 @@ import SavePost from './SavePost';
 import QRCode from './QRCode';
 import FollowHandler from '../../../../ProfileUtils.js/FollowHandler';
 import RegisterSaved from './RegisterSaved';
+import { useNavigation, useRoute } from "@react-navigation/native";
+
 
 
 
@@ -24,13 +26,18 @@ const PostTools = ({ post, toggleToolings }) => {
 
     const usersData = useSelector((state) => state.usersReducer);
     const userData = useSelector((state) => state.userReducer);
-
+    const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
 
 
 
 
+    const goToAbout = (id) => {
+        console.log("clicked");
+        navigation.navigate("AboutThisAccount", { id });
+        toggleToolings()
+    }
 
 
 
@@ -569,6 +576,7 @@ const PostTools = ({ post, toggleToolings }) => {
                     >
 
                         <TouchableOpacity
+                            onPress={() => goToAbout(post.posterId)}
                             style={{
                                 width: "100%",
                                 height: "50%",

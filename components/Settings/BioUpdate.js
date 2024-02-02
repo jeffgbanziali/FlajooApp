@@ -183,8 +183,8 @@ const BioUpdate = () => {
             }}
             editable
             multiline
-            numberOfLines={4}
-            maxLength={140}
+            numberOfLines={6}
+            maxLength={600}
             onChangeText={(text) => setText(text)}
             value={text}
             placeholder={t('bio-placeholder')}

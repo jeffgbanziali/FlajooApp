@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
-  Animated, Easing
+  Animated, Easing,
+  Pressable
 } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -137,31 +138,29 @@ const ProfileFriends = () => {
 
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{
-        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-        flex: 1,
-        width: "100%",
-        height: "100%"
-      }}
-    >
+    <>
       <SafeAreaView
+
         style={{
+          backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
           flex: 1,
+          width: "100%",
+          height: "100%"
         }}
       >
-        <ScrollView>
 
-
-
-
+        <View
+          style={{
+            //backgroundColor: "red",
+            width: "100%",
+            maxHeight: 430,
+          }}>
           <View
             style={{
-              flex: 1,
               backgroundColor: isDarkMode ? "#171717" : "white",
               borderRadius: 30,
-              paddingBottom: 50,
+              width: "100%",
+              height: "100%",
               shadowColor: "#000",
               shadowOffset: {
                 width: 0,
@@ -182,6 +181,9 @@ const ProfileFriends = () => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
+                width: "100%",
+                //backgroundColor: "red",
+                paddingTop: "1.5%",
               }}
             >
               <TouchableOpacity
@@ -230,19 +232,17 @@ const ProfileFriends = () => {
 
             <View
               style={{
-                flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                width: "100%",
-                marginTop: -16,
-                padding: 5,
+                //backgroundColor: "red"
               }}
             >
-              <View
+              <Pressable
                 style={{
                   width: 160,
                   height: 160,
                   borderRadius: 100,
+                  marginTop: -20,
                   objectFit: "cover",
                 }}
               >
@@ -276,32 +276,49 @@ const ProfileFriends = () => {
                     zIndex: 100,
                   }}
                 ></View>
-              </View>
+              </Pressable>
 
-              <Text
-                style={{
-                  fontSize: 30,
-                  color: isDarkMode ? "white" : "black",
-                  fontWeight: "500",
-                  marginTop: 10,
-                }}
-              >
-                {users.pseudo}
-              </Text>
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
                   alignItems: "center",
-                  flex: 1,
-                  width: "50%",
-                  marginTop: 4,
+                  justifyContent: "center",
+                  width: "100%",
+                  //height: "10%",
+                  //backgroundColor: "red",
                 }}
               >
-                <Text style={{ fontSize: 15, color: "gray" }}>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: isDarkMode ? "white" : "black",
+                    fontWeight: "500",
+                    marginTop: 10,
+                  }}
+                >
+                  {users.pseudo}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  alignItems: "center",
+                  width: "60%",
+                  maxHeight: 200,
+                  // backgroundColor: "black",
+                  marginTop: 10
+                }}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    textAlign: "left",
+                    color: "#5F5858",
+                    fontWeight: "500",
+                  }}
+                >
                   {renderLimitedMessage(users.bio)}
                 </Text>
               </View>
+
               <View
                 style={{
                   display: "flex",
@@ -309,7 +326,8 @@ const ProfileFriends = () => {
                   width: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: 10,
+                  //backgroundColor: "blue",
+                  marginTop: 30,
                 }}
               >
                 <View
@@ -322,37 +340,35 @@ const ProfileFriends = () => {
                 <View
                   style={{
                     marginLeft: 4,
+
                   }}
                 >
-                  <TouchableOpacity onPress={() => handleSendMEssage(id)}>
-                    <View
+                  <TouchableOpacity onPress={() => handleSendMEssage(users.followers._id)}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "red",
+                      borderRadius: 10,
+                      height: 38,
+                      width: 170,
+                    }}
+                  >
+                    <Text
                       style={{
-                        flexDirection: "row",
-                        alignItems: "center",
+                        color: "white",
+                        textAlign: "center",
+                        fontWeight: "500",
                         justifyContent: "center",
-                        backgroundColor: "red",
-                        borderRadius: 10,
-                        height: 38,
-                        width: 170,
+                        fontSize: 20,
                       }}
                     >
-                      <Text
-                        style={{
-                          color: "white",
-                          textAlign: "center",
-                          fontWeight: "500",
-                          justifyContent: "center",
-                          fontSize: 20,
-                        }}
-                      >
-                        Writing
-                      </Text>
-                    </View>
+                      {t('Writing')}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
-
 
 
 
@@ -362,8 +378,10 @@ const ProfileFriends = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 position: "relative",
+                //backgroundColor: "green",
                 width: "100%",
                 height: "10%",
+                marginTop: 5
               }}
 
             >
@@ -491,12 +509,22 @@ const ProfileFriends = () => {
 
 
 
-
-
           </View>
           <ProfileFriendsTools users={users} />
 
+        </View>
+
+
+
+        <View
+          style={{
+            //backgroundColor: "red",
+            width: "100%",
+            height: "100%",
+            marginTop: "10%"
+          }}>
           <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
+
           {selectedSwitchValue === "P" && (
             <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
               <PostsFriendsUser users={users} />
@@ -512,23 +540,9 @@ const ProfileFriends = () => {
             </View>
           )}
 
+        </View>
 
-
-
-        </ScrollView>
-      </SafeAreaView>
-
-
-
-
-
-
-
-
-
-
-
-
+      </SafeAreaView >
 
 
 
@@ -552,7 +566,7 @@ const ProfileFriends = () => {
 
       </Modal>
 
-    </KeyboardAvoidingView >
+    </ >
   );
 };
 

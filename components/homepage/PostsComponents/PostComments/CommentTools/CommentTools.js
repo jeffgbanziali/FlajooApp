@@ -16,7 +16,7 @@ const CommentTools = ({ post, comment, areYouPressComment }) => {
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
 
-    console.log("comment vas-tu ?",)
+
 
 
 

@@ -106,11 +106,24 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        alignContent: "center",
-                        alignSelf: "center",
+                        marginTop: 10
                     }}
                 >
-                    <TouchableOpacity onPress={() => goProfil(post.posterId)}>
+
+
+
+
+                    <TouchableOpacity
+
+                        style={{
+                            width: 35,
+                            height: 35,
+                            borderRadius: 30,
+                            marginLeft: 10,
+                            resizeMode: "cover",
+                            zIndex: 1,
+                        }}
+                        onPress={() => goProfil(post.posterId)}>
                         <Image
                             source={{
                                 uri:
@@ -126,16 +139,19 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                         .join(""),
                             }}
                             style={{
-                                width: 45,
-                                height: 45,
+                                width: "100%",
+                                height: "100%",
                                 borderRadius: 30,
-                                marginTop: 10,
-                                marginLeft: 30,
                                 resizeMode: "cover",
                                 zIndex: 1,
                             }}
                         />
                     </TouchableOpacity>
+
+
+
+
+
                     <View
                         style={{
                             flexDirection: "column",
@@ -152,7 +168,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                     color: isDarkMode ? "white" : "white",
                                     marginLeft: 5,
                                     fontWeight: "600",
-                                    fontSize: 16,
+                                    fontSize: 14,
                                 }}
                             >
                                 {!isEmpty(usersData[0]) &&
@@ -190,7 +206,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                 >
                     <Feather
                         name="more-horizontal"
-                        size={25}
+                        size={20}
                         color="white"
 
                     />
@@ -297,6 +313,9 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
 
                 <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
             </Pressable>
+
+
+
             <Modal
                 visible={showImage}
                 transparent={true}
@@ -414,9 +433,8 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     alignItems: "center",
                     position: "absolute",
                     marginVertical: 10,
-                    bottom: "5%",
+                    bottom: "2%",
                     width: "100%",
-
                     //backgroundColor: "red"
                 }}
             >
@@ -424,7 +442,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        paddingLeft: 12
+                        paddingLeft: 10
                     }}
                 >
                     <View
@@ -446,6 +464,8 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             {post.likers.length}
                         </Text>
                     </View>
+
+
                     <View
                         style={{
                             flexDirection: "row",
@@ -482,11 +502,13 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
                         </Text>
                     </View>
+
                     <TouchableOpacity
                         style={{
                             width: 50,
                             height: 50,
                             borderRadius: 30,
+                            paddingLeft: 10,
                             justifyContent: "center",
                             alignItems: "center",
                         }}

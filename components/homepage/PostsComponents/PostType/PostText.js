@@ -55,34 +55,46 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            alignContent: "center",
-            alignSelf: "center",
+            marginTop:10
           }}
         >
-          <TouchableOpacity onPress={() => goProfil(post.posterId)}>
+          <TouchableOpacity
+
+            style={{
+              width: 35,
+              height: 35,
+              borderRadius: 30,
+              marginLeft: 10,
+              resizeMode: "cover",
+              zIndex: 1,
+            }}
+            onPress={() => goProfil(post.posterId)}>
             <Image
               source={{
                 uri:
                   !isEmpty(usersData[0]) &&
                   usersData
                     .map((user) => {
-                      if (user._id === post.posterId)
+                      if (user._id === post.posterId) {
                         return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                      else return null;
+                      }
+                      else
+                        return null;
                     })
                     .join(""),
               }}
               style={{
-                width: 50,
-                height: 50,
+                width: "100%",
+                height: "100%",
                 borderRadius: 30,
-                marginTop: 10,
-                marginLeft: 30,
                 resizeMode: "cover",
                 zIndex: 1,
               }}
             />
           </TouchableOpacity>
+
+
+
           <View
             style={{
               flexDirection: "column",
@@ -99,7 +111,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
                   color: isDarkMode ? "#F5F5F5" : "black",
                   marginLeft: 5,
                   fontWeight: "600",
-                  fontSize: 18,
+                  fontSize: 14,
                 }}
               >
                 {!isEmpty(usersData[0]) &&
@@ -125,6 +137,9 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
             </Text>
           </View>
         </View>
+
+
+
         <TouchableOpacity
           onPress={toggleToolings}
           style={{
@@ -138,12 +153,19 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
         >
           <Feather
             name="more-horizontal"
-            size={25}
+            size={20}
             color={isDarkMode ? "#F5F5F5" : "black"}
 
           />
         </TouchableOpacity>
+
+
       </View>
+
+
+
+
+
       <View
         style={{
           zIndex: 1,
@@ -164,6 +186,9 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           {post.message}
         </Text>
       </View>
+
+
+
       <View
         style={{
           flexDirection: "row",

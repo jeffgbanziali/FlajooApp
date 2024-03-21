@@ -77,11 +77,20 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            alignContent: "center",
-                            alignSelf: "center",
+                            marginTop: 10
                         }}
                     >
-                        <TouchableOpacity onPress={() => goProfil(post.posterId)}>
+                        <TouchableOpacity
+
+                            style={{
+                                width: 35,
+                                height: 35,
+                                borderRadius: 30,
+                                marginLeft: 10,
+                                resizeMode: "cover",
+                                zIndex: 1,
+                            }}
+                            onPress={() => goProfil(post.posterId)}>
                             <Image
                                 source={{
                                     uri:
@@ -97,16 +106,17 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                                             .join(""),
                                 }}
                                 style={{
-                                    width: 45,
-                                    height: 45,
+                                    width: "100%",
+                                    height: "100%",
                                     borderRadius: 30,
-                                    marginTop: 10,
-                                    marginLeft: 30,
                                     resizeMode: "cover",
                                     zIndex: 1,
                                 }}
                             />
                         </TouchableOpacity>
+
+
+
                         <View
                             style={{
                                 flexDirection: "column",
@@ -123,7 +133,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                                         color: isDarkMode ? "white" : "white",
                                         marginLeft: 5,
                                         fontWeight: "600",
-                                        fontSize: 16,
+                                        fontSize: 14,
                                     }}
                                 >
                                     {!isEmpty(usersData[0]) &&
@@ -148,6 +158,8 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                             </Text>
                         </View>
                     </View>
+
+
                     <TouchableOpacity
                         onPress={toggleToolings}
                         style={{
@@ -161,7 +173,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                     >
                         <Feather
                             name="more-horizontal"
-                            size={25}
+                            size={20}
                             color="white"
 
                         />

@@ -98,8 +98,8 @@ const CommentImage = ({ areYouPressComment, post, comment, toggle, toAnswering, 
                     <Pressable
                         onPress={() => goProfil(comment.commenterId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
                         <Image
@@ -294,7 +294,7 @@ const CommentImage = ({ areYouPressComment, post, comment, toggle, toAnswering, 
                         >
                             <Text
                                 style={{
-                                    fontWeight: "bold",
+                                    fontWeight: "600",
                                     color: "gray",
                                 }}
                             >
@@ -413,7 +413,7 @@ const CommentImage = ({ areYouPressComment, post, comment, toggle, toAnswering, 
                                                         <ReplyToAudio index={index} post={post} comment={comment} replierImage={replierImage} reply={reply} toAnswering={toAnswering} toggle={toggle} toReplying={toReplying} />
                                                     </TouchableOpacity>
                                                 )}
-                                               
+
                                             </>
                                         )
                                         }

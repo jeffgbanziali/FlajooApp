@@ -80,6 +80,8 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                     alignItems: "center"
                 }}
             >
+
+
                 <View
                     style={{
                         width: "85%",
@@ -89,8 +91,8 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 
@@ -108,6 +110,8 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                         />
 
                     </Pressable>
+
+
                     <View
                         style={{
                             width: "100%",
@@ -141,6 +145,7 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                                 {formatPostDate(reply.timestamp)}
                             </Text>
                         </View>
+                        
                         <View
                             style={{
                                 flexDirection: "column",
@@ -183,7 +188,13 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                         </View>
                     </View>
                 </View>
+
+
             </View>
+
+
+
+
             <View
                 style={{
                     width: "100%",
@@ -261,6 +272,9 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
                 <CommentTools comment={comment} reply={reply} />
 
             </Modal>
+
+
+
         </View>
     )
 }

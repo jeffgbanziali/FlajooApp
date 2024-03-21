@@ -43,11 +43,13 @@ const Header = () => {
       >
         <TouchableOpacity
           style={{
-            width: 100,
-            height: 50,
+            marginLeft: 10,
+            //backgroundColor: "red",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
-          {isDarkMode ? (
+          {/*isDarkMode ? (
             <Image
               style={{
                 width: 110,
@@ -65,7 +67,17 @@ const Header = () => {
               }}
               source={require("../../assets/Logos/my_flajoo2.jpeg")}
             />
-          )}
+          )*/}
+
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 30,
+            }}
+          >
+            flajoooooo
+          </Text>
         </TouchableOpacity>
 
         <View
@@ -99,6 +111,8 @@ const Header = () => {
               />
             </TouchableOpacity>
           </View>
+
+
           <View
             style={{
               justifyContent: "center",
@@ -152,8 +166,8 @@ const Header = () => {
               borderRadius: 30,
               marginTop: "1.5%",
               marginLeft: 10,
-              width: 35,
-              height: 35,
+              width: 30,
+              height: 30,
               zIndex: 100,
             }}
           >

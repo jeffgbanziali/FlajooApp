@@ -11,7 +11,7 @@ const ProfileFriendsTools = ({ users }) => {
       style={{
         position: "relative",
         width: 371,
-        height: 80,
+        height: 70,
         backgroundColor: isDarkMode ? "#171717" : "white",
         borderRadius: 30,
         marginTop: -30,
@@ -21,7 +21,7 @@ const ProfileFriendsTools = ({ users }) => {
         
         borderStyle: "solid",
         zIndex: 1,
-        alignContent: "center",
+        justifyContent:"center",
         alignSelf: "center",
         shadowColor: "#000",
         shadowOffset: {

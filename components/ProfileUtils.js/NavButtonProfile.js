@@ -33,8 +33,8 @@ const NavButtonProfile = ({ onSwitchChange }) => {
                 hasPadding
                 options={[
                     { label: "Post ", value: "P" },
-                    { label: "Video", value: "V" },
-                    { label: "Audio", value: "A" },
+                    { label: "Réels", value: "V" },
+                    { label: "Favoris", value: "A" },
                 ]}
                 testID="gender-switch-selector"
                 accessibilityLabel="gender-switch-selector"

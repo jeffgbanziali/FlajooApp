@@ -90,8 +90,8 @@ const ReplyGif = ({ post, comment, reply, toggle, replierImage, toReplying }) =>
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 
@@ -179,6 +179,10 @@ const ReplyGif = ({ post, comment, reply, toggle, replierImage, toReplying }) =>
                     </View>
                 </View>
             </View>
+
+
+
+
             <View
                 style={{
                     width: "100%",

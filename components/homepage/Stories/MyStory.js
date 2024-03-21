@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import Video from 'react-native-video';
 import { getStories } from "../../../actions/story.action";
 import { useTranslation } from "react-i18next";
+import { LinearGradient } from "react-native-linear-gradient";
+import { useDarkMode } from "../../Context/AppContext";
 
 const MyStory = () => {
   const navigation = useNavigation();
@@ -13,7 +15,7 @@ const MyStory = () => {
   const dispatch = useDispatch();
   const [loadStories, setLoadStories] = useState(true);
   const userStories = useSelector((state) => state.storyReducer).filter(item => item.container.posterId === userData._id);
-
+  const { isDarkMode } = useDarkMode();
 
   const { t } = useTranslation()
 
@@ -218,6 +220,8 @@ const MyStory = () => {
                   }}
                 />
               </View>
+
+
               <View
                 style={{
                   display: "flex",
@@ -226,7 +230,8 @@ const MyStory = () => {
                   justifyContent: "center",
                   position: "absolute",
                   marginLeft: 3,
-                  marginTop: 70,
+                  zIndex: 2,
+                  marginTop: 65,
                 }}
               >
                 <View
@@ -239,23 +244,25 @@ const MyStory = () => {
                   <View
                     style={{
                       backgroundColor: "white",
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       borderRadius: 30,
                       justifyContent: "center",
-                      alignSelf: "center",
+                      alignItems: "center",
                     }}
                   >
                     <Entypo
                       name="circle-with-plus"
-                      size={30}
+                      size={25}
                       color="blue"
 
                     />
                   </View>
+
                   <View
                     style={{
-                      marginTop: 2,
+                      marginTop: 4,
+                     
                       alignItems: "center",
                       justifyContent: "center",
                     }}
@@ -263,9 +270,8 @@ const MyStory = () => {
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 10,
-                        fontWeight: "400",
-                        marginTop: 10,
+                        fontSize: 14,
+                        fontWeight: "600",
                         textAlign: "center",
                       }}
                     >
@@ -274,6 +280,20 @@ const MyStory = () => {
                   </View>
                 </View>
               </View>
+
+
+              <LinearGradient
+                colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: 80,
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
+                }}
+              />
             </TouchableOpacity>
           </>
         )

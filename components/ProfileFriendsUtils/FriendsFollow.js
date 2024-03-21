@@ -51,7 +51,6 @@ const Followers = ({ users }) => {
           justifyContent: "space-evenly",
           zIndex: 1,
           position: "relative",
-          marginTop: 18,
         }}
       >
         <View
@@ -62,8 +61,8 @@ const Followers = ({ users }) => {
         >
           <Text
             style={{
-              fontSize: 20,
-              fontWeight: "bold",
+              fontSize: 18,
+              fontWeight: "600",
               color: isDarkMode ? "#F5F5F5" : "black",
 
               textAlign: "center",
@@ -80,6 +79,9 @@ const Followers = ({ users }) => {
             {t('Post')}
           </Text>
         </View>
+
+
+
         <View
           style={{
             flexDirection: "row",
@@ -89,8 +91,8 @@ const Followers = ({ users }) => {
           <TouchableOpacity onPress={() => handleFollowers(id)}>
             <Text
               style={{
-                fontSize: 20,
-                fontWeight: "bold",
+                fontSize: 18,
+                fontWeight: "600",
                 color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}
@@ -106,6 +108,9 @@ const Followers = ({ users }) => {
             </Text>
           </TouchableOpacity>
         </View>
+
+
+
         <View
           style={{
             flexDirection: "row",
@@ -115,8 +120,8 @@ const Followers = ({ users }) => {
           <TouchableOpacity onPress={() => handleFollowing(id)}>
             <Text
               style={{
-                fontSize: 20,
-                fontWeight: "bold",
+                fontSize: 18,
+                fontWeight: "600",
                 color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}

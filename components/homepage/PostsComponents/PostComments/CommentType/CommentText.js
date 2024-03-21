@@ -99,8 +99,8 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
                     <Pressable
                         onPress={() => goProfil(comment.commenterId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
                         <Image
@@ -128,6 +128,8 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
                         style={{
                             width: "100%",
                             marginLeft: "4%",
+                            //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
+
 
                         }}>
 
@@ -167,9 +169,7 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
                                 maxWidth: 340,
                                 minHeight: 30,
                                 minWidth: 200,
-                                //backgroundColor: isDarkMode ? "#3C3C3C" : "#F3F3F3",
                                 borderRadius: 15,
-                                marginTop: "1%",
                                 //padding: 10,
                                 shadowColor: isDarkMode ? "white " : "#000",
                                 shadowOffset: {
@@ -184,7 +184,7 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
                             <Text
                                 style={{
                                     color: isDarkMode ? "#F5F5F5" : "black",
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontFamily: '',
                                     fontWeight: "400",
                                     lineHeight: 22
@@ -202,7 +202,7 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
             <View
                 style={{
                     width: "100%",
-                    height: 40,
+                    height: 20,
                     flexDirection: "row",
                     justifyContent: "space-between",
                     //backgroundColor: "blue",
@@ -291,7 +291,7 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
                         >
                             <Text
                                 style={{
-                                    fontWeight: "bold",
+                                    fontWeight: "600",
                                     color: "gray",
                                 }}
                             >

@@ -87,8 +87,8 @@ const ReplyToGif = ({ post, comment, reply, toggle, replierImage, toReplying, in
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 

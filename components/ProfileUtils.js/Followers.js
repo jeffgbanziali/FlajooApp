@@ -20,18 +20,18 @@ const Followers = () => {
 
   const { uid } = useContext(UidContext)
 
- 
+
   useEffect(() => {
     const getPostUser = async () => {
-        try {
-            const response = await axios.get(`${APP_API_URL}/api/post/${uid}`);
-            setUser(response.data);
-        } catch (err) {
-            console.error(err);
-        }
+      try {
+        const response = await axios.get(`${APP_API_URL}/api/post/${uid}`);
+        setUser(response.data);
+      } catch (err) {
+        console.error(err);
+      }
     }
     getPostUser();
-}, [uid]);
+  }, [uid]);
 
 
 
@@ -54,7 +54,6 @@ const Followers = () => {
           justifyContent: "space-evenly",
           zIndex: 1,
           position: "relative",
-          marginTop: 18,
         }}
       >
         <View
@@ -65,8 +64,8 @@ const Followers = () => {
         >
           <Text
             style={{
-              fontSize: 20,
-              fontWeight: "bold",
+              fontSize: 18,
+              fontWeight: "600",
               color: isDarkMode ? "#F5F5F5" : "black",
               textAlign: "center",
             }}
@@ -82,6 +81,8 @@ const Followers = () => {
             {t('Post')}
           </Text>
         </View>
+
+
         <View
           style={{
             flexDirection: "row",
@@ -91,8 +92,8 @@ const Followers = () => {
           <TouchableOpacity onPress={handleFollowers}>
             <Text
               style={{
-                fontSize: 20,
-                fontWeight: "bold",
+                fontSize: 18,
+                fontWeight: "600",
                 color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}
@@ -108,6 +109,8 @@ const Followers = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
+
         <View
           style={{
             flexDirection: "row",
@@ -117,8 +120,8 @@ const Followers = () => {
           <TouchableOpacity onPress={handleFollowing}>
             <Text
               style={{
-                fontSize: 20,
-                fontWeight: "bold",
+                fontSize: 18,
+                fontWeight: "600",
                 color: isDarkMode ? "#F5F5F5" : "black",
                 textAlign: "center",
               }}
@@ -134,6 +137,8 @@ const Followers = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        
       </View>
     </>
   );

@@ -526,7 +526,12 @@ const ProfileFriends = () => {
           <NavButtonProfile onSwitchChange={setSelectedSwitchValue} />
 
           {selectedSwitchValue === "P" && (
-            <View style={{ flex: 1, width: '100%', marginBottom: 10 }}>
+            <View style={{
+              flex: 1,
+              width: '100%',
+              marginBottom: 10,
+              alignItems: "center"
+            }}>
               <PostsFriendsUser users={users} />
             </View>
           )}
@@ -534,7 +539,8 @@ const ProfileFriends = () => {
             <View style={{
               flex: 1,
               width: '100%',
-              marginBottom: 10
+              marginBottom: 10,
+              alignItems: "center"
             }}>
               <VideoRéelsFriendsUser users={users} />
             </View>

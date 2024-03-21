@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Pressable,
-  Platform
+  Platform,
+  Dimensions
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -22,6 +23,17 @@ import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
+
+
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
+
+
+
 const SignInScreen = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
@@ -32,6 +44,17 @@ const SignInScreen = () => {
   const [showPass, setShowPass] = useState(false)
   const [errors, setErrors] = useState({});
   const { uid, setUid } = useContext(UidContext)
+
+
+  const containerWidthSize = windowWidth * 0.88;
+  const containerHeightSize = windowHeight * 0.32;
+
+  const inputWidthSize = windowWidth * 0.75;
+  const inputHeightSize = windowHeight * 0.056;
+
+
+
+
 
   const handleSignIn = async () => {
     setIsLoadingSignIn(true);
@@ -77,6 +100,9 @@ const SignInScreen = () => {
       }, 5000);
     }
   };
+
+
+
 
   const showPassword = () => {
     setShowPass(!showPass);
@@ -130,12 +156,14 @@ const SignInScreen = () => {
                 height: "25%",
                 width: "100%",
                 justifyContent: "center",
+                //backgroundColor:"red"
 
               }}>
+
               <View
                 style={{
-                  width: 80,
-                  height: 80,
+                  width: 100,
+                  height: 100,
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
@@ -154,8 +182,8 @@ const SignInScreen = () => {
 
             <View
               style={{
-                width: '90%',
-                height: '55%',
+                width: containerWidthSize,
+                height: containerHeightSize,
                 borderRadius: 20,
                 backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
                 alignItems: "center",
@@ -174,28 +202,18 @@ const SignInScreen = () => {
                 style={{
                   width: "100%",
                   height: "100%",
-                  //backgroundColor: "green",
+                  alignItems: "center",
+                  justifyContent: "center",
 
                 }}
               >
-                <View
-                  style={{
-                    width: 150,
-                    height: 95,
-                  }}
-                >
-                  <Image
-                    source={require("../../assets/Logos/my_flajooo.png")}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      marginLeft: 10
-                    }} />
-                </View>
+
                 {errors.email && <Text style={styles.error}>{errors.email}</Text>}
+
                 <View
                   style={{
-                    height: 48,
+                    width: inputWidthSize,
+                    height: inputHeightSize,
                     borderRadius: 10,
                     borderColor: "#2e2e2d",
                     borderWidth: 1,
@@ -203,19 +221,18 @@ const SignInScreen = () => {
                     backgroundColor: "white",
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 30,
-                    marginRight: 30,
                     paddingLeft: 14,
-                    width: 300,
                   }}
                 >
                   <TextInput
                     style={{
                       width: '90%',
-                      height: 48,
+                      height: "100%",
                       fontSize: 16,
-                      borderColor: "white"
+                      borderColor: "white",
+                      //backgroundColor:"red"
                     }}
+                    keyboardType="default"
                     placeholder={t("Email")}
                     placeholderTextColor="gray"
                     onChangeText={(text) => setEmail(text)}
@@ -229,7 +246,8 @@ const SignInScreen = () => {
                 )}
                 <View
                   style={{
-                    height: 48,
+                    width: inputWidthSize,
+                    height: inputHeightSize,
                     borderRadius: 10,
                     borderColor: "#2e2e2d",
                     borderWidth: 1,
@@ -237,20 +255,19 @@ const SignInScreen = () => {
                     backgroundColor: "white",
                     marginTop: 10,
                     marginBottom: 10,
-                    marginLeft: 30,
-                    marginRight: 30,
                     justifyContent: "center",
                     paddingLeft: 14,
-                    width: 300,
+
                     flexDirection: "row"
                   }}
                 >
                   <TextInput
                     style={{
                       width: '85%',
-                      height: 48,
+                      height: "100%",
                       fontSize: 16
                     }}
+                    keyboardType="default"
                     placeholderTextColor="gray"
                     secureTextEntry={!showPass}
                     placeholder={t("Password")}
@@ -285,6 +302,8 @@ const SignInScreen = () => {
                 <TouchableOpacity style={styles.button} onPress={handleSignIn}>
                   <Text style={styles.buttonTitle}>{t('ButtonSignin')}</Text>
                 </TouchableOpacity>
+
+
                 <View style={styles.footerView}>
                   <Text style={{
                     fontSize: 16,
@@ -305,6 +324,8 @@ const SignInScreen = () => {
                 </View>
               </View>
             </View>
+
+
           </SafeAreaView>
         </KeyboardAvoidingView >
       )}
@@ -326,16 +347,12 @@ const styles = StyleSheet.create({
   ,
   button: {
     backgroundColor: "red",
-    marginLeft: 30,
-    marginRight: 30,
     marginTop: 10,
-    width: 130,
-    height: 48,
+    width: 120,
+    height: 46,
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    alignContent: "center",
-    alignSelf: "center",
   },
   buttonTitle: {
     color: "white",
@@ -343,7 +360,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   footerView: {
-    flex: 1,
     alignItems: "center",
     marginTop: 20,
   },

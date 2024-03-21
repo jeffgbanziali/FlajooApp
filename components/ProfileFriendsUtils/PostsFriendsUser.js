@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, FlatList, View, Text } from 'react-native';
+import { Image, TouchableOpacity, FlatList, View, Text, Dimensions } from 'react-native';
 import axios from 'axios';
 import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
@@ -7,6 +7,9 @@ import { LinearGradient } from 'react-native-linear-gradient';
 import { useDarkMode } from '../Context/AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const PostsFriendsUser = ({ users }) => {
     const [user, setUser] = useState([]);
@@ -25,9 +28,17 @@ const PostsFriendsUser = ({ users }) => {
 
 
 
+    const imageWidthSize = windowWidth * 0.3;
+    const imageHeightSize = windowHeight * 0.2;
+
 
     const renderPost = ({ item, index }) => (
-        < TouchableOpacity key={index} >
+
+
+
+        <TouchableOpacity key={index} >
+
+            
             {item.media.length > 1 ? (
                 <View style={{
                     borderRadius: 10,
@@ -38,8 +49,8 @@ const PostsFriendsUser = ({ users }) => {
                 }}>
                     <View
                         style={{
-                            width: 25,
-                            height: 25,
+                            width: imageWidthSize,
+                            height: imageHeightSize,
                             position: "absolute",
                             top: 4,
                             right: 5,
@@ -54,15 +65,21 @@ const PostsFriendsUser = ({ users }) => {
                             color={isDarkMode ? "#F5F5F5" : "black"} />
 
                     </View>
-                    <Image
-                        source={{ uri: item.media[0]?.mediaUrl }}
+                    <View
                         style={{
-                            width: 135,
-                            height: 200,
-                            resizeMode: "cover",
-                            opacity: 0.9,
-                        }}
-                    />
+                            width: imageWidthSize,
+                            height: imageHeightSize,
+                        }}>
+                        <Image
+                            source={{ uri: item.media[0]?.mediaUrl }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                resizeMode: "cover",
+                                opacity: 0.9,
+                            }}
+                        />
+                    </View>
                     <View
                         style={{
                             position: "absolute",
@@ -105,14 +122,21 @@ const PostsFriendsUser = ({ users }) => {
                     borderColor: "white",
                     backgroundColor: "white"
                 }}>
-                    <Image
-                        source={{ uri: item.media[0]?.mediaUrl }}
+                    <View
                         style={{
-                            width: 135,
-                            height: 200,
-                            resizeMode: "cover",
-                        }}
-                    />
+                            width: imageWidthSize,
+                            height: imageHeightSize,
+                        }}>
+                        <Image
+                            source={{ uri: item.media[0]?.mediaUrl }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                resizeMode: "cover",
+                            }}
+                        />
+                    </View>
+
                     <View
                         style={{
                             position: "absolute",

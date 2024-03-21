@@ -90,8 +90,8 @@ const ReplyText = ({ post, comment, reply, toggle, replierImage, toReplying, ind
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 
@@ -150,7 +150,6 @@ const ReplyText = ({ post, comment, reply, toggle, replierImage, toReplying, ind
                                 minHeight: 30,
                                 minWidth: 200,
                                 borderRadius: 15,
-                                marginTop: "1%",
                                 shadowColor: isDarkMode ? "white" : "#000",
                                 shadowOffset: {
                                     width: 0,
@@ -164,7 +163,7 @@ const ReplyText = ({ post, comment, reply, toggle, replierImage, toReplying, ind
                             <Text
                                 style={{
                                     color: isDarkMode ? "#F5F5F5" : "black",
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontFamily: "",
                                     fontWeight: "400",
                                     lineHeight: 22
@@ -175,13 +174,20 @@ const ReplyText = ({ post, comment, reply, toggle, replierImage, toReplying, ind
                         </View>
                     </View>
                 </View>
+
+
+
             </View>
+
+
+
             <View
                 style={{
                     width: "100%",
-                    height: 30,
+                    height: 20,
                     flexDirection: "row",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
+                    //backgroundColor: "blue",
                 }}
             >
                 <View

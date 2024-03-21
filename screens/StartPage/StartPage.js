@@ -82,14 +82,14 @@ function StartPage() {
                             width: "100%",
                             height: "40%",
                             marginTop: "2%",
-                            justifyContent: "space-evenly"
+                            justifyContent: "space-evenly",
                         }}>
                             <TouchableOpacity
                                 onPress={goEmailSignUp}
                                 style={{
                                     alignItems: "center",
-                                    width: 380,
-                                    height: 60,
+                                    width: 350,
+                                    height: 50,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
@@ -99,7 +99,7 @@ function StartPage() {
                                 }}>
                                 <Feather
                                     name="mail"
-                                    size={30}
+                                    size={28}
                                     color={isDarkMode ? "#FFFFFF" : "black"}
                                 />
                                 <Text
@@ -115,8 +115,8 @@ function StartPage() {
                                 onPress={goFacebook}
                                 style={{
                                     alignItems: "center",
-                                    width: 380,
-                                    height: 60,
+                                    width: 350,
+                                    height: 50,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
@@ -124,7 +124,7 @@ function StartPage() {
                                     borderWidth: 2,
                                     borderColor: isDarkMode ? "#343232" : "lightgray",
                                 }}>
-                                <MaterialIcons name="facebook" size={40} color="#0332D8" />
+                                <MaterialIcons name="facebook" size={28} color="#0332D8" />
                                 <Text
                                     style={{
                                         color: isDarkMode ? "#F5F5F5" : "black",
@@ -138,8 +138,8 @@ function StartPage() {
                                 onPress={goGoogle}
                                 style={{
                                     alignItems: "center",
-                                    width: 380,
-                                    height: 60,
+                                    width: 350,
+                                    height: 50,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
@@ -148,7 +148,7 @@ function StartPage() {
                                     borderColor: isDarkMode ? "#343232" : "lightgray",
                                 }}>
 
-                                <AntDesign name="google" size={35} color="red" />
+                                <AntDesign name="google" size={28} color="red" />
                                 <Text
                                     style={{
                                         color: isDarkMode ? "#F5F5F5" : "black",
@@ -159,6 +159,8 @@ function StartPage() {
                                 </Text>
                             </TouchableOpacity>
                         </View>
+
+                        
                         <View
                             style={{
                                 alignItems: 'center',

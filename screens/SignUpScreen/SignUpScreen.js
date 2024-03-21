@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert, TextInput } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert, TextInput } from 'react-native';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,10 @@ import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Pressable } from 'react-native';
+import { APP_API_URL } from '../../config';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 
 
@@ -26,18 +30,27 @@ const SignUpScreen = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
+
+
+    const inputWidthSize = windowWidth * 0.75;
+    const inputHeightSize = windowHeight * 0.056;
+
+
+
+
+
     const handleSignUp = async () => {
         const data = {
-            pseudo: pseudo,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword,
-            phoneNumber: phoneNumber,
+            pseudo,
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+            phoneNumber,
         };
         try {
-            const url = 'http://192.168.0.14:4000/api/user/register';
+            const url = `${APP_API_URL}/api/user/register`;
 
 
             // Validate the form data
@@ -185,10 +198,11 @@ const SignUpScreen = () => {
                                 placeholderTextColor='gray'
                                 value={pseudo}
                                 onChangeText={(text) => setPseudo(text)}
-                                keyboardType='none'
+                                keyboardType="default"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
+
                         </View>
 
                         <View style={styles.input}>
@@ -202,10 +216,11 @@ const SignUpScreen = () => {
                                 placeholderTextColor='gray'
                                 value={firstName}
                                 onChangeText={(text) => setFirstName(text)}
-                                keyboardType='none'
+                                keyboardType="default"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
+
                         </View>
 
 
@@ -220,10 +235,11 @@ const SignUpScreen = () => {
                                 placeholderTextColor='gray'
                                 value={lastName}
                                 onChangeText={(text) => setLastName(text)}
-                                keyboardType='none'
+                                keyboardType="default"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
+
                         </View>
 
                         <View style={styles.input}>
@@ -237,7 +253,7 @@ const SignUpScreen = () => {
                                 placeholderTextColor='gray'
                                 onChangeText={(text) => setEmail(text)}
                                 value={email}
-                                keyboardType="email-address"
+                                keyboardType="default"
                                 autoCapitalize="none"
                                 autoCorrect={false}
 
@@ -245,7 +261,7 @@ const SignUpScreen = () => {
                         </View >
                         <View
                             style={{
-                                height: 48,
+                                height: inputHeightSize,
                                 borderRadius: 10,
                                 borderColor: "#2e2e2d",
                                 borderWidth: 1,
@@ -257,7 +273,7 @@ const SignUpScreen = () => {
                                 marginRight: 30,
                                 justifyContent: "center",
                                 paddingLeft: 14,
-                                width: 320,
+                                width: inputWidthSize,
                                 flexDirection: "row"
                             }}>
                             <TextInput
@@ -297,7 +313,7 @@ const SignUpScreen = () => {
                         </View>
                         <View
                             style={{
-                                height: 48,
+                                height: inputHeightSize,
                                 borderRadius: 10,
                                 borderColor: "#2e2e2d",
                                 borderWidth: 1,
@@ -309,7 +325,7 @@ const SignUpScreen = () => {
                                 marginRight: 30,
                                 justifyContent: "center",
                                 paddingLeft: 14,
-                                width: 320,
+                                width: inputWidthSize,
                                 flexDirection: "row"
                             }}>
                             <TextInput
@@ -358,7 +374,7 @@ const SignUpScreen = () => {
                                 placeholderTextColor='gray'
                                 value={phoneNumber}
                                 onChangeText={(text) => setPhoneNumber(text)}
-                                keyboardType="phone-pad"
+                                keyboardType="default"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                             />
@@ -388,6 +404,8 @@ const SignUpScreen = () => {
                                 {t('ButtonRegis')}
                             </Text>
                         </TouchableOpacity>
+
+
                         <View style={styles.footerView}>
                             <Text style={{
                                 fontSize: 16,
@@ -414,59 +432,69 @@ const SignUpScreen = () => {
 
 
 
-const styles = StyleSheet.create({
 
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: darkRose,
-        marginBottom: 30,
-    },
-    error: {
-        color: 'red',
-        fontSize: 12,
-        marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    input: {
-        height: 48,
-        borderRadius: 10,
-        borderColor: "#2e2e2d",
-        borderWidth: 1,
-        overflow: "hidden",
-        backgroundColor: "white",
-        marginTop: 6,
-        marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        paddingLeft: 14,
-        width: 320,
-    },
-    button: {
-        backgroundColor: "red",
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 10,
-        width: 120,
-        height: 48,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignSelf: 'center'
-    },
-    buttonTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: "bold"
-    },
-    footerView: {
-        flex: 1,
-        alignItems: "center",
-        marginTop: 20
-    },
 
-})
+const inputWidthSize = windowWidth * 0.75;
+const inputHeightSize = windowHeight * 0.056;
+
+
+
+
+const styles = StyleSheet.create(
+
+
+    {
+
+
+
+        title: {
+            fontSize: 30,
+            fontWeight: 'bold',
+            color: darkRose,
+            marginBottom: 30,
+        },
+        error: {
+            color: 'red',
+            fontSize: 12,
+            marginBottom: 10,
+            marginLeft: 30,
+            marginRight: 30,
+        },
+        input: {
+            height: inputHeightSize,
+            borderRadius: 10,
+            borderColor: "#2e2e2d",
+            borderWidth: 1,
+            overflow: "hidden",
+            backgroundColor: "white",
+            marginTop: 6,
+            marginBottom: 10,
+            paddingLeft: 14,
+            width: inputWidthSize,
+        },
+        button: {
+            backgroundColor: "red",
+            marginLeft: 30,
+            marginRight: 30,
+            marginTop: 10,
+            width: 120,
+            height: 48,
+            borderRadius: 5,
+            alignItems: "center",
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignSelf: 'center'
+        },
+        buttonTitle: {
+            color: 'white',
+            fontSize: 16,
+            fontWeight: "bold"
+        },
+        footerView: {
+            alignItems: "center",
+            marginTop: 20
+        },
+
+    })
 
 export default SignUpScreen;

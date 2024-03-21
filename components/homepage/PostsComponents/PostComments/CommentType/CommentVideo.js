@@ -102,8 +102,8 @@ const CommentImage = ({ areYouPressComment,post, comment, toggle, toAnswering, t
                     <Pressable
                         onPress={() => goProfil(comment.commenterId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
                         <Image
@@ -304,7 +304,7 @@ const CommentImage = ({ areYouPressComment,post, comment, toggle, toAnswering, t
                         >
                             <Text
                                 style={{
-                                    fontWeight: "bold",
+                                    fontWeight: "600",
                                     color: "gray",
                                 }}
                             >

@@ -59,8 +59,8 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 

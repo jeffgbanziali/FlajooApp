@@ -107,8 +107,6 @@ const TabNavigation = () => {
           tabBarStyle: {
             display: "flex",
             backgroundColor: isDarkMode ? "#171717" : "white",
-            height: "10%",
-            alignItems: "center"
           },
           headerShown: false,
           tabBarActiveTintColor: isDarkMode ? "white" : "black",
@@ -128,14 +126,14 @@ const TabNavigation = () => {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <Foundation name="home"
-                  size={30}
+                size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
                 <Feather
                   name="home"
-                  size={28}
+                  size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -152,7 +150,7 @@ const TabNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <Feather
                 name="search"
-                size={30}
+                size={26}
                 color={isDarkMode ? "white" : "black"}
                 style={[focused && styles.bottomTabIconFocused]}
               />
@@ -167,7 +165,7 @@ const TabNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={styles.tabIconContainer}>
                 <TouchableOpacity onPress={arePress} style={styles.addButton}>
-                  <Feather name="plus" size={40} style={styles.addButtonText} color="black" />
+                  <Feather name="plus" size={25} style={styles.addButtonText} color="black" />
                 </TouchableOpacity>
               </View>
             ),
@@ -187,13 +185,13 @@ const TabNavigation = () => {
               focused ? (
                 <MaterialCommunityIcons
                   name="youtube-tv"
-                  size={28}
+                  size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
                 <Octicons name="video"
-                  size={28}
+                size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]} />
               )
@@ -210,12 +208,12 @@ const TabNavigation = () => {
               focused ? (
                 <FontAwesome
                   name="user"
-                  size={30}
+                  size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
-                <AntDesign name="user" size={30}
+                <AntDesign name="user" size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -248,11 +246,13 @@ const TabNavigation = () => {
             justifyContent: "center",
             alignItems: "center",
           }}>
+
+
           <View
             style={{
               borderRadius: 10,
-              width: 260,
-              height: 260,
+              width: 220,
+              height: 200,
               borderRadius: 20,
               padding: 2,
               backgroundColor: isDarkMode ? "#171717" : "white",
@@ -266,6 +266,8 @@ const TabNavigation = () => {
               elevation: 2,
 
             }}>
+
+
             <TouchableOpacity
               onPress={AddPost}
               style={{
@@ -282,17 +284,19 @@ const TabNavigation = () => {
                 backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
 
               }}>
-              <AntDesign name="picture" size={30} color={isDarkMode ? "white" : "black"} />
+              <AntDesign name="picture" size={25} color={isDarkMode ? "white" : "black"} />
               <Text
                 style={{
                   color: isDarkMode ? "#F5F5F5" : "black",
-                  fontSize: 24,
+                  fontSize: 18,
                   marginLeft: 14
                 }}
               >
                 {t('AddPosting')}
               </Text>
             </TouchableOpacity>
+
+
             <TouchableOpacity
               onPress={AddReels}
               style={{
@@ -309,18 +313,21 @@ const TabNavigation = () => {
               }}>
               <MaterialCommunityIcons
                 name="youtube-tv"
-                size={30}
+                size={25}
                 color={isDarkMode ? "white" : "black"}
               />
               <Text style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
-                fontSize: 24,
+                fontSize: 18,
                 marginLeft: 14
 
               }}>
                 {t('AddReels')}
               </Text>
             </TouchableOpacity>
+
+
+
             <TouchableOpacity
               onPress={AddStory}
 
@@ -335,16 +342,19 @@ const TabNavigation = () => {
                 borderBottomColor: "rgba(255,255,255)",
               }}>
               <Ionicons name="book"
-                size={30}
+                size={25}
                 color={isDarkMode ? "white" : "black"} />
               <Text style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
-                fontSize: 24,
+                fontSize: 18,
                 marginLeft: 16
               }}>
                 {t('AddStory')}
               </Text>
             </TouchableOpacity>
+
+
+
             <TouchableOpacity
               onPress={StartLive}
               style={{
@@ -360,16 +370,20 @@ const TabNavigation = () => {
               }}>
 
               <FontAwesome5
-                name="video" size={26}
+                name="video"
+                size={25}
                 color={isDarkMode ? "white" : "black"} />
               <Text style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
-                fontSize: 24,
+                fontSize: 18,
                 marginLeft: 16
               }}>
                 {t('LiveStream')}
               </Text>
             </TouchableOpacity>
+
+
+
           </View>
         </View>
       </Modal>
@@ -393,10 +407,9 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: "#0D73D1",
-    borderRadius: 100,
-    width: 50,
-    height: 50,
-    padding: 5,
+    borderRadius: 10,
+    width: 32,
+    height: 32,
     justifyContent: "center",
     alignItems: "center",
   },

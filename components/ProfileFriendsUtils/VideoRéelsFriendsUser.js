@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, TouchableOpacity, FlatList, View, Text } from 'react-native';
+import { Image, TouchableOpacity, FlatList, View, Text, Dimensions } from 'react-native';
 import axios from 'axios';
 import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
@@ -9,10 +9,18 @@ import { useDarkMode, UidContext } from '../Context/AppContext';
 import Video from 'react-native-video';
 
 
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
 const VideoRéelsFriendsUser = ({ users }) => {
     const [user, setUser] = useState([]);
     const { isDarkMode } = useDarkMode();
     const { uid } = useContext(UidContext)
+
+    const imageWidthSize = windowWidth * 0.3;
+    const imageHeightSize = windowHeight * 0.2;
 
     useEffect(() => {
         const getPostUser = async () => {
@@ -38,20 +46,27 @@ const VideoRéelsFriendsUser = ({ users }) => {
                 borderColor: "white",
                 backgroundColor: "white"
             }}>
-                <Video
-                    source={{ uri: item.videoPath }}
-                    rate={1.0}
-                    volume={1.0}
-                    isMuted={false}
-                    resizeMode="cover"
-                    isLooping
-                    paused={true}
+
+                <View
                     style={{
-                        width: 135,
-                        height: 200,
-                        resizeMode: "cover",
-                    }}
-                />
+                        width: imageWidthSize,
+                        height: imageHeightSize,
+                    }}>
+                    <Video
+                        source={{ uri: item.videoPath }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        resizeMode="cover"
+                        isLooping
+                        paused={true}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                    />
+                </View>
+
                 <View
                     style={{
                         position: "absolute",

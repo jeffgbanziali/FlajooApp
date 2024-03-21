@@ -90,8 +90,8 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
                     <Pressable
                         onPress={() => goProfil(reply.replierId)}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                         }}
                     >
 
@@ -153,7 +153,6 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
                                 minHeight: 30,
                                 minWidth: 200,
                                 borderRadius: 15,
-                                marginTop: "1%",
                                 shadowColor: isDarkMode ? "white" : "#000",
                                 shadowOffset: {
                                     width: 0,
@@ -167,7 +166,7 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
                             <Text
                                 style={{
                                     color: isDarkMode ? "#F5F5F5" : "black",
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontFamily: "",
                                     fontWeight: "400",
                                     lineHeight: 22
@@ -182,9 +181,10 @@ const ReplyToText = ({ post, comment, reply, toggle, replierImage, toReplying, i
             <View
                 style={{
                     width: "100%",
-                    height: 30,
+                    height: 20,
                     flexDirection: "row",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
+                    //backgroundColor: "blue",
                 }}
             >
                 <View

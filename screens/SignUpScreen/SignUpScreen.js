@@ -987,10 +987,10 @@ const SignUpScreen = () => {
                                             height: "100%",
                                             fontSize: 16,
                                         }}
-                                        placeholder={t('state')}
+                                        placeholder={t('department')}
                                         placeholderTextColor='gray'
-                                        value={city}
-                                        onChangeText={(text) => setCity(text)}
+                                        value={department}
+                                        onChangeText={(text) => setDepartment(text)}
                                         keyboardType="default"
                                         autoCapitalize="none"
                                         autoCorrect={false}
@@ -1238,8 +1238,8 @@ const styles = StyleSheet.create(
         },
         countryPickerContainer: {
             position: 'absolute',
-            top: 50, 
-            left: 30, 
+            top: 50,
+            left: 30,
         },
 
     })

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, TouchableOpacity, FlatList, View, Text, Dimensions } from 'react-native';
+import { Image, TouchableOpacity, SafeAreaView, FlatList, View, Text, Dimensions } from 'react-native';
 import axios from 'axios';
 import { APP_API_URL } from '../../config';
 import { MyPostUser } from '../../Data/UserProfilePost';
@@ -19,8 +19,37 @@ const VideoRéelsFriendsUser = ({ users }) => {
     const { isDarkMode } = useDarkMode();
     const { uid } = useContext(UidContext)
 
-    const imageWidthSize = windowWidth * 0.3;
-    const imageHeightSize = windowHeight * 0.2;
+
+
+    // iPhone 15 Pro (standard)
+    const iPhone15ProWidth = 390; // Largeur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProHeight = 844; // Hauteur de l'écran de l'iPhone 15 Pro
+
+    // iPhone 15 Pro Max
+    const iPhone15ProMaxWidth = 428; // Largeur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxHeight = 926; // Hauteur de l'écran de l'iPhone 15 Pro Max
+
+    // iPhone SE (3rd génération)
+    const iPhoneSEWidth = 375; // Largeur de l'écran de l'iPhone SE (3rd génération)
+    const iPhoneSEHeight = 667; // Hauteur de l'écran de l'iPhone SE (3rd génération)
+
+    // Ajustement des mesures en fonction des appareils
+    const inputWidthSize = windowWidth * 0.85;
+    const inputHeightSize = windowHeight * 0.056;
+
+    const containerPersoWidthSize = windowWidth * 0.3;
+    const containerPersoHeightSize = windowHeight * 0.18;
+
+
+    // Fonction pour ajuster les mesures en fonction de l'appareil
+    const adjustMeasurement = (measurement, baseWidth, targetWidth) => {
+        return (measurement / baseWidth) * targetWidth;
+    };
+
+
+    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhone15ProWidth, windowWidth);
+    const imageHeightSize = adjustMeasurement(containerPersoHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
+
 
     useEffect(() => {
         const getPostUser = async () => {
@@ -112,20 +141,33 @@ const VideoRéelsFriendsUser = ({ users }) => {
 
 
     return (
-        <View style={{
-            flex: 1,
-            width: user.length <= 2 ? '68%' : '100%',
-        }}>
-            <FlatList
-                data={user}
-                renderItem={renderPost}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={3}
-                columnWrapperStyle={{
-                    justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
-                }}
-            />
-        </View>
+        <SafeAreaView
+            style={{
+                flex: 1,
+                width: "100%",
+                height: 900,
+                justifyContent: "center",
+                backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                alignItems: "center"
+            }} >
+            <View
+                style={{
+                    flex: 1,
+                    paddingTop: 10,
+                    width: user.length <= 2 ? '68%' : '100%',
+                }
+                }>
+                <FlatList
+                    data={user}
+                    renderItem={renderPost}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                        justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
+                    }}
+                />
+            </View>
+        </SafeAreaView>
     );
 }
 

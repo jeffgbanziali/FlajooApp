@@ -18,6 +18,7 @@ import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
 import { NavigationContainer } from "@react-navigation/native";
 import { APP_API_URL } from "./config";
+import MaterialTopNavigation from "./navigation/MaterialTopNavigation";
 
 const App = () => {
 

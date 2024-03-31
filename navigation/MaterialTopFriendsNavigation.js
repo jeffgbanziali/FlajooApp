@@ -4,13 +4,13 @@ import { StatusBar } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SignInScreen from "../screens/SignInScreen/SignInScreen";
-import PostsUser from "../components/ProfileUtils.js/PostsUser";
 import { useDarkMode } from "../components/Context/AppContext";
-import VideoRéelsUser from "../components/ProfileUtils.js/VideoRéelsUser";
+import PostsFriendsUser from "../components/ProfileFriendsUtils/PostsFriendsUser";
+import VideoRéelsFriendsUser from "../components/ProfileFriendsUtils/VideoRéelsFriendsUser";
 
 const Tab = createMaterialTopTabNavigator();
 
-const MaterialTopNavigation = () => {
+const MaterialTopFriendsNavigation = ({ users }) => {
 
 
 
@@ -42,8 +42,8 @@ const MaterialTopNavigation = () => {
                         />
                     ),
                 }}
-                component={PostsUser}
-                name='PostProfile'
+                component={() => <PostsFriendsUser users={users} />}
+                name='PostFiendsProfile'
             />
             <Tab.Screen
                 options={{
@@ -55,8 +55,8 @@ const MaterialTopNavigation = () => {
                         />
                     ),
                 }}
-                component={VideoRéelsUser}
-                name='ReelsProfile'
+                component={() => <VideoRéelsFriendsUser users={users} />}
+                name='ReelsFriendsProfile'
             />
             <Tab.Screen
                 options={{
@@ -79,4 +79,4 @@ const MaterialTopNavigation = () => {
     );
 }
 
-export default MaterialTopNavigation;
+export default MaterialTopFriendsNavigation;

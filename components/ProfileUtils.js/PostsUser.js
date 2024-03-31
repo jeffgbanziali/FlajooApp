@@ -1,10 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, TouchableOpacity, FlatList, View, Text } from 'react-native';
+import { Image, TouchableOpacity, Dimensions, SafeAreaView, FlatList, View, Text } from 'react-native';
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { LinearGradient } from 'react-native-linear-gradient';
 import { useDarkMode, UidContext } from '../Context/AppContext';
 import { APP_API_URL } from '../../config';
+import { MyPostUser } from '../../Data/UserProfilePost';
+import { $CombinedState } from 'redux';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
+
 
 
 const PostsUser = () => {
@@ -28,10 +36,64 @@ const PostsUser = () => {
 
 
 
+
+
+
+    // iPhone 15 Pro (standard)
+    const iPhone15ProWidth = 390; // Largeur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProHeight = 844; // Hauteur de l'écran de l'iPhone 15 Pro
+
+    // iPhone 15 Pro Max
+    const iPhone15ProMaxWidth = 428; // Largeur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxHeight = 926; // Hauteur de l'écran de l'iPhone 15 Pro Max
+
+    // iPhone SE (3rd génération)
+    const iPhoneSEWidth = 375; // Largeur de l'écran de l'iPhone SE (3rd génération)
+    const iPhoneSEHeight = 667; // Hauteur de l'écran de l'iPhone SE (3rd génération)
+
+    // Ajustement des mesures en fonction des appareils
+    const inputWidthSize = windowWidth * 0.85;
+    const inputHeightSize = windowHeight * 0.056;
+
+    const containerPersoWidthSize = windowWidth * 0.32;
+    const containerPersoHeightSize = windowHeight * 0.18;
+
+
+    // Fonction pour ajuster les mesures en fonction de l'appareil
+    const adjustMeasurement = (measurement, baseWidth, targetWidth) => {
+        return (measurement / baseWidth) * targetWidth;
+    };
+
+    // Ajuster les mesures en fonction des appareils cibles
+    const adjustedInputWidthSize = adjustMeasurement(inputWidthSize, iPhone15ProWidth, windowWidth);
+    const adjustedInputHeightSize = adjustMeasurement(inputHeightSize, iPhone15ProHeight, windowHeight);
+
+    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhone15ProWidth, windowWidth);
+    const imageHeightSize = adjustMeasurement(containerPersoHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const renderPost = ({ item, index }) => {
-      
+
         return (
-            < TouchableOpacity key={index} >
+            < TouchableOpacity
+                key={index} >
                 <View style={{
                     borderRadius: 10,
                     overflow: "hidden",
@@ -43,8 +105,8 @@ const PostsUser = () => {
                     <Image
                         source={{ uri: item.media[0]?.mediaUrl }}
                         style={{
-                            width: 135,
-                            height: 200,
+                            width: imageWidthSize,
+                            height: imageHeightSize,
                             resizeMode: "cover",
                         }}
                     />
@@ -90,20 +152,34 @@ const PostsUser = () => {
 
 
     return (
-        <View style={{
-            flex: 1,
-            width: user.length <= 2 ? '68%' : '100%',
-        }}>
-            <FlatList
-                data={user}
-                renderItem={renderPost}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={3}
-                columnWrapperStyle={{
-                    justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
-                }}
-            />
-        </View>
+        <SafeAreaView
+            style={{
+                flex: 1,
+                width: "100%",
+                height: 900,
+                justifyContent: "center",
+                backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                alignItems: "center"
+            }} >
+            <View
+                style={{
+                    flex: 1,
+                    paddingTop: 10,
+                    width: user.length <= 2 ? '68%' : '100%',
+                }
+                }>
+                <FlatList
+                    data={user}
+                    renderItem={renderPost}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                        justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
+                    }}
+                />
+            </View>
+
+        </SafeAreaView >
     );
 }
 

@@ -4,7 +4,7 @@ import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "react-native-linear-gradient";
-
+import MaterialTopNavigation from '../../navigation/MaterialTopNavigation';
 const BeginingScreen = () => {
 
 
@@ -32,6 +32,7 @@ const BeginingScreen = () => {
                 backgroundColor: isDarkMode ? "#171717" : "white",
             }}
         >
+
             <SafeAreaView
                 style={{
                     flex: 1,
@@ -40,16 +41,16 @@ const BeginingScreen = () => {
                     width: "100%",
                 }}>
 
+
                 <View
                     style={{
                         width: "100%",
                         height: "6%",
-                        //backgroundColor: "blue",
+                        backgroundColor: "blue",
                         alignItems: "flex-end",
                         justifyContent: "center",
 
                     }}>
-
 
                     <TouchableOpacity
                         onPress={skipBegin}

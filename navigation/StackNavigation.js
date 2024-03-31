@@ -38,6 +38,7 @@ import CallingOn from "../screens/CallScreen/CallingOn";
 import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 import AboutThisAccount from "../screens/ProfileFriends/AboutThisAccount";
 import BeginingScreen from "../screens/BeginingScreen/BeginingScreen";
+import PostsUser from "../components/ProfileUtils.js/PostsUser";
 
 const Stack = createNativeStackNavigator();
 
@@ -100,14 +101,13 @@ const StackNavigation = () => {
               <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
               <Stack.Screen name="Myfollowers" component={MyFollowers} />
               <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
-              <Stack.Screen name="Searching" component={Search} />
 
             </>
           ) : (
             <>
-              { /*<Stack.Screen name="Begin" component={BeginingScreen} />
+              { /* <Stack.Screen name="Begin" component={BeginingScreen} />*/}
 
-          <Stack.Screen name="Start" component={StartPage} />*/}
+              <Stack.Screen name="Start" component={StartPage} />
               <Stack.Screen name="Signup" component={SignUpScreen} />
               <Stack.Screen name="Signin" component={SignInScreen} />
               <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />

@@ -112,11 +112,15 @@
     "streetName":"Nom de rue",
     "postalCode": "Code postal",
     "state":"Etat",
-    "department":"Departement",
+    "department":"Département",
     "region":"Région",
     "country":"Pays",
     "birthDate":"Date de naissance",
     "nationality":"Nationalité",
+    "dateLanguage":"fr-FR",
+    "SelectNationality":"Choisir votre nationalité",
+    "AccountInfo":"Vos informations de compte",
+    "PersonalInfo":"Vos informations personnelles",
 
 
      

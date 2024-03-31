@@ -109,13 +109,16 @@
     "Skip":"Skip",
     "streetName": "Street name",
     "postalCode":"Postal code",
-    "state":"state",
+    "state":"State",
     "department":"Department",
     "region":"Region",
     "country":"Country",
     "birthDate":"Date of birth",
     "nationality":"NationalitY",
-
+    "dateLanguage":"en-EN",
+    "SelectNationality":"Choose your nationality",
+    "AccountInfo": "Your account information",
+    "PersonalInfo":"Your personal information",
 
     "Loading":"Loading...",
     "Research":"Research ...",

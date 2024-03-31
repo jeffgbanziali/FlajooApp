@@ -126,7 +126,7 @@ const TabNavigation = () => {
             tabBarIcon: ({ focused }) => (
               focused ? (
                 <Foundation name="home"
-                size={26}
+                  size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -191,7 +191,7 @@ const TabNavigation = () => {
                 />
               ) : (
                 <Octicons name="video"
-                size={26}
+                  size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]} />
               )
@@ -387,6 +387,9 @@ const TabNavigation = () => {
           </View>
         </View>
       </Modal>
+
+
+
     </View>
   );
 };

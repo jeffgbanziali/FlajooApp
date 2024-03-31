@@ -105,6 +105,16 @@
     "ToShow":"Show QR code",
     "Following":"Following",
     "Writing":"Writing",
+    "GetStarted":"Get started",
+    "Skip":"Skip",
+    "streetName": "Street name",
+    "postalCode":"Postal code",
+    "state":"state",
+    "department":"Department",
+    "region":"Region",
+    "country":"Country",
+    "birthDate":"Date of birth",
+    "nationality":"NationalitY",
 
 
     "Loading":"Loading...",

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Switch, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import Logout from "../Profile/Logout";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -37,7 +37,7 @@ const Settings = () => {
 
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "black",
@@ -47,7 +47,6 @@ const Settings = () => {
     >
       <View
         style={{
-          marginTop: 50,
           paddingBottom: 2,
           marginLeft: 10,
           marginRight: 10,
@@ -101,7 +100,7 @@ const Settings = () => {
             height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 10,
+            paddingLeft: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
@@ -138,7 +137,7 @@ const Settings = () => {
             height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 10,
+            paddingLeft: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
@@ -174,7 +173,7 @@ const Settings = () => {
             height: "6%",
             flexDirection: "row",
             alignItems: "center",
-            padding: 10,
+            paddingLeft: 10,
             backgroundColor: isDarkMode ? "#171717" : "white",
             borderRadius: 10,
           }}
@@ -216,9 +215,12 @@ const Settings = () => {
           <Logout />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
+
+
+
 
 
 

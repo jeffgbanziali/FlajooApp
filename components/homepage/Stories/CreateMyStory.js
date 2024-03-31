@@ -216,7 +216,7 @@ const CreateStory = () => {
         }
     };
 
-/*************************** système de création d'une story ********************************************/
+    /*************************** système de création d'une story ********************************************/
 
 
     const closeImageModal = () => {
@@ -259,7 +259,7 @@ const CreateStory = () => {
     return (
 
         <>
-            <View
+            <SafeAreaView
                 keyboardShouldPersistTaps="always"
                 style={{
                     flex: 1,
@@ -274,15 +274,15 @@ const CreateStory = () => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        marginTop: 50,
                         borderBottomWidth: 1,
+                        paddingRight: 6,
                         borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
-                        padding: 6
+                        //backgroundColor: 'red'
                     }}>
                     <View
                         style={{
                             flexDirection: 'row',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}>
                         <TouchableOpacity
                             onPress={handleClickReturnHome}
@@ -314,15 +314,24 @@ const CreateStory = () => {
                         </Text>
 
                     </View>
-                    <Image
-                        source={{
-                            uri: userData.picture
-                        }}
+                    <View
                         style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 100
-                        }} />
+                            width: 35,
+                            height: 35,
+                            borderRadius: 100,
+                        }}
+                    >
+                        <Image
+                            source={{
+                                uri: userData.picture
+                            }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: 100,
+                            }} />
+                    </View>
+
 
                 </View>
 
@@ -560,7 +569,7 @@ const CreateStory = () => {
                     </View>
                 </View>
 
-            </View>
+            </SafeAreaView>
 
             <Modal
                 visible={showImage}

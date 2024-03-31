@@ -193,7 +193,7 @@ const NewPostScreen = () => {
                         justifyContent: 'space-between',
                         borderBottomWidth: 2,
                         borderColor: isDarkMode ? "#343232" : "lightgray",
-                        padding: 6
+                        //backgroundColor: "red",
                     }}>
                     <View
                         style={{
@@ -209,7 +209,6 @@ const NewPostScreen = () => {
                                 width: 40,
                                 height: 40,
                                 borderRadius: 30,
-                                marginLeft: "3.5%"
                             }}>
                             <View>
                                 <AntDesign
@@ -241,7 +240,7 @@ const NewPostScreen = () => {
                             style={{
                                 marginRight: "3.5%",
                                 width: 100,
-                                height: 40,
+                                height: 36,
                                 justifyContent: 'center',
                                 alignSelf: 'center',
                                 backgroundColor: isDarkMode ? "#E52C2C" : "#2B60E8",

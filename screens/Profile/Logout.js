@@ -35,6 +35,7 @@ const Logout = () => {
 
 
 
+
   return (
 
     <TouchableOpacity
@@ -45,9 +46,9 @@ const Logout = () => {
         alignItems: "center",
         flexDirection: "row",
         alignItems: "center",
-        padding: 6,
-        width: "35%",
-        height: "50%",
+        paddingLeft: 6,
+        width: 150,
+        height: 50,
         backgroundColor: isDarkMode ? "#D13333" : "#72ACF1",
         borderRadius: 20,
       }}

@@ -37,6 +37,7 @@ import VideoCall from "../screens/CallScreen/VideoCall";
 import CallingOn from "../screens/CallScreen/CallingOn";
 import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 import AboutThisAccount from "../screens/ProfileFriends/AboutThisAccount";
+import BeginingScreen from "../screens/BeginingScreen/BeginingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -104,8 +105,11 @@ const StackNavigation = () => {
             </>
           ) : (
             <>
-              <Stack.Screen name="Signin" component={SignInScreen} />
+              { /*<Stack.Screen name="Begin" component={BeginingScreen} />
+
+          <Stack.Screen name="Start" component={StartPage} />*/}
               <Stack.Screen name="Signup" component={SignUpScreen} />
+              <Stack.Screen name="Signin" component={SignInScreen} />
               <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
             </>
           )

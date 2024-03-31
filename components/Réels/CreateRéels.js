@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Alert, TextInput } from 'react-native';
+import { View, Text, Image, Dimensions, SafeAreaView, TouchableOpacity, FlatList, Alert, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from "../Context/AppContext"
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,21 @@ import { Modal } from 'react-native';
 import Video from 'react-native-video';
 import { addVideoReels, getVideoReels } from '../../actions/réels.action';
 import { useTranslation } from 'react-i18next';
+
+
+
+
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
+
+
+
+
+
 
 
 const CreateRéels = () => {
@@ -48,6 +63,12 @@ const CreateRéels = () => {
         setLoadVideo(true);
 
     };
+
+
+
+    const containerWidthSize = windowWidth * 0.24;
+    const containerHeightSize = windowHeight * 0.16;
+
 
 
     const handleSumbitRéels = async () => {
@@ -181,7 +202,7 @@ const CreateRéels = () => {
     return (
 
         <>
-            <View
+            <SafeAreaView
                 style={{
                     flex: 1,
                     backgroundColor: isDarkMode ? "#171717" : "white",
@@ -195,7 +216,6 @@ const CreateRéels = () => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        marginTop: 50,
                         borderBottomWidth: 1,
                         borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
                         padding: 6
@@ -247,18 +267,19 @@ const CreateRéels = () => {
 
                 </View>
 
-                <View style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    marginTop: 10
-                }}>
+                <View
+                    style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        marginTop: 10
+                    }}>
 
                     <TouchableOpacity
                         onPress={handleText}
                         style={{
-                            width: 100,
-                            height: 120,
+                            width: containerWidthSize,
+                            height: containerHeightSize,
                             backgroundColor: "#4C1854",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -288,10 +309,13 @@ const CreateRéels = () => {
                         </Text>
 
                     </TouchableOpacity>
+
+
+
                     <TouchableOpacity
                         style={{
-                            width: 100,
-                            height: 120,
+                            width: containerWidthSize,
+                            height: containerHeightSize,
                             backgroundColor: "#7D5C96",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -321,10 +345,13 @@ const CreateRéels = () => {
                         </Text>
 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={goCamera}
+
+
+                    <TouchableOpacity
+                        onPress={goCamera}
                         style={{
-                            width: 100,
-                            height: 120,
+                            width: containerWidthSize,
+                            height: containerHeightSize,
                             backgroundColor: "#8C1616",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -359,10 +386,13 @@ const CreateRéels = () => {
                         </Text>
 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={goCamera}
+
+
+                    <TouchableOpacity
+                        onPress={goCamera}
                         style={{
-                            width: 100,
-                            height: 120,
+                            width: containerWidthSize,
+                            height: containerHeightSize,
                             backgroundColor: "#E5A708",
                             borderRadius: 20,
                             justifyContent: "center",
@@ -426,7 +456,7 @@ const CreateRéels = () => {
                                 style={{
                                     fontSize: 20,
                                     fontWeight: '300',
-                                    color: isDarkMode ? "#F5F5F5" : "black",
+                                    color: isDarkMode ? "#F5F5F5" : "white",
                                     marginLeft: "3.5%",
                                     alignSelf: 'center'
                                 }}>
@@ -518,7 +548,7 @@ const CreateRéels = () => {
                     </View>
                 </View>
 
-            </View>
+            </SafeAreaView>
 
 
             <Modal

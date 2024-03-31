@@ -47,7 +47,7 @@ const SignInScreen = () => {
 
 
   const containerWidthSize = windowWidth * 0.88;
-  const containerHeightSize = windowHeight * 0.32;
+  const containerHeightSize = windowHeight * 0.36;
 
   const inputWidthSize = windowWidth * 0.75;
   const inputHeightSize = windowHeight * 0.056;
@@ -178,6 +178,8 @@ const SignInScreen = () => {
                   source={isDarkMode ? require("../../assets/Logos/ios/1212.png") : require("../../assets/Logos/ios/1212.png")}
                 />
               </View>
+
+
             </View>
 
             <View
@@ -265,7 +267,7 @@ const SignInScreen = () => {
                     style={{
                       width: '85%',
                       height: "100%",
-                      fontSize: 16
+                      fontSize: 16,
                     }}
                     keyboardType="default"
                     placeholderTextColor="gray"
@@ -278,7 +280,7 @@ const SignInScreen = () => {
                   <View
                     style={{
                       width: '15%',
-                      height: 48,
+                      height: "100%",
                       alignItems: "center",
                       justifyContent: "center"
                     }}

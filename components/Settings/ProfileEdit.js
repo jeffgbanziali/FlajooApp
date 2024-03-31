@@ -70,7 +70,7 @@ const ProfileEdit = () => {
 
 
 
-  
+
   const handleClickReturnProfile = () => {
     console.log("clicked home");
     navigation.navigate("Settings");
@@ -130,7 +130,7 @@ const ProfileEdit = () => {
   };
 
 
-  
+
   const closeImageModal = () => {
     setShowImage(false);
   };
@@ -185,7 +185,9 @@ const ProfileEdit = () => {
 
 
   return (
+
     <>
+    
       <SafeAreaView
         style={{
           flex: 1,

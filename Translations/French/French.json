@@ -106,6 +106,17 @@
     "ToShow":"Afficher le code QR",
     "Following":"Suivi(e)",
     "Writing":"Ecrire",
+    "GetStarted":"Commencez",
+    "Skip":"Ignorer",
+    "Adress":"Adresse de votre domicile",
+    "streetName":"Nom de rue",
+    "postalCode": "Code postal",
+    "state":"Etat",
+    "department":"Departement",
+    "region":"Région",
+    "country":"Pays",
+    "birthDate":"Date de naissance",
+    "nationality":"Nationalité",
 
 
      

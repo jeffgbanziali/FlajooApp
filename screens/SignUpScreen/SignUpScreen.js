@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert, TextInput } from 'react-native';
+import { View, StyleSheet, Dimensions, Button, Text, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, SafeAreaView, Alert, TextInput } from 'react-native';
 import { darkBlue, darkRose } from '../../components/Button/Constants';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,20 @@ import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Pressable } from 'react-native';
 import { APP_API_URL } from '../../config';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import DatePicker from 'react-native-neat-date-picker'
+
+
+
+const data = [
+    { label: 'Male', value: '1' },
+    { label: 'Female', value: '2' },
+    { label: 'Other', value: '3' },
+];
+
+
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -29,12 +43,39 @@ const SignUpScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [nationality, setNationality] = useState('');
+    const [streetNumber, setStreetNumber] = useState('');
+    const [streetName, setStreetName] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [department, setDepartment] = useState('');
+    const [region, setRegion] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [country, setCountry] = useState('');
 
-
-
-    const inputWidthSize = windowWidth * 0.75;
+    const inputWidthSize = windowWidth * 0.85;
     const inputHeightSize = windowHeight * 0.056;
 
+    const imageWidthSize = windowWidth * 0.75;
+    const imageHeightSize = windowHeight * 0.056;
+
+    const [showDatePickerSingle, setShowDatePickerSingle] = useState(false)
+
+    const [date, setDate] = useState('');
+
+    const openDatePickerSingle = () => setShowDatePickerSingle(true)
+
+    const onCancelSingle = () => {
+        setShowDatePickerSingle(false)
+    }
+
+    const onConfirmSingle = (output) => {
+        setShowDatePickerSingle(false)
+
+        console.log(output)
+        setBirthDate(output.dateString)
+    }
 
 
 
@@ -48,6 +89,18 @@ const SignUpScreen = () => {
             password,
             confirmPassword,
             phoneNumber,
+            birthDate,
+            nationality,
+            homeAddress: {
+                streetNumber,
+                streetName,
+                city,
+                state,
+                department,
+                region,
+                postalCode,
+                country
+            }
         };
         try {
             const url = `${APP_API_URL}/api/user/register`;
@@ -129,6 +182,25 @@ const SignUpScreen = () => {
         setShowPass(!showPass);
     }
 
+    const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+
+    const renderItem = item => {
+        return (
+            <View style={styles.item}>
+                <Text style={styles.textItem}>{item.label}</Text>
+                {item.value === value && (
+                    <AntDesign
+                        style={styles.icon}
+                        color="black"
+                        name="Safety"
+                        size={20}
+                    />
+                )}
+            </View>
+        );
+    };
+
 
 
     return (
@@ -143,8 +215,6 @@ const SignUpScreen = () => {
         >
             <SafeAreaView
                 style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     height: "100%",
                     width: "100%",
                 }}
@@ -152,46 +222,99 @@ const SignUpScreen = () => {
             >
                 <ScrollView
                     showsVerticalScrollIndicator={false}>
-                    <View style={{
-                        width: "100%",
-                        height: 150,
-                        padding: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
+
+                    <View
+                        style={{
+                            width: "100%",
+                            height: 150,
+                            padding: 2,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+
+                        }}>
                         <Image
                             style={{
-                                width: 150,
-                                height: 150,
+                                width: 120,
+                                height: 120,
                                 borderRadius: 100
 
                             }}
                             source={require("../../assets/Logos/ios/1212.png")} />
                     </View>
+
+
                     <View
                         style={{
-                            overflow: 'hidden',
                             borderRadius: 20,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            marginTop: "4%"
+                            marginTop: "4%",
+
                         }}
                     >
 
-                        <Text style={{
-                            fontSize: 20,
-                            color: isDarkMode ? "#FFFFFF" : "black",
-                            fontWeight: 'bold',
-                            marginVertical: 2,
-                            marginBottom: 16
-                        }}>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                color: isDarkMode ? "#FFFFFF" : "black",
+                                fontWeight: 'bold',
+                                marginVertical: 2,
+                                marginBottom: 16
+                            }}>
                             {t('CreateAccount')}
                         </Text>
-                        <View style={styles.input}>
+
+
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                marginTop: 6,
+                                marginBottom: 10,
+                                width: inputWidthSize,
+                            }}>
+                            <Dropdown
+                                style={styles.dropdown}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                data={data}
+                                maxHeight={300}
+                                labelField="label"
+                                valueField="value"
+                                placeholder="Gender"
+                                value={value}
+                                onChange={item => {
+                                    setValue(item.value);
+                                }}
+                                renderLeftIcon={() => (
+                                    <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                                )}
+                                renderItem={renderItem}
+                            />
+                        </View>
+
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
                             <TextInput
                                 style={{
-                                    width: '85%',
-                                    height: 48,
+                                    width: '90%',
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t('Pseudo')}
@@ -205,11 +328,29 @@ const SignUpScreen = () => {
 
                         </View>
 
-                        <View style={styles.input}>
+
+
+
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
                             <TextInput
                                 style={{
-                                    width: '85%',
-                                    height: 48,
+                                    width: '90%',
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t('FirstName')}
@@ -224,11 +365,26 @@ const SignUpScreen = () => {
                         </View>
 
 
-                        <View style={styles.input}>
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
                             <TextInput
                                 style={{
                                     width: '85%',
-                                    height: 48,
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t("LastName")}
@@ -241,12 +397,80 @@ const SignUpScreen = () => {
                             />
 
                         </View>
+                        <DatePicker
+                            isVisible={showDatePickerSingle}
+                            mode={'single'}
+                            onCancel={onCancelSingle}
+                            onConfirm={onConfirmSingle}
+                        />
+                        <TouchableOpacity
+                            onPress={openDatePickerSingle}
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                alignItems: "center",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
 
-                        <View style={styles.input}>
+                            {birthDate ?
+                                <Text
+                                    style={{
+                                        fontSize: 16,
+                                        color: isDarkMode ? 'gray' : "black",
+                                    }}>{birthDate}</Text> :
+                                <>
+                                    <View style={{
+                                        paddingRight: 6
+                                    }}>
+                                        <Ionicons name="calendar-outline" size={24} color="gray" />
+
+                                    </View>
+                                    <Text
+                                        style={{
+                                            fontSize: 16,
+                                            color: isDarkMode ? 'gray' : "black",
+                                        }}>
+                                        {t('birthDate')}
+                                    </Text>
+                                </>
+
+
+                            }
+
+
+                        </TouchableOpacity>
+
+
+
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
                             <TextInput
                                 style={{
-                                    width: '85%',
-                                    height: 48,
+                                    width: '90%',
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t('Email')}
@@ -259,6 +483,7 @@ const SignUpScreen = () => {
 
                             />
                         </View >
+
                         <View
                             style={{
                                 height: inputHeightSize,
@@ -279,7 +504,7 @@ const SignUpScreen = () => {
                             <TextInput
                                 style={{
                                     width: '85%',
-                                    height: 48,
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t('Password')}
@@ -293,7 +518,7 @@ const SignUpScreen = () => {
                             <View
                                 style={{
                                     width: '15%',
-                                    height: 48,
+                                    height: "100%",
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}
@@ -311,6 +536,7 @@ const SignUpScreen = () => {
 
                             </View>
                         </View>
+
                         <View
                             style={{
                                 height: inputHeightSize,
@@ -331,7 +557,7 @@ const SignUpScreen = () => {
                             <TextInput
                                 style={{
                                     width: '85%',
-                                    height: 48,
+                                    height: "100%",
                                     fontSize: 16
                                 }}
                                 placeholder={t('ConfirmPass')}
@@ -345,7 +571,7 @@ const SignUpScreen = () => {
                             <View
                                 style={{
                                     width: '15%',
-                                    height: 48,
+                                    height: "100%",
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}
@@ -363,12 +589,28 @@ const SignUpScreen = () => {
 
                             </View>
                         </View>
-                        <View style={styles.input}>
+
+                        <View
+                            style={{
+                                height: inputHeightSize,
+                                borderRadius: 10,
+                                borderColor: "#2e2e2d",
+                                borderWidth: 1,
+                                overflow: "hidden",
+                                backgroundColor: "white",
+                                marginTop: 6,
+                                marginBottom: 10,
+                                marginLeft: 30,
+                                marginRight: 30,
+                                paddingLeft: 14,
+                                width: inputWidthSize,
+                                flexDirection: "row"
+                            }}>
                             <TextInput
                                 style={{
-                                    width: '85%',
-                                    height: 48,
-                                    fontSize: 16
+                                    width: '90%',
+                                    height: "100%",
+                                    fontSize: 16,
                                 }}
                                 placeholder={t('PhoneNumb')}
                                 placeholderTextColor='gray'
@@ -380,9 +622,188 @@ const SignUpScreen = () => {
                             />
                         </View>
 
+                        <View
+                            style={{
+                                width: "100%",
+
+                            }}>
+                            <View
+                                style={{
+                                    width: "100%",
+                                    height: 300,
+                                    alignItems: "center"
+
+                                }}>
+                                <View
+                                    style={{
+                                        width: inputWidthSize,
+                                        height: "10%",
+                                        //backgroundColor: "red",
+                                        justifyContent: "center",
+                                        paddingLeft: 6
+
+
+                                    }}>
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            color: isDarkMode ? "#FFFFFF" : "black",
+                                            fontWeight: '500',
+                                        }}>
+                                        {t('Adress')}
+                                    </Text>
+                                </View>
+
+
+
+                                <View
+                                    style={{
+                                        height: inputHeightSize,
+                                        borderRadius: 10,
+                                        marginTop: 6,
+                                        marginBottom: 10,
+                                        marginLeft: 30,
+                                        marginRight: 30,
+                                        justifyContent: "space-between",
+                                        width: inputWidthSize,
+                                        flexDirection: "column"
+                                    }}>
+
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            width: inputWidthSize,
+                                            justifyContent: "space-between",
+                                            height: inputHeightSize,
+                                        }}
+                                    >
+
+
+                                        <View
+                                            style={{
+                                                width: "20%",
+                                                height: inputHeightSize,
+                                                backgroundColor: "white",
+                                                paddingLeft: 10,
+                                                alignItems: "stretch",
+                                                borderRadius: 10,
+                                                borderColor: "#2e2e2d",
+                                                borderWidth: 1,
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('Number')}
+                                                placeholderTextColor='gray'
+                                                value={streetNumber}
+                                                onChangeText={(text) => setStreetNumber(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+
+                                        <View
+                                            style={{
+                                                width: "78%",
+                                                height: inputHeightSize,
+                                                backgroundColor: "white",
+                                                borderRadius: 10,
+                                                borderColor: "#2e2e2d",
+                                                borderWidth: 1,
+                                                paddingLeft: 14,
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('streetName')}
+                                                placeholderTextColor='gray'
+                                                value={streetName}
+                                                onChangeText={(text) => setStreetName(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            marginTop: 6,
+                                            marginBottom: 10,
+                                            justifyContent: "space-between",
+                                            width: inputWidthSize,
+                                            flexDirection: "column",
+                                            backgroundColor: "white",
+                                            paddingLeft: 14,
+
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '90%',
+                                                height: "100%",
+                                                fontSize: 16,
+                                            }}
+                                            placeholder={t('postalCode')}
+                                            placeholderTextColor='gray'
+                                            value={postalCode}
+                                            onChangeText={(text) => setPostalCode(text)}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            marginTop: 6,
+                                            marginBottom: 10,
+                                            justifyContent: "space-between",
+                                            width: inputWidthSize,
+                                            flexDirection: "column",
+                                            backgroundColor: "white",
+                                            paddingLeft: 14,
+
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '90%',
+                                                height: "100%",
+                                                fontSize: 16,
+                                            }}
+                                            placeholder={t('City')}
+                                            placeholderTextColor='gray'
+                                            value={city}
+                                            onChangeText={(text) => setCity(text)}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+                                    </View>
+
+
+                                </View>
+
+                            </View>
+
+                        </View>
+
+
+
                         <TouchableOpacity
                             style={{
-                                backgroundColor: darkRose,
+                                backgroundColor: "#FF1C1C",
                                 marginLeft: 30,
                                 marginRight: 30,
                                 marginTop: 10,
@@ -422,8 +843,18 @@ const SignUpScreen = () => {
                                 </Text>
                             </Text>
                         </View>
+
+
+
+
+
+
                     </View>
+
+
                 </ScrollView>
+
+
             </SafeAreaView>
         </KeyboardAvoidingView >
 
@@ -465,8 +896,8 @@ const styles = StyleSheet.create(
             borderRadius: 10,
             borderColor: "#2e2e2d",
             borderWidth: 1,
-            overflow: "hidden",
             backgroundColor: "white",
+
             marginTop: 6,
             marginBottom: 10,
             paddingLeft: 14,
@@ -478,7 +909,7 @@ const styles = StyleSheet.create(
             marginRight: 30,
             marginTop: 10,
             width: 120,
-            height: 48,
+            height: 46,
             borderRadius: 5,
             alignItems: "center",
             justifyContent: 'center',
@@ -493,6 +924,55 @@ const styles = StyleSheet.create(
         footerView: {
             alignItems: "center",
             marginTop: 20
+        },
+
+
+
+        dropdown: {
+            height: inputHeightSize,
+            width: 100,
+            backgroundColor: 'white',
+            borderRadius: 12,
+            padding: 12,
+            shadowColor: '#000',
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 1.41,
+
+            elevation: 2,
+        },
+
+        icon: {
+            marginRight: 5,
+        },
+
+        item: {
+            padding: 17,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+        },
+
+        textItem: {
+            flex: 1,
+            fontSize: 18,
+        },
+        placeholderStyle: {
+            fontSize: 16,
+        },
+        selectedTextStyle: {
+            fontSize: 16,
+        },
+        iconStyle: {
+            width: 20,
+            height: 20,
+        },
+        inputSearchStyle: {
+            height: 40,
+            fontSize: 16,
         },
 
     })

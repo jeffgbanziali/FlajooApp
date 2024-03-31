@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -12,7 +12,8 @@ import { useTranslation } from 'react-i18next';
 
 
 
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 
 function StartPage() {
@@ -38,6 +39,10 @@ function StartPage() {
     const goSignIn = () => {
         navigation.navigate("Signin")
     }
+
+
+    const containWidthSize = windowWidth * 0.8;
+    const containHeightSize = windowHeight * 0.062;
 
     return (
 
@@ -79,48 +84,52 @@ function StartPage() {
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
+                            //backgroundColor: "red",
                             width: "100%",
-                            height: "40%",
+                            height: "35%",
                             marginTop: "2%",
                             justifyContent: "space-evenly",
                         }}>
+
                             <TouchableOpacity
                                 onPress={goEmailSignUp}
                                 style={{
                                     alignItems: "center",
-                                    width: 350,
-                                    height: 50,
+                                    width: containWidthSize,
+                                    height: containHeightSize,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
-                                    padding: 10,
+                                    paddingLeft: 10,
                                     borderWidth: 2,
                                     borderColor: isDarkMode ? "#343232" : "lightgray",
                                 }}>
                                 <Feather
                                     name="mail"
-                                    size={28}
+                                    size={26}
                                     color={isDarkMode ? "#FFFFFF" : "black"}
                                 />
                                 <Text
                                     style={{
                                         color: isDarkMode ? "#F5F5F5" : "black",
                                         marginLeft: "2%",
-                                        fontSize: 24,
+                                        fontSize: 20,
                                     }}>
                                     {t('SignWithEmail')}
                                 </Text>
                             </TouchableOpacity>
+
+
                             <TouchableOpacity
                                 onPress={goFacebook}
                                 style={{
                                     alignItems: "center",
-                                    width: 350,
-                                    height: 50,
+                                    width: containWidthSize,
+                                    height: containHeightSize,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
-                                    padding: 10,
+                                    paddingLeft: 10,
                                     borderWidth: 2,
                                     borderColor: isDarkMode ? "#343232" : "lightgray",
                                 }}>
@@ -134,16 +143,19 @@ function StartPage() {
                                     {t('Facebook')}
                                 </Text>
                             </TouchableOpacity>
+
+
+
                             <TouchableOpacity
                                 onPress={goGoogle}
                                 style={{
                                     alignItems: "center",
-                                    width: 350,
-                                    height: 50,
+                                    width: containWidthSize,
+                                    height: containHeightSize,
                                     backgroundColor: isDarkMode ? "#171717" : "white",
                                     flexDirection: "row",
                                     borderRadius: 30,
-                                    padding: 10,
+                                    paddingLeft: 10,
                                     borderWidth: 2,
                                     borderColor: isDarkMode ? "#343232" : "lightgray",
                                 }}>
@@ -158,16 +170,22 @@ function StartPage() {
                                     {t('Google')}
                                 </Text>
                             </TouchableOpacity>
+
+
+
                         </View>
 
-                        
+
                         <View
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 width: "100%",
                                 height: "10%",
-                                marginTop: "2%"
+                                marginTop: "2%",
+                                //backgroundColor: "blue",
+
+
                             }}
                         >
                             <Text

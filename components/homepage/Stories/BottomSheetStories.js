@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useImperativeHandle } from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, {
     Extrapolate,
@@ -11,66 +11,23 @@ import Animated, {
 import StoriesViewUser from './StoriesViewUser';
 import { useDarkMode } from '../../Context/AppContext';
 
-
-
-
-
-
-
-
-
-
-
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 300;
 
-
-
-
-
-
-
-
-
-const BottomSheetStories = forwardRef(({ children }, ref) => {
-
-
-
-
-
-
-
-
-
+const BottomSheetStories = forwardRef(({ children, stopAnimation, startAnimation }, ref) => {
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
     const { isDarkMode } = useDarkMode();
 
-
-
-
-
-
     const scrollTo = useCallback((destination) => {
         'worklet';
         active.value = destination !== 0;
-
         translateY.value = withSpring(destination, { damping: 50 });
     }, []);
-
-
-
-
-
 
     const isActive = useCallback(() => {
         return active.value;
     }, []);
-
-
-
-
 
     useImperativeHandle(ref, () => ({ scrollTo, isActive }), [scrollTo, isActive]);
 
@@ -81,6 +38,8 @@ const BottomSheetStories = forwardRef(({ children }, ref) => {
     const gesture = Gesture.Pan()
         .onStart(() => {
             context.value = { y: translateY.value };
+            // Arrête l'animation lorsque le geste commence
+            stopAnimation();
         })
         .onUpdate((event) => {
             translateY.value = event.translationY + context.value.y;
@@ -89,13 +48,13 @@ const BottomSheetStories = forwardRef(({ children }, ref) => {
         .onEnd(() => {
             if (translateY.value > -SCREEN_HEIGHT / 3) {
                 scrollTo(0);
+                startAnimation();
+
             } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
                 scrollTo(MAX_TRANSLATE_Y);
             }
+
         });
-
-
-
 
     const reBottomSheet = useAnimatedStyle(() => {
         const borderRadius = interpolate(
@@ -111,10 +70,6 @@ const BottomSheetStories = forwardRef(({ children }, ref) => {
         };
     });
 
-
-
-
-
     return (
         <GestureDetector gesture={gesture}>
             <Animated.View style={[reBottomSheet]}>
@@ -124,6 +79,7 @@ const BottomSheetStories = forwardRef(({ children }, ref) => {
                     backgroundColor: isDarkMode ? "#171717" : "white",
                     top: SCREEN_HEIGHT,
                     borderRadius: 25,
+                    alignItems: "center",
                     bottom: 0,
                 }}>
                     <View style={{

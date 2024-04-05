@@ -5,6 +5,7 @@ import { getStories, getStoriesWithViews } from '../../../actions/story.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { formatPostDate, isEmpty } from '../../Context/Utils';
+import { useDarkMode } from '../../Context/AppContext';
 
 
 
@@ -13,7 +14,7 @@ const StoriesViewUser = () => {
     const dispatch = useDispatch();
     const storiesWithViews = useSelector(state => state.storyReducer);
     const usersData = useSelector((state) => state.usersReducer);
-
+    const { isDarkMode } = useDarkMode();
 
     const route = useRoute();
     const { id } = route.params;
@@ -57,7 +58,7 @@ const StoriesViewUser = () => {
                 style={{
                     width: '100%',
                     //backgroundColor: "red",
-                    marginTop: "1%"
+                    marginTop: "1%",
                 }}>
 
                 <View
@@ -72,8 +73,8 @@ const StoriesViewUser = () => {
                     }}>
                     <View
                         style={{
-                            width: 40,
-                            height: 40,
+                            width: 50,
+                            height: 50,
                             borderRadius: 100,
 
                         }}>
@@ -102,31 +103,30 @@ const StoriesViewUser = () => {
                             width: '100%',
                             height: '100%',
                             justifyContent: 'center',
-                            paddingLeft: '3%',
+                            paddingLeft: '5%',
+                            //backgroundColor: "red"
 
                         }}>
-                        <View>
-                            <Text
-                                style={{
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    color: 'white',
-                                }}>
-                                {!isEmpty(usersData[0]) &&
-                                    usersData.map((user) => {
-                                        if (user._id === item.viewerId) return user.pseudo;
-                                        else return null;
-                                    })}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: 14,
-                                    fontWeight: 'normal',
-                                    color: 'white',
-                                }}>
-                                {formatPostDate(item.viewed_at)}
-                            </Text>
-                        </View>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                fontWeight: '600',
+                                color: isDarkMode ? "#F5F5F5" : "black",
+                            }}>
+                            {!isEmpty(usersData[0]) &&
+                                usersData.map((user) => {
+                                    if (user._id === item.viewerId) return user.pseudo;
+                                    else return null;
+                                })}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: 14,
+                                fontWeight: 'normal',
+                                color: isDarkMode ? "#F5F5F5" : "gray",
+                            }}>
+                            {formatPostDate(item.viewed_at)}
+                        </Text>
                     </View>
                 </View>
 
@@ -139,8 +139,8 @@ const StoriesViewUser = () => {
             style={{
                 height: "66%",
                 width: "100%",
-                borderRadius: 25,
                 shadowColor: "#000",
+                //backgroundColor: "red",
                 shadowOffset: {
                     width: 0,
                     height: 2,

@@ -13,7 +13,7 @@ import {
     Easing,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPostDate, formatTimeAgo, isEmpty, timestampStoryParser } from "../../Context/Utils";
@@ -82,6 +82,9 @@ const StoriesStreamUser = () => {
     }, [loadStories, dispatch]);
 
 
+
+
+
     const goToHome = () => {
         console.log("clicked");
         setLoadStories(true);
@@ -132,12 +135,13 @@ const StoriesStreamUser = () => {
 
 
     const progressAnimation = useRef(new Animated.Value(0)).current;
+
     const animationRef = useRef(null); // Référence pour stocker l'animation
 
     const start = () => {
         animationRef.current = Animated.timing(progressAnimation, {
             toValue: 1,
-            duration: 5000000000000,
+            duration: 5000,
             easing: Easing.linear,
             useNativeDriver: false,
         });
@@ -153,6 +157,19 @@ const StoriesStreamUser = () => {
         progressAnimation.setValue(0);
     };
 
+
+
+    const restartAnimation = () => {
+        if (animationRef.current) {
+            animationRef.current.start(({ finished }) => {
+                if (finished) {
+                    goToNextStory();
+                }
+            }); // Arrête l'animation en cours
+        }
+    }
+
+
     const stopAnimation = () => {
         if (animationRef.current) {
             animationRef.current.stop(); // Arrête l'animation en cours
@@ -161,7 +178,7 @@ const StoriesStreamUser = () => {
 
     const ref = useRef(null);
 
-    const onPress = useCallback(() => {
+    /*const onPress = useCallback(() => {
         const isActive = ref?.current?.isActive();
         if (isActive) {
             ref?.current?.scrollTo(0);
@@ -169,14 +186,17 @@ const StoriesStreamUser = () => {
             ref?.current?.scrollTo(-200);
         }
         stopAnimation(); // Appel de la fonction pour arrêter l'animation lorsqu'on presse
-    }, [ref, stopAnimation]);
+    }, [ref, stopAnimation]);*/
 
     useEffect(() => {
         resetAnimation();
+        restartAnimation();
         start();
         return () => {
             stopAnimation(); // Arrête l'animation lors du démontage du composant
         };
+        // Arrête l'animation lors du démontage du composant
+
     }, []);
 
 
@@ -211,7 +231,7 @@ const StoriesStreamUser = () => {
                             width: "30%",
                             position: "absolute",
                             left: 0,
-                            //backgroundColor: "red",
+                            // backgroundColor: "red",
                             zIndex: 2
                         }}
                     >
@@ -240,9 +260,9 @@ const StoriesStreamUser = () => {
                             width: "100%",
                             height: "2%",
                             alignItems: "center",
-                            justifyContent: "space-evenly ",
-                            alignItems: "center",
                             position: "absolute",
+                            // backgroundColor: "red",
+                            marginTop: "3%",
                             zIndex: 2
                         }}
                     >
@@ -251,17 +271,18 @@ const StoriesStreamUser = () => {
                                 height: 40,
                                 width: 40,
                                 borderRadius: 20,
+                                //backgroundColor: "red",
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}
                         >
-                            <Entypo name="cross" size={30} color="white" />
+                            <AntDesign name="close" size={35} color="white" />
 
                         </TouchableOpacity>
 
                         <View
                             style={{
-                                width: '88%',
+                                width: '86%',
                                 justifyContent: "space-evenly ",
                                 alignItems: "center",
                                 flexDirection: "row"
@@ -308,7 +329,7 @@ const StoriesStreamUser = () => {
                             alignItems: "center",
                             paddingLeft: "5%",
                             height: 30,
-                            top: "2%",
+                            top: "4%",
                             zIndex: 2
 
 
@@ -340,9 +361,9 @@ const StoriesStreamUser = () => {
                             }}
                         >
                             <TouchableOpacity
-                                onPress={onPress}
+                                //onPress={onPress}
                                 style={{
-                                    backgroundColor: "red",
+                                    //backgroundColor: "red",
                                     width: "20%",
                                     height: 30,
                                     borderRadius: 10,
@@ -352,7 +373,7 @@ const StoriesStreamUser = () => {
                             </TouchableOpacity>
                             <View
                                 style={{
-                                    backgroundColor: "#343232",
+                                    //backgroundColor: "#343232",
                                     height: 30,
                                     borderRadius: 10,
                                     flexDirection: "row",
@@ -413,7 +434,7 @@ const StoriesStreamUser = () => {
                                     flexDirection: "row",
                                     backgroundColor: "black",
                                     position: "absolute",
-                                    borderRadius: 30,
+                                    borderRadius: 20,
                                     width: "80%",
                                     height: "70%",
                                     top: "16%",
@@ -428,7 +449,7 @@ const StoriesStreamUser = () => {
                                         style={{
                                             height: "100%",
                                             width: "100%",
-                                            borderRadius: 30,
+                                            borderRadius: 20,
                                             opacity: 0.9,
                                         }}
                                         onLoadEnd={() => {
@@ -453,7 +474,7 @@ const StoriesStreamUser = () => {
                                         style={{
                                             height: "100%",
                                             width: "100%",
-                                            borderRadius: 30,
+                                            borderRadius: 20,
                                         }}
                                     />
                                 )}
@@ -479,7 +500,7 @@ const StoriesStreamUser = () => {
                                         justifyContent: "center",
                                         alignItems: "flex-end",
                                         bottom: 20,
-                                        borderRadius: 30,
+                                        borderRadius: 20,
                                         width: "100%",
                                         height: "100%",
                                     }}
@@ -504,7 +525,7 @@ const StoriesStreamUser = () => {
                                     flex: 1,
                                     flexDirection: "row",
                                     position: "absolute",
-                                    borderRadius: 30,
+                                    borderRadius: 20,
                                     width: "100%",
                                     height: "100%",
                                     backgroundColor: "black"
@@ -517,7 +538,7 @@ const StoriesStreamUser = () => {
                                         style={{
                                             height: "100%",
                                             width: "100%",
-                                            borderRadius: 30,
+                                            borderRadius: 20,
                                             opacity: 0.9,
                                         }}
                                         resizeMode="contain"
@@ -544,7 +565,7 @@ const StoriesStreamUser = () => {
                                         style={{
                                             height: "100%",
                                             width: "100%",
-                                            borderRadius: 30,
+                                            borderRadius: 20,
                                         }}
                                     />
 
@@ -565,7 +586,7 @@ const StoriesStreamUser = () => {
                                     position: "absolute",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    borderRadius: 30,
+                                    borderRadius: 20,
                                     width: "90%",
                                     height: "78%",
                                     top: "14%",
@@ -585,27 +606,16 @@ const StoriesStreamUser = () => {
 
 
 
-                    <View
-                        style={{
-                            flex: 1,
-                            width: "100%",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            //backgroundColor: "green",
-                            zIndex: 1
-                        }}
-                    >
-                        <GestureHandlerRootView
-                            style={{
-                                flex: 1,
-                                zIndex: 10,
-                                
 
-                            }} >
-                            <BottomSheetStories ref={ref} />
-                        </GestureHandlerRootView>
-                    </View>
+                    <GestureHandlerRootView
+                        style={{
+                            zIndex: 1,
+                            //backgroundColor: "red"
+
+
+                        }} >
+                        <BottomSheetStories stopAnimation={stopAnimation} startAnimation={restartAnimation} ref={ref} />
+                    </GestureHandlerRootView>
 
 
 

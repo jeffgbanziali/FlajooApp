@@ -37,7 +37,7 @@ const windowHeight = Dimensions.get('window').height;
 const SignInScreen = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -302,7 +302,8 @@ const SignInScreen = () => {
 
 
                 <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                  <Text style={styles.buttonTitle}>{t('ButtonSignin')}</Text>
+                  <Text style={[styles.buttonTitle, { fontSize: i18n.language === 'fr' ? 14 : 16 }]}
+                  >{t('ButtonSignin')}</Text>
                 </TouchableOpacity>
 
 
@@ -335,35 +336,40 @@ const SignInScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
 
 
 
-  error: {
-    color: "red",
-    fontSize: 12,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-  }
-  ,
-  button: {
-    backgroundColor: "red",
-    marginTop: 10,
-    width: 120,
-    height: 46,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonTitle: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  footerView: {
-    alignItems: "center",
-    marginTop: 20,
-  },
-});
+
+const styles = StyleSheet.create(
+
+  {
+
+
+
+    error: {
+      color: "red",
+      fontSize: 12,
+      marginBottom: 10,
+      marginLeft: 30,
+      marginRight: 30,
+    }
+    ,
+    button: {
+      backgroundColor: "red",
+      marginTop: 10,
+      width: 120,
+      height: 46,
+      borderRadius: 20,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    buttonTitle: {
+      color: "white",
+      fontWeight: "bold",
+    },
+    footerView: {
+      alignItems: "center",
+      marginTop: 20,
+    },
+  });
 export default SignInScreen;

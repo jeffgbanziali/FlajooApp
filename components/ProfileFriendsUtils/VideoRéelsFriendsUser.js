@@ -12,22 +12,28 @@ import Video from 'react-native-video';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+console.log('Largeur de l\'écran:', windowWidth);
+console.log('Hauteur de l\'écran:', windowHeight);
 
 const VideoRéelsFriendsUser = ({ users }) => {
     const [user, setUser] = useState([]);
     const { isDarkMode } = useDarkMode();
     const { uid } = useContext(UidContext)
 
+    console.log('Largeur de l\'écran:', windowWidth);
+    console.log('Hauteur de l\'écran:', windowHeight);
 
 
     // iPhone 15 Pro (standard)
     const iPhone15ProWidth = 390; // Largeur de l'écran de l'iPhone 15 Pro
-    const iPhone15ProHeight = 844; // Hauteur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProHeight = 852; // Hauteur de l'écran de l'iPhone 15 Pro
 
     // iPhone 15 Pro Max
-    const iPhone15ProMaxWidth = 428; // Largeur de l'écran de l'iPhone 15 Pro Max
-    const iPhone15ProMaxHeight = 926; // Hauteur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxWidth = 430; // Largeur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxHeight = 932;
+
+
+
 
     // iPhone SE (3rd génération)
     const iPhoneSEWidth = 375; // Largeur de l'écran de l'iPhone SE (3rd génération)
@@ -37,7 +43,7 @@ const VideoRéelsFriendsUser = ({ users }) => {
     const inputWidthSize = windowWidth * 0.85;
     const inputHeightSize = windowHeight * 0.056;
 
-    const containerPersoWidthSize = windowWidth * 0.3;
+    const containerPersoWidthSize = windowWidth * 0.28;
     const containerPersoHeightSize = windowHeight * 0.18;
 
 
@@ -47,8 +53,10 @@ const VideoRéelsFriendsUser = ({ users }) => {
     };
 
 
-    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhone15ProWidth, windowWidth);
+    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhoneSEWidth, iPhone15ProMaxWidth, iPhone15ProWidth, windowWidth);
     const imageHeightSize = adjustMeasurement(containerPersoHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
+
+
 
 
     useEffect(() => {
@@ -148,13 +156,14 @@ const VideoRéelsFriendsUser = ({ users }) => {
                 height: 900,
                 justifyContent: "center",
                 backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                alignItems: "center"
             }} >
             <View
                 style={{
                     flex: 1,
                     paddingTop: 10,
-                    width: user.length <= 2 ? '68%' : '100%',
+                    width: user.length <= 2 ? '100%' : '100%',
+                    alignItems: user.length <= 2 ? "flex-start" : "center",
+                    paddingLeft: user.length <= 2 ? 4 : 0
                 }
                 }>
                 <FlatList

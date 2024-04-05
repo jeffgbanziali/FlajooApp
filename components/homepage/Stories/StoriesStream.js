@@ -5,13 +5,13 @@ import {
   Animated,
   StatusBar,
   Image,
-  TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView,
+  Keyboard,
   Pressable,
   Dimensions,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -24,6 +24,13 @@ import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
 import AddStoryComment from "./AddStoryComment";
 import { getStories } from "../../../actions/story.action";
+import { useTranslation } from "react-i18next";
+
+
+
+
+
+
 
 const { width } = Dimensions.get("window")
 
@@ -33,7 +40,9 @@ const StoriesStream = () => {
   const route = useRoute();
   const { id } = route.params;
   const dispatch = useDispatch();
-  const { uid } = useContext(UidContext);
+  const [isKeyboardActive, setKeyboardActive] = useState(false);
+  const [partVisible, setPartVisible] = useState(true);
+  const { i18n, t } = useTranslation()
   const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
 
@@ -148,6 +157,8 @@ const StoriesStream = () => {
 
 
   const progressAnimation = useRef(new Animated.Value(0)).current;
+
+
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
@@ -173,11 +184,32 @@ const StoriesStream = () => {
 
   });
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // Le clavier est ouvert, masquez votre partie
+        setPartVisible(false);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        // Le clavier est fermé, affichez votre partie
+        setPartVisible(true);
+      }
+    );
 
+    // Nettoyez les écouteurs lorsque le composant est démonté
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
 
   return (
-    <KeyboardAvoidingView
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "black"
@@ -192,9 +224,10 @@ const StoriesStream = () => {
           width: width,
           position: "relative",
           alignItems: "center",
-          overflow: "hidden",
+          backgroundColor: "red"
         }}
       >
+
         <StatusBar backgroundColor="black" barStyle="light-content" />
         <Pressable
           onPress={handlePrevStoryButtonPress}
@@ -210,6 +243,7 @@ const StoriesStream = () => {
           }}
         >
         </Pressable>
+
         <Pressable
           style={{
             flex: 1,
@@ -223,6 +257,7 @@ const StoriesStream = () => {
           }}
           onPress={handleNextStoryButtonPress}>
         </Pressable>
+
         <View
           style={{
             flex: 1,
@@ -232,23 +267,22 @@ const StoriesStream = () => {
             alignItems: "center",
             justifyContent: "space-evenly ",
             alignItems: "center",
-            top: "5%",
             position: "absolute",
             zIndex: 2
           }}
         >
-          <TouchableOpacity onPress={goToHome}>
-            <View
-              style={{
-                height: 40,
-                width: 40,
-                borderRadius: 20,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Entypo name="cross" size={35} color="white" />
-            </View>
+          <TouchableOpacity onPress={goToHome}
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 20,
+              marginLeft: 6,
+              justifyContent: "center",
+              alignItems: "center",
+              //backgroundColor: "red"
+            }}
+          >
+            <Entypo name="cross" size={30} color="white" />
           </TouchableOpacity>
 
           <View
@@ -257,7 +291,8 @@ const StoriesStream = () => {
               alignItems: "center",
               justifyContent: "space-evenly ",
               alignItems: "center",
-              flexDirection: "row"
+              flexDirection: "row",
+              paddingLeft: 6
             }}
           >
             {selectedStory.container.stories.map((item, index) => (
@@ -265,9 +300,8 @@ const StoriesStream = () => {
                 key={index}
                 style={{
                   flex: 1,
-                  height: 6,
+                  height: 3,
                   backgroundColor: "rgba(255,255,255,0.5)",
-                  marginLeft: 6,
                   flexDirection: "row",
                   borderRadius: 20,
 
@@ -275,7 +309,7 @@ const StoriesStream = () => {
               >
                 <Animated.View
                   style={{
-                    height: 6,
+                    height: 3,
                     borderRadius: 20,
                     flex: currentStoryIndex === index ? progressAnimation : selectedStory.container.stories[index].finish,
                     backgroundColor: "white",
@@ -287,9 +321,8 @@ const StoriesStream = () => {
           </View>
 
 
-
-
         </View>
+
         <View
           style={{
             flex: 1,
@@ -297,17 +330,20 @@ const StoriesStream = () => {
             position: "absolute",
             width: "100%",
             justifyContent: "space-between",
-            marginLeft: "30%",
-            marginTop: "20%",
-            zIndex: 2
+            //backgroundColor: "blue",
+            alignItems: "center",
+            height: 30,
+            top: "2%",
+            zIndex: 1
 
           }}
         >
           <Text
             style={{
-              fontSize: 20,
-              fontWeight: "bold",
+              fontSize: 16,
+              fontWeight: "500",
               color: "white",
+              paddingLeft: "12%"
             }}
           >
             {!isEmpty(usersData[0]) &&
@@ -316,11 +352,15 @@ const StoriesStream = () => {
                 else return null;
               })}
           </Text>
+
+
+
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
+              paddingRight: "4%"
             }}
           >
             <View
@@ -334,23 +374,27 @@ const StoriesStream = () => {
                 padding: 4,
               }}
             >
-              <FontAwesome5 name="clock" size={10} color="white" />
+              <FontAwesome5 name="clock" size={14} color="white" />
               <Text
                 style={{
-                  marginLeft: 4,
+                  marginLeft: 6,
                   color: "white",
-                  fontSize: 12,
+                  fontSize: 12
                 }}
               >
-                {formatPostDate(createdAt)}
+                {formatPostDate(createdAt, t)}
               </Text>
             </View>
+
+
+
+
             <TouchableOpacity onPress={() => goProfil(user._id)}>
               <View
                 style={{
                   marginLeft: 10,
-                  height: 40,
-                  width: 40,
+                  height: 30,
+                  width: 30,
                   borderRadius: 30,
                   justifyContent: "center",
                   alignItems: "center",
@@ -387,7 +431,6 @@ const StoriesStream = () => {
                 flexDirection: "row",
                 backgroundColor: "black",
                 position: "absolute",
-                borderRadius: 30,
                 width: "80%",
                 height: "70%",
                 top: "15%",
@@ -475,7 +518,6 @@ const StoriesStream = () => {
                 flex: 1,
                 flexDirection: "row",
                 position: "absolute",
-                borderRadius: 30,
                 width: "100%",
                 height: "100%",
                 backgroundColor: "black"
@@ -553,37 +595,50 @@ const StoriesStream = () => {
           </View>
         )}
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "null"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
-            flex: 1,
             width: "100%",
+            height: 480,
             flexDirection: "row",
             position: "absolute",
-            bottom: "4%",
-            alignItems: "center",
-            justifyContent: "space-between",
+            //backgroundColor: "red",
+            bottom: 0,
+            alignItems: "flex-end",
+
           }}
         >
-          <AddStoryComment story={selectedStory.container.stories[currentStoryIndex]} />
+
           <View
             style={{
-              width: 50,
-              height: 50,
-              marginLeft: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 3
+              //backgroundColor: "green",
+              flexDirection: "row",
+              width: "100%",
+              bottom: 65,
+              justifyContent: "space-between",
+            }}>
+            <AddStoryComment story={selectedStory.container.stories[currentStoryIndex]} />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                marginLeft: 2,
+                marginRight: 4,
+                backgroundColor: "red",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 3
 
-            }}
-          >
-            <LikeStoriesButton
-              story={selectedStory.container?.stories[currentStoryIndex]}
-            />
+              }}
+            >
+              <LikeStoriesButton
+                story={selectedStory.container?.stories[currentStoryIndex]}
+              />
+            </View>
           </View>
         </KeyboardAvoidingView>
       </View>
 
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

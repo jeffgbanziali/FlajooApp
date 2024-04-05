@@ -19,7 +19,7 @@ const windowHeight = Dimensions.get('window').height;
 function StartPage() {
 
     const { isDarkMode } = useDarkMode();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const navigation = useNavigation();
 
@@ -113,7 +113,7 @@ function StartPage() {
                                     style={{
                                         color: isDarkMode ? "#F5F5F5" : "black",
                                         marginLeft: "2%",
-                                        fontSize: 20,
+                                        fontSize: i18n.language === 'fr' ? 16 : 20
                                     }}>
                                     {t('SignWithEmail')}
                                 </Text>
@@ -143,7 +143,6 @@ function StartPage() {
                                     {t('Facebook')}
                                 </Text>
                             </TouchableOpacity>
-
 
 
                             <TouchableOpacity
@@ -202,14 +201,14 @@ function StartPage() {
                                     width: 130,
                                     height: 50,
                                     backgroundColor: "#FF1C1C",
-                                    borderRadius: 30,
+                                    borderRadius: 20,
                                     marginTop: "4%"
                                 }}>
 
                                 <Text
                                     style={{
                                         color: isDarkMode ? "#F5F5F5" : "black",
-                                        fontSize: 16,
+                                        fontSize: i18n.language === 'fr' ? 16 : 16,
                                         fontWeight: "600"
                                     }}>{t('ButtonSignin')}</Text>
 

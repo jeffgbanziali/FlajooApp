@@ -9,6 +9,7 @@ export const DISLIKE_STORY = 'DISLIKE_STORY';
 export const VIEW_STORY = 'VIEW_STORY';
 export const COMMENT_STORY = 'COMMENT_STORY';
 export const DELETE_STORY = 'DELETE_STORY';
+export const GET_STORIES_WITH_VIEWS = 'GET_STORIES_WITH_VIEWS';
 
 // Action creators
 export const getStories = (num) => {
@@ -103,4 +104,13 @@ export const deleteStory = (storyId) => {
   };
 };
 
-
+export const getStoriesWithViews = () => {
+  return (dispatch) => {
+    return axios
+      .get(`${APP_API_URL}/api/stories/storiesWithViews`)
+      .then((res) => {
+        dispatch({ type: GET_STORIES_WITH_VIEWS, payload: res.data });
+      })
+      .catch((err) => console.error(err));
+  };
+};

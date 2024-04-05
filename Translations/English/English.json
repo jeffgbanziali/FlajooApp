@@ -119,6 +119,12 @@
     "SelectNationality":"Choose your nationality",
     "AccountInfo": "Your account information",
     "PersonalInfo":"Your personal information",
+    "secondAgo": "%{count} second(s) ago",
+    "minuteAgo": "%{count} minute(s) ago",
+    "hourAgo": "%{count} hour(s) ago",
+    "dayAgo": "%{count} day(s) ago",
+    "weekAgo": "%{count} week(s) ago",
+    "yearAgo": "%{count} year(s) ago",
 
     "Loading":"Loading...",
     "Research":"Research ...",

@@ -51,8 +51,8 @@ const FollowHandler = ({ idToFollow, type }) => {
               style={{
                 backgroundColor: "#4a5568",
                 borderRadius: 10,
-                padding: 10,
-                width: 100,
+                height: 30,
+                width: 120,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -76,8 +76,8 @@ const FollowHandler = ({ idToFollow, type }) => {
                   justifyContent: "center",
                   backgroundColor: "#EBF8FF",
                   borderRadius: 10,
-                  height: 38,
-                  width: 170,
+                  height: 32,
+                  width: 150,
                 }}
               >
                 <Text
@@ -86,7 +86,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                     textAlign: "center",
                     fontWeight: "500",
                     justifyContent: "center",
-                    fontSize: 20,
+                    fontSize: 16,
                   }}
                 >
                   {t("Following")}
@@ -181,14 +181,14 @@ const FollowHandler = ({ idToFollow, type }) => {
                 }}>
                 <Feather
                   name="user-minus"
-                  size={30}
+                  size={26}
                   color={isDarkMode ? "gray" : "black"}
                 />
                 <Text
                   style={{
                     fontWeight: "600",
                     color: isDarkMode ? "gray" : "black",
-                    fontSize: 20,
+                    fontSize: 18,
                     paddingLeft: 10,
                   }}
                 >
@@ -207,8 +207,8 @@ const FollowHandler = ({ idToFollow, type }) => {
               style={{
                 backgroundColor: "red",
                 borderRadius: 10,
-                padding: 10,
-                width: 100,
+                height: 30,
+                width: 120,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -232,8 +232,8 @@ const FollowHandler = ({ idToFollow, type }) => {
                   justifyContent: "center",
                   backgroundColor: "red",
                   borderRadius: 10,
-                  height: 38,
-                  width: 170,
+                  height: 35,
+                  width: 150,
                 }}
               >
                 <Text
@@ -242,7 +242,7 @@ const FollowHandler = ({ idToFollow, type }) => {
                     textAlign: "center",
                     fontWeight: "500",
                     justifyContent: "center",
-                    fontSize: 20,
+                    fontSize: 16,
                   }}
                 >
                   {t("Follow")}
@@ -342,15 +342,14 @@ const FollowHandler = ({ idToFollow, type }) => {
                 }}>
                 <Feather
                   name="user-plus"
-                  size={30}
+                  size={26}
                   color={isDarkMode ? "gray" : "black"}
                 />
-
                 <Text
                   style={{
                     fontWeight: "600",
                     color: isDarkMode ? "gray" : "black",
-                    fontSize: 20,
+                    fontSize: 18,
                     paddingLeft: 10,
                   }}
                 >

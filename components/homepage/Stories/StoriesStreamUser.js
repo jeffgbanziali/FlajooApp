@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback, useRef, useState, } from "react";
+import React, { useContext, useEffect, useCallback, useRef, useState, useTransition, } from "react";
 import {
     View,
     Text,
@@ -9,16 +9,30 @@ import {
     KeyboardAvoidingView,
     Pressable,
     Dimensions,
+    SafeAreaView,
+    Easing,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { formatPostDate, isEmpty, timestampStoryParser } from "../../Context/Utils";
+import { formatPostDate, formatTimeAgo, isEmpty, timestampStoryParser } from "../../Context/Utils";
 import { UidContext, useDarkMode } from "../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
 import { getStories } from "../../../actions/story.action";
+import BottomSheetStories, { BottomSheetRefProps } from "./BottomSheetStories";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+
+
+
+
+
+
+
+
+
 
 const { width, height } = Dimensions.get("window")
 
@@ -29,21 +43,31 @@ const StoriesStreamUser = () => {
     const { id } = route.params;
     const dispatch = useDispatch();
     const { uid } = useContext(UidContext);
+    const { t } = useTransition()
     const [loadStories, setLoadStories] = useState(true);
     const storiesData = useSelector((state) => state.storyReducer);
-    console.log(storiesData)
+    //console.log(storiesData)
     const usersData = useSelector((state) => state.usersReducer);
-    console.log(id);
-    const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id))); // Remplace selectedStoryData par la valeur initiale
+    //console.log(id);
+
+
+    const [selectedStory, setSelectedStory] = useState(
+        storiesData.find((story) =>
+            story.container.stories.some((s) => s._id === id))
+    );
+
+
     storiesData.find((story) => story.container.stories.some((s) => s._id === id));
+
+
     if (selectedStory) {
         const selectedContainer = selectedStory.container;
-        console.log("Selected Container:", selectedContainer);
+        //console.log("Selected Container:", selectedContainer);
     } else {
         console.log("Container not found for story ID:", id);
     }
     const user = usersData.find((user) => user._id === selectedStory.container.posterId);
-    console.log(user);
+    //console.log(user);
 
     const [currentStoryIndex, setCurrentStoryIndex] = useState(
         selectedStory.container.stories.findIndex((story) => story._id === id)
@@ -108,13 +132,17 @@ const StoriesStreamUser = () => {
 
 
     const progressAnimation = useRef(new Animated.Value(0)).current;
+    const animationRef = useRef(null); // Référence pour stocker l'animation
 
     const start = () => {
-        Animated.timing(progressAnimation, {
+        animationRef.current = Animated.timing(progressAnimation, {
             toValue: 1,
-            duration: 5000,
+            duration: 5000000000000,
+            easing: Easing.linear,
             useNativeDriver: false,
-        }).start(({ finished }) => {
+        });
+
+        animationRef.current.start(({ finished }) => {
             if (finished) {
                 goToNextStory();
             }
@@ -125,6 +153,11 @@ const StoriesStreamUser = () => {
         progressAnimation.setValue(0);
     };
 
+    const stopAnimation = () => {
+        if (animationRef.current) {
+            animationRef.current.stop(); // Arrête l'animation en cours
+        }
+    };
 
     const ref = useRef(null);
 
@@ -135,18 +168,21 @@ const StoriesStreamUser = () => {
         } else {
             ref?.current?.scrollTo(-200);
         }
-    }, [ref]);
-
+        stopAnimation(); // Appel de la fonction pour arrêter l'animation lorsqu'on presse
+    }, [ref, stopAnimation]);
 
     useEffect(() => {
         resetAnimation();
         start();
-    });
+        return () => {
+            stopAnimation(); // Arrête l'animation lors du démontage du composant
+        };
+    }, []);
 
 
     return (
         <>
-            <KeyboardAvoidingView
+            <SafeAreaView
                 style={{
                     flex: 1,
                     backgroundColor: "black"
@@ -164,6 +200,8 @@ const StoriesStreamUser = () => {
                     }}
                 >
                     <StatusBar backgroundColor="black" barStyle="light-content" />
+
+
                     <Pressable
                         onPress={handlePrevStoryButtonPress}
                         style={{
@@ -173,11 +211,12 @@ const StoriesStreamUser = () => {
                             width: "30%",
                             position: "absolute",
                             left: 0,
-                            overflow: "hidden",
+                            //backgroundColor: "red",
                             zIndex: 2
                         }}
                     >
                     </Pressable>
+
                     <Pressable
                         style={{
                             flex: 1,
@@ -186,11 +225,14 @@ const StoriesStreamUser = () => {
                             width: "30%",
                             position: "absolute",
                             right: 0,
-                            overflow: "hidden",
+                            //backgroundColor: "blue",
                             zIndex: 2
                         }}
                         onPress={handleNextStoryButtonPress}>
                     </Pressable>
+
+
+
                     <View
                         style={{
                             flex: 1,
@@ -200,23 +242,21 @@ const StoriesStreamUser = () => {
                             alignItems: "center",
                             justifyContent: "space-evenly ",
                             alignItems: "center",
-                            top: "5%",
                             position: "absolute",
                             zIndex: 2
                         }}
                     >
-                        <TouchableOpacity onPress={goToHome}>
-                            <View
-                                style={{
-                                    height: 40,
-                                    width: 40,
-                                    borderRadius: 20,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <Entypo name="cross" size={35} color="white" />
-                            </View>
+                        <TouchableOpacity onPress={goToHome}
+                            style={{
+                                height: 40,
+                                width: 40,
+                                borderRadius: 20,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Entypo name="cross" size={30} color="white" />
+
                         </TouchableOpacity>
 
                         <View
@@ -232,9 +272,8 @@ const StoriesStreamUser = () => {
                                     key={index}
                                     style={{
                                         flex: 1,
-                                        height: 6,
+                                        height: 3,
                                         backgroundColor: "rgba(255,255,255,0.5)",
-                                        marginLeft: 6,
                                         flexDirection: "row",
                                         borderRadius: 20,
 
@@ -242,7 +281,7 @@ const StoriesStreamUser = () => {
                                 >
                                     <Animated.View
                                         style={{
-                                            height: 6,
+                                            height: 3,
                                             borderRadius: 20,
                                             flex: currentStoryIndex === index ? progressAnimation : selectedStory.container.stories[index].finish,
                                             backgroundColor: "white",
@@ -257,6 +296,7 @@ const StoriesStreamUser = () => {
 
 
                     </View>
+
                     <View
                         style={{
                             flex: 1,
@@ -264,18 +304,23 @@ const StoriesStreamUser = () => {
                             position: "absolute",
                             width: "100%",
                             justifyContent: "space-between",
-                            marginLeft: "30%",
-                            marginTop: "20%",
+                            //backgroundColor:"red",
+                            alignItems: "center",
+                            paddingLeft: "5%",
+                            height: 30,
+                            top: "2%",
                             zIndex: 2
+
 
                         }}
                     >
 
                         <Text
                             style={{
-                                fontSize: 20,
-                                fontWeight: "bold",
+                                fontSize: 16,
+                                fontWeight: "500",
                                 color: "white",
+                                paddingLeft: "12%"
                             }}
                         >
                             {!isEmpty(usersData[0]) &&
@@ -291,6 +336,7 @@ const StoriesStreamUser = () => {
                                 flexDirection: "row",
                                 alignItems: "center",
                                 justifyContent: "space-between",
+                                paddingRight: "4%"
                             }}
                         >
                             <TouchableOpacity
@@ -315,22 +361,22 @@ const StoriesStreamUser = () => {
                                     padding: 4,
                                 }}
                             >
-                                <FontAwesome5 name="clock" size={10} color="white" />
+                                <FontAwesome5 name="clock" size={14} color="white" />
                                 <Text
                                     style={{
-                                        marginLeft: 10,
+                                        marginLeft: 6,
                                         color: "white",
                                         fontSize: 12,
                                     }}
                                 >
-                                    {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt)}
+                                    {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt, t)}
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={() => goProfil(user._id)}>
                                 <View
                                     style={{
-                                        height: 40,
-                                        width: 40,
+                                        height: 30,
+                                        width: 30,
                                         borderRadius: 30,
                                         justifyContent: "center",
                                         alignItems: "center",
@@ -538,10 +584,37 @@ const StoriesStreamUser = () => {
 
 
 
+
+                    <View
+                        style={{
+                            flex: 1,
+                            width: "100%",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            //backgroundColor: "green",
+                            zIndex: 1
+                        }}
+                    >
+                        <GestureHandlerRootView
+                            style={{
+                                flex: 1,
+                                zIndex: 10,
+                                
+
+                            }} >
+                            <BottomSheetStories ref={ref} />
+                        </GestureHandlerRootView>
+                    </View>
+
+
+
+
+
                 </View>
 
 
-            </KeyboardAvoidingView>
+            </SafeAreaView>
 
 
         </>

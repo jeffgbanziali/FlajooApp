@@ -118,15 +118,15 @@ const Profile = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                   borderRadius: 30,
                   marginLeft: "3.5%",
                 }}
               >
                 <MaterialIcons
                   name="arrow-back"
-                  size={28}
+                  size={25}
                   color={isDarkMode ? "white" : "black"}
                 />
               </TouchableOpacity>
@@ -136,15 +136,15 @@ const Profile = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                   borderRadius: 30,
                   marginRight: "3.5%",
                 }}
               >
                 <Entypo
                   name="dots-three-horizontal"
-                  size={28}
+                  size={20}
                   color={isDarkMode ? "white" : "black"}
                 />
               </TouchableOpacity>
@@ -159,8 +159,8 @@ const Profile = () => {
             >
               <Pressable
                 style={{
-                  width: 130,
-                  height: 130,
+                  width: 120,
+                  height: 120,
                   borderRadius: 100,
                 }}>
                 <Image
@@ -180,17 +180,17 @@ const Profile = () => {
                   style={{
                     backgroundColor: "#09C03C",
                     position: "absolute",
-                    left: 22,
-                    width: 20,
-                    height: 20,
+                    left: 105,
+                    top: 82,
+                    bottom: 50,
+                    width: 18,
+                    height: 18,
                     borderRadius: 25,
                     borderWidth: 3,
                     borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
                     justifyContent: "center",
                     alignSelf: "center",
                     alignItems: "center",
-                    marginLeft: 80,
-                    marginTop: 100,
                     zIndex: 100,
                   }}
                 ></View>
@@ -211,8 +211,8 @@ const Profile = () => {
               <Text
                 style={{
                   fontSize: 20,
-                  fontWeight: "bold",
                   textAlign: "justify",
+                  fontWeight: "500",
                   color: isDarkMode ? "white" : "black",
                 }}
               >
@@ -230,7 +230,7 @@ const Profile = () => {
               }}>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: 12,
                   textAlign: "left",
                   color: "#5F5858",
                   fontWeight: "500",

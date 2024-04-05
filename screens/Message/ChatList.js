@@ -922,6 +922,7 @@ const Message = () => {
                   </Animated.View>
                 )
               }
+              
               <View
                 style={{
                   position: "relative",

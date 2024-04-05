@@ -1,15 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
 import { USER } from '../../../Data/Users';
+import { getStories, getStoriesWithViews } from '../../../actions/story.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { formatPostDate, isEmpty } from '../../Context/Utils';
+
+
 
 const StoriesViewUser = () => {
+    const [loadStories, setLoadStories] = useState(true);
+    const dispatch = useDispatch();
+    const storiesWithViews = useSelector(state => state.storyReducer);
+    const usersData = useSelector((state) => state.usersReducer);
+
+
+    const route = useRoute();
+    const { id } = route.params;
+
+    const [selectedStory, setSelectedStory] = useState(
+        storiesWithViews.find((story) =>
+            story.container.stories.some((s) => s._id === id))
+    );
+
+    const [currentStoryIndex, setCurrentStoryIndex] = useState(
+        selectedStory.container.stories.findIndex((story) => story._id === id)
+    );
+
+
+    const storiesViewer = selectedStory.container.stories[currentStoryIndex].views
+
+
+
+    console.log("vous êtes où", storiesViewer)
+
+
+    useEffect(() => {
+        if (loadStories) {
+            dispatch(getStories());
+            setLoadStories(false);
+        }
+    }, [loadStories, dispatch]);
+
+
+
+
+
+
     const renderItem = ({ item, index }) => {
-        console.log(item)
+        console.log("toi lààààààààààààààààààà", item)
+
+
         return (
             <View
                 key={index}
                 style={{
                     width: '100%',
+                    //backgroundColor: "red",
+                    marginTop: "1%"
                 }}>
 
                 <View
@@ -20,15 +68,27 @@ const StoriesViewUser = () => {
                         alignItems: 'center',
                         flexDirection: 'row',
 
+
                     }}>
                     <View
                         style={{
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             borderRadius: 100,
+
                         }}>
                         <Image
-                            source={{ uri: item.image }}
+                            source={{
+                                uri:
+                                    !isEmpty(usersData) &&
+                                    usersData
+                                        .map((user) => {
+                                            if (user._id === item.viewerId)
+                                                return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                                            else return null;
+                                        })
+                                        .join(""),
+                            }}
                             style={{
                                 width: '100%',
                                 backgroundColor: 'green',
@@ -43,6 +103,7 @@ const StoriesViewUser = () => {
                             height: '100%',
                             justifyContent: 'center',
                             paddingLeft: '3%',
+
                         }}>
                         <View>
                             <Text
@@ -51,7 +112,11 @@ const StoriesViewUser = () => {
                                     fontWeight: '600',
                                     color: 'white',
                                 }}>
-                                {item.user}
+                                {!isEmpty(usersData[0]) &&
+                                    usersData.map((user) => {
+                                        if (user._id === item.viewerId) return user.pseudo;
+                                        else return null;
+                                    })}
                             </Text>
                             <Text
                                 style={{
@@ -59,7 +124,7 @@ const StoriesViewUser = () => {
                                     fontWeight: 'normal',
                                     color: 'white',
                                 }}>
-                                12 minutes ago
+                                {formatPostDate(item.viewed_at)}
                             </Text>
                         </View>
                     </View>
@@ -86,7 +151,7 @@ const StoriesViewUser = () => {
             }}
         >
             <FlatList
-                data={USER}
+                data={storiesViewer}
                 keyExtractor={(item, index) => index.toString()} // Convertir en chaîne
                 renderItem={renderItem}
             />

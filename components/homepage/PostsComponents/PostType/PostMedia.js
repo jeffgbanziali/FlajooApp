@@ -87,7 +87,6 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                                 height: 35,
                                 borderRadius: 30,
                                 marginLeft: 10,
-                                resizeMode: "cover",
                                 zIndex: 1,
                             }}
                             onPress={() => goProfil(post.posterId)}>

@@ -12,6 +12,7 @@ const Stories = () => {
   const [loadStories, setLoadStories] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  
   const storiesData = useSelector((state) => state.storyReducer).map((story, index) => ({
     ...story,
     container: {
@@ -97,7 +98,6 @@ const Stories = () => {
                     height: 140,
                     borderRadius: 10,
                     marginLeft: 10,
-                    resizeMode: "cover",
                   }}
                 />
               )}
@@ -116,7 +116,6 @@ const Stories = () => {
                 marginLeft: 10,
                 alignItems: "center",
                 justifyContent: "center",
-                resizeMode: "cover",
               }}
             >
               <Text
@@ -171,7 +170,6 @@ const Stories = () => {
               marginTop: -28,
               alignItems: "center",
               justifyContent: "center",
-              resizeMode: "cover",
             }}
           >
             <View
@@ -196,7 +194,6 @@ const Stories = () => {
               marginLeft: 10,
               alignItems: "center",
               justifyContent: "center",
-              resizeMode: "cover",
             }}
           >
             <Text
@@ -224,7 +221,6 @@ const Stories = () => {
       style={{
         height: 160,
         width: "100%",
-        resizeMode: "cover",
         backgroundColor: isDarkMode ? "#171717" : "white",
         shadowColor: "#000",
         shadowOffset: {

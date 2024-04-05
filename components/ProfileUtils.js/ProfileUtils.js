@@ -17,7 +17,7 @@ const ProfileUtils = () => {
         display: "flex",
         borderWidth: 1,
         justifyContent:"center",
-        borderColor: "#EFEAEA",
+        borderColor: isDarkMode ? "gray" : "white", 
         borderStyle: "solid",
         zIndex: 1,
         alignSelf: "center",

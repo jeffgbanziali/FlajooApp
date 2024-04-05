@@ -121,7 +121,6 @@ const MyStory = () => {
                               width: 100,
                               height: 140,
                               borderRadius: 10,
-                              resizeMode: "cover",
                             }}
                           />
                         )}

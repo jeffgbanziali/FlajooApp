@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export const isEmpty = (value) => {
     return (
         value === undefined ||
@@ -6,6 +8,10 @@ export const isEmpty = (value) => {
         (typeof value === "string" && value.trim().length === 0)
     );
 };
+
+
+
+
 
 export const dateParser = (num) => {
     let options = {
@@ -77,6 +83,8 @@ export const formatPostDate = (timestamp) => {
     const millisecondsPerWeek = millisecondsPerDay * daysPerWeek;
     const millisecondsPerYear = millisecondsPerDay * daysPerYear;
 
+
+
     if (timeDifference < millisecondsPerMinute) {
         const secondsAgo = Math.floor(timeDifference / millisecondsPerSecond);
         return `il y a ${secondsAgo} seconde(s)`;
@@ -97,3 +105,52 @@ export const formatPostDate = (timestamp) => {
         return `il y a ${yearsAgo} an(s)`;
     }
 };
+
+
+export const formatTimeAgo = (timeDifference, language) => {
+    const { t, i18n } = useTranslation(); // Déplacez ceci à l'intérieur d'un composant de fonction
+
+    const millisecondsPerSecond = 1000;
+    const millisecondsPerMinute = millisecondsPerSecond * 60;
+    const millisecondsPerHour = millisecondsPerMinute * 60;
+    const millisecondsPerDay = millisecondsPerHour * 24;
+    const millisecondsPerWeek = millisecondsPerDay * 7;
+    const millisecondsPerYear = millisecondsPerDay * 365;
+
+    if (i18n.language === 'fr') {
+        if (timeDifference < millisecondsPerMinute) {
+            const secondsAgo = Math.floor(timeDifference / millisecondsPerSecond);
+            return `il y a ${secondsAgo} seconde(s)`;
+        } else if (timeDifference < millisecondsPerHour) {
+            const minutesAgo = Math.floor(timeDifference / millisecondsPerMinute);
+            return `il y a ${minutesAgo} minute(s)`;
+        } else if (timeDifference < millisecondsPerDay) {
+            const hoursAgo = Math.floor(timeDifference / millisecondsPerHour);
+            return `il y a ${hoursAgo} heure(s)`;
+        } else if (timeDifference < millisecondsPerWeek) {
+            const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
+            return `il y a ${daysAgo} jour(s)`;
+        } else {
+            const weeksAgo = Math.floor(timeDifference / millisecondsPerWeek);
+            return `il y a ${weeksAgo} semaine(s)`;
+        }
+    } else {
+        if (timeDifference < millisecondsPerMinute) {
+            const secondsAgo = Math.floor(timeDifference / millisecondsPerSecond);
+            return `${secondsAgo} second${secondsAgo === 1 ? '' : 's'} ago`;
+        } else if (timeDifference < millisecondsPerHour) {
+            const minutesAgo = Math.floor(timeDifference / millisecondsPerMinute);
+            return `${minutesAgo} minute${minutesAgo === 1 ? '' : 's'} ago`;
+        } else if (timeDifference < millisecondsPerDay) {
+            const hoursAgo = Math.floor(timeDifference / millisecondsPerHour);
+            return `${hoursAgo} hour${hoursAgo === 1 ? '' : 's'} ago`;
+        } else if (timeDifference < millisecondsPerWeek) {
+            const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
+            return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+        } else {
+            const weeksAgo = Math.floor(timeDifference / millisecondsPerWeek);
+            return `${weeksAgo} week${weeksAgo === 1 ? '' : 's'} ago`;
+        }
+    }
+};
+

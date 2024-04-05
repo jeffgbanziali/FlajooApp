@@ -77,13 +77,13 @@ const SavePost = ({ post }) => {
 
                         <AntDesign
                             name="staro"
-                            size={30}
+                            size={26}
                             color={isDarkMode ? "gray" : "black"} />
                         <Text
                             style={{
                                 color: isDarkMode ? "gray" : "black",
                                 fontWeight: "500",
-                                fontSize: 20,
+                                fontSize: 18,
                                 paddingLeft: 10,
                             }}
                         >
@@ -121,13 +121,13 @@ const SavePost = ({ post }) => {
 
                         <AntDesign
                             name="star"
-                            size={30}
+                            size={26}
                             color={isDarkMode ? "gray" : "black"} />
                         <Text
                             style={{
                                 color: isDarkMode ? "gray" : "black",
                                 fontWeight: "500",
-                                fontSize: 20,
+                                fontSize: 18,
                                 paddingLeft: 10,
                             }}
                         >

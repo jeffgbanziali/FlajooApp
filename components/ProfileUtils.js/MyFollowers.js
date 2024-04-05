@@ -17,8 +17,8 @@ import { useTranslation } from "react-i18next";
 const MyFollowers = () => {
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
- 
- 
+
+
   const { t } = useTranslation();
 
 
@@ -53,8 +53,8 @@ const MyFollowers = () => {
               justifyContent: "center",
               alignSelf: "center",
               backgroundColor: "#161414",
-              width: 50,
-              height: 50,
+              width: 40,
+              height: 40,
               borderRadius: 30,
               marginLeft: "3.5%",
               marginTop: "1.5%",
@@ -63,7 +63,7 @@ const MyFollowers = () => {
             <View>
               <AntDesign
                 name="arrowleft"
-                size={28}
+                size={25}
                 color="#5F5858"
                 style={{
                   alignSelf: "center",
@@ -108,13 +108,12 @@ const MyFollowers = () => {
                         style={{
                           flexDirection: "row",
                           justifyContent: "space-between",
+                          width: "100%"
                         }}
                       >
                         <View
                           style={{
                             padding: 5,
-                            marginLeft: 20,
-                            marginRight: 20,
                             marginTop: 10,
                             marginBottom: 10,
                             flexDirection: "row",
@@ -127,8 +126,8 @@ const MyFollowers = () => {
                                 "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
                             }}
                             style={{
-                              width: 60,
-                              height: 60,
+                              width: 50,
+                              height: 50,
                               borderRadius: 100,
                               objectFit: "cover",
                             }}
@@ -152,9 +151,7 @@ const MyFollowers = () => {
                         </View>
                         <View
                           style={{
-                            width: 100,
                             padding: 5,
-                            marginRight: 20,
                             marginTop: 10,
                             marginBottom: 10,
                             justifyContent: "center",

@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Pressable } from 'react-native';
 import { APP_API_URL } from '../../config';
 import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-neat-date-picker'
 import CountryPicker from 'react-native-country-picker-modal';
 
@@ -60,12 +60,12 @@ const SignUpScreen = () => {
 
 
     // iPhone 15 Pro (standard)
-    const iPhone15ProWidth = 390; // Largeur de l'écran de l'iPhone 15 Pro
-    const iPhone15ProHeight = 844; // Hauteur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProWidth = 393; // Largeur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProHeight = 852; // Hauteur de l'écran de l'iPhone 15 Pro
 
     // iPhone 15 Pro Max
-    const iPhone15ProMaxWidth = 428; // Largeur de l'écran de l'iPhone 15 Pro Max
-    const iPhone15ProMaxHeight = 926; // Hauteur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxWidth = 430; // Largeur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxHeight = 932; // Hauteur de l'écran de l'iPhone 15 Pro Max
 
     // iPhone SE (3rd génération)
     const iPhoneSEWidth = 375; // Largeur de l'écran de l'iPhone SE (3rd génération)
@@ -93,14 +93,17 @@ const SignUpScreen = () => {
     const adjustedInputWidthSize = adjustMeasurement(inputWidthSize, iPhone15ProWidth, windowWidth);
     const adjustedInputHeightSize = adjustMeasurement(inputHeightSize, iPhone15ProHeight, windowHeight);
 
-    const adjustedContainerPersoWidthSize = adjustMeasurement(containerPersoWidthSize, iPhone15ProWidth, windowWidth);
+    const adjustedContainerPersoWidthSize = adjustMeasurement(containerPersoWidthSize, iPhoneSEWidth, iPhone15ProMaxWidth, iPhone15ProWidth, windowWidth);
     const adjustedContainerPersoHeightSize = adjustMeasurement(containerPersoHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
 
-    const adjustedContainerInfosWidthSize = adjustMeasurement(containerInfosWidthSize, iPhone15ProWidth, windowWidth);
+    const adjustedContainerInfosWidthSize = adjustMeasurement(containerPersoWidthSize, iPhoneSEWidth, iPhone15ProMaxWidth, iPhone15ProWidth, windowWidth);
     const adjustedContainerInfosHeightSize = adjustMeasurement(containerInfosHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
 
-    const adjustedContainerAdressWidthSize = adjustMeasurement(containerAdressWidthSize, iPhone15ProWidth, windowWidth);
+    const adjustedContainerAdressWidthSize = adjustMeasurement(containerPersoWidthSize, iPhoneSEWidth, iPhone15ProMaxWidth, iPhone15ProWidth, windowWidth);
     const adjustedContainerAdressHeightSize = adjustMeasurement(containerAdressHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
+
+
+
 
 
 

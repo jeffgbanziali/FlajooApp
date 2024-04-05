@@ -65,7 +65,7 @@ const ProfileFriends = () => {
 
 
 
-  const MAX_MESSAGE_LENGTH = 55;
+  const MAX_MESSAGE_LENGTH = 180;
 
   const renderLimitedMessage = (message) => {
     if (message && message.length <= MAX_MESSAGE_LENGTH) {
@@ -156,8 +156,9 @@ const ProfileFriends = () => {
             style={{
               //backgroundColor: "red",
               width: "100%",
-              maxHeight: 430,
+              maxHeight: 400,
             }}>
+
             <View
               style={{
                 backgroundColor: isDarkMode ? "#171717" : "white",
@@ -195,8 +196,8 @@ const ProfileFriends = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                    width: 50,
-                    height: 50,
+                    width: 40,
+                    height: 40,
                     borderRadius: 30,
                     marginLeft: "3.5%",
                     marginTop: "1.5%",
@@ -204,7 +205,7 @@ const ProfileFriends = () => {
                 >
                   <AntDesign
                     name="arrowleft"
-                    size={28}
+                    size={25}
                     color={isDarkMode ? "white" : "black"}
                   />
                 </TouchableOpacity>
@@ -216,8 +217,8 @@ const ProfileFriends = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
-                    width: 50,
-                    height: 50,
+                    width: 40,
+                    height: 40,
                     borderRadius: 30,
                     marginRight: "3.5%",
                     marginTop: "1.5%",
@@ -225,7 +226,7 @@ const ProfileFriends = () => {
                 >
                   <Entypo
                     name="dots-three-horizontal"
-                    size={28}
+                    size={20}
                     color={isDarkMode ? "white" : "black"}
                   />
                 </TouchableOpacity>
@@ -242,8 +243,8 @@ const ProfileFriends = () => {
               >
                 <Pressable
                   style={{
-                    width: 160,
-                    height: 160,
+                    width: 120,
+                    height: 120,
                     borderRadius: 100,
                     marginTop: -20,
                     objectFit: "cover",
@@ -251,7 +252,9 @@ const ProfileFriends = () => {
                 >
                   <Image
                     source={{
-                      uri: users.picture,
+                      uri: users?.picture ?
+                        users.picture :
+                        "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
                     }}
                     style={{
                       width: "100%",
@@ -265,17 +268,17 @@ const ProfileFriends = () => {
                     style={{
                       backgroundColor: "#09C03C",
                       position: "absolute",
-                      left: 65,
-                      width: 20,
-                      height: 20,
+                      left: 105,
+                      top: 82,
+                      bottom: 50,
+                      width: 15,
+                      height: 15,
                       borderRadius: 25,
                       borderWidth: 2,
-                      borderColor: "#000000",
+                      borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
                       justifyContent: "center",
                       alignSelf: "center",
                       alignItems: "center",
-                      marginLeft: 80,
-                      marginTop: 100,
                       zIndex: 100,
                     }}
                   ></View>
@@ -292,7 +295,7 @@ const ProfileFriends = () => {
                 >
                   <Text
                     style={{
-                      fontSize: 30,
+                      fontSize: 20,
                       color: isDarkMode ? "white" : "black",
                       fontWeight: "500",
                       marginTop: 10,
@@ -312,7 +315,7 @@ const ProfileFriends = () => {
                   }}>
                   <Text
                     style={{
-                      fontSize: 14,
+                      fontSize: 12,
                       textAlign: "left",
                       color: "#5F5858",
                       fontWeight: "500",
@@ -330,7 +333,7 @@ const ProfileFriends = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     //backgroundColor: "blue",
-                    marginTop: 30,
+                    marginTop: 10,
                   }}
                 >
                   <View
@@ -342,7 +345,7 @@ const ProfileFriends = () => {
                   </View>
                   <View
                     style={{
-                      marginLeft: 4,
+                      marginLeft: 2,
 
                     }}
                   >
@@ -353,8 +356,8 @@ const ProfileFriends = () => {
                         justifyContent: "center",
                         backgroundColor: "red",
                         borderRadius: 10,
-                        height: 38,
-                        width: 170,
+                        height: 32,
+                        width: 150,
                       }}
                     >
                       <Text
@@ -363,7 +366,7 @@ const ProfileFriends = () => {
                           textAlign: "center",
                           fontWeight: "500",
                           justifyContent: "center",
-                          fontSize: 20,
+                          fontSize: 16,
                         }}
                       >
                         {t('Writing')}
@@ -399,7 +402,7 @@ const ProfileFriends = () => {
 
                             <Text
                               style={{
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontWeight: "normal",
                                 color: isDarkMode ? "white" : "black",
                               }}
@@ -409,7 +412,7 @@ const ProfileFriends = () => {
                             <Text
                               style={{
                                 color: isDarkMode ? "gray" : "black",
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: "normal"
                               }}
                             >
@@ -450,7 +453,7 @@ const ProfileFriends = () => {
                     <>
                       <Text
                         style={{
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: "normal",
                           color: isDarkMode ? "white" : "black",
                         }}
@@ -471,7 +474,7 @@ const ProfileFriends = () => {
                       />
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: 14,
                           paddingLeft: 8,
                           fontWeight: "normal",
                           color: "gray",
@@ -481,8 +484,8 @@ const ProfileFriends = () => {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 15,
-                          paddingLeft: 8,
+                          fontSize: 14,
+                          paddingLeft: 3,
                           fontWeight: "normal",
                           color: isDarkMode ? "white" : "black",
                         }}
@@ -524,7 +527,7 @@ const ProfileFriends = () => {
               backgroundColor: "red",
               width: "100%",
               height: 600,
-              marginTop: "12%"
+              marginTop: "13%"
             }}>
             <MaterialTopFriendsNavigation users={users} />
 

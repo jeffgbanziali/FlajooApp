@@ -41,11 +41,13 @@ const PostsUser = () => {
 
     // iPhone 15 Pro (standard)
     const iPhone15ProWidth = 390; // Largeur de l'écran de l'iPhone 15 Pro
-    const iPhone15ProHeight = 844; // Hauteur de l'écran de l'iPhone 15 Pro
+    const iPhone15ProHeight = 852; // Hauteur de l'écran de l'iPhone 15 Pro
 
     // iPhone 15 Pro Max
-    const iPhone15ProMaxWidth = 428; // Largeur de l'écran de l'iPhone 15 Pro Max
-    const iPhone15ProMaxHeight = 926; // Hauteur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxWidth = 430; // Largeur de l'écran de l'iPhone 15 Pro Max
+    const iPhone15ProMaxHeight = 932;
+
+
 
     // iPhone SE (3rd génération)
     const iPhoneSEWidth = 375; // Largeur de l'écran de l'iPhone SE (3rd génération)
@@ -55,8 +57,8 @@ const PostsUser = () => {
     const inputWidthSize = windowWidth * 0.85;
     const inputHeightSize = windowHeight * 0.056;
 
-    const containerPersoWidthSize = windowWidth * 0.32;
-    const containerPersoHeightSize = windowHeight * 0.18;
+    const containerPersoWidthSize = windowWidth * 0.28;
+    const containerPersoHeightSize = windowHeight * 0.15;
 
 
     // Fonction pour ajuster les mesures en fonction de l'appareil
@@ -65,13 +67,9 @@ const PostsUser = () => {
     };
 
     // Ajuster les mesures en fonction des appareils cibles
-    const adjustedInputWidthSize = adjustMeasurement(inputWidthSize, iPhone15ProWidth, windowWidth);
-    const adjustedInputHeightSize = adjustMeasurement(inputHeightSize, iPhone15ProHeight, windowHeight);
 
-    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhone15ProWidth, windowWidth);
+    const imageWidthSize = adjustMeasurement(containerPersoWidthSize, iPhoneSEWidth, iPhone15ProMaxWidth, iPhone15ProWidth, windowWidth);
     const imageHeightSize = adjustMeasurement(containerPersoHeightSize, iPhoneSEHeight, iPhone15ProHeight, iPhone15ProMaxHeight, windowHeight);
-
-
 
 
 
@@ -159,13 +157,14 @@ const PostsUser = () => {
                 height: 900,
                 justifyContent: "center",
                 backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                alignItems: "center"
             }} >
             <View
                 style={{
                     flex: 1,
                     paddingTop: 10,
-                    width: user.length <= 2 ? '68%' : '100%',
+                    width: user.length <= 2 ? '100%' : '100%',
+                    alignItems: user.length <= 2 ? "flex-start" : "center",
+                    paddingLeft: user.length <= 2 ? 4 : 0
                 }
                 }>
                 <FlatList

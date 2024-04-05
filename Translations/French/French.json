@@ -147,6 +147,14 @@
     "Chat":"Chat",
     "Messages":"Messages",
     "PleaseWait":"S'il vous plaît, attendez",
+    "secondAgo": "il y a %{count} seconde(s)",
+    "minuteAgo": "il y a %{count} minute(s)",
+    "hourAgo": "il y a %{count} heure(s)",
+    "dayAgo": "il y a %{count} jour(s)",
+    "weekAgo": "il y a %{count} semaine(s)",
+    "yearAgo": "il y a %{count} an(s)",
+
+   
 
     "SignInto":"Connectez-vous à votre compte",
     "Email":"Email",

@@ -6,6 +6,7 @@ import {
   VIEW_STORY,
   COMMENT_STORY,
   DELETE_STORY,
+  GET_STORIES_WITH_VIEWS,
 } from "../actions/story.action";
 
 const initialState = [];
@@ -14,8 +15,10 @@ export default function storyReducer(state = initialState, action) {
   switch (action.type) {
     case GET_STORIES:
       return action.payload;
+    case GET_STORIES_WITH_VIEWS:
+      return action.payload;      
     case ADD_STORY:
-      return [action.payload, ...state];
+      return [action.payload, ...state];ﬂ
     case LIKE_STORY:
       return state.map((story) =>
         story._id === action.payload.storyId

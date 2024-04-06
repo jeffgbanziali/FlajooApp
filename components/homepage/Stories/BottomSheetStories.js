@@ -82,14 +82,16 @@ const BottomSheetStories = forwardRef(({ children, stopAnimation, startAnimation
                     alignItems: "center",
                     bottom: 0,
                 }}>
-                    <View style={{
-                        width: 75,
-                        height: 6,
-                        alignSelf: 'center',
-                        backgroundColor: 'black',
-                        marginTop: 20,
-                        borderRadius: 2
-                    }} />
+                    <View
+                        style={{
+                            width: 30,
+                            height: 6,
+                            alignSelf: 'center',
+                            backgroundColor: 'black',
+                            marginTop: 10,
+                            borderRadius: 5
+                        }} />
+
                     {children}
                     <StoriesViewUser />
                 </View>

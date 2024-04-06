@@ -314,6 +314,8 @@ const CreateStory = () => {
                         </Text>
 
                     </View>
+
+
                     <View
                         style={{
                             width: 35,
@@ -335,12 +337,13 @@ const CreateStory = () => {
 
                 </View>
 
-                <View style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                    marginTop: 10
-                }}>
+                <View
+                    style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        marginTop: 10
+                    }}>
 
                     <TouchableOpacity
                         onPress={handleText}
@@ -368,7 +371,7 @@ const CreateStory = () => {
                         <Text
                             style={{
                                 color: isDarkMode ? "#F5F5F5" : "white",
-                                fontSize: 14,
+                                fontSize: 12,
                                 marginTop: 10,
                             }}
                         >
@@ -445,6 +448,8 @@ const CreateStory = () => {
                     </TouchableOpacity>
 
                 </View>
+
+
                 <View
                     style={{
                         height: "100%",

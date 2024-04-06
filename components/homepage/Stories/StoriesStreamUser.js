@@ -14,6 +14,8 @@ import {
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPostDate, formatTimeAgo, isEmpty, timestampStoryParser } from "../../Context/Utils";
@@ -105,7 +107,7 @@ const StoriesStreamUser = () => {
                     setCurrentStoryIndex(nextStoryIndex);
                     resetAnimation();
                 } else {
-                    console.error('Unable to go to the next story or container.');
+                    console.log('Unable to go to the next story or container.');
                     navigation.navigate("TabNavigation");
                 }
 
@@ -130,7 +132,7 @@ const StoriesStreamUser = () => {
     };
 
 
-
+    const storiesViewer = selectedStory.container.stories[currentStoryIndex].views
 
 
 
@@ -285,7 +287,8 @@ const StoriesStreamUser = () => {
                                 width: '86%',
                                 justifyContent: "space-evenly ",
                                 alignItems: "center",
-                                flexDirection: "row"
+                                flexDirection: "row",
+
                             }}
                         >
                             {selectedStory.container.stories.map((item, index) => (
@@ -294,6 +297,7 @@ const StoriesStreamUser = () => {
                                     style={{
                                         flex: 1,
                                         height: 3,
+                                        marginLeft: "1%",
                                         backgroundColor: "rgba(255,255,255,0.5)",
                                         flexDirection: "row",
                                         borderRadius: 20,
@@ -371,6 +375,7 @@ const StoriesStreamUser = () => {
 
                             >
                             </TouchableOpacity>
+
                             <View
                                 style={{
                                     //backgroundColor: "#343232",
@@ -617,7 +622,51 @@ const StoriesStreamUser = () => {
                         <BottomSheetStories stopAnimation={stopAnimation} startAnimation={restartAnimation} ref={ref} />
                     </GestureHandlerRootView>
 
+                    <View
+                        style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: 60,
+                            // backgroundColor: "red",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            bottom: 0
 
+                        }}>
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "50%",
+                                //backgroundColor: 'blue',
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "row"
+                            }}>
+                            <SimpleLineIcons name="arrow-up" size={20} color="white" />
+                        </View>
+                        <View
+                            style={{
+                                width: "100%",
+                                height: "50%",
+                                //backgroundColor: 'green',
+                                justifyContent: "center",
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}>
+                            <Ionicons name="eye" size={20} color="white" />
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: '600',
+                                    paddingLeft: "2%",
+                                    color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                                }}>
+                                {storiesViewer.length}
+                            </Text>
+                        </View>
+
+                    </View>
 
 
 

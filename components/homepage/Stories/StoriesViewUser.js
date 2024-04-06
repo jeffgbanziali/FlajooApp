@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { formatPostDate, isEmpty } from '../../Context/Utils';
 import { useDarkMode } from '../../Context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -15,6 +16,7 @@ const StoriesViewUser = () => {
     const storiesWithViews = useSelector(state => state.storyReducer);
     const usersData = useSelector((state) => state.usersReducer);
     const { isDarkMode } = useDarkMode();
+    const { t } = useTranslation();
 
     const route = useRoute();
     const { id } = route.params;
@@ -140,7 +142,7 @@ const StoriesViewUser = () => {
                 height: "66%",
                 width: "100%",
                 shadowColor: "#000",
-                //backgroundColor: "red",
+                // backgroundColor: "red",
                 shadowOffset: {
                     width: 0,
                     height: 2,
@@ -150,6 +152,42 @@ const StoriesViewUser = () => {
                 elevation: 5,
             }}
         >
+            <View
+                style={{
+                    width: "100%",
+                    height: 50,
+                    //backgroundColor: 'black',
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                <View
+                    style={{
+                        width: "100%",
+                        //backgroundColor: 'red',
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "row"
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: '500',
+                            color: isDarkMode ? "#F5F5F5" : "black",
+                        }}>
+                        {t('ViewerBy')}
+                    </Text>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: '600',
+                            paddingLeft: "2%",
+                            color: isDarkMode ? "#F5F5F5" : "black",
+                        }}>
+                        {storiesViewer.length}
+                    </Text>
+                </View>
+
+            </View>
             <FlatList
                 data={storiesViewer}
                 keyExtractor={(item, index) => index.toString()} // Convertir en chaîne

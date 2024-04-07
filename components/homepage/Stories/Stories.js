@@ -112,7 +112,7 @@ const Stories = () => {
                 height: 140,
                 borderRadius: 10,
                 padding: 5,
-                backgroundColor: "green",
+                backgroundColor: "#1E0F1C",
                 marginLeft: 10,
                 alignItems: "center",
                 justifyContent: "center",

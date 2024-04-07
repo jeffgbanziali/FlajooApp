@@ -133,7 +133,7 @@ const MyStory = () => {
                           height: 140,
                           borderRadius: 10,
                           padding: 5,
-                          backgroundColor: "green",
+                          backgroundColor: "#1E0F1C",
                           alignItems: "center",
                           justifyContent: "center",
                         }}
@@ -228,9 +228,8 @@ const MyStory = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   position: "absolute",
-                  marginLeft: 3,
                   zIndex: 2,
-                  marginTop: 65,
+                  marginTop: 70,
                 }}
               >
                 <View
@@ -260,8 +259,8 @@ const MyStory = () => {
 
                   <View
                     style={{
-                      marginTop: 4,
-                     
+                      marginTop: 6,
+
                       alignItems: "center",
                       justifyContent: "center",
                     }}
@@ -269,7 +268,7 @@ const MyStory = () => {
                     <Text
                       style={{
                         color: "white",
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: "600",
                         textAlign: "center",
                       }}
@@ -277,6 +276,8 @@ const MyStory = () => {
                       {t('CreateStory')}
                     </Text>
                   </View>
+
+
                 </View>
               </View>
 

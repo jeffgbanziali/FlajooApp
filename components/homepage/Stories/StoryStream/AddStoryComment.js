@@ -2,8 +2,8 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDarkMode } from "../../Context/AppContext";
-import { commentStory, getStories } from "../../../actions/story.action";
+import { useDarkMode } from "../../../Context/AppContext";
+import { commentStory, getStories } from "../../../../actions/story.action";
 
 const AddStoryComment = ({ story }) => {
     const { isDarkMode } = useDarkMode();
@@ -37,9 +37,9 @@ const AddStoryComment = ({ story }) => {
             style={{
                 width: "75%",
                 height: 50,
-                marginLeft: 4,
+                marginLeft: 10,
                 flexDirection: "row",
-                backgroundColor: "red",
+                //backgroundColor: "red",
                 justifyContent: "center",
                 alignItems: "center",
                 borderWidth: 1,

@@ -18,7 +18,7 @@ import FriendsFollowers from "../components/ProfileFriendsUtils/FriendsFollowers
 import MyFollowings from "../components/ProfileUtils.js/MyFollowings";
 import FriendsFollowing from "../components/ProfileFriendsUtils/FriendsFollowing";
 import ProfileFriends from "../screens/ProfileFriends/ProfileFriends";
-import StoriesStream from "../components/homepage/Stories/StoriesStream";
+import StoriesStream from "../components/homepage/Stories/StoryStream/StoriesStream";
 import Search from "../components/Search/Search";
 import TabNavigation from "./TabNavigation";
 import Réels from "../screens/Réels/Réels";
@@ -30,7 +30,7 @@ import ProfileEdit from "../components/Settings/ProfileEdit";
 import BioUpdate from "../components/Settings/BioUpdate";
 import StoryCamera from "../components/homepage/Stories/StoryCamera";
 import CreateRéels from "../components/Réels/CreateRéels";
-import StoriesStreamUser from "../components/homepage/Stories/StoriesStreamUser";
+import StoriesStreamUser from "../components/homepage/Stories/StoryStreamUser/StoriesStreamUser";
 import IncomingCall from "../screens/CallScreen/IncomingCall";
 import VoiceCall from "../screens/CallScreen/VoiceCall";
 import VideoCall from "../screens/CallScreen/VideoCall";

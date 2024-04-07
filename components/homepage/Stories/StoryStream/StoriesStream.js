@@ -14,17 +14,20 @@ import {
   SafeAreaView,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { formatPostDate, isEmpty } from "../../Context/Utils";
-import { UidContext, useDarkMode } from "../../Context/AppContext";
-import LikeStoriesButton from "./LikeStoriesButton";
+import { formatPostDate, isEmpty } from "../../../Context/Utils";
+import { UidContext, useDarkMode } from "../../../Context/AppContext";
+import LikeStoriesButton from "../LikeStoriesButton";
 import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
 import AddStoryComment from "./AddStoryComment";
-import { getStories } from "../../../actions/story.action";
+import { getStories } from "../../../../actions/story.action";
 import { useTranslation } from "react-i18next";
+import StoryByMediaAndText from "./StoryByMediaAndText";
+import StoryByMedia from "./StoryByMedia";
+import StoryByText from "./StoryByText";
 
 
 
@@ -162,7 +165,7 @@ const StoriesStream = () => {
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
-      duration: 5000,
+      duration: 50000000000000,
       useNativeDriver: false,
     }).start(({ finished }) => {
       if (finished) {
@@ -224,7 +227,7 @@ const StoriesStream = () => {
           width: width,
           position: "relative",
           alignItems: "center",
-          backgroundColor: "red"
+          backgroundColor: "black"
         }}
       >
 
@@ -268,6 +271,7 @@ const StoriesStream = () => {
             justifyContent: "space-evenly ",
             alignItems: "center",
             position: "absolute",
+            marginTop: "3%",
             zIndex: 2
           }}
         >
@@ -276,23 +280,22 @@ const StoriesStream = () => {
               height: 40,
               width: 40,
               borderRadius: 20,
-              marginLeft: 6,
+              //backgroundColor: "red",
               justifyContent: "center",
               alignItems: "center",
-              //backgroundColor: "red"
             }}
           >
-            <Entypo name="cross" size={30} color="white" />
+            <AntDesign name="close" size={35} color="white" />
+
           </TouchableOpacity>
 
           <View
             style={{
-              width: '88%',
-              alignItems: "center",
+              width: '86%',
               justifyContent: "space-evenly ",
               alignItems: "center",
               flexDirection: "row",
-              paddingLeft: 6
+
             }}
           >
             {selectedStory.container.stories.map((item, index) => (
@@ -301,6 +304,7 @@ const StoriesStream = () => {
                 style={{
                   flex: 1,
                   height: 3,
+                  marginLeft: "1%",
                   backgroundColor: "rgba(255,255,255,0.5)",
                   flexDirection: "row",
                   borderRadius: 20,
@@ -323,6 +327,7 @@ const StoriesStream = () => {
 
         </View>
 
+
         <View
           style={{
             flex: 1,
@@ -333,7 +338,8 @@ const StoriesStream = () => {
             //backgroundColor: "blue",
             alignItems: "center",
             height: 30,
-            top: "2%",
+            paddingLeft: "5%",
+            top: "4%",
             zIndex: 1
 
           }}
@@ -365,7 +371,6 @@ const StoriesStream = () => {
           >
             <View
               style={{
-                backgroundColor: "#343232",
                 height: 30,
                 borderRadius: 10,
                 flexDirection: "row",
@@ -420,180 +425,27 @@ const StoriesStream = () => {
                 />
               </View>
             </TouchableOpacity>
+
           </View>
         </View>
 
-        {selectedStory.container.stories[currentStoryIndex]?.media &&
-          selectedStory.container.stories[currentStoryIndex]?.text && (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                backgroundColor: "black",
-                position: "absolute",
-                width: "80%",
-                height: "70%",
-                top: "15%",
-              }}
-            >
-              {selectedStory.container.stories[currentStoryIndex].media_type === "image" && (
-                <Image
-                  source={{
-                    uri: selectedStory.container.stories[currentStoryIndex].media,
-                  }}
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: 30,
-                    opacity: 0.9,
-                  }}
-                  onLoadEnd={() => {
-                    progressAnimation.setValue(0);
-                    start()
-                  }}
-                />
-              )}
-              {selectedStory.container.stories[currentStoryIndex].media_type === 'video' && (
-                <Video
-                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media, }}
-                  rate={1.0}
-                  volume={1.0}
-                  isMuted={false}
-                  resizeMode="cover"
-                  shouldPlay
-                  isLooping
-                  onLoad={() => {
-                    progressAnimation.setValue(0);
-                    start()
-                  }}
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: 30,
-                  }}
-                />
-              )}
-              <LinearGradient
-                colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 200,
-                  borderBottomLeftRadius: 20,
-                  borderBottomRightRadius: 20,
-                }}
-              />
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  position: "absolute",
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  bottom: 20,
-                  borderRadius: 30,
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 20,
-                  }}
-                >
-                  {selectedStory.container.stories[currentStoryIndex].text}
-                </Text>
-              </View>
-            </View>
-          )}
+        <StoryByMediaAndText
+          story={selectedStory.container.stories[currentStoryIndex]}
+          progressAnimation={progressAnimation}
+          start={start} />
 
-        {selectedStory.container.stories[currentStoryIndex]?.media &&
-          !selectedStory.container.stories[currentStoryIndex]?.text && (
+        <StoryByMedia
+          story={selectedStory.container.stories[currentStoryIndex]}
+          progressAnimation={progressAnimation}
+          start={start} />
 
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                backgroundColor: "black"
-              }}
-            >
+        <StoryByText
+          story={selectedStory.container.stories[currentStoryIndex]}
+          progressAnimation={progressAnimation}
+          start={start}
+        />
 
-              {selectedStory.container.stories[currentStoryIndex].media_type === "image" && (
-                <Image
-                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media }}
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: 30,
-                    resizeMode: "contain",
-                    opacity: 0.9,
-                  }}
-                  onLoadEnd={() => {
-                    progressAnimation.setValue(0);
-                    start()
-                  }}
-                />
-              )}
-              {selectedStory.container.stories[currentStoryIndex].media_type === 'video' && (
-                <Video
-                  source={{ uri: selectedStory.container.stories[currentStoryIndex].media }}
-                  rate={1.0}
-                  volume={1.0}
-                  isMuted={false}
-                  resizeMode="cover"
-                  shouldPlay
-                  isLooping
-                  onLoad={() => {
-                    progressAnimation.setValue(0);
-                    start()
-                  }}
-                  onError={(error) => console.error("Erreur de chargement de la vidéo:", error)}
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: 30,
-                  }}
-                />
 
-              )}
-            </View>
-          )}
-        {!selectedStory.container.stories[currentStoryIndex]?.media && (
-
-          <View
-            onLayout={() => {
-              progressAnimation.setValue(0);
-              start();
-            }}
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              backgroundColor: "pink",
-              position: "absolute",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 30,
-              width: "90%",
-              height: "75%",
-              top: "14%",
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 30,
-              }}
-            >
-              {selectedStory.container.stories[currentStoryIndex]?.text}
-            </Text>
-          </View>
-        )}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{
@@ -613,7 +465,6 @@ const StoriesStream = () => {
               //backgroundColor: "green",
               flexDirection: "row",
               width: "100%",
-              bottom: 65,
               justifyContent: "space-between",
             }}>
             <AddStoryComment story={selectedStory.container.stories[currentStoryIndex]} />
@@ -623,7 +474,7 @@ const StoriesStream = () => {
                 height: 50,
                 marginLeft: 2,
                 marginRight: 4,
-                backgroundColor: "red",
+                //backgroundColor: "red",
                 justifyContent: "center",
                 alignItems: "center",
                 zIndex: 3
@@ -635,6 +486,7 @@ const StoriesStream = () => {
               />
             </View>
           </View>
+
         </KeyboardAvoidingView>
       </View>
 

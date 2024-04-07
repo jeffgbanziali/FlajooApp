@@ -8,8 +8,8 @@ import Animated, {
     useSharedValue,
     withSpring,
 } from 'react-native-reanimated';
-import StoriesViewUser from './StoriesViewUser';
-import { useDarkMode } from '../../Context/AppContext';
+import StoriesViewUser from '../StoriesViewUser';
+import { useDarkMode } from '../../../Context/AppContext';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 300;
@@ -87,7 +87,7 @@ const BottomSheetStories = forwardRef(({ children, stopAnimation, startAnimation
                             width: 30,
                             height: 6,
                             alignSelf: 'center',
-                            backgroundColor: 'black',
+                            backgroundColor: 'gray',
                             marginTop: 10,
                             borderRadius: 5
                         }} />

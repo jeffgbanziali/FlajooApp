@@ -1,18 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import { getStories, viewStory } from "../../../actions/story.action";
+import { getStories, viewStory } from "../../../../actions/story.action";
 import MyStory from "./MyStory";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty } from "../../Context/Utils";
-import { UidContext, useDarkMode } from "../../Context/AppContext";
+import { isEmpty } from "../../../Context/Utils";
+import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import Video from 'react-native-video';
 
 const Stories = () => {
   const [loadStories, setLoadStories] = useState(true);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  
+  const navigation = useNavigation(false)
+  const usersData = useSelector((state) => state.usersReducer);
+  const { isDarkMode } = useDarkMode();
+  const { uid } = useContext(UidContext);
+
+
   const storiesData = useSelector((state) => state.storyReducer).map((story, index) => ({
     ...story,
     container: {
@@ -21,9 +26,12 @@ const Stories = () => {
     },
   }));
 
-  const usersData = useSelector((state) => state.usersReducer);
-  const { isDarkMode } = useDarkMode();
-  const { uid } = useContext(UidContext);
+  const container = useSelector((state) => state.storyReducer)
+
+
+
+
+
 
   useEffect(() => {
     if (loadStories) {
@@ -32,32 +40,69 @@ const Stories = () => {
     }
   }, [loadStories, dispatch]);
 
+
+
+
   useEffect(() => {
     !isEmpty(usersData) && setLoading(false);
   }, [usersData]);
 
-  const filteredStories = storiesData.filter(item => item.container.posterId !== uid);
-  const navigation = useNavigation(false);
 
-  const handleViewStory = (id, media_type) => {
-    console.log("Clicked story ID:", id);
-    setLoadStories(true);
-    navigation.navigate("StoryStream", { id, media_type });
-  };
+
+
+
+  const filteredStories = storiesData.filter(item => item.container.posterId !== uid);
+
+
+
+
 
 
 
   const renderItem = ({ item }) => {
 
+
+
+
+    const registerView = () => {
+      dispatch(
+        viewStory(
+          item._id,
+          item.container.stories[0]._id,
+          uid
+        ));
+
+    }
+
+    const handleViewStory = (storyId, mediaType) => {
+      navigation.navigate("StoryStream",
+        { id: storyId, mediaType })
+      registerView()
+      setLoadStories(true)
+
+
+    }
+
+
+
+
+    /* console.log("viens à moi mon container", item._id)
+     console.log("viens à moi ma story", item.container.stories[0]._id)
+     console.log("viens à moi mon id", uid)*/
+
+
     return (
 
-      <View key={item.container._id}>
+      <View key={item._id}>
+
+
         <TouchableOpacity
-          onPress={() => {
-            const storyId = item.container.stories[0]._id;
-            const mediaType = item.container.stories[0].media_type;
-            handleViewStory(storyId, mediaType);
-          }}
+          onPress={() =>
+            handleViewStory(
+              item.container.stories[0]._id,
+              item.container.stories[0].media_type
+            )}
+
         >
           {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
             <View
@@ -105,6 +150,7 @@ const Stories = () => {
 
             </View>
           )}
+
           {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
             <View
               style={{
@@ -131,12 +177,14 @@ const Stories = () => {
             </View>
           )}
         </TouchableOpacity>
+
+
         <View
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: -70,
-          }}ƒ
+          }} ƒ
         >
           <Image
             source={{
@@ -212,6 +260,8 @@ const Stories = () => {
             </Text>
           </View>
         </View>
+
+
       </View>
     );
   }
@@ -245,7 +295,7 @@ const Stories = () => {
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
         ListHeaderComponent={<MyStory />}
-       
+
       />
     </View>
   );

@@ -12,7 +12,7 @@ import {
     SafeAreaView,
     Easing,
 } from "react-native";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -342,17 +342,40 @@ const StoriesStreamUser = () => {
                         }}
                     >
 
-                        <Text
+                        <View
                             style={{
-                                fontSize: 16,
-                                fontWeight: "500",
-                                color: "white",
-                                paddingLeft: "12%"
+                                //backgroundColor: "#343232",
+                                height: 30,
+                                borderRadius: 10,
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: 4,
                             }}
                         >
-                            {t("You")}
+                            <Text
+                                style={{
+                                    marginRight: 6,
+                                    color: "white",
+                                    fontSize: 12,
+                                }}
+                            >
+                                {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt, t)}
+                            </Text>
+                            <TouchableOpacity onPress={goToHome}
+                                style={{
+                                    height: 30,
+                                    width: 30,
+                                    borderRadius: 20,
+                                    //backgroundColor: "red",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Entypo name="dots-three-horizontal" size={20} color="white" />
 
-                        </Text>
+                            </TouchableOpacity>
+                        </View>
 
                         <View
                             style={{
@@ -374,33 +397,25 @@ const StoriesStreamUser = () => {
                             >
                             </TouchableOpacity>
 
-                            <View
+
+
+
+                            <Text
                                 style={{
-                                    //backgroundColor: "#343232",
-                                    height: 30,
-                                    borderRadius: 10,
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    padding: 4,
+                                    fontSize: 16,
+                                    fontWeight: "500",
+                                    color: "white",
+                                    paddingLeft: "12%"
                                 }}
                             >
-                                <FontAwesome5 name="clock" size={14} color="white" />
-                                <Text
-                                    style={{
-                                        marginLeft: 6,
-                                        color: "white",
-                                        fontSize: 12,
-                                    }}
-                                >
-                                    {formatPostDate(selectedStory.container.stories[currentStoryIndex].createdAt, t)}
-                                </Text>
-                            </View>
+                                {t("You")}
+
+                            </Text>
 
 
 
 
-                            
+
                             <TouchableOpacity onPress={() => goProfil(user._id)}>
                                 <View
                                     style={{
@@ -463,7 +478,11 @@ const StoriesStreamUser = () => {
                             //backgroundColor: "red"
 
                         }} >
-                        <BottomSheetStories stopAnimation={stopAnimation} startAnimation={restartAnimation} ref={ref} />
+                        <BottomSheetStories
+                            story={selectedStory.container.stories[currentStoryIndex]}
+                            stopAnimation={stopAnimation}
+                            startAnimation={restartAnimation}
+                            ref={ref} />
                     </GestureHandlerRootView>
 
                     <View
@@ -501,7 +520,7 @@ const StoriesStreamUser = () => {
                             <Ionicons name="eye" size={20} color="white" />
                             <Text
                                 style={{
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: '600',
                                     paddingLeft: "2%",
                                     color: isDarkMode ? "#F5F5F5" : "#F5F5F5",

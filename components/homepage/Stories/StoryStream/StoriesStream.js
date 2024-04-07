@@ -15,15 +15,14 @@ import {
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPostDate, isEmpty } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
-import LikeStoriesButton from "../LikeStoriesButton";
-import { LinearGradient } from "react-native-linear-gradient";
-import Video from 'react-native-video';
+import LikeStoriesButton from "./LikeStoriesButton";
 import AddStoryComment from "./AddStoryComment";
-import { getStories } from "../../../../actions/story.action";
+import { getStories, viewStory } from "../../../../actions/story.action";
 import { useTranslation } from "react-i18next";
 import StoryByMediaAndText from "./StoryByMediaAndText";
 import StoryByMedia from "./StoryByMedia";
@@ -42,32 +41,35 @@ const StoriesStream = () => {
   const { isDarkMode } = useDarkMode();
   const route = useRoute();
   const { id } = route.params;
+  const { uid } = useContext(UidContext);
   const dispatch = useDispatch();
-  const [isKeyboardActive, setKeyboardActive] = useState(false);
   const [partVisible, setPartVisible] = useState(true);
   const { i18n, t } = useTranslation()
   const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
 
-
-  console.log("le container que j'ai choisi", storiesData)
-
-
   const usersData = useSelector((state) => state.usersReducer);
-  console.log(id);
-  const [selectedStory, setSelectedStory] = useState(storiesData.find((story) => story.container.stories.some((s) => s._id === id)));
+
+
+  const [selectedStory, setSelectedStory] = useState(storiesData.find((story) =>
+    story.container.stories.some((s) => s._id === id)));
   storiesData.find((story) => story.container.stories.some((s) => s._id === id));
 
-  const user = usersData.find((user) => user._id === selectedStory.container.posterId);
-  console.log(user);
+  const user = usersData.find((user) =>
+    user._id === selectedStory.container.posterId);
+
 
   const [currentStoryIndex, setCurrentStoryIndex] = useState(
     selectedStory.container.stories.findIndex((story) => story._id === id)
   );
 
+
+
   const [currentContainerIndex, setCurrentContainerIndex] = useState(
     storiesData.findIndex((story) => story === selectedStory)
   );
+
+
 
   useEffect(() => {
     if (loadStories) {
@@ -85,7 +87,26 @@ const StoriesStream = () => {
 
   const goProfil = (id) => {
     navigation.navigate("ProfilFriends", { id });
+
+
   };
+
+
+
+  const registerView = () => {
+    dispatch(
+      viewStory(
+        storiesData[currentContainerIndex]._id,
+        selectedStory.container.stories[currentStoryIndex]._id,
+        uid
+      ));
+  }
+
+
+
+
+
+
 
   const goToNextStory = () => {
     try {
@@ -98,11 +119,12 @@ const StoriesStream = () => {
           const nextStory = selectedStory.container.stories[nextStoryIndex];
 
           console.log('Next Story:', nextStory);
-
+          registerView()
           setCurrentStoryIndex(nextStoryIndex);
           resetAnimation();
         } else {
           console.log('No next container. Navigating to TabNavigation.');
+          registerView()
           goToNextContainer();
         }
       } else {
@@ -126,7 +148,7 @@ const StoriesStream = () => {
           // Mettre à jour l'histoire sélectionnée et l'index du conteneur
           setSelectedStory(nextContainer);
           setCurrentContainerIndex(nextContainerIndex);
-
+          registerView()
           // Réinitialiser l'index de l'histoire
           setCurrentStoryIndex(0);
           // Réinitialiser l'animation si nécessaire
@@ -134,6 +156,7 @@ const StoriesStream = () => {
 
         } else {
           console.log('Navigating to TabNavigation.');
+          registerView()
           navigation.navigate("TabNavigation");
         }
       } else {
@@ -146,7 +169,6 @@ const StoriesStream = () => {
 
 
   const createdAt = selectedStory.container.stories[currentStoryIndex]?.createdAt;
-
 
 
 
@@ -268,7 +290,7 @@ const StoriesStream = () => {
             width: "100%",
             height: "2%",
             alignItems: "center",
-            justifyContent: "space-evenly ",
+            justifyContent: "space-evenly",
             alignItems: "center",
             position: "absolute",
             marginTop: "3%",
@@ -292,7 +314,7 @@ const StoriesStream = () => {
           <View
             style={{
               width: '86%',
-              justifyContent: "space-evenly ",
+              justifyContent: "space-evenly",
               alignItems: "center",
               flexDirection: "row",
 
@@ -338,26 +360,48 @@ const StoriesStream = () => {
             //backgroundColor: "blue",
             alignItems: "center",
             height: 30,
-            paddingLeft: "5%",
+            paddingLeft: "4%",
             top: "4%",
             zIndex: 1
 
           }}
         >
-          <Text
+
+
+
+          <View
             style={{
-              fontSize: 16,
-              fontWeight: "500",
-              color: "white",
-              paddingLeft: "12%"
+              height: 30,
+              borderRadius: 10,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 4,
             }}
           >
-            {!isEmpty(usersData[0]) &&
-              usersData.map((user) => {
-                if (user._id === selectedStory.container.posterId) return user.pseudo;
-                else return null;
-              })}
-          </Text>
+            <Text
+              style={{
+                marginRight: 6,
+                color: "white",
+                fontSize: 12
+              }}
+            >
+              {formatPostDate(createdAt, t)}
+            </Text>
+            <TouchableOpacity onPress={goToHome}
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 20,
+                //backgroundColor: "red",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Entypo name="dots-three-horizontal" size={20} color="white" />
+
+            </TouchableOpacity>
+          </View>
 
 
 
@@ -369,29 +413,23 @@ const StoriesStream = () => {
               paddingRight: "4%"
             }}
           >
-            <View
+
+
+
+            <Text
               style={{
-                height: 30,
-                borderRadius: 10,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 4,
+                fontSize: 16,
+                fontWeight: "500",
+                color: "white",
+                paddingLeft: "12%"
               }}
             >
-              <FontAwesome5 name="clock" size={14} color="white" />
-              <Text
-                style={{
-                  marginLeft: 6,
-                  color: "white",
-                  fontSize: 12
-                }}
-              >
-                {formatPostDate(createdAt, t)}
-              </Text>
-            </View>
-
-
+              {!isEmpty(usersData[0]) &&
+                usersData.map((user) => {
+                  if (user._id === selectedStory.container.posterId) return user.pseudo;
+                  else return null;
+                })}
+            </Text>
 
 
             <TouchableOpacity onPress={() => goProfil(user._id)}>

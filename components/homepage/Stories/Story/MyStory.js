@@ -4,10 +4,10 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Video from 'react-native-video';
-import { getStories } from "../../../actions/story.action";
+import { getStories } from "../../../../actions/story.action";
 import { useTranslation } from "react-i18next";
 import { LinearGradient } from "react-native-linear-gradient";
-import { useDarkMode } from "../../Context/AppContext";
+import { useDarkMode } from "../../../Context/AppContext";
 
 const MyStory = () => {
   const navigation = useNavigation();
@@ -177,16 +177,16 @@ const MyStory = () => {
                 <View
                   style={{
                     backgroundColor: "white",
-                    width: 35,
-                    height: 35,
+                    width: 30,
+                    height: 30,
                     borderRadius: 100,
                     justifyContent: "center",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
                   <Entypo
                     name="circle-with-plus"
-                    size={35}
+                    size={30}
                     color="blue"
 
                   />
@@ -279,6 +279,9 @@ const MyStory = () => {
 
 
                 </View>
+
+
+
               </View>
 
 

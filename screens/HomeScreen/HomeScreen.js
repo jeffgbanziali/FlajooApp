@@ -9,8 +9,6 @@ import {
     Dimensions,
     SafeAreaView,
 } from 'react-native';
-import Header from '../../components/homepage/Header';
-import Stories from '../../components/homepage/Stories/Stories';
 import Thread from '../../components/Thread/Thread';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';

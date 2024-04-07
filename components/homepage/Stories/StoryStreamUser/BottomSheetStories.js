@@ -8,13 +8,13 @@ import Animated, {
     useSharedValue,
     withSpring,
 } from 'react-native-reanimated';
-import StoriesViewUser from '../StoriesViewUser';
+import StoriesViewUser from './StoriesViewUser';
 import { useDarkMode } from '../../../Context/AppContext';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 300;
 
-const BottomSheetStories = forwardRef(({ children, stopAnimation, startAnimation }, ref) => {
+const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAnimation }, ref) => {
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
     const { isDarkMode } = useDarkMode();
@@ -93,7 +93,7 @@ const BottomSheetStories = forwardRef(({ children, stopAnimation, startAnimation
                         }} />
 
                     {children}
-                    <StoriesViewUser />
+                    <StoriesViewUser story={story} />
                 </View>
             </Animated.View>
         </GestureDetector>

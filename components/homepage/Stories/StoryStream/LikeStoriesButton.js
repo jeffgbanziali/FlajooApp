@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
-import { likeStory, dislikeStory } from "../../../actions/story.action";
-import { UidContext } from "../../Context/AppContext";
+import { likeStory, dislikeStory } from "../../../../actions/story.action";
+import { UidContext } from "../../../Context/AppContext";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 

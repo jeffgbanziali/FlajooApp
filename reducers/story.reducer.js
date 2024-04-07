@@ -16,9 +16,9 @@ export default function storyReducer(state = initialState, action) {
     case GET_STORIES:
       return action.payload;
     case GET_STORIES_WITH_VIEWS:
-      return action.payload;      
+      return action.payload;
     case ADD_STORY:
-      return [action.payload, ...state];ﬂ
+      return [action.payload, ...state]; ﬂ
     case LIKE_STORY:
       return state.map((story) =>
         story._id === action.payload.storyId
@@ -46,7 +46,6 @@ export default function storyReducer(state = initialState, action) {
           }
           : story
       );
-
     case COMMENT_STORY:
       return state.map((story) =>
         story._id === action.payload.storyId

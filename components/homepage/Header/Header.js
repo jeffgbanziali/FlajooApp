@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useDarkMode } from "../Context/AppContext";
+import { useDarkMode } from "../../Context/AppContext";
 
 const Header = () => {
   const userData = useSelector((state) => state.userReducer);

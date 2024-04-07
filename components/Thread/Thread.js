@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../actions/post.actions";
 import Posts from "../homepage/PostsComponents/Posts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Header from "../homepage/Header";
-import Stories from "../homepage/Stories/Stories";
+import Header from "../homepage/Header/Header";
+import Stories from "../homepage/Stories/Story/Stories";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);

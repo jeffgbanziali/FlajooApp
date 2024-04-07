@@ -7,6 +7,7 @@ export const ADD_STORY = 'ADD_STORY';
 export const LIKE_STORY = 'LIKE_STORY';
 export const DISLIKE_STORY = 'DISLIKE_STORY';
 export const VIEW_STORY = 'VIEW_STORY';
+export const VIEW_STORY_FAILED = 'VIEW_STORY_FAILED';
 export const COMMENT_STORY = 'COMMENT_STORY';
 export const DELETE_STORY = 'DELETE_STORY';
 export const GET_STORIES_WITH_VIEWS = 'GET_STORIES_WITH_VIEWS';
@@ -67,16 +68,23 @@ export const dislikeStory = (storyId, posterId) => {
 
 
 
-export const viewStory = (storyId, viewerId) => {
-  return (dispatch) => {
-    return axios
-      .patch(`${APP_API_URL}/api/stories/view-story/${storyId}`, { viewerId })
-      .then((res) => {
-        dispatch({ type: VIEW_STORY, payload: { storyId, viewerId } });
-      })
-      .catch((err) => console.log(err));
+export const viewStory = (containerId, storyId, viewerId) => {
+  return async (dispatch) => {
+    try {
+      console.log("Calling viewStory API with containerId:", containerId, "storyId:", storyId, "viewerId:", viewerId);
+      const res = await axios.post(`${APP_API_URL}/api/stories/view-story/${containerId}/${storyId}`, { viewerId });
+      console.log("viewStory API response:", res.data);
+      dispatch({ type: VIEW_STORY, payload: { containerId, storyId, viewer: res.data } });
+    } catch (error) {
+      console.error("Error in viewStory:", error);
+      dispatch({ type: VIEW_STORY_FAILED, payload: error.message });
+    }
   };
 };
+
+
+
+
 
 export const commentStory = (storyId, commenterId, text, commenterPseudo) => {
   return (dispatch) => {
@@ -103,6 +111,9 @@ export const deleteStory = (storyId) => {
       .catch((err) => console.log(err));
   };
 };
+
+
+
 
 export const getStoriesWithViews = () => {
   return (dispatch) => {

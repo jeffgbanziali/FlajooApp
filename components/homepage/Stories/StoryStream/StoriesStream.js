@@ -43,7 +43,6 @@ const StoriesStream = () => {
   const { id } = route.params;
   const { uid } = useContext(UidContext);
   const dispatch = useDispatch();
-  const [partVisible, setPartVisible] = useState(true);
   const { i18n, t } = useTranslation()
   const [loadStories, setLoadStories] = useState(true);
   const storiesData = useSelector((state) => state.storyReducer);
@@ -68,6 +67,148 @@ const StoriesStream = () => {
   const [currentContainerIndex, setCurrentContainerIndex] = useState(
     storiesData.findIndex((story) => story === selectedStory)
   );
+
+
+
+  const goToPrevStory = () => {
+    try {
+      if (selectedStory && selectedStory.container && selectedStory.container.stories && selectedStory.container.posterId !== uid) {
+        setCurrentStoryIndex((prevIndex) => {
+          if (prevIndex > 0) {
+            registerView();
+            return prevIndex - 1;
+          } else {
+            console.log('Already at the first story.');
+            goToPrevContainer();
+            return prevIndex;
+          }
+        });
+        resetAnimation();
+      } else {
+        console.error('Invalid story or container.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+
+
+  const goToNextStory = () => {
+    try {
+      if (selectedStory && selectedStory.container && selectedStory.container.stories && selectedStory.container.posterId !== uid) {
+        setCurrentStoryIndex((prevIndex) => {
+          const totalStories = selectedStory.container.stories.length;
+          if (prevIndex < totalStories - 1) {
+            registerView();
+            return prevIndex + 1;
+          } else {
+            console.log('No next container. Navigating to TabNavigation.');
+            registerView();
+            goToNextContainer();
+            return prevIndex;
+          }
+        });
+        resetAnimation();
+      } else {
+        console.error('Invalid story or container.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+
+  const goToNextContainer = () => {
+    setCurrentContainerIndex((index) => {
+      if (index === storiesData.length - 1) {
+        navigation.navigate("TabNavigation");
+        return 0;
+      }
+
+      return index + 1;
+    });
+  };
+
+
+
+
+  const goToPrevContainer = () => {
+    setCurrentContainerIndex((index) => {
+      if (index === 0) {
+        
+        return storiesData.length - 1;
+      }
+      navigation.navigate("TabNavigation");
+      return index - 1;
+
+    });
+  };
+
+
+
+  /* const goToNextContainer = () => {
+     try {
+       if (selectedStory && selectedStory.container.posterId !== uid) {
+         const totalContainers = storiesData.length &&
+           selectedStory.container.posterId !== uid;
+ 
+         if (currentContainerIndex < totalContainers - 1) {
+           const nextContainerIndex = currentContainerIndex + 1;
+           const nextContainer = storiesData[nextContainerIndex];
+ 
+           setSelectedStory(nextContainer);
+           setCurrentContainerIndex(nextContainerIndex);
+           registerView();
+           setCurrentContainerIndex(0);
+           resetAnimation();
+         } else {
+           console.log('Navigating to TabNavigation.');
+           registerView();
+           navigation.navigate("TabNavigation");
+         }
+       } else {
+         console.error('Invalid selected story or posterId.');
+       }
+     } catch (error) {
+       console.error('Error:', error);
+     }
+   };
+ 
+ 
+ 
+ 
+   const goToPrevContainer = () => {
+     try {
+       if (selectedStory &&
+         selectedStory.container.posterId !== uid) {
+ 
+ 
+         if (currentContainerIndex > 0
+           && selectedStory.container.posterId !== uid) {
+           const prevContainerIndex = currentContainerIndex - 1;
+           const prevContainer = storiesData[prevContainerIndex];
+ 
+           setSelectedStory(prevContainer);
+           setCurrentContainerIndex(prevContainerIndex);
+           registerView();
+           setCurrentContainerIndex(0);
+           resetAnimation();
+         } else {
+           console.log('Already at the first container.');
+           navigation.navigate("TabNavigation");
+         }
+       } else {
+         console.error('Invalid selected story or posterId.');
+       }
+     } catch (error) {
+       console.error('Error:', error);
+     }
+   };*/
+
+
 
 
 
@@ -104,70 +245,6 @@ const StoriesStream = () => {
 
 
 
-
-
-
-
-  const goToNextStory = () => {
-    try {
-      if (selectedStory && selectedStory.container && selectedStory.container.stories) {
-        const totalStories = selectedStory.container.stories.length;
-
-        if (currentStoryIndex < totalStories - 1) {
-          // Passer à l'histoire suivante dans le même conteneur
-          const nextStoryIndex = currentStoryIndex + 1;
-          const nextStory = selectedStory.container.stories[nextStoryIndex];
-
-          console.log('Next Story:', nextStory);
-          registerView()
-          setCurrentStoryIndex(nextStoryIndex);
-          resetAnimation();
-        } else {
-          console.log('No next container. Navigating to TabNavigation.');
-          registerView()
-          goToNextContainer();
-        }
-      } else {
-        console.error('Invalid story or container.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const goToNextContainer = () => {
-    try {
-      if (selectedStory) {
-        const totalContainers = storiesData.length;
-
-        if (currentContainerIndex < totalContainers - 1) {
-          // Passer au conteneur suivant
-          const nextContainerIndex = currentContainerIndex + 1;
-          const nextContainer = storiesData[nextContainerIndex];
-
-          // Mettre à jour l'histoire sélectionnée et l'index du conteneur
-          setSelectedStory(nextContainer);
-          setCurrentContainerIndex(nextContainerIndex);
-          registerView()
-          // Réinitialiser l'index de l'histoire
-          setCurrentStoryIndex(0);
-          // Réinitialiser l'animation si nécessaire
-          resetAnimation();
-
-        } else {
-          console.log('Navigating to TabNavigation.');
-          registerView()
-          navigation.navigate("TabNavigation");
-        }
-      } else {
-        console.error('Invalid selected story.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-
   const createdAt = selectedStory.container.stories[currentStoryIndex]?.createdAt;
 
 
@@ -187,7 +264,7 @@ const StoriesStream = () => {
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
-      duration: 50000000000000,
+      duration: 5000,
       useNativeDriver: false,
     }).start(({ finished }) => {
       if (finished) {
@@ -207,30 +284,8 @@ const StoriesStream = () => {
     resetAnimation();
     start();
 
-  });
+  }, [currentStoryIndex, currentContainerIndex]);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        // Le clavier est ouvert, masquez votre partie
-        setPartVisible(false);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        // Le clavier est fermé, affichez votre partie
-        setPartVisible(true);
-      }
-    );
-
-    // Nettoyez les écouteurs lorsque le composant est démonté
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
 
   return (
@@ -334,13 +389,17 @@ const StoriesStream = () => {
                 }}
               >
                 <Animated.View
-                  style={{
-                    height: 3,
-                    borderRadius: 20,
-                    flex: currentStoryIndex === index ? progressAnimation : selectedStory.container.stories[index].finish,
-                    backgroundColor: "white",
-                  }}
+                  style={[
+                    {
+                      height: 3,
+                      borderRadius: 20,
+                      flex: index === currentStoryIndex ? progressAnimation : 0,
+                      width: index < currentStoryIndex ? '100%' : (index > currentStoryIndex ? 0 : null),
+                      backgroundColor: "white",
+                    },
+                  ]}
                 ></Animated.View>
+
               </View>
             ))}
 
@@ -528,7 +587,7 @@ const StoriesStream = () => {
         </KeyboardAvoidingView>
       </View>
 
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

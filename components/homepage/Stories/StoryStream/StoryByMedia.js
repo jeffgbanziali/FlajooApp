@@ -17,7 +17,7 @@ const StoryByMedia = ({ story, progressAnimation, start }) => {
                             position: "absolute",
                             width: "100%",
                             height: "92%",
-                           
+
                         }}
                     >
 

@@ -70,8 +70,10 @@ const StoriesStreamUser = () => {
     } else {
         console.log("Container not found for story ID:", id);
     }
+
+
     const user = usersData.find((user) => user._id === selectedStory.container.posterId);
-    //console.log(user);
+
 
     const [currentStoryIndex, setCurrentStoryIndex] = useState(
         selectedStory.container.stories.findIndex((story) => story._id === id)
@@ -99,6 +101,33 @@ const StoriesStreamUser = () => {
         navigation.navigate("Profile", { uid });
     };
 
+
+
+    const goToPrevStory = () => {
+        try {
+            if (selectedStory && selectedStory.container && selectedStory.container.stories ) {
+                setCurrentStoryIndex((prevIndex) => {
+                    if (prevIndex > 0) {
+                        return prevIndex - 1;
+                    } else {
+                        console.log('Already at the first story.');
+                        navigation.navigate("TabNavigation");
+                        return prevIndex;
+                    }
+                });
+                resetAnimation();
+            } else {
+                console.error('Invalid story or container.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+
+
+
+
     const goToNextStory = () => {
         try {
             if (selectedStory && selectedStory.container && selectedStory.container.stories) {
@@ -120,6 +149,7 @@ const StoriesStreamUser = () => {
             console.error('Error:', error);
         }
     };
+
 
 
 
@@ -145,7 +175,7 @@ const StoriesStreamUser = () => {
     const start = () => {
         animationRef.current = Animated.timing(progressAnimation, {
             toValue: 1,
-            duration: 50000000000000000000000,
+            duration: 5000,
             easing: Easing.linear,
             useNativeDriver: false,
         });
@@ -182,16 +212,6 @@ const StoriesStreamUser = () => {
 
     const ref = useRef(null);
 
-    /*const onPress = useCallback(() => {
-        const isActive = ref?.current?.isActive();
-        if (isActive) {
-            ref?.current?.scrollTo(0);
-        } else {
-            ref?.current?.scrollTo(-200);
-        }
-        stopAnimation(); // Appel de la fonction pour arrêter l'animation lorsqu'on presse
-    }, [ref, stopAnimation]);*/
-
     useEffect(() => {
         resetAnimation();
         restartAnimation();
@@ -201,7 +221,7 @@ const StoriesStreamUser = () => {
         };
         // Arrête l'animation lors du démontage du composant
 
-    }, []);
+    }, [currentStoryIndex]);
 
 
     return (
@@ -307,12 +327,15 @@ const StoriesStreamUser = () => {
                                     }}
                                 >
                                     <Animated.View
-                                        style={{
-                                            height: 3,
-                                            borderRadius: 20,
-                                            flex: currentStoryIndex === index ? progressAnimation : selectedStory.container.stories[index].finish,
-                                            backgroundColor: "white",
-                                        }}
+                                        style={[
+                                            {
+                                                height: 3,
+                                                borderRadius: 20,
+                                                flex: index === currentStoryIndex ? progressAnimation : 0,
+                                                width: index < currentStoryIndex ? '100%' : (index > currentStoryIndex ? 0 : null),
+                                                backgroundColor: "white",
+                                            },
+                                        ]}
                                     ></Animated.View>
                                 </View>
                             ))}
@@ -475,7 +498,8 @@ const StoriesStreamUser = () => {
                     <GestureHandlerRootView
                         style={{
                             zIndex: 1,
-                            //backgroundColor: "red"
+                            //backgroundColor: "red",
+                            width: "100%",
 
                         }} >
                         <BottomSheetStories

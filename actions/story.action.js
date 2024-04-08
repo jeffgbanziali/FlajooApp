@@ -71,9 +71,9 @@ export const dislikeStory = (storyId, posterId) => {
 export const viewStory = (containerId, storyId, viewerId) => {
   return async (dispatch) => {
     try {
-      console.log("Calling viewStory API with containerId:", containerId, "storyId:", storyId, "viewerId:", viewerId);
+      //console.log("Calling viewStory API with containerId:", containerId, "storyId:", storyId, "viewerId:", viewerId);
       const res = await axios.post(`${APP_API_URL}/api/stories/view-story/${containerId}/${storyId}`, { viewerId });
-      console.log("viewStory API response:", res.data);
+      //console.log("viewStory API response:", res.data);
       dispatch({ type: VIEW_STORY, payload: { containerId, storyId, viewer: res.data } });
     } catch (error) {
       console.error("Error in viewStory:", error);

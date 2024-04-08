@@ -15,7 +15,7 @@ const StoryByMedia = ({ story, progressAnimation, start }) => {
                             borderRadius: 20,
                             width: "100%",
                             height: "100%",
-                            backgroundColor: "black"
+                            //backgroundColor: "black"
                         }}
                     >
 
@@ -26,7 +26,6 @@ const StoryByMedia = ({ story, progressAnimation, start }) => {
                                     height: "100%",
                                     width: "100%",
                                     borderRadius: 20,
-                                    opacity: 0.9,
                                 }}
                                 resizeMode="contain"
                                 onLoadEnd={() => {

@@ -43,9 +43,12 @@ const StoriesStream = () => {
   const { id } = route.params;
   const { uid } = useContext(UidContext);
   const dispatch = useDispatch();
+  const [partVisible, setPartVisible] = useState(true);
   const { i18n, t } = useTranslation()
   const [loadStories, setLoadStories] = useState(true);
-  const storiesData = useSelector((state) => state.storyReducer);
+  const selectedUserStories = useSelector((state) => state.storyReducer);
+
+  const storiesData = selectedUserStories.filter(story => story.container.posterId !== uid);
 
   const usersData = useSelector((state) => state.usersReducer);
 
@@ -59,7 +62,8 @@ const StoriesStream = () => {
 
 
   const [currentStoryIndex, setCurrentStoryIndex] = useState(
-    selectedStory.container.stories.findIndex((story) => story._id === id)
+    selectedStory.container.stories.findIndex((story) => story._id === id,)
+
   );
 
 
@@ -70,20 +74,24 @@ const StoriesStream = () => {
 
 
 
+
+
+
   const goToPrevStory = () => {
     try {
-      if (selectedStory && selectedStory.container && selectedStory.container.stories && selectedStory.container.posterId !== uid) {
-        setCurrentStoryIndex((prevIndex) => {
-          if (prevIndex > 0) {
-            registerView();
-            return prevIndex - 1;
-          } else {
-            console.log('Already at the first story.');
-            goToPrevContainer();
-            return prevIndex;
-          }
-        });
-        resetAnimation();
+      if (selectedStory
+        && selectedStory.container
+        && selectedStory.container.stories) {
+        if (currentStoryIndex > 0) {
+          // Passer à l'histoire précédente dans le même conteneur
+          const prevStoryIndex = currentStoryIndex - 1;
+          registerView();
+          setCurrentStoryIndex(prevStoryIndex);
+          resetAnimation();
+        } else {
+          console.log('Already at the first story.');
+          goPrevContainer();
+        }
       } else {
         console.error('Invalid story or container.');
       }
@@ -93,24 +101,23 @@ const StoriesStream = () => {
   };
 
 
-
-
   const goToNextStory = () => {
     try {
-      if (selectedStory && selectedStory.container && selectedStory.container.stories && selectedStory.container.posterId !== uid) {
-        setCurrentStoryIndex((prevIndex) => {
-          const totalStories = selectedStory.container.stories.length;
-          if (prevIndex < totalStories - 1) {
-            registerView();
-            return prevIndex + 1;
-          } else {
-            console.log('No next container. Navigating to TabNavigation.');
-            registerView();
-            goToNextContainer();
-            return prevIndex;
-          }
-        });
-        resetAnimation();
+      if (selectedStory &&
+        selectedStory.container &&
+        selectedStory.container.stories) {
+
+        const totalStories = selectedStory.container.stories.length;
+        if (currentStoryIndex < totalStories - 1) {
+          const nextStoryIndex = currentStoryIndex + 1;
+          registerView();
+          setCurrentStoryIndex(nextStoryIndex);
+          resetAnimation();
+        } else {
+          console.log('No next container. Navigating to TabNavigation.');
+          registerView();
+          goToNextContainer();
+        }
       } else {
         console.error('Invalid story or container.');
       }
@@ -122,91 +129,65 @@ const StoriesStream = () => {
 
 
   const goToNextContainer = () => {
-    setCurrentContainerIndex((index) => {
-      if (index === storiesData.length - 1) {
-        navigation.navigate("TabNavigation");
-        return 0;
-      }
+    try {
+      if (selectedStory) {
+        const totalContainers = storiesData.length
 
-      return index + 1;
-    });
+        if (currentContainerIndex < totalContainers - 1) {
+          // Passer au conteneur suivant
+          const nextContainerIndex = currentContainerIndex + 1;
+          const nextContainer = storiesData[nextContainerIndex]
+
+          setSelectedStory(nextContainer);
+          setCurrentContainerIndex(nextContainerIndex);
+          registerView();
+          setCurrentStoryIndex(0);
+          resetAnimation();
+        } else {
+          console.log('Navigating to TabNavigation.');
+          registerView();
+          navigation.navigate("TabNavigation");
+        }
+      } else {
+        console.error('Invalid selected story or posterId.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
 
 
 
-  const goToPrevContainer = () => {
-    setCurrentContainerIndex((index) => {
-      if (index === 0) {
-        
-        return storiesData.length - 1;
+  const goPrevContainer = () => {
+    try {
+      if (selectedStory) {
+
+
+        if (currentContainerIndex > 0) {
+          // Passer au conteneur précédent
+          const prevContainerIndex = currentContainerIndex - 1;
+          const prevContainer = storiesData[prevContainerIndex];
+
+          // Mettre à jour l'histoire sélectionnée et l'index du conteneur
+          setSelectedStory(prevContainer);
+          setCurrentContainerIndex(prevContainerIndex);
+          registerView();
+          // Réinitialiser l'index de l'histoire
+          setCurrentStoryIndex(0);
+          // Réinitialiser l'animation si nécessaire
+          resetAnimation();
+        } else {
+          console.log('Already at the first container.');
+          navigation.navigate("TabNavigation");
+        }
+      } else {
+        console.error('Invalid selected story or posterId.');
       }
-      navigation.navigate("TabNavigation");
-      return index - 1;
-
-    });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
-
-
-  /* const goToNextContainer = () => {
-     try {
-       if (selectedStory && selectedStory.container.posterId !== uid) {
-         const totalContainers = storiesData.length &&
-           selectedStory.container.posterId !== uid;
- 
-         if (currentContainerIndex < totalContainers - 1) {
-           const nextContainerIndex = currentContainerIndex + 1;
-           const nextContainer = storiesData[nextContainerIndex];
- 
-           setSelectedStory(nextContainer);
-           setCurrentContainerIndex(nextContainerIndex);
-           registerView();
-           setCurrentContainerIndex(0);
-           resetAnimation();
-         } else {
-           console.log('Navigating to TabNavigation.');
-           registerView();
-           navigation.navigate("TabNavigation");
-         }
-       } else {
-         console.error('Invalid selected story or posterId.');
-       }
-     } catch (error) {
-       console.error('Error:', error);
-     }
-   };
- 
- 
- 
- 
-   const goToPrevContainer = () => {
-     try {
-       if (selectedStory &&
-         selectedStory.container.posterId !== uid) {
- 
- 
-         if (currentContainerIndex > 0
-           && selectedStory.container.posterId !== uid) {
-           const prevContainerIndex = currentContainerIndex - 1;
-           const prevContainer = storiesData[prevContainerIndex];
- 
-           setSelectedStory(prevContainer);
-           setCurrentContainerIndex(prevContainerIndex);
-           registerView();
-           setCurrentContainerIndex(0);
-           resetAnimation();
-         } else {
-           console.log('Already at the first container.');
-           navigation.navigate("TabNavigation");
-         }
-       } else {
-         console.error('Invalid selected story or posterId.');
-       }
-     } catch (error) {
-       console.error('Error:', error);
-     }
-   };*/
 
 
 
@@ -264,7 +245,7 @@ const StoriesStream = () => {
   const start = () => {
     Animated.timing(progressAnimation, {
       toValue: 1,
-      duration: 5000,
+      duration: 15000,
       useNativeDriver: false,
     }).start(({ finished }) => {
       if (finished) {
@@ -284,8 +265,30 @@ const StoriesStream = () => {
     resetAnimation();
     start();
 
-  }, [currentStoryIndex, currentContainerIndex]);
+  });
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // Le clavier est ouvert, masquez votre partie
+        setPartVisible(false);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        // Le clavier est fermé, affichez votre partie
+        setPartVisible(true);
+      }
+    );
+
+    // Nettoyez les écouteurs lorsque le composant est démonté
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
 
   return (
@@ -389,17 +392,13 @@ const StoriesStream = () => {
                 }}
               >
                 <Animated.View
-                  style={[
-                    {
-                      height: 3,
-                      borderRadius: 20,
-                      flex: index === currentStoryIndex ? progressAnimation : 0,
-                      width: index < currentStoryIndex ? '100%' : (index > currentStoryIndex ? 0 : null),
-                      backgroundColor: "white",
-                    },
-                  ]}
+                  style={{
+                    height: 3,
+                    borderRadius: 20,
+                    flex: currentStoryIndex === index ? progressAnimation : 1, // Utilisation de 1 pour la flexibilité
+                    backgroundColor: currentStoryIndex >= index ? "white" : "rgba(255,255,255,0.5)", // Utilisation de blanc pour les éléments précédents et actuels
+                  }}
                 ></Animated.View>
-
               </View>
             ))}
 
@@ -587,7 +586,7 @@ const StoriesStream = () => {
         </KeyboardAvoidingView>
       </View>
 
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 

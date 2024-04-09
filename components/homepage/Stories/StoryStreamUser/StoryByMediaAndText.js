@@ -29,7 +29,7 @@ const StoryByMediaAndText = ({ story, progressAnimation, start }) => {
                         {story.media_type === "image" && (
                             <Image
                                 source={{
-                                    uri: story.media,
+                                    uri: story.media.url
                                 }}
                                 resizeMode="contain"
                                 style={{
@@ -46,7 +46,7 @@ const StoryByMediaAndText = ({ story, progressAnimation, start }) => {
                         )}
                         {story.media_type === 'video' && (
                             <Video
-                                source={{ uri: story.media, }}
+                                source={{ uri: story.media.url }}
                                 rate={1.0}
                                 volume={1.0}
                                 isMuted={false}

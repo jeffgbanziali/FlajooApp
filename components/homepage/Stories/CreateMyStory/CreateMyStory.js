@@ -69,27 +69,121 @@ const CreateStory = () => {
     /*************************** système de création d'une story ********************************************/
 
     // Fonction pour gérer l'envoi de l'image
+    /*   const handleImageSubmit = async () => {
+           const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
+           const mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
+           const mediaInfo = {
+               type: 'image',
+               url: mediaUrl,
+               fileName: selectedImage.fileName,
+               fileSize: selectedImage.fileSize,
+               height: selectedImage.height,
+               width: selectedImage.width,
+           };
+           return mediaInfo;
+       };
+   
+       // Fonction pour gérer l'envoi de la vidéo
+       const handleVideoSubmit = async () => {
+           const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
+           const mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
+           const mediaInfo = {
+               type: 'video',
+               url: mediaUrl,
+               duration: selectedVideo.duration,
+               fileName: selectedVideo.fileName,
+               fileSize: selectedVideo.fileSize,
+               height: selectedVideo.height,
+               width: selectedVideo.width,
+   
+           };
+           return mediaInfo;
+       };
+   
+       // Fonction pour gérer la soumission de l'histoire
+       const submitStory = async (mediaInfo) => {
+           if (mediaInfo) { // Vérifiez si mediaInfo est défini
+               const storyData = {
+                   posterId: userData._id,
+                   text: postText,
+                   media: mediaInfo,
+               };
+       
+               // Sauvegarde localement avant l'envoi au serveur
+               saveStoryLocally(storyData);
+       
+               dispatch(addStory(storyData));
+               Alert.alert('Succès', 'Votre story a été publiée avec succès !');
+               setPostText('');
+               setSelectedImage(null);
+               setSelectedVideo(null);
+               setLoadStories(true);
+               navigation.goBack('TabNavigation');
+           } else {
+               Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
+           }
+       };
+       
+   
+       // Fonction principale pour gérer la soumission de l'histoire
+       const handleStorySubmit = async () => {
+           try {
+               let mediaInfo = null;
+   
+               if (selectedImage) {
+                   mediaInfo = await handleImageSubmit();
+               } else if (selectedVideo) {
+                   mediaInfo = await handleVideoSubmit();
+               }
+   
+               if ((postText && !mediaInfo) || (!postText && mediaInfo) || (postText && mediaInfo)) {
+                   submitStory(mediaInfo);
+               } else {
+                   Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
+               }
+           } catch (error) {
+               console.error('Erreur lors de la création de la story :', error);
+               let errorMessage = 'Une erreur s\'est produite lors de la création de la story.';
+               Alert.alert('Erreur', errorMessage);
+           }
+       };*/
+
+
+
+
     const handleImageSubmit = async () => {
         const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
         const mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
-        return { mediaType: 'image', mediaUrl };
+        const fileName = selectedImage.fileName;
+        const fileSize = selectedImage.fileSize;
+        const height = selectedImage.height;
+        const width = selectedImage.width;
+        return { mediaType: 'image', mediaUrl, fileName, fileSize, height, width };
     };
 
-    // Fonction pour gérer l'envoi de la vidéo
     const handleVideoSubmit = async () => {
         const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
         const mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
-        return { mediaType: 'video', mediaUrl };
+        const duration = selectedVideo.duration;
+        const fileName = selectedVideo.fileName;
+        const fileSize = selectedVideo.fileSize;
+        const height = selectedVideo.height;
+        const width = selectedVideo.width;
+        return { mediaType: 'video', mediaUrl, duration, fileName, fileSize, height, width };
     };
 
-    // Fonction pour gérer la soumission de l'histoire
-    const submitStory = async (mediaType, mediaUrl) => {
+    const submitStory = async (mediaType, mediaUrl, duration, fileName, fileSize, height, width) => {
         const storyData = {
             posterId: userData._id,
             text: postText,
             media: {
                 type: mediaType,
                 url: mediaUrl,
+                duration,
+                fileName,
+                fileSize,
+                height,
+                width
             },
         };
 
@@ -98,6 +192,7 @@ const CreateStory = () => {
 
         // Envoyer la story au serveur ou à d'autres utilisateurs
         dispatch(addStory(storyData));
+        console.log("viens me voir ma story ", storyData)
         Alert.alert('Succès', 'Votre story a été publiée avec succès !');
         setPostText('');
         setSelectedImage(null);
@@ -106,21 +201,24 @@ const CreateStory = () => {
         navigation.goBack('TabNavigation');
     };
 
-    // Fonction principale pour gérer la soumission de l'histoire
-    
     const handleStorySubmit = async () => {
         try {
             let mediaType = null;
             let mediaUrl = null;
+            let duration = null;
+            let fileName = null;
+            let fileSize = null;
+            let height = null;
+            let width = null;
 
             if (selectedImage) {
-                ({ mediaType, mediaUrl } = await handleImageSubmit());
+                ({ mediaType, mediaUrl, fileName, fileSize, height, width } = await handleImageSubmit());
             } else if (selectedVideo) {
-                ({ mediaType, mediaUrl } = await handleVideoSubmit());
+                ({ mediaType, mediaUrl, duration, fileName, fileSize, height, width } = await handleVideoSubmit());
             }
 
             if ((postText && !mediaType) || (!postText && mediaType) || (postText && mediaType)) {
-                submitStory(mediaType, mediaUrl);
+                submitStory(mediaType, mediaUrl, duration, fileName, fileSize, height, width);
             } else {
                 Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
             }
@@ -130,6 +228,38 @@ const CreateStory = () => {
             Alert.alert('Erreur', errorMessage);
         }
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

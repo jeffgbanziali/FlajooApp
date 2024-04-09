@@ -34,12 +34,6 @@ import StoryByText from "./StoryByText";
 
 
 
-
-
-
-
-
-
 const { width, height } = Dimensions.get("window")
 
 const StoriesStreamUser = () => {
@@ -51,6 +45,7 @@ const StoriesStreamUser = () => {
     const { uid } = useContext(UidContext);
     const [loadStories, setLoadStories] = useState(true);
     const storiesData = useSelector((state) => state.storyReducer);
+    const [videoDurationLoaded, setVideoDurationLoaded] = useState(false);
     //console.log(storiesData)
     const usersData = useSelector((state) => state.usersReducer);
     const { t } = useTranslation();
@@ -105,7 +100,7 @@ const StoriesStreamUser = () => {
 
     const goToPrevStory = () => {
         try {
-            if (selectedStory && selectedStory.container && selectedStory.container.stories ) {
+            if (selectedStory && selectedStory.container && selectedStory.container.stories) {
                 setCurrentStoryIndex((prevIndex) => {
                     if (prevIndex > 0) {
                         return prevIndex - 1;
@@ -164,7 +159,27 @@ const StoriesStreamUser = () => {
     };
 
 
+
+    const videoDurationRef = useRef(0);
+
+
+
+
     const storiesViewer = selectedStory.container.stories[currentStoryIndex].views
+
+
+    useEffect(() => {
+        if (selectedStory && selectedStory.container && selectedStory.container.stories) {
+            const currentStory = selectedStory.container.stories[currentStoryIndex];
+            if (currentStory.media && currentStory.media_type === 'video' && currentStory.media.duration) {
+                videoDurationRef.current = currentStory.media.duration; // Utilise la durée de la vidéo actuelle
+                setVideoDurationLoaded(true); // Indique que la durée de la vidéo a été chargée
+            } else {
+                setVideoDurationLoaded(false); // Réinitialise si la durée de la vidéo n'est pas disponible
+            }
+        }
+    }, [selectedStory, currentStoryIndex]);
+
 
 
 
@@ -173,19 +188,35 @@ const StoriesStreamUser = () => {
     const animationRef = useRef(null); // Référence pour stocker l'animation
 
     const start = () => {
-        animationRef.current = Animated.timing(progressAnimation, {
-            toValue: 1,
-            duration: 5000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        });
-
+        const currentStory = selectedStory.container.stories[currentStoryIndex];
+        if (currentStory.media_type === 'video') {
+            // Si c'est une vidéo, utilisez la durée de la vidéo pour l'animation
+            const videoDuration = currentStory.media.duration; // Durée de la vidéo en secondes
+            const animationDuration = videoDuration * 1000; // Convertit en millisecondes
+            animationRef.current = Animated.timing(progressAnimation, {
+                toValue: 1,
+                duration: animationDuration,
+                easing: Easing.linear,
+                useNativeDriver: false,
+            });
+        } else if (currentStory.media_type === 'image') {
+            // Si c'est une image, définissez une durée fixe pour l'animation (par exemple, 15 secondes)
+            const animationDuration = 15000; // 15 secondes en millisecondes
+            animationRef.current = Animated.timing(progressAnimation, {
+                toValue: 1,
+                duration: animationDuration,
+                easing: Easing.linear,
+                useNativeDriver: false,
+            });
+        }
         animationRef.current.start(({ finished }) => {
             if (finished) {
                 goToNextStory();
             }
         });
     };
+
+
 
     const resetAnimation = () => {
         progressAnimation.setValue(0);

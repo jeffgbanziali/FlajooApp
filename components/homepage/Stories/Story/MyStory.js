@@ -110,7 +110,7 @@ const MyStory = () => {
                         )}
                         {item.container.stories[item.container.stories.length - 1].media_type === "video" && (
                           <Video
-                            source={{ uri: item.container.stories[item.container.stories.length - 1].media.media.url }}
+                            source={{ uri: item.container.stories[item.container.stories.length - 1].media.url }}
                             rate={1.0}
                             volume={1.0}
                             isMuted={true}

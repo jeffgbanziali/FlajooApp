@@ -24,7 +24,7 @@ const StoriesViewUser = ({ story }) => {
         return new Date(b.viewed_at) - new Date(a.viewed_at);
     });
 
-    console.log("Où est tu mon frangin", story.views)
+
 
 
 

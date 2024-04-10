@@ -12,6 +12,9 @@ import StoriesViewUser from './StoriesViewUser';
 import { useDarkMode } from '../../../Context/AppContext';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+
+
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 300;
 
 const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAnimation }, ref) => {

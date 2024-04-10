@@ -12,6 +12,7 @@ import {
   Dimensions,
   Platform,
   SafeAreaView,
+  Easing,
 } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -47,7 +48,7 @@ const StoriesStream = () => {
   const { i18n, t } = useTranslation()
   const [loadStories, setLoadStories] = useState(true);
   const selectedUserStories = useSelector((state) => state.storyReducer);
-
+  const [videoDurationLoaded, setVideoDurationLoaded] = useState(false);
   const storiesData = selectedUserStories.filter(story => story.container.posterId !== uid);
 
   const usersData = useSelector((state) => state.usersReducer);
@@ -193,6 +194,10 @@ const StoriesStream = () => {
 
 
 
+
+
+
+
   useEffect(() => {
     if (loadStories) {
       dispatch(getStories());
@@ -240,20 +245,11 @@ const StoriesStream = () => {
 
 
   const progressAnimation = useRef(new Animated.Value(0)).current;
+  const videoDurationRef = useRef(0);
+  const animationRef = useRef(null);
 
 
-  const start = () => {
-    Animated.timing(progressAnimation, {
-      toValue: 1,
-      duration: 15000,
-      useNativeDriver: false,
-    }).start(({ finished }) => {
-      if (finished) {
-        goToNextStory();
 
-      }
-    });
-  };
 
   const resetAnimation = () => {
     progressAnimation.setValue(0);
@@ -261,34 +257,100 @@ const StoriesStream = () => {
 
 
 
+  const restartAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.start(({ finished }) => {
+        if (finished) {
+          goToNextStory();
+        }
+      }); // Arrête l'animation en cours
+    }
+  }
+
+
+  const stopAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
+  };
+
+  const ref = useRef(null);
+
   useEffect(() => {
     resetAnimation();
     start();
 
   });
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        // Le clavier est ouvert, masquez votre partie
-        setPartVisible(false);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        // Le clavier est fermé, affichez votre partie
-        setPartVisible(true);
-      }
-    );
 
-    // Nettoyez les écouteurs lorsque le composant est démonté
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+
+
+
+
+
+
+  useEffect(() => {
+    if (selectedStory && selectedStory.container && selectedStory.container.stories) {
+      const currentStory = selectedStory.container.stories[currentStoryIndex];
+      if (currentStory.media && currentStory.media_type === 'video' && currentStory.media.duration) {
+        videoDurationRef.current = currentStory.media.duration; // Utilise la durée de la vidéo actuelle
+        setVideoDurationLoaded(true); // Indique que la durée de la vidéo a été chargée
+      } else {
+        setVideoDurationLoaded(false); // Réinitialise si la durée de la vidéo n'est pas disponible
+      }
+    }
+  }, [selectedStory, currentStoryIndex]);
+
+
+
+
+
+
+  const start = () => {
+    const currentStory = selectedStory.container.stories[currentStoryIndex];
+    if (currentStory.media_type === 'video') {
+      // Si c'est une vidéo, utilisez la durée de la vidéo pour l'animation
+      const videoDuration = currentStory.media.duration; // Durée de la vidéo en secondes
+      const animationDuration = videoDuration * 1000; // Convertit en millisecondes
+      animationRef.current = Animated.timing(progressAnimation, {
+        toValue: 1,
+        duration: animationDuration,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      });
+    } else if (currentStory.media_type === 'image') {
+      // Si c'est une image, définissez une durée fixe pour l'animation (par exemple, 15 secondes)
+      const animationDuration = 15000;
+      animationRef.current = Animated.timing(progressAnimation, {
+        toValue: 1,
+        duration: animationDuration,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      });
+    } else {
+      const animationDuration = 15000;
+      animationRef.current = Animated.timing(progressAnimation, {
+        toValue: 1,
+        duration: animationDuration,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      });
+    }
+    animationRef.current.start(({ finished }) => {
+      if (finished) {
+        goToNextStory();
+      }
+    });
+  };
+
+
+
+
+
+
+
+
+
 
 
   return (

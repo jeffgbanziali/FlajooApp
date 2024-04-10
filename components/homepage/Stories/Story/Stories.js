@@ -107,6 +107,7 @@ const Stories = () => {
           {item.container.stories && item.container.stories.length > 0 && item.container.stories[item.container.stories.length - 1].media && (
             <View
               style={{
+                backgroundColor: isDarkMode ? "#171717" : "white",
                 shadowColor: "#000",
                 shadowOffset: {
                   width: 0,
@@ -119,7 +120,7 @@ const Stories = () => {
             >
               {item.container.stories[item.container.stories.length - 1].media_type === "image" && (
                 <Image
-                  source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
+                  source={{ uri: item.container.stories[item.container.stories.length - 1].media.url }}
                   style={{
                     width: 100,
                     height: 140,
@@ -131,7 +132,7 @@ const Stories = () => {
               )}
               {item.container.stories[item.container.stories.length - 1].media_type === "video" && (
                 <Video
-                  source={{ uri: item.container.stories[item.container.stories.length - 1].media }}
+                  source={{ uri: item.container.stories[item.container.stories.length - 1].media.url }}
                   rate={1.0}
                   volume={1.0}
                   isMuted={false}
@@ -151,7 +152,7 @@ const Stories = () => {
             </View>
           )}
 
-          {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
+          {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media.url && (
             <View
               style={{
                 width: 100,

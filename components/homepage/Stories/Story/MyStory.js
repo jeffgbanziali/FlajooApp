@@ -51,6 +51,7 @@ const MyStory = () => {
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
+        backgroundColor: isDarkMode ? "#171717" : "white",
         borderRadius: 10,
         position: "relative",
         shadowColor: "#000",
@@ -87,6 +88,7 @@ const MyStory = () => {
 
                       <View
                         style={{
+                          backgroundColor: isDarkMode ? "#171717" : "white",
                           shadowColor: "#000",
                           shadowOffset: {
                             width: 0,
@@ -126,7 +128,7 @@ const MyStory = () => {
                         )}
                       </View>
                     )}
-                    {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media && (
+                    {item.container.stories && item.container.stories.length > 0 && !item.container.stories[item.container.stories.length - 1].media.url && (
                       <View
                         style={{
                           width: 100,

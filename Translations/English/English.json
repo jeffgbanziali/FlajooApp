@@ -19,6 +19,14 @@
     "Notifications":"Notifications",
     "Mode-app-dark":"Dark mode",
     "Mode-app-clear": "Clear mode",
+    "deleteTheStory":"Delete the story",
+    "Featured":"Featured",
+    "ShareIn":"Share in a post...",
+    "Send":"Send",
+    "AddMentions":"Add mentions",
+    "StorySettings":"Story Settings",
+    "DeleteStoryLoading":"Deleting the current story...",
+
 
     "Profile-picture":"Profile picture",
     "Update":"Update",

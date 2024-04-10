@@ -18,35 +18,36 @@ const StoryByText = ({ story, progressAnimation, start }) => {
                 height: "100%",
             }}
         >
-            {!story?.media && (
+            {!story?.media.url &&
+                story.text && (
 
-                <View
-                    onLayout={() => {
-                        progressAnimation.setValue(0);
-                        start();
-                    }}
-                    style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        backgroundColor: "#1E0F1C",
-                        position: "absolute",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 20,
-                        width: "92%",
-                        height: "80%",
-                    }}
-                >
-                    <Text
+                    <View
+                        onLayout={() => {
+                            progressAnimation.setValue(0);
+                            start();
+                        }}
                         style={{
-                            color: "white",
-                            fontSize: 30,
+                            flex: 1,
+                            flexDirection: "row",
+                            backgroundColor: "#1E0F1C",
+                            position: "absolute",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 20,
+                            width: "92%",
+                            height: "80%",
                         }}
                     >
-                        {story?.text}
-                    </Text>
-                </View>
-            )}
+                        <Text
+                            style={{
+                                color: "white",
+                                fontSize: 30,
+                            }}
+                        >
+                            {story?.text}
+                        </Text>
+                    </View>
+                )}
 
         </View>
     )

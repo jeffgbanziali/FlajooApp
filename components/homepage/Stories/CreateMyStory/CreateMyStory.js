@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView } from 'react-native';
 import ShowImage from './ShowImage';
 import ShowText from './ShowText';
+import Loading from '../../../Loading/Loading';
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -35,6 +36,7 @@ const CreateStory = () => {
     const userData = useSelector((state) => state.userReducer);
     const [galleryMedia, setGalleryMedia] = useState([]);
     const navigation = useNavigation();
+    const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
     const [police, setPolice] = useState(['normal', 'Arial', 'serif', ' Times New Roman', ' monospace', 'Courier New']);
     const [indicePolice, setIndicePolice] = useState(0);
     const policeActuelle = police[indicePolice];
@@ -67,87 +69,6 @@ const CreateStory = () => {
 
 
     /*************************** système de création d'une story ********************************************/
-
-    // Fonction pour gérer l'envoi de l'image
-    /*   const handleImageSubmit = async () => {
-           const mediaName = `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`;
-           const mediaUrl = await uploadStoryToFirebase(selectedImage.uri, mediaName, 'image');
-           const mediaInfo = {
-               type: 'image',
-               url: mediaUrl,
-               fileName: selectedImage.fileName,
-               fileSize: selectedImage.fileSize,
-               height: selectedImage.height,
-               width: selectedImage.width,
-           };
-           return mediaInfo;
-       };
-   
-       // Fonction pour gérer l'envoi de la vidéo
-       const handleVideoSubmit = async () => {
-           const mediaName = `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`;
-           const mediaUrl = await uploadStoryToFirebase(selectedVideo.uri, mediaName, 'video');
-           const mediaInfo = {
-               type: 'video',
-               url: mediaUrl,
-               duration: selectedVideo.duration,
-               fileName: selectedVideo.fileName,
-               fileSize: selectedVideo.fileSize,
-               height: selectedVideo.height,
-               width: selectedVideo.width,
-   
-           };
-           return mediaInfo;
-       };
-   
-       // Fonction pour gérer la soumission de l'histoire
-       const submitStory = async (mediaInfo) => {
-           if (mediaInfo) { // Vérifiez si mediaInfo est défini
-               const storyData = {
-                   posterId: userData._id,
-                   text: postText,
-                   media: mediaInfo,
-               };
-       
-               // Sauvegarde localement avant l'envoi au serveur
-               saveStoryLocally(storyData);
-       
-               dispatch(addStory(storyData));
-               Alert.alert('Succès', 'Votre story a été publiée avec succès !');
-               setPostText('');
-               setSelectedImage(null);
-               setSelectedVideo(null);
-               setLoadStories(true);
-               navigation.goBack('TabNavigation');
-           } else {
-               Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
-           }
-       };
-       
-   
-       // Fonction principale pour gérer la soumission de l'histoire
-       const handleStorySubmit = async () => {
-           try {
-               let mediaInfo = null;
-   
-               if (selectedImage) {
-                   mediaInfo = await handleImageSubmit();
-               } else if (selectedVideo) {
-                   mediaInfo = await handleVideoSubmit();
-               }
-   
-               if ((postText && !mediaInfo) || (!postText && mediaInfo) || (postText && mediaInfo)) {
-                   submitStory(mediaInfo);
-               } else {
-                   Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
-               }
-           } catch (error) {
-               console.error('Erreur lors de la création de la story :', error);
-               let errorMessage = 'Une erreur s\'est produite lors de la création de la story.';
-               Alert.alert('Erreur', errorMessage);
-           }
-       };*/
-
 
 
 
@@ -202,6 +123,7 @@ const CreateStory = () => {
     };
 
     const handleStorySubmit = async () => {
+        setIsLoadingSignIn(true)
         try {
             let mediaType = null;
             let mediaUrl = null;
@@ -222,11 +144,18 @@ const CreateStory = () => {
             } else {
                 Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour publier une histoire.');
             }
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Erreur lors de la création de la story :', error);
             let errorMessage = 'Une erreur s\'est produite lors de la création de la story.';
             Alert.alert('Erreur', errorMessage);
         }
+        finally {
+            setTimeout(() => {
+                setIsLoadingSignIn(false);
+            }, 5000);
+        }
+
     };
 
 
@@ -388,276 +317,287 @@ const CreateStory = () => {
 
     return (
 
+
         <>
-            <SafeAreaView
-                keyboardShouldPersistTaps="always"
-                style={{
-                    flex: 1,
-                    backgroundColor: isDarkMode ? "#171717" : "white",
-                    position: "relative",
-
-                }}
-            >
-
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        borderBottomWidth: 1,
-                        paddingRight: 6,
-                        borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
-                        //backgroundColor: 'red'
-                    }}>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}>
-                        <TouchableOpacity
-                            onPress={handleClickReturnHome}
+            {
+                isLoadingSignIn ? (
+                    <Loading />
+                ) : (
+                    <>
+                        <SafeAreaView
+                            keyboardShouldPersistTaps="always"
                             style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: 40,
-                                height: 40,
-                                borderRadius: 30,
-                                marginLeft: "3.5%"
-                            }}>
-                            <View>
-                                <AntDesign
-                                    name="arrowleft"
-                                    size={25}
-                                    color={isDarkMode ? "#F5F5F5" : "black"}
-                                />
+                                flex: 1,
+                                backgroundColor: isDarkMode ? "#171717" : "white",
+                                position: "relative",
+
+                            }}
+                        >
+
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    borderBottomWidth: 1,
+                                    paddingRight: 6,
+                                    borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+                                    //backgroundColor: 'red'
+                                }}>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}>
+                                    <TouchableOpacity
+                                        onPress={handleClickReturnHome}
+                                        style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            width: 40,
+                                            height: 40,
+                                            borderRadius: 30,
+                                            marginLeft: "3.5%"
+                                        }}>
+                                        <View>
+                                            <AntDesign
+                                                name="arrowleft"
+                                                size={25}
+                                                color={isDarkMode ? "#F5F5F5" : "black"}
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <Text
+                                        style={{
+                                            fontSize: 20,
+                                            fontWeight: 'bold',
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            marginLeft: "3.5%",
+                                            alignSelf: 'center'
+                                        }}>
+                                        {t('CreateStory')}
+                                    </Text>
+
+                                </View>
+
+
+                                <View
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: 100,
+                                    }}
+                                >
+                                    <Image
+                                        source={{
+                                            uri: userData.picture
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: 100,
+                                        }} />
+                                </View>
+
+
                             </View>
-                        </TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: 20,
-                                fontWeight: 'bold',
-                                color: isDarkMode ? "#F5F5F5" : "black",
-                                marginLeft: "3.5%",
-                                alignSelf: 'center'
-                            }}>
-                            {t('CreateStory')}
-                        </Text>
 
-                    </View>
+                            <View
+                                style={{
+                                    width: "100%",
+                                    flexDirection: "row",
+                                    justifyContent: "space-around",
+                                    marginTop: 10
+                                }}>
+
+                                <TouchableOpacity
+                                    onPress={handleText}
+                                    style={{
+                                        width: 100,
+                                        height: 140,
+                                        backgroundColor: "#8A8A94",
+                                        borderRadius: 20,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+
+                                    }}>
+                                    <View
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            backgroundColor: "blue",
+                                            borderRadius: 100,
+                                        }}
+                                    >
+                                        <MaterialCommunityIcons name="format-letter-case" size={24} color="white" />
+                                    </View>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "white",
+                                            fontSize: 12,
+                                            marginTop: 10,
+                                        }}
+                                    >
+                                        {t("WriteText")}
+                                    </Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={{
+                                        width: 100,
+                                        height: 140,
+                                        backgroundColor: "#7D5C96",
+                                        borderRadius: 20,
+                                        justifyContent: "center",
+                                        alignItems: "center"
+
+                                    }}>
+                                    <View
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            backgroundColor: "green",
+                                            borderRadius: 100,
+                                        }}>
+                                        <Feather name="music" size={24} color="white" />
+                                    </View>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "white",
+                                            fontSize: 16,
+                                            marginTop: 10,
+
+                                        }}
+                                    >
+                                        {t(' Music')}
+                                    </Text>
+
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={goCamera}
+                                    style={{
+                                        width: 100,
+                                        height: 140,
+                                        backgroundColor: "#8C1616",
+                                        borderRadius: 20,
+                                        justifyContent: "center",
+                                        alignItems: "center"
+
+                                    }}>
+                                    <View
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            backgroundColor: "yellow",
+                                            borderRadius: 100,
+                                        }}
+                                    >
+                                        <Feather name="smile" size={24} color="black" />
+                                    </View>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "white",
+                                            marginTop: 10,
+
+                                            fontSize: 16
+                                        }}
+                                    >
+                                        {t('Selfie')}
+                                    </Text>
+
+                                </TouchableOpacity>
+
+                            </View>
 
 
-                    <View
-                        style={{
-                            width: 35,
-                            height: 35,
-                            borderRadius: 100,
-                        }}
-                    >
-                        <Image
-                            source={{
-                                uri: userData.picture
-                            }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: 100,
-                            }} />
-                    </View>
+                            <MyGallery
+                                isDarkMode={isDarkMode}
+                                galleryMedia={galleryMedia}
+                                selectImage={selectImage} />
+
+                        </SafeAreaView>
 
 
-                </View>
 
-                <View
-                    style={{
-                        width: "100%",
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        marginTop: 10
-                    }}>
 
-                    <TouchableOpacity
-                        onPress={handleText}
-                        style={{
-                            width: 100,
-                            height: 140,
-                            backgroundColor: "#8A8A94",
-                            borderRadius: 20,
-                            justifyContent: "center",
-                            alignItems: "center",
-
-                        }}>
-                        <View
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: "blue",
-                                borderRadius: 100,
-                            }}
+                        <Modal
+                            visible={showImage}
+                            transparent={true}
+                            animationType="slide"
+                            onRequestClose={closeImageModal}
                         >
-                            <MaterialCommunityIcons name="format-letter-case" size={24} color="white" />
-                        </View>
-                        <Text
-                            style={{
-                                color: isDarkMode ? "#F5F5F5" : "white",
-                                fontSize: 12,
-                                marginTop: 10,
-                            }}
-                        >
-                            {t("WriteText")}
-                        </Text>
-
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            width: 100,
-                            height: 140,
-                            backgroundColor: "#7D5C96",
-                            borderRadius: 20,
-                            justifyContent: "center",
-                            alignItems: "center"
-
-                        }}>
-                        <View
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: "green",
-                                borderRadius: 100,
-                            }}>
-                            <Feather name="music" size={24} color="white" />
-                        </View>
-                        <Text
-                            style={{
-                                color: isDarkMode ? "#F5F5F5" : "white",
-                                fontSize: 16,
-                                marginTop: 10,
-
-                            }}
-                        >
-                            {t(' Music')}
-                        </Text>
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={goCamera}
-                        style={{
-                            width: 100,
-                            height: 140,
-                            backgroundColor: "#8C1616",
-                            borderRadius: 20,
-                            justifyContent: "center",
-                            alignItems: "center"
-
-                        }}>
-                        <View
-                            style={{
-                                width: 40,
-                                height: 40,
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: "yellow",
-                                borderRadius: 100,
-                            }}
-                        >
-                            <Feather name="smile" size={24} color="black" />
-                        </View>
-                        <Text
-                            style={{
-                                color: isDarkMode ? "#F5F5F5" : "white",
-                                marginTop: 10,
-
-                                fontSize: 16
-                            }}
-                        >
-                            {t('Selfie')}
-                        </Text>
-
-                    </TouchableOpacity>
-
-                </View>
-
-
-                <MyGallery
-                    isDarkMode={isDarkMode}
-                    galleryMedia={galleryMedia}
-                    selectImage={selectImage} />
-
-            </SafeAreaView>
+                            <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: isDarkMode ? "black" : "black",
+                                    width: windowWidth,
+                                    height: windowHeight
+                                }}>
 
 
 
 
-            <Modal
-                visible={showImage}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={closeImageModal}
-            >
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={{
-                        flex: 1,
-                        backgroundColor: isDarkMode ? "black" : "black",
-                        width: windowWidth,
-                        height: windowHeight
-                    }}>
+                                <ShowImage
+                                    selectedImage={selectedImage}
+                                    selectedVideo={selectedVideo}
+                                    addText={addText}
+                                    postText={postText}
+                                    handleAddEffect={handleAddEffect}
+                                    setPostText={setPostText}
+                                    handlePress={handlePress}
+                                    handleStorySubmit={handleStorySubmit}
+                                    isDarkMode={isDarkMode}
+                                    closeImageModal={closeImageModal}
+                                />
+                            </KeyboardAvoidingView>
 
 
+                        </Modal>
+
+                        <Modal
+                            visible={showText}
+                            transparent={true}
+                            animationType="slide"
+                            onRequestClose={closeModalText}>
+
+                            <KeyboardAvoidingView
+                                behavior={Platform.OS === "ios" ? "padding" : null}
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: isDarkMode ? "black" : "gray",
+                                    height: "100%"
+                                }}>
 
 
-                    <ShowImage
-                        selectedImage={selectedImage}
-                        selectedVideo={selectedVideo}
-                        addText={addText}
-                        postText={postText}
-                        handleAddEffect={handleAddEffect}
-                        setPostText={setPostText}
-                        handlePress={handlePress}
-                        handleStorySubmit={handleStorySubmit}
-                        isDarkMode={isDarkMode}
-                        closeImageModal={closeImageModal}
-                    />
-                </KeyboardAvoidingView>
+                                <ShowText
+                                    selectedImage={selectedImage}
+                                    selectedVideo={selectedVideo}
+                                    addText={addText}
+                                    postText={postText}
+                                    policeActuelle={policeActuelle}
+                                    handleAddEffect={handleAddEffect}
+                                    setPostText={setPostText}
+                                    handlePress={handlePress}
+                                    handleStorySubmit={handleStorySubmit}
+                                    isDarkMode={isDarkMode}
+                                    closeModalText={closeModalText} />
 
 
-            </Modal>
+                            </KeyboardAvoidingView>
 
-            <Modal
-                visible={showText}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={closeModalText}>
-
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : null}
-                    style={{
-                        flex: 1,
-                        backgroundColor: isDarkMode ? "black" : "gray",
-                        height: "100%"
-                    }}>
+                        </Modal>
+                    </>
+                )
+            }
 
 
-                    <ShowText
-                        selectedImage={selectedImage}
-                        selectedVideo={selectedVideo}
-                        addText={addText}
-                        postText={postText}
-                        policeActuelle={policeActuelle}
-                        handleAddEffect={handleAddEffect}
-                        setPostText={setPostText}
-                        handlePress={handlePress}
-                        handleStorySubmit={handleStorySubmit}
-                        isDarkMode={isDarkMode}
-                        closeModalText={closeModalText} />
-
-
-                </KeyboardAvoidingView>
-
-            </Modal>
 
         </>
 

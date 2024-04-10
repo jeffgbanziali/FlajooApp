@@ -19,7 +19,13 @@
     "Notifications":"Notifications",
     "Mode-app-dark":"Mode sombre",
     "Mode-app-clear": "Mode clair",
-
+    "deleteTheStory":"Supprimer la story",
+    "Featured":"Mettre à la une ",
+    "ShareIn": "Partager dans une publication...",
+    "Send":"Envoyer",
+    "AddMentions":"Ajouter des mentions",
+    "StorySettings":"Paramètres de la story",
+    "DeleteStoryLoading":"Suppression de la story en cours...",
 
     "Profile-picture":"Photo de profil",
     "Update":"Modfier",

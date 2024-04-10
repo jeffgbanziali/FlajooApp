@@ -15,7 +15,7 @@ const StoryByText = ({ story, progressAnimation, start }) => {
                 height: "100%",
             }}
         >
-            {!story.media &&
+            {!story.media.url  &&
                 story.text && (
                     <View
                         onLayout={() => {

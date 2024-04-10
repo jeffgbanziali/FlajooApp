@@ -190,7 +190,7 @@ const StoriesStreamUser = () => {
             });
         } else if (currentStory.media_type === 'image') {
             // Si c'est une image, définissez une durée fixe pour l'animation (par exemple, 15 secondes)
-            const animationDuration = 15000;
+            const animationDuration = 10000;
             animationRef.current = Animated.timing(progressAnimation, {
                 toValue: 1,
                 duration: animationDuration,
@@ -198,7 +198,7 @@ const StoriesStreamUser = () => {
                 useNativeDriver: false,
             });
         } else {
-            const animationDuration = 15000;
+            const animationDuration = 10000;
             animationRef.current = Animated.timing(progressAnimation, {
                 toValue: 1,
                 duration: animationDuration,
@@ -221,7 +221,7 @@ const StoriesStreamUser = () => {
 
 
 
-    const restartAnimation = () => {
+    const startAnimation = () => {
         if (animationRef.current) {
             animationRef.current.start(({ finished }) => {
                 if (finished) {
@@ -242,7 +242,7 @@ const StoriesStreamUser = () => {
 
     useEffect(() => {
         resetAnimation();
-        restartAnimation();
+        startAnimation();
         start();
         return () => {
             stopAnimation(); // Arrête l'animation lors du démontage du composant
@@ -394,7 +394,7 @@ const StoriesStreamUser = () => {
                             <StoryTools
                                 setIsDeleteLoading={setIsDeleteLoading}
                                 stopAnimation={stopAnimation}
-                                startAnimation={restartAnimation}
+                                startAnimation={startAnimation}
                                 selectedStory={selectedStory.container}
                                 story={selectedStory.container.stories[currentStoryIndex]} />
 
@@ -428,10 +428,12 @@ const StoriesStreamUser = () => {
                                     width: "100%",
 
                                 }} >
+
+
                                 <BottomSheetStories
                                     story={selectedStory.container.stories[currentStoryIndex]}
                                     stopAnimation={stopAnimation}
-                                    startAnimation={restartAnimation}
+                                    startAnimation={startAnimation}
                                     ref={ref} />
                             </GestureHandlerRootView>
 
@@ -482,10 +484,10 @@ const StoriesStreamUser = () => {
                             </View>
 
 
-                        </View>
+                        </View >
 
 
-                    </SafeAreaView>
+                    </SafeAreaView >
                 )}
 
 

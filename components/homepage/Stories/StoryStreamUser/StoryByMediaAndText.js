@@ -66,7 +66,7 @@ const StoryByMediaAndText = ({ story, progressAnimation, start }) => {
                         )}
 
                         <LinearGradient
-                            colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                            colors={["transparent", isDarkMode ? "black" : "black"]}
                             style={{
                                 position: "absolute",
                                 bottom: 0,

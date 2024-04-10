@@ -40,7 +40,7 @@ const StoryByMediaAndText = ({ story, progressAnimation, start }) => {
                         )}
                         {story.media_type === 'video' && (
                             <Video
-                                source={{ uri: story.media.url}}
+                                source={{ uri: story.media.url }}
                                 rate={1.0}
                                 volume={1.0}
                                 isMuted={false}
@@ -59,7 +59,7 @@ const StoryByMediaAndText = ({ story, progressAnimation, start }) => {
                             />
                         )}
                         <LinearGradient
-                            colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                            colors={["transparent", isDarkMode ? "black" : "black"]}
                             style={{
                                 position: "absolute",
                                 bottom: 0,

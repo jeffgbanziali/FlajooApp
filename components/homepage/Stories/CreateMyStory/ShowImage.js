@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Video from 'react-native-video';
 import { useTranslation } from 'react-i18next';
 
-const ShowImage = ({ selectedImage, addText, postText,selectedEffect, handleAddEffect, setPostText, handlePress, handleStorySubmit, isDarkMode, selectedVideo, closeImageModal }) => {
+const ShowImage = ({ selectedImage, addText, postText, selectedEffect, handleAddEffect, setPostText, handlePress, handleStorySubmit, isDarkMode, selectedVideo, closeImageModal }) => {
 
     const { t } = useTranslation();
 
@@ -53,7 +53,7 @@ const ShowImage = ({ selectedImage, addText, postText,selectedEffect, handleAddE
                     />
                 )}
 
-                {selectedVideo && (
+                {selectedVideo && !selectedImage && (
 
                     <Video
                         source={{ uri: selectedVideo.uri }}

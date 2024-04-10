@@ -79,25 +79,25 @@ export const formatPostDate = (timestamp) => {
 
     if (timeDifference < millisecondsPerMinute) {
         const secondsAgo = Math.floor(timeDifference / millisecondsPerSecond);
-        return `il y a ${secondsAgo} seconde(s)`;
+        return `Il y a ${secondsAgo} seconde(s)`;
     } else if (timeDifference < millisecondsPerHour) {
         const minutesAgo = Math.floor(timeDifference / millisecondsPerMinute);
-        return `il y a ${minutesAgo} minute(s)`;
+        return `Il y a ${minutesAgo} minute(s)`;
     } else if (timeDifference < millisecondsPerDay) {
         const hoursAgo = Math.floor(timeDifference / millisecondsPerHour);
         if (isSameDay(currentDate, postDate)) {
-            return `aujourd'hui à ${pad(postDate.getHours())}:${pad(postDate.getMinutes())}`;
+            return `Aujourd'hui, ${pad(postDate.getHours())}:${pad(postDate.getMinutes())}`;
         } else if (isYesterday(currentDate, postDate)) {
-            return `hier à ${pad(postDate.getHours())}:${pad(postDate.getMinutes())}`;
+            return `Hier à ${pad(postDate.getHours())}:${pad(postDate.getMinutes())}`;
         } else {
-            return `il y a ${hoursAgo} heure(s)`;
+            return `Il y a ${hoursAgo} heure(s)`;
         }
     } else if (timeDifference < millisecondsPerWeek) {
         const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
-        return `il y a ${daysAgo} jour(s)`;
+        return `Il y a ${daysAgo} jour(s)`;
     } else {
         const weeksAgo = Math.floor(timeDifference / millisecondsPerWeek);
-        return `il y a ${weeksAgo} semaine(s)`;
+        return `Il y a ${weeksAgo} semaine(s)`;
     }
 };
 

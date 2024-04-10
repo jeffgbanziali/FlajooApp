@@ -56,7 +56,7 @@ const StoriesViewUser = ({ story }) => {
                         <View
                             style={{
                                 width: '100%',
-                                height: 70,
+                                height: 60,
                                 paddingLeft: '4%',
                                 alignItems: 'center',
                                 flexDirection: 'row',
@@ -65,8 +65,8 @@ const StoriesViewUser = ({ story }) => {
                             }}>
                             <View
                                 style={{
-                                    width: 50,
-                                    height: 50,
+                                    width: 42,
+                                    height: 42,
                                     borderRadius: 100,
 
                                 }}>
@@ -84,7 +84,6 @@ const StoriesViewUser = ({ story }) => {
                                     }}
                                     style={{
                                         width: '100%',
-                                        backgroundColor: 'green',
                                         height: '100%',
                                         borderRadius: 100,
                                     }}
@@ -94,15 +93,16 @@ const StoriesViewUser = ({ story }) => {
                                 style={{
                                     width: '100%',
                                     height: '100%',
-                                    justifyContent: 'center',
+                                    justifyContent: 'space-evenly',
                                     paddingLeft: '5%',
                                     //backgroundColor: "red"
 
                                 }}>
                                 <Text
                                     style={{
-                                        fontSize: 20,
-                                        fontWeight: '600',
+                                        fontSize: 22,
+                                        letterSpacing: 1,
+                                        fontWeight: '500',
                                         color: isDarkMode ? "#F5F5F5" : "black",
                                     }}>
                                     {!isEmpty(usersData[0]) &&
@@ -113,9 +113,9 @@ const StoriesViewUser = ({ story }) => {
                                 </Text>
                                 <Text
                                     style={{
-                                        fontSize: 14,
+                                        fontSize: 18,
                                         fontWeight: 'normal',
-                                        color: isDarkMode ? "#F5F5F5" : "gray",
+                                        color: isDarkMode ? "gray" : "gray",
                                     }}>
                                     {formatPostDate(item.viewed_at)}
                                 </Text>
@@ -135,20 +135,14 @@ const StoriesViewUser = ({ story }) => {
                 height: "66%",
                 width: "100%",
                 shadowColor: "#000",
-                // backgroundColor: "red",
-                shadowOffset: {
-                    width: 0,
-                    height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
+                //backgroundColor: "red",
+                alignItems: "center"
             }}
         >
             <View
                 style={{
                     width: "100%",
-                    height: 50,
+                    height: 40,
                     //backgroundColor: 'black',
                     alignItems: "center",
                     justifyContent: "center"
@@ -156,14 +150,15 @@ const StoriesViewUser = ({ story }) => {
                 <View
                     style={{
                         width: "100%",
-                        //backgroundColor: 'red',
+                        height: "100%",
                         alignItems: "center",
+                        //backgroundColor: "green",
                         justifyContent: "center",
                         flexDirection: "row"
                     }}>
                     <Text
                         style={{
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: '500',
                             color: isDarkMode ? "#F5F5F5" : "black",
                         }}>
@@ -171,8 +166,8 @@ const StoriesViewUser = ({ story }) => {
                     </Text>
                     <Text
                         style={{
-                            fontSize: 20,
-                            fontWeight: '600',
+                            fontSize: 18,
+                            fontWeight: '500',
                             paddingLeft: "2%",
                             color: isDarkMode ? "#F5F5F5" : "black",
                         }}>

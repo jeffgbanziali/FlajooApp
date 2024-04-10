@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useImperativeHandle } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle } from 'react';
 import { View, Dimensions } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, {
@@ -25,11 +25,15 @@ const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAn
     const scrollTo = useCallback((destination) => {
         'worklet';
         active.value = destination !== 0;
+        if (destination !== 0) {
+            stopAnimation();
+        }
         translateY.value = withSpring(destination, { damping: 50 });
-    }, []);
+    }, [stopAnimation]);
 
     const isActive = useCallback(() => {
         return active.value;
+
     }, []);
 
     useImperativeHandle(ref, () => ({ scrollTo, isActive }), [scrollTo, isActive]);
@@ -41,8 +45,8 @@ const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAn
     const gesture = Gesture.Pan()
         .onStart(() => {
             context.value = { y: translateY.value };
-            // Arrête l'animation lorsque le geste commence
-            stopAnimation();
+
+
         })
         .onUpdate((event) => {
             translateY.value = event.translationY + context.value.y;
@@ -51,13 +55,14 @@ const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAn
         .onEnd(() => {
             if (translateY.value > -SCREEN_HEIGHT / 3) {
                 scrollTo(0);
-                startAnimation();
+
 
             } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
                 scrollTo(MAX_TRANSLATE_Y);
             }
 
         });
+
 
     const reBottomSheet = useAnimatedStyle(() => {
         const borderRadius = interpolate(
@@ -72,6 +77,8 @@ const BottomSheetStories = forwardRef(({ children, story, stopAnimation, startAn
             transform: [{ translateY: translateY.value }],
         };
     });
+
+
 
     return (
         <GestureDetector gesture={gesture}>

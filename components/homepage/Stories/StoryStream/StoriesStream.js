@@ -28,6 +28,7 @@ import { useTranslation } from "react-i18next";
 import StoryByMediaAndText from "./StoryByMediaAndText";
 import StoryByMedia from "./StoryByMedia";
 import StoryByText from "./StoryByText";
+import StorySend from "./StorySend";
 
 
 
@@ -257,7 +258,7 @@ const StoriesStream = () => {
 
 
 
-  const restartAnimation = () => {
+  const startAnimation = () => {
     if (animationRef.current) {
       animationRef.current.start(({ finished }) => {
         if (finished) {
@@ -320,7 +321,7 @@ const StoriesStream = () => {
       });
     } else if (currentStory.media_type === 'image') {
       // Si c'est une image, définissez une durée fixe pour l'animation (par exemple, 15 secondes)
-      const animationDuration = 15000;
+      const animationDuration = 10000000000000;
       animationRef.current = Animated.timing(progressAnimation, {
         toValue: 1,
         duration: animationDuration,
@@ -328,7 +329,7 @@ const StoriesStream = () => {
         useNativeDriver: false,
       });
     } else {
-      const animationDuration = 15000;
+      const animationDuration = 10000;
       animationRef.current = Animated.timing(progressAnimation, {
         toValue: 1,
         duration: animationDuration,
@@ -625,24 +626,20 @@ const StoriesStream = () => {
               width: "100%",
               justifyContent: "space-between",
             }}>
-            <AddStoryComment story={selectedStory.container.stories[currentStoryIndex]} />
-            <View
-              style={{
-                width: 50,
-                height: 50,
-                marginLeft: 2,
-                marginRight: 4,
-                //backgroundColor: "red",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 3
+            <AddStoryComment
+              story={selectedStory.container.stories[currentStoryIndex]} />
 
-              }}
-            >
-              <LikeStoriesButton
-                story={selectedStory.container?.stories[currentStoryIndex]}
-              />
-            </View>
+            <StorySend
+              stopAnimation={stopAnimation}
+              startAnimation={startAnimation}
+              selectedStory={selectedStory.container}
+              story={selectedStory.container.stories[currentStoryIndex]}
+            />
+
+
+            <LikeStoriesButton
+              story={selectedStory.container?.stories[currentStoryIndex]}
+            />
           </View>
 
         </KeyboardAvoidingView>

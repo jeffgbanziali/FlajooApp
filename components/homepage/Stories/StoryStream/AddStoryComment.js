@@ -32,10 +32,11 @@ const AddStoryComment = ({ story }) => {
     };
 
     return (
+        
         <View
             keyboardShouldPersistTaps="always"
             style={{
-                width: "75%",
+                width: "72%",
                 height: 50,
                 marginLeft: 10,
                 flexDirection: "row",

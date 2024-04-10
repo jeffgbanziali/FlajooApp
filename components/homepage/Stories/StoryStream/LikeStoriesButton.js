@@ -33,13 +33,46 @@ const LikeStoriesButton = ({ story }) => {
       else return false;
     });
   }, [uid, story?.likers]);
-  
+
 
 
   return (
-    <View>
-      {uid && liked == false && (
-        <>
+
+    <View
+      style={{
+        width: 50,
+        height: 50,
+        marginRight: 4,
+        //backgroundColor: "red",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 3
+
+      }}
+    >
+      <View>
+        {uid && liked == false && (
+          <>
+            <TouchableOpacity
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={like}
+            >
+              <Feather
+                name="heart"
+                size={35}
+                color="white"
+
+              />
+            </TouchableOpacity>
+          </>
+        )}
+        {uid && liked && (
           <TouchableOpacity
             style={{
               width: 50,
@@ -48,35 +81,16 @@ const LikeStoriesButton = ({ story }) => {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={like}
+            onPress={unlike}
           >
-            <Feather
+            <AntDesign
               name="heart"
               size={35}
-              color="white"
-
+              color="red"
             />
           </TouchableOpacity>
-        </>
-      )}
-      {uid && liked && (
-        <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={unlike}
-        >
-          <AntDesign
-            name="heart"
-            size={35}
-            color="red"
-          />
-        </TouchableOpacity>
-      )}
+        )}
+      </View>
     </View>
   );
 };

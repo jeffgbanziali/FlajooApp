@@ -8,6 +8,7 @@ import { useDarkMode } from "../Context/AppContext";
 import { TouchableOpacity } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useTranslation } from "react-i18next";
+import { APP_API_URL } from "../../config";
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -25,7 +26,7 @@ const MessagesUser = ({ message, own, user }) => {
 
 
 
-  
+
   const messageTools = () => {
     if (showMessageTools) {
       Animated.timing(messageHeight, {
@@ -65,7 +66,7 @@ const MessagesUser = ({ message, own, user }) => {
 
   const deleteMessage = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/message/${message._id}`, {
+      const response = await fetch(`${APP_API_URL}/api/message/${message._id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +150,8 @@ const MessagesUser = ({ message, own, user }) => {
                         {" "}
                         <Text
                           style={{
-                            fontWeight: "bold",
+                            fontWeight: "400",
+                            marginLeft: 10,
                             fontSize: 14,
                             color: "lightgray",
                           }}
@@ -234,7 +236,8 @@ const MessagesUser = ({ message, own, user }) => {
                               {" "}
                               <Text
                                 style={{
-                                  fontWeight: "bold",
+                                  fontWeight: "400",
+                                  marginLeft: 10,
                                   fontSize: 14,
                                   color: "lightgray",
                                 }}
@@ -387,7 +390,8 @@ const MessagesUser = ({ message, own, user }) => {
                           {" "}
                           <Text
                             style={{
-                              fontWeight: "bold",
+                              fontWeight: "400",
+                              marginLeft: 10,
                               fontSize: 14,
                               color: "lightgray",
                             }}
@@ -470,7 +474,8 @@ const MessagesUser = ({ message, own, user }) => {
                               {" "}
                               <Text
                                 style={{
-                                  fontWeight: "bold",
+                                  fontWeight: "400",
+                                  marginLeft: 10,
                                   fontSize: 14,
                                   color: "lightgray",
                                 }}

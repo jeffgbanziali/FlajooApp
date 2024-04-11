@@ -97,45 +97,55 @@ const Conversation = ({ conversation, currentUser }) => {
             flexDirection: "row",
           }}
         >
-          <Pressable
-            onPress={viewProfile}
+          <View
             style={{
-              width: 60,
-              height: 60,
-              borderRadius: 100,
-              marginLeft: "2%",
-            }}
-          >
-            <Image
-              source={{
-                uri: user?.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-              }}
+              width: "20%",
+              // backgroundColor: "green",
+              alignItems: "center",
+            }}>
+            <Pressable
+              onPress={viewProfile}
               style={{
-                width: "100%",
-                height: "100%",
+                width: 60,
+                height: 60,
                 borderRadius: 100,
               }}
-            />
-          </Pressable>
+            >
+              <Image
+                source={{
+                  uri: user?.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 100,
+                }}
+              />
+            </Pressable>
+          </View>
+
 
           <View
             style={{
               display: "flex",
-              width: "70%",
+              width: "80%",
               height: "100%",
+              //backgroundColor: "red",
               flexDirection: "row",
               justifyContent: "space-between",
             }}>
             <View
               style={{
                 justifyContent: "center",
-                marginLeft: "3%",
+                //backgroundColor: "red",
+                height: "80%",
+                width: "84%"
               }}>
               <Text
                 style={{
-                  fontSize: 22,
+                  fontSize: 18,
                   alignItems: "center",
-                  fontWeight: "bold",
+                  fontWeight: "600",
                   color: isDarkMode ? "white" : "black",
                 }}
               >
@@ -144,58 +154,60 @@ const Conversation = ({ conversation, currentUser }) => {
               <Text
                 style={{
                   fontSize: 16,
-                  marginTop: 3,
+                  marginTop: 4,
                   alignItems: "center",
-                  fontWeight: "500",
+                  fontWeight: "400",
                   color: "gray"
                 }}
               >
                 {renderLimitedMessage(conversation.message)}
               </Text>
             </View>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: "14%",
-              height: "100%",
-            }}>
-            <Text
-              style={{
-                fontSize: 14,
-                alignItems: "center",
-                fontWeight: "600",
-                color: isDarkMode ? "white" : "black",
 
-              }}
-            >
-              22:11
-            </Text>
             <View
               style={{
-                width: 20,
-                height: 20,
-                borderRadius: 100,
-                backgroundColor: "red",
                 alignItems: "center",
-                marginTop: 6,
-                justifyContent: "center"
-
-              }}
-            >
+                justifyContent: "center",
+                width: "16%",
+                height: "80%",
+              }}>
               <Text
                 style={{
                   fontSize: 12,
                   alignItems: "center",
-                  fontWeight: "normal",
-                  color: "white"
+                  fontWeight: "600",
+                  color: isDarkMode ? "white" : "black",
+
                 }}
               >
-                2
+                22:11
               </Text>
+              <View
+                style={{
+                  width: 18,
+                  height: 18,
+                  borderRadius: 100,
+                  backgroundColor: "red",
+                  alignItems: "center",
+                  marginTop: 6,
+                  justifyContent: "center"
+
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 10,
+                    alignItems: "center",
+                    fontWeight: "normal",
+                    color: "white"
+                  }}
+                >
+                  2
+                </Text>
+              </View>
             </View>
           </View>
+
 
         </View>
 

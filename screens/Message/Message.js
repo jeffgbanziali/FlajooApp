@@ -16,7 +16,6 @@ import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
 import { SafeAreaView } from "react-native";
-import { initializeUseSelector } from "react-redux/es/hooks/useSelector";
 import { isEmpty } from "../../components/Context/Utils";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +25,7 @@ const Message = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [isPressed, setIsPressed] = useState(false);
   const { isDarkMode } = useDarkMode();
-  const usersData = initializeUseSelector((state) => state.usersReducer);
+  const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
@@ -190,8 +189,10 @@ const Message = () => {
       <View
         style={{
           height: "14%",
+          //backgroundColor: "red",
           width: "100%",
           flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         <ChatOnline />
@@ -281,6 +282,7 @@ const Message = () => {
               style={{
                 width: "100%",
                 height: "78%",
+                marginTop: 10,
               }}
             >
               <FlatList

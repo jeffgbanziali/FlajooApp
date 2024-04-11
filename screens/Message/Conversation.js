@@ -3,13 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
-import { formatPostDate } from "../../components/Context/Utils";
+import { formatPostDate, isEmpty } from "../../components/Context/Utils";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useDarkMode } from "../../components/Context/AppContext";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
+import { useDispatch, useSelector } from "react-redux";
 
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
@@ -18,24 +19,22 @@ const Conversation = ({ conversation, currentUser }) => {
   const [user, setUser] = useState();
   const [showOptions, setShowOptions] = useState(false);
 
-  useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser);
-    console.log(currentUser._id);
+  const usersData = useSelector((state) => state.usersReducer);
 
-    const getFriendInfo = async () => {
-      try {
-        const response = await axios.get(
-          `${APP_API_URL}/api/user/${friendId}`
-        );
-        setUser(response.data);
-        console.log("Updated user state:", response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const friendId = conversation.members.find((m) => m !== currentUser);
 
-    getFriendInfo();
-  }, []);
+
+  const foundUser = usersData.map(user => {
+    if (user._id === friendId) {
+      return user;
+    }
+    return null;
+  }).filter(user => user !== null)[0];
+
+
+
+
+
 
   const containerStyle = {
     display: "flex",
@@ -50,7 +49,7 @@ const Conversation = ({ conversation, currentUser }) => {
     console.log("clicked");
     navigation.navigate("Chatlist", {
       conversationId: conversation._id,
-      user: user
+      user: foundUser
     });
   };
 
@@ -113,8 +112,19 @@ const Conversation = ({ conversation, currentUser }) => {
             >
               <Image
                 source={{
-                  uri: user?.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                  uri:
+                    !isEmpty(usersData[0]) &&
+                    usersData
+                      .map((user) => {
+                        if (user._id === friendId) {
+                          return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
+                        }
+                        return null;
+                      })
+                      .filter((url) => url !== null) // Retirer les éléments nuls
+                      .join(""),
                 }}
+
                 style={{
                   width: "100%",
                   height: "100%",
@@ -149,7 +159,11 @@ const Conversation = ({ conversation, currentUser }) => {
                   color: isDarkMode ? "white" : "black",
                 }}
               >
-                {user?.pseudo}
+                {!isEmpty(usersData[0]) &&
+                  usersData.map((user) => {
+                    if (user._id === friendId) return user.pseudo;
+                    else return null;
+                  })}
               </Text>
               <Text
                 style={{
@@ -286,7 +300,7 @@ const Conversation = ({ conversation, currentUser }) => {
                   fontWeight: '500'
                 }}
               >
-                {user?.pseudo}
+                {foundUser?.pseudo}
               </Text>
             </View>
             <View
@@ -313,7 +327,7 @@ const Conversation = ({ conversation, currentUser }) => {
             >
 
               <Image
-                source={{ uri: user?.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
+                source={{ uri: foundUser?.picture ? foundUser.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -338,7 +352,7 @@ const Conversation = ({ conversation, currentUser }) => {
               }}
             >
               <TouchableOpacity
-                onPress={() => goProfil(user._id)}
+                onPress={() => goProfil(foundUser._id)}
                 style={{
                   width: 50,
                   height: 50,
@@ -391,7 +405,7 @@ const Conversation = ({ conversation, currentUser }) => {
                   borderRadius: 16,
                 }}
               >
-                <FollowHandler idToFollow={user?._id ?? ''} type={"mess"} />
+                <FollowHandler idToFollow={foundUser?._id ?? ''} type={"mess"} />
               </View>
             </View>
           </View>

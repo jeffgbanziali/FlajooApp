@@ -1,33 +1,37 @@
 import axios from 'axios';
+import { APP_API_URL } from '../config';
+
 
 export const GET_MESSAGE = "GET_MESSAGE";
-export const FETCH_CONVERSATIONS = "FETCH_CONVERSATIONS";
+export const FETCH_CONVERSATIONS_SUCCESS = "FETCH_CONVERSATIONS_SUCCESS";
+export const FETCH_CONVERSATIONS_FAILURE = "FETCH_CONVERSATIONS_FAILURE";
+export const FETCH_CONVERSATION_INFO_SUCCESS = "FETCH_CONVERSATION_INFO_SUCCESS";
+export const FETCH_CONVERSATION_INFO_FAILURE = "FETCH_CONVERSATION_INFO_FAILURE";
 
 
 
-export const getMessage = (num) => {
-    return (dispatch) => {
-        return axios
-            .get(`http://http://192.168.0.14:3000/api/message`)
-            .then((res) => {
-                const array = res.data.slice(0, num);
-                dispatch({ type: GET_MESSAGE, payload: array});
-            }
-            )
-            .catch((err) => console.log(err));
-    }
+
+export const fetchConversations = (uid) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`${APP_API_URL}/api/conversation/${uid}`);
+            dispatch({ type: FETCH_CONVERSATIONS_SUCCESS, payload: response.data });
+        } catch (error) {
+            console.error('Error while fetching conversations:', error);
+            dispatch({ type: FETCH_CONVERSATIONS_FAILURE, payload: error.message });
+        }
+    };
 };
 
-export const fetchConversations = () => (dispatch) => {
-    axios.get('http://http://192.168.0.14:3000/api/conversation'
-     )
-        .then(res => {
-            dispatch({
-                type: FETCH_CONVERSATIONS,
-                payload: res.data
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
+
+export const fetchConversationInfo = (friendId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`${APP_API_URL}/api/user/${friendId}`);
+            dispatch({ type: FETCH_CONVERSATION_INFO_SUCCESS, payload: response.data });
+        } catch (error) {
+            console.error('Error while fetching conversation info:', error);
+            dispatch({ type: FETCH_CONVERSATION_INFO_FAILURE, payload: error.message });
+        }
+    };
 };

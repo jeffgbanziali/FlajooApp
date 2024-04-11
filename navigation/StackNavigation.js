@@ -38,6 +38,7 @@ import VideoCallProgress from "../screens/CallScreen/VideoCallProgress";
 import AboutThisAccount from "../screens/ProfileFriends/AboutThisAccount";
 import BeginingScreen from "../screens/BeginingScreen/BeginingScreen";
 import PostsUser from "../components/ProfileUtils.js/PostsUser";
+import CreateNewConversation from "../components/MessagesUser/CreateConversation/CreateNewConversation";
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +83,7 @@ const StackNavigation = () => {
               <Stack.Screen name="IncomingCall" component={IncomingCall} />
               <Stack.Screen name="CallingOn" component={CallingOn} />
               <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
+              <Stack.Screen name="CreateNewConversation" component={CreateNewConversation} />
               <Stack.Screen name="VoiceCall" component={VoiceCall} />
               <Stack.Screen name="VideoCall" component={VideoCall} />
               <Stack.Screen name="Chatlist" component={ChatList} />

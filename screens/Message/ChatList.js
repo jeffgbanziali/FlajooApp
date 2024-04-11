@@ -23,7 +23,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from "axios";
-import MessagesUser from "../../components/MessagesUser/MessagesUser";
+import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { io } from "socket.io-client";
 import { APP_API_URL, MESSAGE_ADRESS_IP } from "../../config";
@@ -374,9 +374,6 @@ const Message = () => {
 
 
 
-  const handleSendVoice = () => {
-    console.warn("recording");
-  };
 
 
   const handleSelect = () => {

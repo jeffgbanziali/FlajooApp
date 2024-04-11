@@ -1,19 +1,41 @@
-import { FETCH_CONVERSATIONS, GET_MESSAGE } from "../actions/conversation.action";
+// conversationReducer.js
 
+import { FETCH_CONVERSATION_INFO_FAILURE, FETCH_CONVERSATION_INFO_SUCCESS, FETCH_CONVERSATIONS_FAILURE, FETCH_CONVERSATIONS_SUCCESS } from "../actions/conversation.action";
 
-const initialState = {}; // initial state
+const initialState = {
+    conversations: [],
+    error: null,
+};
 
-export default function conversationReducer(state = initialState, action) {
-
+const conversationReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_MESSAGE:
-            return action.payload;
-        case FETCH_CONVERSATIONS:
+        case FETCH_CONVERSATIONS_SUCCESS:
             return {
                 ...state,
-                conversation: action.payload
-            }
+                conversations: action.payload,
+                error: null,
+            };
+        case FETCH_CONVERSATIONS_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+            };
+        case FETCH_CONVERSATION_INFO_SUCCESS:
+            return {
+                ...state,
+                user: action.payload,
+                loading: false,
+                error: null,
+            };
+        case FETCH_CONVERSATION_INFO_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
         default:
             return state;
     }
-}
+};
+
+export default conversationReducer;

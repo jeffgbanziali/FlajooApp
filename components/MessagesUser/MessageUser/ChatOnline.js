@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
-import { useDarkMode } from '../Context/AppContext';
-import { USER } from '../../Data/Users';
+import { useDarkMode } from '../../Context/AppContext';
+import { USER } from '../../../Data/Users';
 import { useSelector } from 'react-redux';
 
 const ChatOnline = ({ user }) => {
@@ -76,7 +76,7 @@ const ChatOnline = ({ user }) => {
                 }}>
                 <Text
                     style={{
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: '400',
                         color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
                     }}

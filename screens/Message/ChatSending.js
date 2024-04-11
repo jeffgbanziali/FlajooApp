@@ -23,7 +23,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from "axios";
-import MessagesUser from "../../components/MessagesUser/MessagesUser";
+import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { useTranslation } from "react-i18next";
 
@@ -49,7 +49,6 @@ const ChatSending = ({ newChat, setNewChat, handleSelect, handleSendMessage }) =
         <View
             style={{
                 position: "relative",
-
                 width: "100%",
                 justifyContent: "center",
                 alignItems: "center",

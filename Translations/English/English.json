@@ -30,7 +30,10 @@
     "SharingStory":"Share",
     "SendTo":"Send to your loved ones",
     "ShareOn":"Share on",
-
+    "CreateDiscuss":"Create a discussion",
+    "NewMessagge":"New message",
+    "ChifferBot":" End-to-end encryption....",
+    "Suggested":"Suggested",
 
     "Profile-picture":"Profile picture",
     "Update":"Update",
@@ -139,7 +142,7 @@
     "yearAgo": "%{count} year(s) ago",
 
     "Loading":"Loading...",
-    "Research":"Research ...",
+    "Research":"Research...",
     "Friends":"Friends",
     "Followby":"Followed by",
     "CreatePost":"Create a new post",

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Animated, Dimensions, Easing, KeyboardAvoidingView, Platform, Pressable, Text } from "react-native";
 import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { formatPostDate, dateParser, timestampStoryParser } from "../Context/Utils";
+import { formatPostDate, dateParser, timestampStoryParser } from "../../Context/Utils";
 import Modal from "react-native-modal";
-import { useDarkMode } from "../Context/AppContext";
+import { useDarkMode } from "../../Context/AppContext";
 import { TouchableOpacity } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useTranslation } from "react-i18next";
-import { APP_API_URL } from "../../config";
+import { APP_API_URL } from "../../../config";
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -20,7 +20,6 @@ const MessagesUser = ({ message, own, user }) => {
   const [showImage, setShowImage] = useState(false);
   const [messageHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const { isDarkMode } = useDarkMode();
-  console.log(user)
   const userImageUri = own ? userData.picture : user.picture;
 
 
@@ -86,7 +85,6 @@ const MessagesUser = ({ message, own, user }) => {
     }
   };
 
-  console.log(message)
 
 
 

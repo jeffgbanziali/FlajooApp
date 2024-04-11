@@ -8,7 +8,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Conversation from "./Conversation";
-import ChatOnline from "../../components/MessagesUser/ChatOnline";
+import ChatOnline from "../../components/MessagesUser/MessageUser/ChatOnline";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -19,14 +19,19 @@ import { SafeAreaView } from "react-native";
 import { isEmpty } from "../../components/Context/Utils";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchConversations } from "../../actions/conversation.action";
 
 const Message = () => {
-  const [conver, setConver] = useState([]);
+
   const [currentChat, setCurrentChat] = useState(null);
-  const [isPressed, setIsPressed] = useState(false);
+
+
+  const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+  const conversations = useSelector(state => state.conversationReducer);
+
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
 
@@ -37,37 +42,36 @@ const Message = () => {
 
   const { uid } = useContext(UidContext);
 
+  const dispatch = useDispatch();
+
+
+
+  const myConversation = conversations.conversations.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+
+
   useEffect(() => {
-    const getConversation = async () => {
-      try {
-        const response = await axios.get(
-          `${APP_API_URL}/api/conversation/${uid}`
-        );
+    dispatch(fetchConversations(uid));
+  }, [dispatch, uid]);
 
-        const sortedConversations = response.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setConver(sortedConversations);
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    getConversation();
-  }, [uid]);
-
-  const navigation = useNavigation();
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
   };
+
+
+
   const handleSearch = () => {
     console.warn("Searching");
   };
 
+
+
+
   const handleCreateNewMessage = () => {
-    console.warn("newMEssage");
+    navigation.navigate("CreateNewConversation")
   };
 
 
@@ -127,6 +131,7 @@ const Message = () => {
               />
             </TouchableOpacity>
           </View>
+
           <View
             style={{
               width: "100%",
@@ -144,42 +149,49 @@ const Message = () => {
             </Text>
           </View>
         </View>
+
+
         <View
           style={{
             width: "20%",
             marginRight: "1%",
             flexDirection: "row",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
+            //backgroundColor:"red",
             alignItems: "center",
           }}
         >
+
+
           <TouchableOpacity onPress={handleCreateNewMessage}
             style={{
               justifyContent: "center",
               alignItems: "center",
-              width: 50,
-              height: 50,
+              width: 30,
+              height: 30,
               borderRadius: 30,
             }}
           >
             <Entypo
               name="new-message"
-              size={28}
+              size={22}
               color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
             />
           </TouchableOpacity>
+
+
           <TouchableOpacity onPress={handleSearch}
             style={{
               justifyContent: "center",
               alignItems: "center",
-              width: 50,
-              height: 50,
+              width: 30,
+              height: 30,
               borderRadius: 30,
             }}
           >
             <AntDesign
               name="search1"
-              size={28}
+              size={24}
               color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
             />
           </TouchableOpacity>
@@ -286,7 +298,7 @@ const Message = () => {
               }}
             >
               <FlatList
-                data={conver}
+                data={myConversation}
                 keyExtractor={(item) => item._id} // Utilise une clé unique de chaque élément
                 renderItem={({ item: c }) => (
                   <TouchableOpacity onPress={() => setCurrentChat(c)}>

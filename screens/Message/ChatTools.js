@@ -23,7 +23,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from "axios";
-import MessagesUser from "../../components/MessagesUser/MessagesUser";
+import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useTranslation } from "react-i18next";

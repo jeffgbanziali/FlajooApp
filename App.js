@@ -54,6 +54,7 @@ axios.interceptors.request.use(
 );
 
 const AppW = () => {
+
     const [uid, setUid] = useState(null);
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
@@ -69,23 +70,20 @@ const AppW = () => {
                     url: `${APP_API_URL}/jwtid`,
                     withCredentials: true,
                 });
+                setUid(response.data);
                 AsyncStorage.setItem('uid', response.data);
                 AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
-                console.log(response);
-                setUid(response.data);
             } catch (error) {
                 console.log("No token", error);
             }
         };
 
-        const fetchData = async () => {
-            await fetchToken();
-            if (uid) {
-                dispatch(getUser(uid));
-            }
-        };
 
-        fetchData();
+        fetchToken();
+        if (uid) {
+            dispatch(getUser(uid));
+        }
+
     }, [isDarkMode, uid, dispatch]);
 
 

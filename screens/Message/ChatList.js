@@ -38,6 +38,7 @@ import { SafeAreaView } from "react-native";
 import ChatingHeader from "./ChatingHeader";
 import ChatTools from "./ChatTools";
 import ChatSending from "./ChatSending";
+import { createConversation } from "../../actions/conversation.action";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -47,19 +48,23 @@ const Message = () => {
   const [chat, setChat] = useState([]);
   const [newChat, setNewChat] = useState();
   const [arrivalChat, setArrivalChat] = useState([]);
+  const [showImage, setShowImage] = useState(false);
   const [height, setHeight] = useState(40);
   const [selectTools, setSelectTools] = useState();
   const socket = useRef(io(`ws:${MESSAGE_ADRESS_IP}:8900`));
   const { uid } = useContext(UidContext);
   const scrollRef = useRef();
   const route = useRoute();
-  const { conversationId, user } = route.params;
+  const { conversationId, conversation, user } = route.params;
   const { isDarkMode } = useDarkMode();
   const { t } = useTranslation();
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
+
+
+
 
 
 
@@ -199,8 +204,7 @@ const Message = () => {
 
 
   const handleSendMessage = async () => {
-    console.log("handleSendMessage called");
-    console.log("newChat:", newChat);
+
 
     const promises = [];
     const message = {
@@ -242,12 +246,16 @@ const Message = () => {
         message.attachment = attachment;
       }
 
+
+
       socket.current.emit("sendMessage", {
         senderId: uid,
         receiverId,
         text: newChat,
         attachment: message.attachment,
       });
+
+
 
       const response = await axios.post(`${APP_API_URL}/api/message/`, message);
 
@@ -259,10 +267,17 @@ const Message = () => {
       setSelectedDocument(null);
       setShowImage(false);
       setSelectTools(false);
+      if (conversation) {
+        conversation.message = newChat;
+        console.log("Mama ti doungo mbi", conversation.message)
+
+      }
+
     } catch (err) {
       console.log(err);
     }
   };
+
 
   const saveMediaLocally = async (uri, fileName, mediaType) => {
     return new Promise((resolve, reject) => {
@@ -465,6 +480,8 @@ const Message = () => {
                     newChat={newChat}
                     handleSendMessage={handleSendMessage}
                     setNewChat={setNewChat}
+                    showImage={showImage}
+                    setShowImage={setShowImage}
                     setSelectTools={setSelectTools}
                     selectedImage={selectedImage}
                     setSelectedImage={setSelectedImage}

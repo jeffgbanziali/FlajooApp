@@ -1,40 +1,75 @@
 import { View, Text, Image, SafeAreaView, KeyboardAvoidingView, Pressable, Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { useDarkMode } from '../../Context/AppContext';
+import { UidContext, useDarkMode } from '../../Context/AppContext';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createConversation } from '../../../actions/conversation.action';
 
 
 
-const SearchUser = () => {
+const SearchUser = ({ onSelectUser }) => {
     const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
-    const [searchText, setSearchText] = useState('');
+    const { uid } = useContext(UidContext);
     const searchResults = useSelector((state) => state.usersReducer);
-    const firstTenUsers = searchResults.slice(10, 40);
+    const dispatch = useDispatch();
+    const firstTenUsers = searchResults.sort((a, b) => {
+        const nameA = a.firstName || '';
+        const nameB = b.firstName || '';
+        return nameA.localeCompare(nameB);
+    });
 
-    const [checkedItems, setCheckedItems] = useState({});
+    const [users, setUsers] = useState([]);
 
     const onToggleCheckUser = (index) => {
-        setCheckedItems(prevState => ({
-            ...prevState,
-            [index]: !prevState[index]
+        const user = firstTenUsers[index];
 
-        }));
+        const isSelected = users.some((selectedReceiver) => selectedReceiver._id === user._id);
+
+        if (isSelected) {
+            const filteredUsers = users.filter((selectedReceiver) => selectedReceiver._id !== user._id);
+            setUsers(filteredUsers);
+        } else {
+            setUsers([...users, user]);
+        }
+
     }
+
+
+    const handleCreateConversation = async () => {
+        try {
+            if (users.length === 0) {
+                throw new Error("Aucun utilisateur sélectionné !");
+            }
+
+            const senderId = uid;
+
+            for (const user of users) {
+                const receiverId = user._id;
+                dispatch(createConversation(senderId, receiverId));
+                navigation.navigate("Chatlist", { user });
+            }
+            console.log("New conversation created")
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
 
 
 
 
     const renderItem = ({ item, index }) => {
 
-        const isChecked = checkedItems[index];
+        const isChecked = users.some((selectedReceiver) => selectedReceiver._id === item._id);
+
+        console.log("Toi lààààà", users);
 
 
         return (
@@ -44,7 +79,8 @@ const SearchUser = () => {
                 onPress={() => onToggleCheckUser(index)}
                 style={{
                     width: "100%",
-                    height: 80,
+                    //backgroundColor: "red",
+                    height: 60,
                     alignItems: "center",
                     flexDirection: "row",
                     marginTop: 2,
@@ -116,18 +152,17 @@ const SearchUser = () => {
                             justifyContent: "center"
                         }}>
                         {
-
                             isChecked ? (
                                 <AntDesign
                                     name="checkcircle"
-                                    size={24}
+                                    size={22}
                                     color={isDarkMode ? "red" : "red"} />
 
                             ) : (
                                 <View
                                     style={{
-                                        width: 24,
-                                        height: 24,
+                                        width: 22,
+                                        height: 22,
                                         borderRadius: 100,
                                         borderWidth: 1,
                                         borderColor: "gray"
@@ -142,8 +177,6 @@ const SearchUser = () => {
                     </View>
 
                 </View >
-
-
 
 
 
@@ -223,7 +256,8 @@ const SearchUser = () => {
                     position: "relative",
                     alignItems: "center",
                 }}>
-                <View
+                <Pressable
+                    onPress={handleCreateConversation}
                     style={{
                         width: 320,
                         height: 40,
@@ -241,7 +275,7 @@ const SearchUser = () => {
                         {t("CreateDiscuss")}
                     </Text>
 
-                </View>
+                </Pressable>
 
             </View>
 

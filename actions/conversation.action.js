@@ -7,7 +7,10 @@ export const FETCH_CONVERSATIONS_SUCCESS = "FETCH_CONVERSATIONS_SUCCESS";
 export const FETCH_CONVERSATIONS_FAILURE = "FETCH_CONVERSATIONS_FAILURE";
 export const FETCH_CONVERSATION_INFO_SUCCESS = "FETCH_CONVERSATION_INFO_SUCCESS";
 export const FETCH_CONVERSATION_INFO_FAILURE = "FETCH_CONVERSATION_INFO_FAILURE";
+export const CONVERSATION_CREATED = "CONVERSATION_CREATED";
+export const CONVERSATION_ERROR = "CONVERSATION_ERROR";
 
+CONVERSATION_CREATED
 
 
 
@@ -32,6 +35,21 @@ export const fetchConversationInfo = (friendId) => {
         } catch (error) {
             console.error('Error while fetching conversation info:', error);
             dispatch({ type: FETCH_CONVERSATION_INFO_FAILURE, payload: error.message });
+        }
+    };
+};
+
+
+
+
+
+export const createConversation = (senderId, receiverId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post(`${APP_API_URL}/api/conversation`, { senderId, receiverId });
+            dispatch({ type: 'CONVERSATION_CREATED', payload: response.data });
+        } catch (error) {
+            dispatch({ type: CONVERSATION_ERROR, payload: error });
         }
     };
 };

@@ -33,6 +33,7 @@ const ChatOnline = ({ user }) => {
                 justifyContent: 'center',
                 //backgroundColor: "blue",
                 marginLeft: 10
+
             }}
         >
             <View
@@ -62,7 +63,7 @@ const ChatOnline = ({ user }) => {
                     height: 14,
                     borderRadius: 25,
                     borderWidth: 2,
-                    borderColor: "#E9C8C8",
+                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
                     top: 60,
                     zIndex: 100
                 }}>
@@ -89,13 +90,25 @@ const ChatOnline = ({ user }) => {
     );
 
     return (
-        <FlatList
-            data={firstTenUsers}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-        />
+        <View
+            style={{
+                height: "50%",
+                width: "100%",
+                flexDirection: "row",
+                //backgroundColor: "blue",
+                justifyContent: "center",
+                marginTop: 10
+            }}
+        >
+            <FlatList
+                data={firstTenUsers}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </View>
+
     );
 }
 

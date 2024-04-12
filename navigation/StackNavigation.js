@@ -39,6 +39,7 @@ import AboutThisAccount from "../screens/ProfileFriends/AboutThisAccount";
 import BeginingScreen from "../screens/BeginingScreen/BeginingScreen";
 import PostsUser from "../components/ProfileUtils.js/PostsUser";
 import CreateNewConversation from "../components/MessagesUser/CreateConversation/CreateNewConversation";
+import Loading from "../components/Loading/Loading";
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,33 @@ const StackNavigation = () => {
         }
       });
   }, [isFirstTime]);
+
+  console.log("Voici ma reponse", isFirstTime);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Vérifie la présence du token dans AsyncStorage
+    AsyncStorage.getItem('token')
+      .then((token) => {
+        if (token) {
+          // Si un token est présent, met à jour l'état isLoading à false
+          setIsLoading(false);
+        } else {
+          // Si aucun token n'est présent, met à jour l'état isLoading à false
+          setIsLoading(false);
+        }
+      })
+      .catch(error => {
+        console.error('Error retrieving token from AsyncStorage:', error);
+        // En cas d'erreur, met à jour l'état isLoading à false
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Stack.Navigator
@@ -107,10 +135,8 @@ const StackNavigation = () => {
           ) : (
             <>
               { /* <Stack.Screen name="Begin" component={BeginingScreen} />*/}
-
-              <Stack.Screen name="Start" component={StartPage} />
-              <Stack.Screen name="Signup" component={SignUpScreen} />
               <Stack.Screen name="Signin" component={SignInScreen} />
+              <Stack.Screen name="Signup" component={SignUpScreen} />
               <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
             </>
           )

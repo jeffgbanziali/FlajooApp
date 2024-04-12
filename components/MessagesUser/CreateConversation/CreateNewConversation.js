@@ -10,6 +10,7 @@ import { isEmpty } from "../../Context/Utils"
 import CreateHeader from './CreateHeader';
 import CreateInputSearch from './CreateInputSearch';
 import SearchUser from './SearchUser';
+import { createConversation } from '../../../actions/conversation.action';
 
 
 const CreateNewConversation = () => {
@@ -17,10 +18,12 @@ const CreateNewConversation = () => {
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
 
+    const [selectedUser, setSelectedUser] = useState(null);
 
-    const handleClickReturnHome = () => {
-        navigation.goBack("Messages")
-    }
+
+
+
+
 
     return (
         <SafeAreaView
@@ -34,7 +37,9 @@ const CreateNewConversation = () => {
             }}>
             <CreateHeader />
             <CreateInputSearch />
-            <SearchUser />
+            <SearchUser
+            />
+
         </SafeAreaView >
     )
 }

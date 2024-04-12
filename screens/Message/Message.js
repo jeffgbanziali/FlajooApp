@@ -20,6 +20,8 @@ import { isEmpty } from "../../components/Context/Utils";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchConversations } from "../../actions/conversation.action";
+import ConversationHeader from "./ConversationHeader";
+import ConversationSearching from "./ConversationSearching";
 
 const Message = () => {
 
@@ -92,160 +94,35 @@ const Message = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: isDarkMode ? "#3B3A3A" : "#E9C8C8",
+        width: "100%",
+        height: "100%",
+        //backgroundColor: isDarkMode ? "#3B3A3A" : "#E9C8C8",
+        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+
+        alignItems: "center"
       }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          height: "6%",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            width: "40%",
-
-          }}
-        >
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              marginLeft: "3.5%",
-            }}
-          >
-            <TouchableOpacity
-              onPress={handleClickReturnHome}>
-              <AntDesign
-                name="arrowleft"
-                size={28}
-                color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{
-              width: "100%",
-              height: "80%",
-              marginLeft: "1.5%",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 26,
-                color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
-              }}
-            >
-              {renderLimitedMessage(userData.pseudo)}
-            </Text>
-          </View>
-        </View>
-
-
-        <View
-          style={{
-            width: "20%",
-            marginRight: "1%",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            //backgroundColor:"red",
-            alignItems: "center",
-          }}
-        >
-
-
-          <TouchableOpacity onPress={handleCreateNewMessage}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: 30,
-              height: 30,
-              borderRadius: 30,
-            }}
-          >
-            <Entypo
-              name="new-message"
-              size={22}
-              color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-            />
-          </TouchableOpacity>
-
-
-          <TouchableOpacity onPress={handleSearch}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: 30,
-              height: 30,
-              borderRadius: 30,
-            }}
-          >
-            <AntDesign
-              name="search1"
-              size={24}
-              color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ConversationHeader />
 
       <View
         style={{
-          height: "14%",
-          //backgroundColor: "red",
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "center"
-        }}
-      >
-        <ChatOnline />
-      </View>
-
-      <View
-        style={{
-          height: "100%",
+          flex: 1,
+          height: "94%",
           width: "100%",
           backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          marginTop: "2%"
+          //borderTopLeftRadius: 30,
+          //borderTopRightRadius: 30,
         }}
       >
         <View
           style={{
             display: "flex",
             flexDirection: "column",
+
             width: "100%",
             position: "relative",
           }}
         >
-          <View
-            style={{
-              width: "100%",
-              position: "relative",
-              marginTop: "2%",
-              marginBottom: "1%",
-              marginLeft: "3%",
-              padding: 10
-            }}>
-            <Text
-              style={{
-                fontSize: 36,
-                fontWeight: "500",
-                color: isDarkMode ? "white" : "black",
-              }}>
-              {t('Messages')}
-            </Text>
-          </View>
+
 
           {isLoading ? (
 
@@ -293,26 +170,54 @@ const Message = () => {
             <View
               style={{
                 width: "100%",
-                height: "78%",
-                marginTop: 10,
+                height: "100%",
               }}
             >
               <FlatList
                 data={myConversation}
                 keyExtractor={(item) => item._id} // Utilise une clé unique de chaque élément
-                renderItem={({ item: c }) => (
-                  <TouchableOpacity onPress={() => setCurrentChat(c)}>
-                    <View
+                renderItem={({ item: c }) => {
+                  console.log("Me conversation", c)
+                  return (
+                    <TouchableOpacity onPress={() => setCurrentChat(c)}
                       style={{
                         width: "100%",
+                        // backgroundColor: "green",
                         padding: 1,
-                        height: 90,
+                        height: 80,
                         justifyContent: "center",
                       }}
                     >
                       <Conversation conversation={c} currentUser={uid} />
+                    </TouchableOpacity>
+                  )
+
+                }}
+
+                ListHeaderComponent={() => (
+                  <>
+                    <ConversationSearching />
+                    <ChatOnline />
+                    <View
+                      style={{
+                        width: "100%",
+                        position: "relative",
+                        marginBottom: "1%",
+                        marginLeft: "3%",
+                        padding: 10
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontWeight: "600",
+                          color: isDarkMode ? "white" : "black",
+                        }}>
+                        {t('Messages')}
+                      </Text>
+
                     </View>
-                  </TouchableOpacity>
+                  </>
+
                 )}
               />
             </View>

@@ -33,9 +33,8 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
 
-const ChatTools = ({ handleSendMessage, user, setSelectTools, selectedImage, setSelectedImage, newChat, setNewChat, selectedVideo, setSelectedVideo, selectedDocument, setSelectedDocument }) => {
+const ChatTools = ({ handleSendMessage, showImage, setShowImage, user, setSelectTools, selectedImage, setSelectedImage, newChat, setNewChat, selectedVideo, setSelectedVideo, selectedDocument, setSelectedDocument }) => {
 
-    const [showImage, setShowImage] = useState(false);
     const [addText, setAddText] = useState(false);
     const [postText, setPostText] = useState('');
     const [height, setHeight] = useState(40);

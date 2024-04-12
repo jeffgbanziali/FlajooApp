@@ -1,6 +1,6 @@
 // conversationReducer.js
 
-import { FETCH_CONVERSATION_INFO_FAILURE, FETCH_CONVERSATION_INFO_SUCCESS, FETCH_CONVERSATIONS_FAILURE, FETCH_CONVERSATIONS_SUCCESS } from "../actions/conversation.action";
+import { CONVERSATION_CREATED, CONVERSATION_ERROR, FETCH_CONVERSATION_INFO_FAILURE, FETCH_CONVERSATION_INFO_SUCCESS, FETCH_CONVERSATIONS_FAILURE, FETCH_CONVERSATIONS_SUCCESS } from "../actions/conversation.action";
 
 const initialState = {
     conversations: [],
@@ -32,6 +32,18 @@ const conversationReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            };
+        case CONVERSATION_CREATED:
+            return {
+                ...state,
+                conversation: action.payload,
+                error: null
+            };
+        case CONVERSATION_ERROR:
+            return {
+                ...state,
+                conversation: null,
+                error: action.payload
             };
         default:
             return state;

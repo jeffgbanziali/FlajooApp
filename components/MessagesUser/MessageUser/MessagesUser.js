@@ -136,7 +136,7 @@ const MessagesUser = ({ message, own, user }) => {
                       <Text
                         style={
                           {
-                            fontSize: 18,
+                            fontSize: 16,
                             color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                             textAlign: 'justify',
                             fontFamily: 'Roboto',
@@ -222,7 +222,7 @@ const MessagesUser = ({ message, own, user }) => {
                             <Text
                               style={
                                 {
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                                   textAlign: 'justify',
                                   fontFamily: 'Roboto',
@@ -376,7 +376,7 @@ const MessagesUser = ({ message, own, user }) => {
                         <Text
                           style={
                             {
-                              fontSize: 18,
+                              fontSize: 16,
                               color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                               textAlign: 'justify',
                               fontFamily: 'Roboto',
@@ -460,7 +460,7 @@ const MessagesUser = ({ message, own, user }) => {
                             <Text
                               style={
                                 {
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: isDarkMode ? "#FFFFFF" : "#FFFFFF",
                                   textAlign: 'justify',
                                   fontFamily: 'Roboto',

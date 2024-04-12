@@ -49,6 +49,7 @@ const Conversation = ({ conversation, currentUser }) => {
     console.log("clicked");
     navigation.navigate("Chatlist", {
       conversationId: conversation._id,
+      conversation: conversation,
       user: foundUser
     });
   };
@@ -147,8 +148,9 @@ const Conversation = ({ conversation, currentUser }) => {
             <View
               style={{
                 justifyContent: "center",
+
                 //backgroundColor: "red",
-                height: "80%",
+                height: "100%",
                 width: "84%"
               }}>
               <Text
@@ -226,6 +228,8 @@ const Conversation = ({ conversation, currentUser }) => {
         </View>
 
       </TouchableOpacity>
+
+
       <Modal
         visible={showOptions}
         transparent={true}

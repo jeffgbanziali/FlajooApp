@@ -44,45 +44,6 @@ import Loading from "../components/Loading/Loading";
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
-  const { uid } = useContext(UidContext)
-
-  const [isFirstTime, setIsFirstTime] = useState(true);
-
-  useEffect(() => {
-    AsyncStorage.getItem('uid')
-      .then((storedUid) => {
-        if (storedUid) {
-          setIsFirstTime(false);
-        }
-      });
-  }, [isFirstTime]);
-
-  console.log("Voici ma reponse", isFirstTime);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Vérifie la présence du token dans AsyncStorage
-    AsyncStorage.getItem('token')
-      .then((token) => {
-        if (token) {
-          // Si un token est présent, met à jour l'état isLoading à false
-          setIsLoading(false);
-        } else {
-          // Si aucun token n'est présent, met à jour l'état isLoading à false
-          setIsLoading(false);
-        }
-      })
-      .catch(error => {
-        console.error('Error retrieving token from AsyncStorage:', error);
-        // En cas d'erreur, met à jour l'état isLoading à false
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <Stack.Navigator
@@ -90,57 +51,39 @@ const StackNavigation = () => {
         headerShown: false,
       }}
     >
-      {
-        isFirstTime ? (
-          <>
-            <Stack.Screen name="Start" component={StartPage} />
-            <Stack.Screen name="Signin" component={SignInScreen} />
-            <Stack.Screen name="Signup" component={SignUpScreen} />
-          </>
-        ) :
-          uid ? (
-            <>
-              <Stack.Screen name="TabNavigation" component={TabNavigation} />
-              <Stack.Screen name="Réels" component={Réels} />
-              <Stack.Screen name="createRéels" component={CreateRéels} />
-              <Stack.Screen name="StoryStream" component={StoriesStream} />
-              <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
-              <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
-              <Stack.Screen name="AboutThisAccount" component={AboutThisAccount} />
-              <Stack.Screen name="Messages" component={Message} />
-              <Stack.Screen name="IncomingCall" component={IncomingCall} />
-              <Stack.Screen name="CallingOn" component={CallingOn} />
-              <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
-              <Stack.Screen name="CreateNewConversation" component={CreateNewConversation} />
-              <Stack.Screen name="VoiceCall" component={VoiceCall} />
-              <Stack.Screen name="VideoCall" component={VideoCall} />
-              <Stack.Screen name="Chatlist" component={ChatList} />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="Settings" component={Settings} />
-              <Stack.Screen name="EditProfil" component={ProfileEdit} />
-              <Stack.Screen name="buttonning" component={ButtonColor} />
-              <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
-              <Stack.Screen name="StoryCreate" component={CreateMyStory} />
-              <Stack.Screen name="Live" component={LiveScreen} />
-              <Stack.Screen name="Photo" component={CameraScreen} />
-              <Stack.Screen name="StoryCamera" component={StoryCamera} />
-              <Stack.Screen name="BioUpdate" component={BioUpdate} />
-              <Stack.Screen name="Notifications" component={Notifications} />
-              <Stack.Screen name="Myfollowing" component={MyFollowings} />
-              <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
-              <Stack.Screen name="Myfollowers" component={MyFollowers} />
-              <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
 
-            </>
-          ) : (
-            <>
-              { /* <Stack.Screen name="Begin" component={BeginingScreen} />*/}
-              <Stack.Screen name="Signin" component={SignInScreen} />
-              <Stack.Screen name="Signup" component={SignUpScreen} />
-              <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
-            </>
-          )
-      }
+      <Stack.Screen name="TabNavigation" component={TabNavigation} />
+      <Stack.Screen name="Réels" component={Réels} />
+      <Stack.Screen name="createRéels" component={CreateRéels} />
+      <Stack.Screen name="StoryStream" component={StoriesStream} />
+      <Stack.Screen name="StoryStreamUser" component={StoriesStreamUser} />
+      <Stack.Screen name="ProfilFriends" component={ProfileFriends} />
+      <Stack.Screen name="AboutThisAccount" component={AboutThisAccount} />
+      <Stack.Screen name="Messages" component={Message} />
+      <Stack.Screen name="IncomingCall" component={IncomingCall} />
+      <Stack.Screen name="CallingOn" component={CallingOn} />
+      <Stack.Screen name="VideoCallProgress" component={VideoCallProgress} />
+      <Stack.Screen name="CreateNewConversation" component={CreateNewConversation} />
+      <Stack.Screen name="VoiceCall" component={VoiceCall} />
+      <Stack.Screen name="VideoCall" component={VideoCall} />
+      <Stack.Screen name="Chatlist" component={ChatList} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="EditProfil" component={ProfileEdit} />
+      <Stack.Screen name="buttonning" component={ButtonColor} />
+      <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
+      <Stack.Screen name="StoryCreate" component={CreateMyStory} />
+      <Stack.Screen name="Live" component={LiveScreen} />
+      <Stack.Screen name="Photo" component={CameraScreen} />
+      <Stack.Screen name="StoryCamera" component={StoryCamera} />
+      <Stack.Screen name="BioUpdate" component={BioUpdate} />
+      <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="Myfollowing" component={MyFollowings} />
+      <Stack.Screen name="FriendsFollowing" component={FriendsFollowing} />
+      <Stack.Screen name="Myfollowers" component={MyFollowers} />
+      <Stack.Screen name="FriendsFollowers" component={FriendsFollowers} />
+
+
 
 
 

@@ -49,25 +49,6 @@ const Header = () => {
             justifyContent: "center"
           }}
         >
-          {/*isDarkMode ? (
-            <Image
-              style={{
-                width: 110,
-                height: 110,
-                resizeMode: "contain",
-              }}
-              source={require("../../assets/Logos/my_flajoo.png")}
-            />
-          ) : (
-            <Image
-              style={{
-                width: 100,
-                height: 40,
-                resizeMode: "contain",
-              }}
-              source={require("../../assets/Logos/my_flajoo2.jpeg")}
-            />
-          )*/}
 
           <Text
             style={{

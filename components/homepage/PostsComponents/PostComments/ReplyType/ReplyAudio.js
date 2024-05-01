@@ -1,6 +1,6 @@
-import { View, Text, Image, TouchableOpacity, Pressable,Animated,Easing } from "react-native";
-import React, { useContext,useState } from "react";
-import { formatPostDate,} from "../../../../Context/Utils";
+import { View, Text, Image, TouchableOpacity, Pressable, Animated, Easing } from "react-native";
+import React, { useContext, useState } from "react";
+import { formatPostDate, } from "../../../../Context/Utils";
 import Feather from 'react-native-vector-icons/Feather';
 import { UidContext, useDarkMode } from "../../../../Context/AppContext";
 import { useNavigation } from "@react-navigation/native";
@@ -260,7 +260,7 @@ const ReplyAudio = ({ post, comment, reply, toggle, replierImage, toReplying }) 
             >
 
 
-                <CommentTools comment={comment} reply={reply}  />
+                <CommentTools comment={comment} reply={reply} />
 
             </Modal>
         </View>

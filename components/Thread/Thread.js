@@ -6,11 +6,14 @@ import Posts from "../homepage/PostsComponents/Posts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Header from "../homepage/Header/Header";
 import Stories from "../homepage/Stories/Story/Stories";
+import { useDarkMode } from "../Context/AppContext";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
   const posting = useSelector((state) => state.postReducer);
+  const { isDarkMode } = useDarkMode();
+
 
   useEffect(() => {
     if (loadPost) {
@@ -29,6 +32,7 @@ const Thread = () => {
           <View
             style={{
               alignItems: "center",
+              backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
             }}
             key={post._id}
           >

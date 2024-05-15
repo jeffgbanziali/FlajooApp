@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18next from '../../Translations/Services/i18next';
+import { MESSAGE_ADRESS_IP } from "../../config";
+import { io } from "socket.io-client";
 
 export const UidContext = createContext({ uid: null, setUid: () => { } });
 
@@ -10,6 +12,47 @@ export const DarkModeProvider = ({ children }) => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en'); // Ajoute l'état pour la langue ici
+  const [socket, setSocket] = useState(null);
+  const [usersOnline, setUsersOnline] = useState(null);
+
+
+  useEffect(() => {
+    const initializeSocket = async () => {
+      try {
+        const storedUid = await AsyncStorage.getItem('uid');
+        if (storedUid) {
+          const newSocket = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
+          newSocket.on('connect', () => {
+            console.log("Utilisateur connecté !!!!", newSocket.id);
+            newSocket.emit('addUser', storedUid);
+            setSocket(newSocket);
+          });
+
+          // Déconnexion du socket lorsque le composant est démonté
+          return () => {
+            newSocket.disconnect();
+          };
+        }
+      } catch (error) {
+        console.error("Error initializing socket:", error);
+      }
+    };
+
+    initializeSocket();
+  }, []);
+
+
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('getUsers', (users) => {
+        // Mettre à jour l'état de connexion des utilisateurs
+        setUsersOnline(users);
+      });
+    }
+  }, [socket]);
+
+
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -48,7 +91,7 @@ export const DarkModeProvider = ({ children }) => {
 
 
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode, selectedLanguage, changeLanguage }}>
+    <DarkModeContext.Provider value={{ usersOnline, isDarkMode, toggleDarkMode, selectedLanguage, changeLanguage }}>
       {children}
     </DarkModeContext.Provider>
   );

@@ -25,7 +25,6 @@ import Video from 'react-native-video';
 import { collection, addDoc, getDoc, } from 'firebase/firestore';
 import { firestore, uploadMediaToFirebase } from '../../Data/FireStore';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { EasingFunction } from 'react-native';
 import RNFS from 'react-native-fs';
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native";

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
-import { formatPostDate, isEmpty } from "../../components/Context/Utils";
+import { formatConversationDate, isEmpty } from "../../components/Context/Utils";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -15,8 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
   const [isPressed, setIsPressed] = useState(false);
-  const { isDarkMode } = useDarkMode();
-  const [user, setUser] = useState();
+  const { isDarkMode, usersOnline } = useDarkMode();
   const [showOptions, setShowOptions] = useState(false);
 
   const usersData = useSelector((state) => state.usersReducer);
@@ -40,7 +39,7 @@ const Conversation = ({ conversation, currentUser }) => {
     display: "flex",
     flexDirection: "row",
     backgroundColor: isPressed ? "#6F6F6F" : "#F3F2F2",
-    backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+    backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
     width: "100%",
     height: "100%",
   };
@@ -92,6 +91,7 @@ const Conversation = ({ conversation, currentUser }) => {
           style={{
             width: "100%",
             height: "100%",
+            // backgroundColor: "green",
             alignItems: "center",
             flexDirection: "row",
           }}
@@ -105,9 +105,10 @@ const Conversation = ({ conversation, currentUser }) => {
             <Pressable
               onPress={viewProfile}
               style={{
-                width: 60,
-                height: 60,
+                width: 50,
+                height: 50,
                 borderRadius: 100,
+
               }}
             >
               <Image
@@ -131,6 +132,22 @@ const Conversation = ({ conversation, currentUser }) => {
                   borderRadius: 100,
                 }}
               />
+
+              {usersOnline[0].id === friendId && (<View
+                style={{
+                  backgroundColor: "#09C03C",
+                  position: "absolute",
+                  left: 40,
+                  width: 14,
+                  height: 14,
+                  borderRadius: 25,
+                  borderWidth: 2,
+                  borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                  top: 30,
+                  zIndex: 100
+                }}>
+              </View>
+              )}
             </Pressable>
           </View>
 
@@ -140,9 +157,10 @@ const Conversation = ({ conversation, currentUser }) => {
               display: "flex",
               width: "80%",
               height: "100%",
-              //backgroundColor: "red",
               flexDirection: "row",
               justifyContent: "space-between",
+            //  borderBottomWidth: 1,
+            //  borderColor: "#2C2828",
             }}>
             <View
               style={{
@@ -181,21 +199,23 @@ const Conversation = ({ conversation, currentUser }) => {
 
             <View
               style={{
-                alignItems: "center",
+                alignItems: "flex-end",
                 justifyContent: "center",
                 width: "16%",
+                //backgroundColor: "blue",
+                paddingRight: 10,
                 height: "80%",
               }}>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 14,
                   alignItems: "center",
                   fontWeight: "600",
                   color: isDarkMode ? "white" : "black",
 
                 }}
               >
-                22:11
+                {formatConversationDate(conversation.updatedAt)}
               </Text>
               <View
                 style={{
@@ -204,7 +224,7 @@ const Conversation = ({ conversation, currentUser }) => {
                   borderRadius: 100,
                   backgroundColor: "red",
                   alignItems: "center",
-                  marginTop: 6,
+                  top: 8,
                   justifyContent: "center"
 
                 }}

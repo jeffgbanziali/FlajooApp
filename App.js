@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { StatusBar } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
@@ -17,10 +17,12 @@ import { getPosts } from "./actions/post.actions";
 import { getStories } from "./actions/story.action";
 import { getVideoReels } from "./actions/réels.action";
 import { NavigationContainer } from "@react-navigation/native";
-import { APP_API_URL } from "./config";
+import { APP_API_URL, MESSAGE_ADRESS_IP } from "./config";
 import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
+import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
+
 
 
 const App = () => {
@@ -30,10 +32,20 @@ const App = () => {
         composeWithDevTools(applyMiddleware(thunk, logger))
     );
 
+
+    const connectToRemoteDebugger = () => {
+        NativeDevSettings.setIsDebuggingRemotely(true);
+    };
+
+
+    connectToRemoteDebugger()
+
+
     store.dispatch(getUsers());
     store.dispatch(getPosts());
     store.dispatch(getStories());
     store.dispatch(getVideoReels());
+
     return (
         <Provider store={store}>
             <DarkModeProvider>
@@ -68,9 +80,9 @@ const AppW = ({ token }) => {
 
 
     const dispatch = useDispatch();
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode, usersOnline } = useDarkMode();
 
-    console.log("My kondo est là", token)
+
 
 
     useEffect(() => {
@@ -107,6 +119,8 @@ const AppW = ({ token }) => {
         if (uid) {
             dispatch(getUser(uid));
         }
+
+
     }, [isDarkMode, uid, dispatch]);
 
     return (

@@ -15,7 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/native";
 import PostsUser from "../../components/ProfileUtils.js/PostsUser";
-import { useDarkMode } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { KeyboardAvoidingView } from "react-native";
 import VideoRéelsUser from "../../components/ProfileUtils.js/VideoRéelsUser";
 import { SafeAreaView } from "react-native";
@@ -32,13 +32,12 @@ import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
-  const { isDarkMode } = useDarkMode();
   const navigation = useNavigation();
+  const { isDarkMode, usersOnline } = useDarkMode();
+  const { t } = useTranslation();
+  const { uid } = useContext(UidContext)
 
 
-
-
-  const [selectedSwitchValue, setSelectedSwitchValue] = useState();
 
   const handleClickReturnHome = () => {
     console.log("clicked");
@@ -50,7 +49,12 @@ const Profile = () => {
   };
 
 
-  const { t } = useTranslation();
+
+
+  console.log("mon context est:", usersOnline[0].id === uid)
+
+
+
 
 
   const MAX_MESSAGE_LENGTH = 180;
@@ -176,24 +180,63 @@ const Profile = () => {
                   }}
                 />
 
-                <View
-                  style={{
-                    backgroundColor: "#09C03C",
-                    position: "absolute",
-                    left: 105,
-                    top: 82,
-                    bottom: 50,
-                    width: 18,
-                    height: 18,
-                    borderRadius: 25,
-                    borderWidth: 3,
-                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                    justifyContent: "center",
-                    alignSelf: "center",
-                    alignItems: "center",
-                    zIndex: 100,
-                  }}
-                ></View>
+
+                {usersOnline[0].id === uid ? (
+                  <View
+                    style={{
+                      backgroundColor: "#09C03C",
+                      position: "absolute",
+                      left: 105,
+                      top: 82,
+                      bottom: 50,
+                      width: 20,
+                      height: 20,
+                      borderRadius: 100,
+                      borderWidth: 2,
+                      borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      zIndex: 100,
+                    }}
+                  ></View>
+                ) : (
+                  <View
+                    style={{
+                      backgroundColor: "gray",
+                      position: "absolute",
+                      left: 105,
+                      top: 82,
+                      bottom: 50,
+                      width: 20,
+                      height: 20,
+                      borderRadius: 100,
+                      borderWidth: 2,
+                      borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      zIndex: 100,
+                    }}
+                  >
+                    <View style={{
+                      width: "100%",
+                      height: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 100,
+
+                    }}>
+                      <Entypo
+                        name="cross"
+                        size={14}
+                        color={"black"}
+                      />
+                    </View>
+
+                  </View>
+                )}
+
+
+
               </Pressable>
 
             </View>
@@ -243,7 +286,7 @@ const Profile = () => {
           <ProfileUtils />
         </View>
 
-        <View
+        {   /*<View
           style={{
             backgroundColor: "red",
             width: "100%",
@@ -251,7 +294,7 @@ const Profile = () => {
             marginTop: "10%"
           }}>
           <MaterialTopNavigation />
-        </View>
+        </View>*/}
 
       </ScrollView>
 

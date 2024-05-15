@@ -33,6 +33,7 @@ const ConversationHeader = () => {
     const usersData = useSelector((state) => state.usersReducer);
     const userData = useSelector((state) => state.userReducer);
     const conversations = useSelector(state => state.conversationReducer);
+    const [loadStories, setLoadStories] = useState(true);
 
     const [isLoading, setIsLoading] = useState(true);
     const { t } = useTranslation();
@@ -48,18 +49,19 @@ const ConversationHeader = () => {
 
 
 
-    const myConversation = conversations.conversations.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-
-
     useEffect(() => {
         dispatch(fetchConversations(uid));
     }, [dispatch, uid]);
 
+    useEffect(() => {
+        if (loadStories) {
+            dispatch(fetchConversations(uid));
+            setLoadStories(false);
+        }
+    }, [loadStories, dispatch]);
 
     const handleClickReturnHome = () => {
-        console.log("clicked");
+        setLoadStories(true);
         navigation.navigate("TabNavigation");
     };
 
@@ -122,7 +124,7 @@ const ConversationHeader = () => {
                         <AntDesign
                             name="arrowleft"
                             size={28}
-                            color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                            color={isDarkMode ? "#F5F5F5" : "black"}
                         />
                     </TouchableOpacity>
                 </View>
@@ -137,7 +139,7 @@ const ConversationHeader = () => {
                     <Text
                         style={{
                             fontSize: 26,
-                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                            color: isDarkMode ? "#F5F5F5" : "black",
                         }}
                     >
                         {renderLimitedMessage(userData.pseudo)}
@@ -170,7 +172,7 @@ const ConversationHeader = () => {
                     <Entypo
                         name="new-message"
                         size={22}
-                        color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                        color={isDarkMode ? "#F5F5F5" : "black"}
                     />
                 </TouchableOpacity>
 

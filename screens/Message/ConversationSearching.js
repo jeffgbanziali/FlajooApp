@@ -40,16 +40,15 @@ const ConversationSearching = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                height: "20%",
+                height: 50,
             }}
         >
             <View style={{
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "#2C2828",
-                paddingLeft: 2,
-                width: "95%",
+                backgroundColor: isDarkMode ? "#0D0C0C" : "#F1F1F1",
+                width: "94%",
                 height: "80%",
                 borderRadius: 10
             }}>
@@ -57,7 +56,7 @@ const ConversationSearching = () => {
 
                     name="search"
                     size={20}
-                    color={isDarkMode ? "#F5F5F5" : "#F5F5F5"} />
+                    color={isDarkMode ? "#F5F5F5" : "gray"} />
                 <TextInput
                     style={{
                         //backgroundColor: '#2C2C2C',
@@ -65,13 +64,13 @@ const ConversationSearching = () => {
                         paddingLeft: 10,
                         height: "100%",
                         width: "90%",
-                        fontSize: 16,
+                        fontSize: 14,
                         color: 'white',
                     }}
                     fontSize={18}
                     placeholder={t('Research')}
                     //backgroundColor='red'
-                    placeholderTextColor="white"
+                    placeholderTextColor={isDarkMode ? "white" : "gray"}
                     onChangeText={setSearchText}
                     value={searchText}
                 />

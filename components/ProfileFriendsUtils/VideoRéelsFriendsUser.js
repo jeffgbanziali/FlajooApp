@@ -12,16 +12,11 @@ import Video from 'react-native-video';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-console.log('Largeur de l\'écran:', windowWidth);
-console.log('Hauteur de l\'écran:', windowHeight);
 
 const VideoRéelsFriendsUser = ({ users }) => {
     const [user, setUser] = useState([]);
     const { isDarkMode } = useDarkMode();
     const { uid } = useContext(UidContext)
-
-    console.log('Largeur de l\'écran:', windowWidth);
-    console.log('Hauteur de l\'écran:', windowHeight);
 
 
     // iPhone 15 Pro (standard)
@@ -31,8 +26,6 @@ const VideoRéelsFriendsUser = ({ users }) => {
     // iPhone 15 Pro Max
     const iPhone15ProMaxWidth = 430; // Largeur de l'écran de l'iPhone 15 Pro Max
     const iPhone15ProMaxHeight = 932;
-
-
 
 
     // iPhone SE (3rd génération)

@@ -16,19 +16,35 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useDarkMode } from "../../components/Context/AppContext"
+import { UidContext, useDarkMode } from "../../components/Context/AppContext"
 import { useTranslation } from "react-i18next";
+import { fetchConversations } from "../../actions/conversation.action";
+import { useDispatch } from "react-redux";
 
 
 
 const ChatingHeader = ({ user, renderLimitedMessage }) => {
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode, usersOnline } = useDarkMode();
     const { t } = useTranslation();
+    const [loadStories, setLoadStories] = useState(true);
+
+    const dispatch = useDispatch();
+
+    const { uid } = useContext(UidContext);
+
+
+    useEffect(() => {
+        if (loadStories) {
+            dispatch(fetchConversations(uid));
+            setLoadStories(false);
+        }
+    }, [loadStories, dispatch]);
 
     const handleClickReturnMessageList = () => {
         console.log("clicked");
+        setLoadStories(true);
         navigation.navigate("Messages");
     };
 
@@ -109,20 +125,39 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                         style={{
                             fontWeight: "bold",
                             fontSize: 18,
-                            color: "#FFFFFF",
+                            color: isDarkMode ? "#FFFFFF" : "black",
                         }}
                     >
                         {renderLimitedMessage(user.pseudo)}
                     </Text>
-                    <Text
-                        style={{
-                            fontWeight: "normal",
-                            fontSize: 12,
-                            color: "#FFFFFF",
-                        }}
-                    >
-                        {t('Online')}
-                    </Text>
+
+                    {
+                        usersOnline[0].id === user._id ? (
+                            <Text
+                                style={{
+                                    fontWeight: "normal",
+                                    fontSize: 10,
+                                    color: isDarkMode ? "#F5F5F5" : "black",
+                                }}
+                            >
+                                {t('Online')}
+
+                            </Text>
+
+                        ) : (
+                            <Text
+                                style={{
+                                    fontWeight: "normal",
+                                    fontSize: 10,
+                                    marginTop: 2,
+                                    color: isDarkMode ? "#F5F5F5" : "gray",
+                                }}
+                            >
+                                {t('NotOnline')}
+
+                            </Text>
+                        )
+                    }
                 </View>
 
 
@@ -155,7 +190,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     <Ionicons
                         name="call"
                         size={25}
-                        color={isDarkMode ? "white" : "white"}
+                        color={isDarkMode ? "#F5F5F5" : "black"}
                     />
                 </TouchableOpacity>
 
@@ -171,7 +206,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     <Ionicons
                         name="videocam"
                         size={25}
-                        color={isDarkMode ? "white" : "white"}
+                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                     />
                 </TouchableOpacity>
@@ -187,7 +222,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     <Entypo
                         name="dots-three-vertical"
                         size={22}
-                        color={isDarkMode ? "white" : "white"} />
+                        color={isDarkMode ? "#F5F5F5" : "black"} />
 
                 </TouchableOpacity>
             </View>

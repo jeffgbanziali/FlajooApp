@@ -65,6 +65,70 @@ export const timestampStoryParser = (num) => {
     return date.toString();
 };
 
+export const formatMessageDate = (conversationDate) => {
+    const currentDate = new Date();
+    const messageDate = new Date(conversationDate);
+    const timeDifference = currentDate - messageDate;
+
+
+    const millisecondsPerMinute = 1000 * 60;
+    const millisecondsPerHour = millisecondsPerMinute * 60;
+    const millisecondsPerDay = millisecondsPerHour * 24;
+
+    const pad = (number) => {
+        return number < 10 ? '0' + number : number;
+    };
+
+    if (timeDifference < millisecondsPerDay) {
+        // Affichage de l'heure au format "hh:mm"
+        const formattedTime = `${pad(messageDate.getHours())}:${pad(messageDate.getMinutes())}`;
+        return formattedTime;
+
+    };
+
+}
+
+
+
+
+
+
+
+
+
+
+
+export const formatConversationDate = (conversationDate) => {
+    const currentDate = new Date();
+    const messageDate = new Date(conversationDate);
+    const timeDifference = currentDate - messageDate;
+
+
+    const millisecondsPerMinute = 1000 * 60;
+    const millisecondsPerHour = millisecondsPerMinute * 60;
+    const millisecondsPerDay = millisecondsPerHour * 24;
+
+    const pad = (number) => {
+        return number < 10 ? '0' + number : number;
+    };
+
+    if (timeDifference < millisecondsPerDay) {
+        // Affichage de l'heure au format "hh:mm"
+        const formattedTime = `${pad(messageDate.getHours())}:${pad(messageDate.getMinutes())}`;
+        return formattedTime;
+    } else if (timeDifference >= millisecondsPerDay && timeDifference < millisecondsPerDay * 2) {
+        return "Hier";
+    } else if (timeDifference >= millisecondsPerDay * 2 && timeDifference < millisecondsPerDay * 7) {
+        const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
+        return `Il y a ${daysAgo} jour${daysAgo > 1 ? "s" : ""}`;
+    } else if (timeDifference >= millisecondsPerDay * 7) {
+        return messageDate.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    }
+};
+
+
+
+
 export const formatPostDate = (timestamp) => {
     const currentDate = new Date();
     const postDate = new Date(timestamp);

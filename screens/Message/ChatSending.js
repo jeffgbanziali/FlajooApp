@@ -50,11 +50,11 @@ const ChatSending = ({ newChat, setNewChat, handleSelect, handleSendMessage }) =
             style={{
                 position: "relative",
                 width: "100%",
-                // height: 50,
+                height: Math.max(50, height),
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
-               // backgroundColor: "red",
+              // backgroundColor: "red",
 
             }}
         >

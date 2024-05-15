@@ -23,16 +23,12 @@ const Followers = ({ users }) => {
       try {
         const response = await axios.get(`${APP_API_URL}/api/post/${users._id}`);
         setUser(response.data);
-        console.log(users._id)
-        console.log("Updated user state:", response.data);
       } catch (err) {
         console.error(err);
       }
     }
     getPostUser();
   }, [users._id]);
-
-  console.log("Kondo", user)
 
 
   const handleFollowing = () => {

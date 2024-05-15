@@ -31,8 +31,9 @@ const Message = () => {
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
-  const userData = useSelector((state) => state.userReducer);
   const conversations = useSelector(state => state.conversationReducer);
+  const [loadStories, setLoadStories] = useState(true);
+
 
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
@@ -40,6 +41,15 @@ const Message = () => {
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
+
+
+
+  useEffect(() => {
+    if (loadStories) {
+      dispatch(fetchConversations(uid));
+      setLoadStories(false);
+    }
+  }, [loadStories, dispatch]);
 
 
   const { uid } = useContext(UidContext);
@@ -53,40 +63,8 @@ const Message = () => {
 
 
 
-  useEffect(() => {
-    dispatch(fetchConversations(uid));
-  }, [dispatch, uid]);
 
 
-  const handleClickReturnHome = () => {
-    console.log("clicked");
-    navigation.navigate("TabNavigation");
-  };
-
-
-
-  const handleSearch = () => {
-    console.warn("Searching");
-  };
-
-
-
-
-  const handleCreateNewMessage = () => {
-    navigation.navigate("CreateNewConversation")
-  };
-
-
-  const MAX_MESSAGE_LENGTH = 15;
-  const renderLimitedMessage = (message) => {
-    if (message && message.length <= MAX_MESSAGE_LENGTH) {
-      return message;
-    } else if (message) {
-      return message.substring(0, MAX_MESSAGE_LENGTH) + "...";
-    } else {
-      return "";
-    }
-  };
 
 
   return (
@@ -97,7 +75,7 @@ const Message = () => {
         width: "100%",
         height: "100%",
         //backgroundColor: isDarkMode ? "#3B3A3A" : "#E9C8C8",
-        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+        backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
 
         alignItems: "center"
       }}>
@@ -108,7 +86,7 @@ const Message = () => {
           flex: 1,
           height: "94%",
           width: "100%",
-          backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+          backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
           //borderTopLeftRadius: 30,
           //borderTopRightRadius: 30,
         }}
@@ -175,9 +153,8 @@ const Message = () => {
             >
               <FlatList
                 data={myConversation}
-                keyExtractor={(item) => item._id} // Utilise une clé unique de chaque élément
+                keyExtractor={(item) => item._id}
                 renderItem={({ item: c }) => {
-                  console.log("Me conversation", c)
                   return (
                     <TouchableOpacity onPress={() => setCurrentChat(c)}
                       style={{

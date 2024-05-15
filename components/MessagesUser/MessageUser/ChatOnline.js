@@ -5,7 +5,7 @@ import { USER } from '../../../Data/Users';
 import { useSelector } from 'react-redux';
 
 const ChatOnline = ({ user }) => {
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode, usersOnline } = useDarkMode();
 
     const usersData = useSelector((state) => state.usersReducer);
     const firstTenUsers = usersData.slice(10, 20);
@@ -38,8 +38,8 @@ const ChatOnline = ({ user }) => {
         >
             <View
                 style={{
-                    width: 70,
-                    height: 70,
+                    width: 60,
+                    height: 60,
                     borderRadius: 100,
                     alignContent: 'center',
                 }}>
@@ -54,11 +54,11 @@ const ChatOnline = ({ user }) => {
                 />
             </View>
 
-            <View
+            {usersOnline[0].id === item._id && (<View
                 style={{
                     backgroundColor: "#09C03C",
                     position: "absolute",
-                    left: 65,
+                    left: 58,
                     width: 14,
                     height: 14,
                     borderRadius: 25,
@@ -67,7 +67,8 @@ const ChatOnline = ({ user }) => {
                     top: 60,
                     zIndex: 100
                 }}>
-            </View>
+            </View>)}
+
             <View
                 style={{
                     width: "100%",
@@ -79,7 +80,7 @@ const ChatOnline = ({ user }) => {
                     style={{
                         fontSize: 12,
                         fontWeight: '400',
-                        color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                        color: isDarkMode ? "#F5F5F5" : "black",
                     }}
                 >
                     {renderLimitedMessage(item.pseudo)}

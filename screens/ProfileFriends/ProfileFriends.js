@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import ProfileFriendsTools from "../../components/ProfileFriendsUtils/ProfileFriendsTools";
 import PostsFriendsUser from "../../components/ProfileFriendsUtils/PostsFriendsUser";
-import { useDarkMode } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import VideoRéelsFriendsUser from "../../components/ProfileFriendsUtils/VideoRéelsFriendsUser";
 import { SafeAreaView } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -32,18 +32,16 @@ import MaterialTopFriendsNavigation from "../../navigation/MaterialTopFriendsNav
 const ProfileFriends = () => {
   const route = useRoute();
   const { id } = route.params;
-  const { isDarkMode } = useDarkMode();
-  const [selectedSwitchValue, setSelectedSwitchValue] = useState();
+  const { isDarkMode, usersOnline } = useDarkMode();
 
   const navigation = useNavigation();
   const { t } = useTranslation();
 
 
+  console.log("mon context est:", usersOnline[0].id === id)
 
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
-
-
 
 
 
@@ -109,24 +107,6 @@ const ProfileFriends = () => {
       }).start();
     }
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -264,24 +244,59 @@ const ProfileFriends = () => {
                     }}
                   />
 
-                  <View
-                    style={{
-                      backgroundColor: "#09C03C",
-                      position: "absolute",
-                      left: 105,
-                      top: 82,
-                      bottom: 50,
-                      width: 15,
-                      height: 15,
-                      borderRadius: 25,
-                      borderWidth: 2,
-                      borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                      justifyContent: "center",
-                      alignSelf: "center",
-                      alignItems: "center",
-                      zIndex: 100,
-                    }}
-                  ></View>
+                  {usersOnline[0].id === id ? (
+                    <View
+                      style={{
+                        backgroundColor: "#09C03C",
+                        position: "absolute",
+                        left: 105,
+                        top: 82,
+                        bottom: 50,
+                        width: 20,
+                        height: 20,
+                        borderRadius: 100,
+                        borderWidth: 2,
+                        borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 100,
+                      }}
+                    ></View>
+                  ) : (
+                    <View
+                      style={{
+                        backgroundColor: "gray",
+                        position: "absolute",
+                        left: 105,
+                        top: 82,
+                        bottom: 50,
+                        width: 20,
+                        height: 20,
+                        borderRadius: 100,
+                        borderWidth: 2,
+                        borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 100,
+                      }}
+                    >
+                      <View style={{
+                        width: "100%",
+                        height: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 100,
+
+                      }}>
+                        <Entypo
+                          name="cross"
+                          size={14}
+                          color={"black"}
+                        />
+                      </View>
+
+                    </View>
+                  )}
                 </Pressable>
 
                 <View
@@ -516,13 +531,15 @@ const ProfileFriends = () => {
 
 
             </View>
+
+
             <ProfileFriendsTools users={users} />
 
-          </View>
+          </View >
 
+          {
 
-
-          <View
+         /* <View
             style={{
               backgroundColor: "red",
               width: "100%",
@@ -532,8 +549,8 @@ const ProfileFriends = () => {
             <MaterialTopFriendsNavigation users={users} />
 
 
-          </View>
-        </ScrollView>
+          </View>*/}
+        </ScrollView >
 
 
 

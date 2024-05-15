@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Animated, Dimensions, Easing, KeyboardAvoidingView, Platform, Pressable, Text } from "react-native";
 import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { formatPostDate, dateParser, timestampStoryParser } from "../../Context/Utils";
+import { formatPostDate, dateParser, timestampStoryParser, formatMessageDate } from "../../Context/Utils";
 import Modal from "react-native-modal";
 import { useDarkMode } from "../../Context/AppContext";
 import { TouchableOpacity } from "react-native";
@@ -154,7 +154,7 @@ const MessagesUser = ({ message, own, user }) => {
                             color: "lightgray",
                           }}
                         >
-                          22:30
+                          {formatMessageDate(message.createdAt)}
                         </Text>
                       </Text>
 
@@ -240,7 +240,7 @@ const MessagesUser = ({ message, own, user }) => {
                                   color: "lightgray",
                                 }}
                               >
-                                22:30
+                                {formatMessageDate(message.createdAt)}
                               </Text>
                             </Text>
                           </View>
@@ -325,7 +325,7 @@ const MessagesUser = ({ message, own, user }) => {
                         marginTop: 5,
                       }}
                     >
-                      {formatPostDate(message.createdAt)}
+                      {formatMessageDate(message.createdAt)}
                     </Text>
                   </View>
                 </>
@@ -394,7 +394,7 @@ const MessagesUser = ({ message, own, user }) => {
                               color: "lightgray",
                             }}
                           >
-                            22:30
+                            {formatMessageDate(message.createdAt)}
                           </Text>
                         </Text>
                       </View>
@@ -478,7 +478,7 @@ const MessagesUser = ({ message, own, user }) => {
                                   color: "lightgray",
                                 }}
                               >
-                                22:30
+                                {formatMessageDate(message.createdAt)}
                               </Text>
                             </Text>
                           </View>
@@ -562,7 +562,7 @@ const MessagesUser = ({ message, own, user }) => {
                         marginTop: 5,
                       }}
                     >
-                      {formatPostDate(message.createdAt)}
+                      {formatMessageDate(message.createdAt)}
                     </Text>
                   </View>
                 </>

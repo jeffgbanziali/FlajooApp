@@ -16,20 +16,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAvoidingView } from "react-native";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { io } from "socket.io-client";
 import { APP_API_URL, MESSAGE_ADRESS_IP } from "../../config";
 import Video from 'react-native-video';
-//import { collection, addDoc, getDoc, } from 'firebase/firestore';
-//import { firestore, uploadMediaToFirebase } from '../../Data/FireStore';
+import { collection, addDoc, getDoc, } from 'firebase/firestore';
+import { firestore, uploadMediaToFirebase } from '../../Data/FireStore';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { EasingFunction } from 'react-native';
 import RNFS from 'react-native-fs';
@@ -55,7 +49,7 @@ const Message = () => {
   const { uid } = useContext(UidContext);
   const scrollRef = useRef();
   const route = useRoute();
-  const { conversationId, conversation, user } = route.params;
+  const { conversationId, conversation, conversationData, user } = route.params;
   const { isDarkMode } = useDarkMode();
   const { t } = useTranslation();
 
@@ -64,171 +58,35 @@ const Message = () => {
   const [selectedDocument, setSelectedDocument] = useState(null);
 
 
-
-
-
-
-  /* const handleSendMessage = async () => {
-     try {
-       const { uri: imageUri } = selectedImage || {};
-       const { uri: videoUri } = selectedVideo || {};
-       const { uri: documentUri } = selectedDocument || {};
-   
-       const promises = [];
-   
-       if (imageUri) promises.push(uploadMediaToFirebase(imageUri, `image-${Date.now()}.${imageUri.split('.').pop()}`));
-       if (videoUri) promises.push(uploadMediaToFirebase(videoUri, `video-${Date.now()}.${videoUri.split('.').pop()}`));
-       if (documentUri) promises.push(uploadMediaToFirebase(documentUri, `document-${Date.now()}.${documentUri.split('.').pop()}`));
-   
-       const [imageUrl, videoUrl, documentUrl] = await Promise.all(promises);
-   
-       const attachment = selectedImage
-         ? { type: 'image', url: imageUrl }
-         : selectedVideo
-         ? { type: 'video', url: videoUrl }
-         : selectedDocument
-         ? { type: 'document', url: documentUrl }
-         : null;
-   
-       const messageData = {
-         senderId: uid,
-         conversationId,
-         text: newChat || "",
-         attachment,
-       };
-   
-       const socketData = {
-         senderId: uid,
-         receiverId: [...new Set(currentChat.map((message) => message.senderId))].find(
-           (sender) => sender !== uid
-         ),
-         text: newChat || "",
-         attachment,
-       };
-   
-       socket.current.emit("sendMessage", socketData);
-   
-       if (newChat || attachment) {
-         const response = await axios.post(`${APP_API_URL}/api/message/`, messageData);
-         const docRef = await addDoc(collection(firestore, 'media'), messageData);
-         const docSnapshot = await getDoc(docRef);
-         console.log('Story créée avec succès! Document ID:', docRef.id);
-         console.log('Document data:', docSnapshot.data());
-   
-         setChat((prevChat) => [...prevChat, response.data]);
-         setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
-         setNewChat("");
-         setPostText('');
-         setSelectedImage(null);
-         setSelectedVideo(null);
-         setSelectedDocument(null);
-         setShowImage(false);
-         setSelectTools(false);
-       } else {
-         Alert.alert('Erreur', 'Veuillez fournir du texte, du média, ou les deux pour envoyer un message.');
-       }
-     } catch (error) {
-       console.error('Erreur lors de l\'envoi du message :', error);
-       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'envoi du message.');
-     }
-   };*/
-
-  /*const handleSendMessage = async () => {
-    console.log("handleSendMessage called");
-    console.log("newChat:", newChat);
-
-    const promises = [];
-    const message = {
-      senderId: uid,
-      text: newChat,
-      conversationId: conversationId,
-    };
-
-    const mesSenders = [
-      ...new Set(currentChat.map((message) => message.senderId)),
-    ];
-
-    const receiverId = mesSenders.find((sender) => sender !== uid);
-
-    if (selectedImage) {
-      promises.push(uploadMediaToFirebase(selectedImage.uri, `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`));
-    }
-
-    if (selectedVideo) {
-      promises.push(uploadMediaToFirebase(selectedVideo.uri, `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`));
-    }
-
-    if (selectedDocument) {
-      promises.push(uploadMediaToFirebase(selectedDocument.uri, `document-${Date.now()}.${selectedDocument.uri.split('.').pop()}`));
-    }
-
-    try {
-      const [imageUrl, videoUrl, documentUrl] = await Promise.all(promises);
-
-      if (imageUrl || videoUrl || documentUrl) {
-        const attachment = imageUrl
-          ? { type: 'image', url: imageUrl }
-          : videoUrl
-            ? { type: 'video', url: videoUrl }
-            : documentUrl
-              ? { type: 'document', url: documentUrl }
-              : null;
-
-        message.attachment = attachment;
-      }
-
-      socket.current.emit("sendMessage", {
-        senderId: uid,
-        receiverId,
-        text: newChat,
-        attachment: message.attachment,
-      });
-
-      const response = await axios.post(`${APP_API_URL}/api/message/`, message);
-
-      setChat((prevChat) => [...prevChat, response.data]);
-      setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
-      setNewChat("");
-      setSelectedImage(null);
-      setSelectedVideo(null);
-      setSelectedDocument(null);
-      setShowImage(false);
-      setSelectTools(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };*/
-
-
   /*************************************************************** */
+  const conversationMembersId = conversationId || conversationData._id
 
 
   const handleSendMessage = async () => {
 
-
     const promises = [];
     const message = {
       senderId: uid,
       text: newChat,
-      conversationId: conversationId,
+      conversationId: conversationMembersId,
     };
 
     const mesSenders = [
       ...new Set(currentChat.map((message) => message.senderId)),
     ];
 
-    const receiverId = mesSenders.find((sender) => sender !== uid);
+    const receiverId = mesSenders.find((sender) => sender !== uid) || user._id;
 
     if (selectedImage) {
-      promises.push(saveMediaLocally(selectedImage.uri, `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`, 'image'));
+      promises.push(uploadMediaToFirebase(selectedImage.uri, `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`, 'image'));
     }
 
     if (selectedVideo) {
-      promises.push(saveMediaLocally(selectedVideo.uri, `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`, 'video'));
+      promises.push(uploadMediaToFirebase(selectedVideo.uri, `video-${Date.now()}.${selectedVideo.uri.split('.').pop()}`, 'video'));
     }
 
     if (selectedDocument) {
-      promises.push(saveMediaLocally(selectedDocument.uri, `document-${Date.now()}.${selectedDocument.uri.split('.').pop()}`, 'document'));
+      promises.push(uploadMediaToFirebase(selectedDocument.uri, `document-${Date.now()}.${selectedDocument.uri.split('.').pop()}`, 'document'));
     }
 
     try {
@@ -246,8 +104,7 @@ const Message = () => {
         message.attachment = attachment;
       }
 
-
-
+      // Envoyer le message via socket
       socket.current.emit("sendMessage", {
         senderId: uid,
         receiverId,
@@ -255,9 +112,10 @@ const Message = () => {
         attachment: message.attachment,
       });
 
-
-
+      // Envoyer le message via API et vérifier si c'est le premier message
       const response = await axios.post(`${APP_API_URL}/api/message/`, message);
+      console.log("Premier message de la conversation:", message);
+
 
       setChat((prevChat) => [...prevChat, response.data]);
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
@@ -267,16 +125,23 @@ const Message = () => {
       setSelectedDocument(null);
       setShowImage(false);
       setSelectTools(false);
-      if (conversation) {
-        conversation.message = newChat;
-        console.log("Mama ti doungo mbi", conversation.message)
 
+      if (conversation) {
+        if (!conversation.message || conversation.message.length === 0) {
+          // Mise à jour de la conversation avec le premier message
+          conversation.message = newChat;
+          console.log("Premier message de la conversation:", conversation.message);
+        }
+
+        // Mise à jour de la conversation avec le dernier message
+        conversation.message = newChat;
       }
 
     } catch (err) {
       console.log(err);
     }
   };
+
 
 
   const saveMediaLocally = async (uri, fileName, mediaType) => {
@@ -340,7 +205,7 @@ const Message = () => {
     const getMessages = async () => {
       try {
         const response = await axios.get(
-          `${APP_API_URL}/api/message/${conversationId}`
+          `${APP_API_URL}/api/message/${conversationMembersId}`
         );
         console.log("Messages Response:", response.data);
         setChat(response.data);
@@ -350,7 +215,7 @@ const Message = () => {
       }
     };
     getMessages();
-  }, [conversationId]);
+  }, [conversationMembersId]);
 
   /*************************************************************** */
 
@@ -423,7 +288,7 @@ const Message = () => {
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: isDarkMode ? "#202020" : "#E9C8C8",
+          backgroundColor: isDarkMode ? "#101010" : "white",
           width: "100%",
         }}
       >
@@ -438,11 +303,8 @@ const Message = () => {
             flex: 1,
             paddingBottom: 10,
             backgroundColor: isDarkMode ? "#101010" : "white",
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            marginTop: "5%",
             width: "100%",
-            height: "100%",
+            height: "92%",
           }}
         >
           {currentChat ? (

@@ -55,12 +55,13 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
-                height: "6%",
+                height: "8%",
+                //backgroundColor: "blue",
+
             }}
         >
             <View
                 style={{
-                    //backgroundColor: "blue",
                     width: "60%",
                     flexDirection: "row",
                     alignItems: "center",
@@ -145,8 +146,6 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     style={{
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor: isPressed ? "#D9D9D9" : "red",
-                        backgroundColor: isDarkMode ? "#202020" : "#E9C8C8",
                         width: 50,
                         height: 50,
                         borderRadius: 30,
@@ -155,7 +154,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                 >
                     <Ionicons
                         name="call"
-                        size={30}
+                        size={25}
                         color={isDarkMode ? "white" : "white"}
                     />
                 </TouchableOpacity>
@@ -164,8 +163,6 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     style={{
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor: isPressed ? "#D9D9D9" : "#6F6F6F",
-                        backgroundColor: isDarkMode ? "#202020" : "#E9C8C8",
                         width: 50,
                         height: 50,
                         borderRadius: 30,
@@ -173,7 +170,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                 >
                     <Ionicons
                         name="videocam"
-                        size={30}
+                        size={25}
                         color={isDarkMode ? "white" : "white"}
 
                     />
@@ -182,8 +179,6 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     style={{
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor: isPressed ? "#D9D9D9" : "red",
-                        backgroundColor: isDarkMode ? "#202020" : "#E9C8C8",
                         width: 40,
                         height: 40,
                         borderRadius: 30,

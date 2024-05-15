@@ -10,7 +10,6 @@ export const FETCH_CONVERSATION_INFO_FAILURE = "FETCH_CONVERSATION_INFO_FAILURE"
 export const CONVERSATION_CREATED = "CONVERSATION_CREATED";
 export const CONVERSATION_ERROR = "CONVERSATION_ERROR";
 
-CONVERSATION_CREATED
 
 
 
@@ -47,9 +46,15 @@ export const createConversation = (senderId, receiverId) => {
     return async (dispatch) => {
         try {
             const response = await axios.post(`${APP_API_URL}/api/conversation`, { senderId, receiverId });
-            dispatch({ type: 'CONVERSATION_CREATED', payload: response.data });
+            dispatch({
+                type: CONVERSATION_CREATED,
+                payload: response.data
+            });
+            return response.data; // Ajout de cette ligne pour retourner les données de la réponse
         } catch (error) {
             dispatch({ type: CONVERSATION_ERROR, payload: error });
+            throw error; // Vous pouvez également choisir de relancer l'erreur ici si nécessaire
         }
     };
 };
+

@@ -50,18 +50,19 @@ const ChatSending = ({ newChat, setNewChat, handleSelect, handleSendMessage }) =
             style={{
                 position: "relative",
                 width: "100%",
+                // height: 50,
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
-                marginBottom: 5,
-                // backgroundColor: "red"
+               // backgroundColor: "red",
+
             }}
         >
 
             <View
                 style={{
                     width: "85%",
-                    height: Math.max(40, height),
+                    height: Math.max(42, height),
                     flexDirection: "row",
                     alignItems: "center",
                     backgroundColor: isDarkMode ? "#343434" : "#F7F4F4",

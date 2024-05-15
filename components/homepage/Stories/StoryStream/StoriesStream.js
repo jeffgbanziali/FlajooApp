@@ -320,8 +320,8 @@ const StoriesStream = () => {
         useNativeDriver: false,
       });
     } else if (currentStory.media_type === 'image') {
-      // Si c'est une image, définissez une durée fixe pour l'animation (par exemple, 15 secondes)
-      const animationDuration = 10000000000000;
+      
+      const animationDuration = 10000;
       animationRef.current = Animated.timing(progressAnimation, {
         toValue: 1,
         duration: animationDuration,

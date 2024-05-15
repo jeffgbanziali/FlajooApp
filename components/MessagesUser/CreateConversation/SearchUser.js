@@ -52,10 +52,11 @@ const SearchUser = ({ onSelectUser }) => {
 
             for (const user of users) {
                 const receiverId = user._id;
-                dispatch(createConversation(senderId, receiverId));
-                navigation.navigate("Chatlist", { user });
+                const conversationData = await dispatch(createConversation(senderId, receiverId)); // Utilisation de await pour obtenir les données de la réponse
+                //console.log("Nouvelle conversation créée :", conversationData);
+                navigation.navigate("Chatlist", { user, conversationData });
             }
-            console.log("New conversation created")
+            console.log("Nouvelle conversation créée");
         } catch (error) {
             console.error(error.message);
         }
@@ -65,12 +66,10 @@ const SearchUser = ({ onSelectUser }) => {
 
 
 
+
     const renderItem = ({ item, index }) => {
 
         const isChecked = users.some((selectedReceiver) => selectedReceiver._id === item._id);
-
-        console.log("Toi lààààà", users);
-
 
         return (
 
@@ -200,7 +199,7 @@ const SearchUser = ({ onSelectUser }) => {
             behavior={Platform.OS === "ios" ? "padding" : "null"}
             style={{
                 width: "100%",
-                height: "84%",
+                height: "90%",
                 paddingBottom: 10,
 
                 //backgroundColor: "green",
@@ -250,7 +249,7 @@ const SearchUser = ({ onSelectUser }) => {
             <View
                 style={{
                     width: "100%",
-                    height: "16%",
+                    height: "10%",
                     //backgroundColor: "blue",
                     justifyContent: "center",
                     position: "relative",

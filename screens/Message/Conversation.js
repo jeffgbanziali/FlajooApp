@@ -65,7 +65,6 @@ const Conversation = ({ conversation, currentUser }) => {
   const goProfil = (id) => {
 
     navigation.navigate("ProfilFriends", { id });
-    console.log("go to profile friends", id);
     closeModal();
   };
 

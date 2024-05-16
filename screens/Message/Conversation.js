@@ -43,6 +43,7 @@ const Conversation = ({ conversation, currentUser }) => {
     backgroundColor: isPressed ? "#6F6F6F" : "#F3F2F2",
     backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
     width: "100%",
+    
     height: "100%",
   };
 

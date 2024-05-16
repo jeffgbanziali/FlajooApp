@@ -95,8 +95,8 @@ const Message = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-
             width: "100%",
+            height: "100%",
             position: "relative",
           }}
         >
@@ -149,6 +149,7 @@ const Message = () => {
               style={{
                 width: "100%",
                 height: "100%",
+
               }}
             >
               <FlatList
@@ -159,7 +160,6 @@ const Message = () => {
                     <TouchableOpacity onPress={() => setCurrentChat(c)}
                       style={{
                         width: "100%",
-                        // backgroundColor: "green",
                         padding: 1,
                         height: 80,
                         justifyContent: "center",
@@ -172,7 +172,12 @@ const Message = () => {
                 }}
 
                 ListHeaderComponent={() => (
-                  <>
+                  <View
+                    style={{
+                      // backgroundColor: "red",
+                      width: "100%",
+                      height: 220,
+                    }}>
                     <ConversationSearching />
                     <ChatOnline />
                     <View
@@ -193,7 +198,7 @@ const Message = () => {
                       </Text>
 
                     </View>
-                  </>
+                  </View>
 
                 )}
               />

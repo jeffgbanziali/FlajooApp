@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
-import { useDarkMode } from '../../Context/AppContext';
+import { UidContext, useDarkMode } from '../../Context/AppContext';
 import { USER } from '../../../Data/Users';
 import { useSelector } from 'react-redux';
 
 const ChatOnline = ({ user }) => {
     const { isDarkMode, usersOnline, isConnected } = useDarkMode();
 
+    const { uid } = useContext(UidContext)
+
     const usersData = useSelector((state) => state.usersReducer);
     const firstTenUsers = usersData.slice(10, 40);
+    const filteredUsers = firstTenUsers.filter(user => user._id !== uid);
+
 
     const MAX_MESSAGE_LENGTH = 8;
     const renderLimitedMessage = (message) => {
@@ -117,7 +121,7 @@ const ChatOnline = ({ user }) => {
             }}
         >
             <FlatList
-                data={firstTenUsers}
+                data={filteredUsers}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}

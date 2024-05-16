@@ -1,2 +1,2 @@
-export const APP_API_URL = 'http://10.101.9.148:4000'
-export const MESSAGE_ADRESS_IP = '//10.101.9.148'
+export const APP_API_URL = 'http://192.168.0.14:4000'
+export const MESSAGE_ADRESS_IP = '//192.168.0.14'

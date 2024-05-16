@@ -40,16 +40,17 @@ const ConversationSearching = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                height: 50,
+                height: 60,
+                // backgroundColor: "red"
             }}
         >
             <View style={{
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: isDarkMode ? "#0D0C0C" : "#F1F1F1",
+                backgroundColor: isDarkMode ? "gray" : "#F1F1F1",
                 width: "94%",
-                height: "80%",
+                height: 40,
                 borderRadius: 10
             }}>
                 <Ionicons

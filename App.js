@@ -34,12 +34,12 @@ const App = () => {
     );
 
 
-    /*const connectToRemoteDebugger = () => {
+    const connectToRemoteDebugger = () => {
         NativeDevSettings.setIsDebuggingRemotely(true);
     };
 
 
-    connectToRemoteDebugger()*/
+    connectToRemoteDebugger()
 
 
     store.dispatch(getUsers());
@@ -73,7 +73,7 @@ axios.interceptors.request.use(
 
 
 
-const AppW = ({ token }) => {
+const AppW = () => {
 
     const [uid, setUid] = useState(null);
 

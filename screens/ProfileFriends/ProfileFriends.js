@@ -32,16 +32,14 @@ import MaterialTopFriendsNavigation from "../../navigation/MaterialTopFriendsNav
 const ProfileFriends = () => {
   const route = useRoute();
   const { id } = route.params;
-  const { isDarkMode, usersOnline } = useDarkMode();
+  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
 
   const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const isUserOnline = usersOnline.some(user => user.id === id) && isConnected
 
-  const isUserOnline = usersOnline.some(user => user.id === id);
-
-
-  console.log("mon context est:", usersOnline)
+  console.log("Mon profile est en ligne:", isUserOnline)
 
 
 

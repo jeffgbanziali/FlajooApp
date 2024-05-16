@@ -5,7 +5,11 @@ import { MESSAGE_ADRESS_IP } from "../../config";
 import { io } from "socket.io-client";
 import NetInfo from "@react-native-community/netinfo";
 
+
+
+
 export const UidContext = createContext({ uid: null, setUid: () => { } });
+
 
 const DarkModeContext = createContext();
 
@@ -15,7 +19,7 @@ export const DarkModeProvider = ({ children }) => {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [socket, setSocket] = useState(null);
   const [usersOnline, setUsersOnline] = useState(null);
-
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
     const initializeSocket = async () => {
@@ -45,23 +49,17 @@ export const DarkModeProvider = ({ children }) => {
     initializeSocket();
   }, []);
 
+
+
   useEffect(() => {
-    if (socket) {
-      const unsubscribe = NetInfo.addEventListener(state => {
-        console.log("Connection type", state.type);
-        console.log("Is connected?", state.isConnected);
-        if (!state.isConnected) {
-          socket.disconnect();
-        }
-      });
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected); // Mettre à jour l'état de connexion
+    });
 
-      return () => {
-        unsubscribe();
-      };
-    }
-  }, [socket]);
-
-
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -100,7 +98,7 @@ export const DarkModeProvider = ({ children }) => {
 
 
   return (
-    <DarkModeContext.Provider value={{ usersOnline, isDarkMode, toggleDarkMode, selectedLanguage, changeLanguage }}>
+    <DarkModeContext.Provider value={{ isConnected, usersOnline, isDarkMode, toggleDarkMode, selectedLanguage, changeLanguage }}>
       {children}
     </DarkModeContext.Provider>
   );

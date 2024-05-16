@@ -62,7 +62,8 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
         navigation.navigate("VideoCall", { user: user });
     };
 
-    const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === user._id);
+    const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === user._id) && isConnected;
+    console.log("Mon profile est en ligne:", isUserOnline);
 
 
     return (

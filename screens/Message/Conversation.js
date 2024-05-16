@@ -32,7 +32,8 @@ const Conversation = ({ conversation, currentUser }) => {
 
 
 
-  const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === foundUser._id);
+  const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === foundUser._id) && isConnected;
+  console.log("Mon profile est en ligne:", isUserOnline);
 
 
 

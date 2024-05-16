@@ -5,7 +5,7 @@ import { USER } from '../../../Data/Users';
 import { useSelector } from 'react-redux';
 
 const ChatOnline = ({ user }) => {
-    const { isDarkMode, usersOnline } = useDarkMode();
+    const { isDarkMode, usersOnline, isConnected } = useDarkMode();
 
     const usersData = useSelector((state) => state.usersReducer);
     const firstTenUsers = usersData.slice(10, 40);
@@ -27,7 +27,8 @@ const ChatOnline = ({ user }) => {
 
     const renderItem = ({ item }) => {
 
-        const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === item._id);
+        const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === item._id) && isConnected;
+        console.log("Mon profile est en ligne:", isUserOnline)
 
         return (
 

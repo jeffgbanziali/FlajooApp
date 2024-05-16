@@ -33,7 +33,7 @@ import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const navigation = useNavigation();
-  const { isDarkMode, usersOnline } = useDarkMode();
+  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
   const { t } = useTranslation();
   const { uid } = useContext(UidContext)
 
@@ -53,9 +53,9 @@ const Profile = () => {
 
 
 
-  const isUserOnline = usersOnline.some(user => user.id === uid);
+  const isUserOnline = usersOnline.some(user => user.id === uid) && isConnected
 
-  console.log("mon context est:", usersOnline)
+  console.log("Mon profile est en ligne:", isUserOnline)
 
 
 

@@ -22,6 +22,7 @@ import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
+import NetInfo from "@react-native-community/netinfo";
 
 
 
@@ -75,15 +76,17 @@ axios.interceptors.request.use(
 const AppW = ({ token }) => {
 
     const [uid, setUid] = useState(null);
+
     const [isLoadingApp, setIsLoadingApp] = useState(false);
     const [isFirstTime, setIsFirstTime] = useState(true);
 
-
     const dispatch = useDispatch();
-    const { isDarkMode, usersOnline } = useDarkMode();
+    const { isDarkMode, isConnected } = useDarkMode();
+
+    console.log("vous êtes là mes onlines ?", isConnected)
 
 
-    console.log("mon context est:", usersOnline)
+
 
 
     useEffect(() => {
@@ -97,7 +100,7 @@ const AppW = ({ token }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            // setIsLoadingApp(true)
+            setIsLoadingApp(true)
             try {
                 const response = await axios({
                     method: "get",
@@ -111,9 +114,9 @@ const AppW = ({ token }) => {
                 console.log("No token", error);
             }
 
-            /* finally {
-                 setIsLoadingApp(false);
-             }*/
+            finally {
+                setIsLoadingApp(false);
+            }
         };
 
         fetchToken();
@@ -128,22 +131,22 @@ const AppW = ({ token }) => {
 
 
         <UidContext.Provider value={{ uid, setUid }}>
-            {/*
-                isLoadingApp ?
-                    <Loading /> :*/}
-            <NavigationContainer>
-                {
 
-                    isFirstTime ?
-                        <FirstNavigation />
-                        : uid ?
-                            <StackNavigation />
+            {isLoadingApp ?
+                <Loading /> :
+                <NavigationContainer>
+                    {
 
-                            :
-                            <AuthNavigation />
-                }
-            </NavigationContainer>
+                        isFirstTime ?
+                            <FirstNavigation />
+                            : uid ?
+                                <StackNavigation />
 
+                                :
+                                <AuthNavigation />
+                    }
+                </NavigationContainer>
+            }
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

@@ -38,7 +38,7 @@ const ProfileFriends = () => {
   const { t } = useTranslation();
 
 
-  console.log("mon context est:", usersOnline[0].id === id)
+  const isUserOnline = usersOnline.some(user => user.id === id);
 
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
@@ -244,7 +244,7 @@ const ProfileFriends = () => {
                     }}
                   />
 
-                  {usersOnline[0].id === id ? (
+                  {isUserOnline ? (
                     <View
                       style={{
                         backgroundColor: "#09C03C",

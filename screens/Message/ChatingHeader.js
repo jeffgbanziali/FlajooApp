@@ -62,6 +62,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
         navigation.navigate("VideoCall", { user: user });
     };
 
+    const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === user._id);
 
 
     return (
@@ -132,7 +133,7 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
                     </Text>
 
                     {
-                        usersOnline[0].id === user._id ? (
+                        isUserOnline ? (
                             <Text
                                 style={{
                                     fontWeight: "normal",

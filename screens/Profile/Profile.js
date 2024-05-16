@@ -51,9 +51,11 @@ const Profile = () => {
 
 
 
-  console.log("mon context est:", usersOnline[0].id === uid)
 
 
+  const isUserOnline = usersOnline.some(user => user.id === uid);
+
+  console.log("mon context est:", isUserOnline)
 
 
 
@@ -181,7 +183,7 @@ const Profile = () => {
                 />
 
 
-                {usersOnline[0].id === uid ? (
+                {isUserOnline ? (
                   <View
                     style={{
                       backgroundColor: "#09C03C",

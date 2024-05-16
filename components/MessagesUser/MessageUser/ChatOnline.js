@@ -21,74 +21,85 @@ const ChatOnline = ({ user }) => {
         }
     };
 
-    const renderItem = ({ item }) => (
 
 
-        <View
-            style={{
-                flexDirection: 'column',
-                height: "100%",
-                width: 80,
-                alignItems: "center",
-                justifyContent: 'center',
-                //backgroundColor: "blue",
-                marginLeft: 10
 
-            }}
-        >
+
+    const renderItem = ({ item }) => {
+
+        const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === item._id);
+
+        return (
+
+
             <View
                 style={{
-                    width: 60,
-                    height: 60,
-                    borderRadius: 100,
-                    alignContent: 'center',
-                }}>
-                <Image source={{ uri: item.picture }}
+                    flexDirection: 'column',
+                    height: "100%",
+                    width: 80,
+                    alignItems: "center",
+                    justifyContent: 'center',
+                    //backgroundColor: "blue",
+                    marginLeft: 10
+
+                }}
+            >
+                <View
+                    style={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: 100,
+                        alignContent: 'center',
+                    }}>
+                    <Image source={{ uri: item.picture }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    />
+                </View>
+
+                {isUserOnline && (<View
+                    style={{
+                        backgroundColor: "#09C03C",
+                        position: "absolute",
+                        left: 58,
+                        width: 14,
+                        height: 14,
+                        borderRadius: 25,
+                        borderWidth: 2,
+                        borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                        top: 60,
+                        zIndex: 100
+                    }}>
+                </View>)}
+
+                <View
                     style={{
                         width: "100%",
-                        height: "100%",
-                        borderRadius: 100,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                />
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: 6
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 12,
+                            fontWeight: '400',
+                            color: isDarkMode ? "#F5F5F5" : "black",
+                        }}
+                    >
+                        {renderLimitedMessage(item.pseudo)}
+                    </Text>
+                </View>
+
             </View>
+        );
+    }
 
-            {usersOnline[0].id === item._id && (<View
-                style={{
-                    backgroundColor: "#09C03C",
-                    position: "absolute",
-                    left: 58,
-                    width: 14,
-                    height: 14,
-                    borderRadius: 25,
-                    borderWidth: 2,
-                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                    top: 60,
-                    zIndex: 100
-                }}>
-            </View>)}
 
-            <View
-                style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 6
-                }}>
-                <Text
-                    style={{
-                        fontSize: 12,
-                        fontWeight: '400',
-                        color: isDarkMode ? "#F5F5F5" : "black",
-                    }}
-                >
-                    {renderLimitedMessage(item.pseudo)}
-                </Text>
-            </View>
-
-        </View>
-    );
 
     return (
         <View

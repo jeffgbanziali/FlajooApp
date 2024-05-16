@@ -32,6 +32,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
 
 
+  const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === foundUser._id);
 
 
 
@@ -133,7 +134,7 @@ const Conversation = ({ conversation, currentUser }) => {
                 }}
               />
 
-              {usersOnline[0].id === friendId && (<View
+              {isUserOnline && (<View
                 style={{
                   backgroundColor: "#09C03C",
                   position: "absolute",
@@ -159,8 +160,8 @@ const Conversation = ({ conversation, currentUser }) => {
               height: "100%",
               flexDirection: "row",
               justifyContent: "space-between",
-            //  borderBottomWidth: 1,
-            //  borderColor: "#2C2828",
+              //  borderBottomWidth: 1,
+              //  borderColor: "#2C2828",
             }}>
             <View
               style={{

@@ -83,7 +83,7 @@ const AppW = ({ token }) => {
     const { isDarkMode, usersOnline } = useDarkMode();
 
 
-
+    console.log("Est ce mon token est là", usersOnline)
 
     useEffect(() => {
         AsyncStorage.getItem('uid')
@@ -96,7 +96,7 @@ const AppW = ({ token }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            setIsLoadingApp(true)
+            // setIsLoadingApp(true)
             try {
                 const response = await axios({
                     method: "get",
@@ -110,9 +110,9 @@ const AppW = ({ token }) => {
                 console.log("No token", error);
             }
 
-            finally {
-                setIsLoadingApp(false);
-            }
+            /* finally {
+                 setIsLoadingApp(false);
+             }*/
         };
 
         fetchToken();
@@ -127,22 +127,22 @@ const AppW = ({ token }) => {
 
 
         <UidContext.Provider value={{ uid, setUid }}>
-            {
+            {/*
                 isLoadingApp ?
-                    <Loading /> :
-                    <NavigationContainer>
-                        {
+                    <Loading /> :*/}
+            <NavigationContainer>
+                {
 
-                            isFirstTime ?
-                                <FirstNavigation />
-                                : uid ?
-                                    <StackNavigation />
+                    isFirstTime ?
+                        <FirstNavigation />
+                        : uid ?
+                            <StackNavigation />
 
-                                    :
-                                    <AuthNavigation />
-                        }
-                    </NavigationContainer>
-            }
+                            :
+                            <AuthNavigation />
+                }
+            </NavigationContainer>
+
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

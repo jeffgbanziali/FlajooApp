@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18next from '../../Translations/Services/i18next';
 import { MESSAGE_ADRESS_IP } from "../../config";
 import { io } from "socket.io-client";
+import NetInfo from "@react-native-community/netinfo";
 
 export const UidContext = createContext({ uid: null, setUid: () => { } });
 
@@ -11,7 +12,7 @@ const DarkModeContext = createContext();
 export const DarkModeProvider = ({ children }) => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('en'); // Ajoute l'état pour la langue ici
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [socket, setSocket] = useState(null);
   const [usersOnline, setUsersOnline] = useState(null);
 
@@ -28,7 +29,10 @@ export const DarkModeProvider = ({ children }) => {
             setSocket(newSocket);
           });
 
-          // Déconnexion du socket lorsque le composant est démonté
+          newSocket.on('getUsers', (users) => {
+            setUsersOnline(users);
+          });
+
           return () => {
             newSocket.disconnect();
           };
@@ -41,14 +45,19 @@ export const DarkModeProvider = ({ children }) => {
     initializeSocket();
   }, []);
 
-
-
   useEffect(() => {
     if (socket) {
-      socket.on('getUsers', (users) => {
-        // Mettre à jour l'état de connexion des utilisateurs
-        setUsersOnline(users);
+      const unsubscribe = NetInfo.addEventListener(state => {
+        console.log("Connection type", state.type);
+        console.log("Is connected?", state.isConnected);
+        if (!state.isConnected) {
+          socket.disconnect();
+        }
       });
+
+      return () => {
+        unsubscribe();
+      };
     }
   }, [socket]);
 

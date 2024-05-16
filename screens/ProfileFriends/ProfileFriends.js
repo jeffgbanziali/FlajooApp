@@ -40,6 +40,11 @@ const ProfileFriends = () => {
 
   const isUserOnline = usersOnline.some(user => user.id === id);
 
+
+  console.log("mon context est:", usersOnline)
+
+
+
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
 

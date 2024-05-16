@@ -1,6 +1,6 @@
 #import "AppDelegate.h"
-
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
@@ -11,16 +11,30 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
-}
+  NSURL *jsCodeLocation;
+  
+  #ifdef DEBUG
+    // Check if an environment variable is set for a custom port
+    NSString *jsPort = [[[NSProcessInfo processInfo] environment] objectForKey:@"JS_SERVER_PORT"];
+    if (jsPort == nil) {
+      jsPort = @"8081"; // Default port
+    }
+    jsCodeLocation = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:%@/index.bundle?platform=ios&dev=true", jsPort]];
+  #else
+    jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  #endif
 
-- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
-{
-#if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-#else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-#endif
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                      moduleName:@"FlajooApp"
+                                               initialProperties:self.initialProps
+                                                   launchOptions:launchOptions];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+
+  return YES;
 }
 
 @end

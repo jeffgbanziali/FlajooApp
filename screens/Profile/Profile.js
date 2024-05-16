@@ -55,7 +55,7 @@ const Profile = () => {
 
   const isUserOnline = usersOnline.some(user => user.id === uid);
 
-  console.log("mon context est:", isUserOnline)
+  console.log("mon context est:", usersOnline)
 
 
 

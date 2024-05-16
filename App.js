@@ -33,12 +33,12 @@ const App = () => {
     );
 
 
-    const connectToRemoteDebugger = () => {
+    /*const connectToRemoteDebugger = () => {
         NativeDevSettings.setIsDebuggingRemotely(true);
     };
 
 
-    connectToRemoteDebugger()
+    connectToRemoteDebugger()*/
 
 
     store.dispatch(getUsers());
@@ -83,7 +83,8 @@ const AppW = ({ token }) => {
     const { isDarkMode, usersOnline } = useDarkMode();
 
 
-    console.log("Est ce mon token est là", usersOnline)
+    console.log("mon context est:", usersOnline)
+
 
     useEffect(() => {
         AsyncStorage.getItem('uid')

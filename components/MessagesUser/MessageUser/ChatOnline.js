@@ -8,7 +8,7 @@ const ChatOnline = ({ user }) => {
     const { isDarkMode, usersOnline } = useDarkMode();
 
     const usersData = useSelector((state) => state.usersReducer);
-    const firstTenUsers = usersData.slice(10, 20);
+    const firstTenUsers = usersData.slice(10, 40);
 
     const MAX_MESSAGE_LENGTH = 8;
     const renderLimitedMessage = (message) => {
@@ -62,20 +62,23 @@ const ChatOnline = ({ user }) => {
                     />
                 </View>
 
-                {isUserOnline && (<View
-                    style={{
-                        backgroundColor: "#09C03C",
-                        position: "absolute",
-                        left: 58,
-                        width: 14,
-                        height: 14,
-                        borderRadius: 25,
-                        borderWidth: 2,
-                        borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                        top: 60,
-                        zIndex: 100
-                    }}>
-                </View>)}
+                {isUserOnline && (
+                    <View
+                        style={{
+                            backgroundColor: "#09C03C",
+                            position: "absolute",
+                            left: 58,
+                            width: 14,
+                            height: 14,
+                            borderRadius: 25,
+                            borderWidth: 2,
+                            borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                            //top: 60,
+                            bottom: 60,
+                            zIndex: 100
+                        }}>
+                    </View>
+                )}
 
                 <View
                     style={{

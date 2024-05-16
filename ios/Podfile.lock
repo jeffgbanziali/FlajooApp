@@ -900,7 +900,7 @@ PODS:
     - React-Core
   - react-native-image-resizer (1.4.5):
     - React-Core
-  - react-native-netinfo (11.3.1):
+  - react-native-netinfo (11.3.2):
     - React-Core
   - react-native-pager-view (6.3.0):
     - glog
@@ -1458,7 +1458,7 @@ SPEC CHECKSUMS:
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-image-picker: d3db110a3ded6e48c93aef7e8e51afdde8b16ed0
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
-  react-native-netinfo: bdb108d340cdb41875c9ced535977cac6d2ff321
+  react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-pager-view: 0eb900a8c5d83c02a74b0125d4b5f9fdcc5b8f44
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-slider: b42e578d7c1ee4cd5f53e1dcfca232d3007b3d3e

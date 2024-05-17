@@ -34,11 +34,7 @@ const Conversation = ({ conversation, setCurrentChat, currentUser }) => {
     return null;
   }).filter(user => user !== null)[0];
 
-
-
   const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === foundUser._id) && isConnected;
-
-
   const différentv = conversation.members.receiverId === uid && conversation.members.senderId !== uid
 
 
@@ -51,6 +47,10 @@ const Conversation = ({ conversation, setCurrentChat, currentUser }) => {
 
   ///console.log("Is there a message from a member?", isMessageFromMember);
   console.log("mes messages sont toujours là", messages);
+
+  const filteredMessages = messages.filter(message => message.isRead === false);
+
+  console.log("Messages filtrés par conversationId:", filteredMessages);
 
 
 
@@ -292,7 +292,7 @@ const Conversation = ({ conversation, setCurrentChat, currentUser }) => {
                           color: "white"
                         }}
                       >
-                        1
+                        {filteredMessages.length}
                       </Text>
                     </View>
                   )

@@ -19,9 +19,10 @@ import { SafeAreaView } from "react-native";
 import { isEmpty } from "../../components/Context/Utils";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchConversations } from "../../actions/conversation.action";
+import { fetchConversations, markConversationAsRead } from "../../actions/conversation.action";
 import ConversationHeader from "./ConversationHeader";
 import ConversationSearching from "./ConversationSearching";
+import { readMessage } from "../../actions/message.actions";
 
 const Message = () => {
 
@@ -64,8 +65,7 @@ const Message = () => {
 
 
 
-
-
+ 
 
   return (
 
@@ -156,17 +156,12 @@ const Message = () => {
                 data={myConversation}
                 keyExtractor={(item) => item._id}
                 renderItem={({ item: c }) => {
+
+                 
+
                   return (
-                    <TouchableOpacity onPress={() => setCurrentChat(c)}
-                      style={{
-                        width: "100%",
-                        padding: 1,
-                        height: 80,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Conversation conversation={c} currentUser={uid} />
-                    </TouchableOpacity>
+
+                    <Conversation setCurrentChat={setCurrentChat} conversation={c} currentUser={uid} />
                   )
 
                 }}

@@ -162,11 +162,12 @@ const SignInScreen = () => {
 
               <View
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",
+                  //backgroundColor:"red"
                 }}
               >
                 <Image
@@ -175,7 +176,7 @@ const SignInScreen = () => {
                     height: "100%",
                     borderRadius: 100,
                   }}
-                  source={isDarkMode ? require("../../assets/Logos/ios/1212.png") : require("../../assets/Logos/ios/1212.png")}
+                  source={isDarkMode ? require("../../assets/Logos/1.png") : require("../../assets/Logos/1.png")}
                 />
               </View>
 

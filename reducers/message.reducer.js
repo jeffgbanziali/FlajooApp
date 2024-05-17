@@ -1,6 +1,6 @@
 // messageReducer.js
 
-import { DELETE_MESSAGE_FAILURE, DELETE_MESSAGE_SUCCESS, READ_MESSAGE_FAILURE, READ_MESSAGE_SUCCESS, SEND_MESSAGE_FAILURE, SEND_MESSAGE_SUCCESS } from "../actions/message.actions";
+import { DELETE_MESSAGE_FAILURE, DELETE_MESSAGE_SUCCESS, MARK_MESSAGES_AS_READ, READ_MESSAGE_FAILURE, READ_MESSAGE_SUCCESS, SEND_MESSAGE_FAILURE, SEND_MESSAGE_SUCCESS } from "../actions/message.actions";
 
 const initialState = {
     messages: [],
@@ -25,6 +25,16 @@ const messageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: state.messages.filter(message => message.id !== action.payload.id),
+                error: null,
+            };
+        case MARK_MESSAGES_AS_READ:
+            return {
+                ...state,
+                messages: state.messages.map(message =>
+                    message.conversationId === action.payload.conversationId && message.receiverId === action.payload.userId
+                        ? { ...message, isRead: true }
+                        : message
+                ),
                 error: null,
             };
         case SEND_MESSAGE_FAILURE:

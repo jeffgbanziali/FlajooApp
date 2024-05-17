@@ -44,21 +44,23 @@ const Header = () => {
         <TouchableOpacity
           style={{
             marginLeft: 10,
-            //backgroundColor: "red",
+
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            // backgroundColor: "black",
+            width: 100,
+            height: 40
           }}
         >
 
-          <Text
+          <Image
+            source={require('../../../assets/Logos/Title.png')}
             style={{
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 30,
-            }}
-          >
-            flajoooooo
-          </Text>
+              width: '100%',
+              height: "100%",
+              position: "absolute"
+            }
+            } />
         </TouchableOpacity>
 
         <View

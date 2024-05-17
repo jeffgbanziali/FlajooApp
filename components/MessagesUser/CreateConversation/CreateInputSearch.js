@@ -38,7 +38,7 @@ const CreateInputSearch = () => {
                     style={{
                         fontSize: 16,
                         fontWeight: "700",
-                        color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                        color: isDarkMode ? "#F5F5F5" : "#000000",
                     }}>
                     À
                 </Text>
@@ -52,6 +52,7 @@ const CreateInputSearch = () => {
                     //backgroundColor: "green",
                     alignItems: "center",
                     flexDirection: "row",
+                    backgroundColor: isDarkMode ? "gray" : "lightgray",
 
                 }}>
                 <TextInput
@@ -62,10 +63,11 @@ const CreateInputSearch = () => {
                         height: "100%",
                         width: "60%",
                         fontSize: 16,
-                        color: 'white',
+                        color: isDarkMode ? "#F5F5F5" : "#000000",
                     }}
                     fontSize={18}
                     placeholder={t('Research')}
+                    color={isDarkMode ? "#F5F5F5" : "#000000"}
                     placeholderTextColor="white"
                     onChangeText={setSearchText}
                     value={searchText}

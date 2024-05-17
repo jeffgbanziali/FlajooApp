@@ -152,7 +152,8 @@
     "AddPic":"Ajouter une photo / vidéo",
     "Live":"Commencer un live",
 
-    "Online":"En linge",
+    "NotOnline":"Deconnecté(e)",
+    "Online":"En ligne",
     "Files":"Documents",
     "Gallery":"Galerie",
     "Audio":"Audio",
@@ -168,6 +169,8 @@
     "dayAgo": "il y a %{count} jour(s)",
     "weekAgo": "il y a %{count} semaine(s)",
     "yearAgo": "il y a %{count} an(s)",
+    "Waiting":"Veuillez patientez",
+    "Powered":"Propulsé par l'entreprise Flaj",
 
    
 

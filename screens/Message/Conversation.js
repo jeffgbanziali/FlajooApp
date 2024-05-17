@@ -8,20 +8,24 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { useDarkMode } from "../../components/Context/AppContext";
+import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useDispatch, useSelector } from "react-redux";
+import { markConversationAsRead } from "../../actions/conversation.action";
+import { readMessage } from "../../actions/message.actions";
 
-const Conversation = ({ conversation, currentUser }) => {
+const Conversation = ({ conversation, setCurrentChat, currentUser }) => {
   const navigation = useNavigation();
   const [isPressed, setIsPressed] = useState(false);
-  const { isDarkMode, usersOnline } = useDarkMode();
+  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
   const [showOptions, setShowOptions] = useState(false);
+  const { uid } = useContext(UidContext);
 
   const usersData = useSelector((state) => state.usersReducer);
+  const friendId = conversation.members.receiverId !== currentUser ? conversation.members.receiverId : conversation.members.senderId;
+  const messages = useSelector((state) => state.messageReducer.messages)
 
-  const friendId = conversation.members.find((m) => m !== currentUser);
-
+  const dispatch = useDispatch()
 
   const foundUser = usersData.map(user => {
     if (user._id === friendId) {
@@ -33,22 +37,47 @@ const Conversation = ({ conversation, currentUser }) => {
 
 
   const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === foundUser._id) && isConnected;
-  console.log("Mon profile est en ligne:", isUserOnline);
+
+
+  const différentv = conversation.members.receiverId === uid && conversation.members.senderId !== uid
 
 
 
-  const containerStyle = {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: isPressed ? "#6F6F6F" : "#F3F2F2",
-    backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
-    width: "100%",
-    
-    height: "100%",
+  useEffect(() => {
+    dispatch(readMessage(conversation._id));
+  }, [dispatch, conversation._id]);
+
+
+
+  ///console.log("Is there a message from a member?", isMessageFromMember);
+  console.log("mes messages sont toujours là", messages);
+
+
+
+  const handleOpenConversation = async () => {
+
+    try {
+      if (différentv && conversation && conversation._id && conversation.message.isRead === false) {
+        await dispatch(markConversationAsRead(conversation._id));
+        console.log("Conversation marquée comme lue :", conversation._id);
+      } else if (différentv && conversation && conversation.message.isRead === true) {
+        console.log("Bonne humeur aujourd'hui")
+      } else {
+        console.error("ID de conversation non défini :", conversation);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la conversation :", error);
+    }
   };
 
+
+
+
+
+
+
   const handleClickMessage = () => {
-    console.log("clicked");
+    handleOpenConversation()
     navigation.navigate("Chatlist", {
       conversationId: conversation._id,
       conversation: conversation,
@@ -83,175 +112,201 @@ const Conversation = ({ conversation, currentUser }) => {
 
   return (
     <>
+
       <TouchableOpacity
-        style={containerStyle}
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
         onPress={handleClickMessage}
+        style={{
+          width: "100%",
+          padding: 1,
+          height: 80,
+          justifyContent: "center",
+        }}
       >
-
         <View
           style={{
-            width: "100%",
-            height: "100%",
-            // backgroundColor: "green",
-            alignItems: "center",
+            display: "flex",
             flexDirection: "row",
+            backgroundColor: isPressed ? "#6F6F6F" : "#F3F2F2",
+            backgroundColor: isDarkMode ? "#0D0C0C" : "#F9F9F9",
+            width: "100%",
+
+            height: "100%",
           }}
+
         >
+
           <View
             style={{
-              width: "20%",
+              width: "100%",
+              height: "100%",
               // backgroundColor: "green",
               alignItems: "center",
-            }}>
-            <Pressable
-              onPress={viewProfile}
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 100,
-
-              }}
-            >
-              <Image
-                source={{
-                  uri:
-                    !isEmpty(usersData[0]) &&
-                    usersData
-                      .map((user) => {
-                        if (user._id === friendId) {
-                          return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
-                        }
-                        return null;
-                      })
-                      .filter((url) => url !== null) // Retirer les éléments nuls
-                      .join(""),
-                }}
-
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 100,
-                }}
-              />
-
-              {isUserOnline && (<View
-                style={{
-                  backgroundColor: "#09C03C",
-                  position: "absolute",
-                  left: 40,
-                  width: 14,
-                  height: 14,
-                  borderRadius: 25,
-                  borderWidth: 2,
-                  borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                  top: 30,
-                  zIndex: 100
-                }}>
-              </View>
-              )}
-            </Pressable>
-          </View>
-
-
-          <View
-            style={{
-              display: "flex",
-              width: "80%",
-              height: "100%",
               flexDirection: "row",
-              justifyContent: "space-between",
-              //  borderBottomWidth: 1,
-              //  borderColor: "#2C2828",
-            }}>
+            }}
+          >
             <View
               style={{
-                justifyContent: "center",
-
-                //backgroundColor: "red",
-                height: "100%",
-                width: "84%"
+                width: "20%",
+                // backgroundColor: "green",
+                alignItems: "center",
               }}>
-              <Text
+              <Pressable
+                onPress={viewProfile}
                 style={{
-                  fontSize: 18,
-                  alignItems: "center",
-                  fontWeight: "600",
-                  color: isDarkMode ? "white" : "black",
+                  width: 50,
+                  height: 50,
+                  borderRadius: 100,
+
                 }}
               >
-                {!isEmpty(usersData[0]) &&
-                  usersData.map((user) => {
-                    if (user._id === friendId) return user.pseudo;
-                    else return null;
-                  })}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  marginTop: 4,
-                  alignItems: "center",
-                  fontWeight: "400",
-                  color: "gray"
-                }}
-              >
-                {renderLimitedMessage(conversation.message)}
-              </Text>
+                <Image
+                  source={{
+                    uri:
+                      !isEmpty(usersData[0]) &&
+                      usersData
+                        .map((user) => {
+                          if (user._id === friendId) {
+                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
+                          }
+                          return null;
+                        })
+                        .filter((url) => url !== null) // Retirer les éléments nuls
+                        .join(""),
+                  }}
+
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 100,
+                  }}
+                />
+
+                {isUserOnline && (<View
+                  style={{
+                    backgroundColor: "#09C03C",
+                    position: "absolute",
+                    left: 40,
+                    width: 14,
+                    height: 14,
+                    borderRadius: 25,
+                    borderWidth: 2,
+                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                    top: 30,
+                    zIndex: 100
+                  }}>
+                </View>
+                )}
+              </Pressable>
             </View>
 
+
             <View
               style={{
-                alignItems: "flex-end",
-                justifyContent: "center",
-                width: "16%",
-                //backgroundColor: "blue",
-                paddingRight: 10,
-                height: "80%",
+                display: "flex",
+                width: "80%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                //  borderBottomWidth: 1,
+                //  borderColor: "#2C2828",
               }}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  alignItems: "center",
-                  fontWeight: "600",
-                  color: isDarkMode ? "white" : "black",
-
-                }}
-              >
-                {formatConversationDate(conversation.updatedAt)}
-              </Text>
               <View
                 style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: 100,
-                  backgroundColor: "red",
-                  alignItems: "center",
-                  top: 8,
-                  justifyContent: "center"
+                  justifyContent: "center",
 
-                }}
-              >
+                  //backgroundColor: "red",
+                  height: "100%",
+                  width: "84%"
+                }}>
                 <Text
                   style={{
-                    fontSize: 10,
+                    fontSize: 18,
                     alignItems: "center",
-                    fontWeight: "normal",
-                    color: "white"
+                    fontWeight: "600",
+                    color: isDarkMode ? "white" : "black",
                   }}
                 >
-                  2
+                  {!isEmpty(usersData[0]) &&
+                    usersData.map((user) => {
+                      if (user._id === friendId) return user.pseudo;
+                      else return null;
+                    })}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    marginTop: 4,
+                    alignItems: "center",
+                    fontWeight: différentv && conversation.message.isRead === false ? "800" : "400",
+                    color: différentv && conversation.message.isRead === false ? "#004AAD" : "gray"
+                  }}
+                >
+                  {renderLimitedMessage(conversation.message.text)}
                 </Text>
               </View>
-            </View>
-          </View>
 
+              <View
+                style={{
+                  alignItems: "flex-end",
+                  justifyContent: "center",
+                  width: "16%",
+                  //backgroundColor: "blue",
+                  paddingRight: 10,
+                  height: "80%",
+                }}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    alignItems: "center",
+                    fontWeight: "600",
+                    color: isDarkMode ? (
+                      différentv && conversation.message.isRead === false ? "red" : "white") : (
+                      différentv && conversation.message.isRead === false ? "red" : "black"),
+
+                  }}
+                >
+                  {formatConversationDate(conversation.updatedAt)}
+                </Text>
+
+                {
+                  différentv && conversation.message.isRead === false && (
+                    <View
+                      style={{
+                        width: 18,
+                        height: 18,
+                        borderRadius: 100,
+                        backgroundColor: "red",
+                        alignItems: "center",
+                        top: 8,
+                        justifyContent: "center"
+
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          alignItems: "center",
+                          fontWeight: "normal",
+                          color: "white"
+                        }}
+                      >
+                        1
+                      </Text>
+                    </View>
+                  )
+
+                }
+              </View>
+            </View>
+
+
+          </View>
 
         </View>
 
       </TouchableOpacity>
-
-
       <Modal
         visible={showOptions}
         transparent={true}

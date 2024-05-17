@@ -9,6 +9,9 @@ export const FETCH_CONVERSATION_INFO_SUCCESS = "FETCH_CONVERSATION_INFO_SUCCESS"
 export const FETCH_CONVERSATION_INFO_FAILURE = "FETCH_CONVERSATION_INFO_FAILURE";
 export const CONVERSATION_CREATED = "CONVERSATION_CREATED";
 export const CONVERSATION_ERROR = "CONVERSATION_ERROR";
+export const CONVERSATION_DELETE = "CONVERSATION_DELETE";
+export const CONVERSATION_DELETE_ERROR = "CONVERSATION_DELETE_ERROR";
+export const CONVERSATION_MARKED_AS_READ = "CONVERSATION_MARKED_AS_READ"
 
 
 
@@ -58,3 +61,37 @@ export const createConversation = (senderId, receiverId) => {
     };
 };
 
+
+export const deleteConversation = (conversationId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.delete(`${APP_API_URL}/api/conversation/${conversationId}`);
+            dispatch({
+                type: CONVERSATION_DELETE,
+                payload: conversationId // Utilisez l'ID de la conversation pour mettre à jour l'état
+            });
+            return response; // Assurez-vous de retourner la réponse si nécessaire
+        } catch (error) {
+            dispatch({
+                type: CONVERSATION_DELETE_ERROR,
+                payload: error.message // Utilisez error.message pour une meilleure lisibilité
+            });
+            throw error;
+        }
+    };
+};
+
+
+export const markConversationAsRead = (conversationId) => {
+    return async (dispatch) => {
+        try {
+            await axios.put(`${APP_API_URL}/api/conversation/${conversationId}/read`);
+            dispatch({
+                type: CONVERSATION_MARKED_AS_READ,
+                payload: conversationId
+            });
+        } catch (error) {
+            console.error('Error while marking conversation as read:', error);
+        }
+    };
+};

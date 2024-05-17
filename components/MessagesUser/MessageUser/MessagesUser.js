@@ -355,7 +355,7 @@ const MessagesUser = ({ message, own, user }) => {
                     >
                       <View
                         style={{
-                          backgroundColor: isDarkMode ? "#403F3F" : "#FDFDFD",
+                          backgroundColor: isDarkMode ? "#403F3F" : "#004AAD",
                           flexDirection: "column",
                           borderRadius: 10,
                           maxWidth: 300,
@@ -426,7 +426,7 @@ const MessagesUser = ({ message, own, user }) => {
                         message.attachment.type === "image" && (
                           <View
                             style={{
-                              backgroundColor: isDarkMode ? "#403F3F" : "#FDFDFD",
+                              backgroundColor: isDarkMode ? "#403F3F" : "#004AAD",
                               borderRadius: 10,
                               width: 200,
                               height: 300,
@@ -514,7 +514,7 @@ const MessagesUser = ({ message, own, user }) => {
                         message.attachment.type === "image" && (
                           <View
                             style={{
-                              backgroundColor: isDarkMode ? "#403F3F" : "#FDFDFD",
+                              backgroundColor: isDarkMode ? "#403F3F" : "#004AAD",
                               borderRadius: 10,
                               width: 200,
                               height: 300,

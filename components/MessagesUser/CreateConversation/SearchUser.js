@@ -53,12 +53,12 @@ const SearchUser = ({ onSelectUser }) => {
             for (const user of users) {
                 const receiverId = user._id;
                 const conversationData = await dispatch(createConversation(senderId, receiverId)); // Utilisation de await pour obtenir les données de la réponse
-                //console.log("Nouvelle conversation créée :", conversationData);
+                console.log("Nouvelle conversation créée :", conversationData.message.text);
                 navigation.navigate("Chatlist", { user, conversationData });
             }
             console.log("Nouvelle conversation créée");
         } catch (error) {
-            console.error(error.message);
+            console.error("montre moi l'erreur", error.message);
         }
     };
 
@@ -120,7 +120,7 @@ const SearchUser = ({ onSelectUser }) => {
                         style={{
                             fontSize: 16,
                             fontWeight: "600",
-                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                            color: isDarkMode ? "#F5F5F5" : "#000000",
                         }}>
                         {item.firstName} {item.lastName}
                     </Text>
@@ -128,7 +128,7 @@ const SearchUser = ({ onSelectUser }) => {
                         style={{
                             fontSize: 12,
                             fontWeight: "400",
-                            color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                            color: isDarkMode ? "#F5F5F5" : "gray",
                         }}>
                         {" "}@{item.pseudo}
                     </Text>

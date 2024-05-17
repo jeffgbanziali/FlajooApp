@@ -32,7 +32,6 @@ const ChatOnline = ({ user }) => {
     const renderItem = ({ item }) => {
 
         const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === item._id) && isConnected;
-        console.log("Mon profile est en ligne:", isUserOnline)
 
         return (
 

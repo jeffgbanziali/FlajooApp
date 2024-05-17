@@ -152,6 +152,9 @@
     "AddPic":"Add a Picture / Video",
     "Live":"Start a live",
     "ViewerBy":"Viewed by",
+    "Waiting":"Please wait",
+    "Powered":"Powered by Flaj Enterprise",
+    "NotOnline":"Disconnected",
 
     "Online":"Online",
     "Files":"Files",

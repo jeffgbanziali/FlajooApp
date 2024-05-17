@@ -132,20 +132,23 @@ const AppW = () => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {isLoadingApp ?
-                <Loading /> :
-                <NavigationContainer>
-                    {
+            {
+                isLoadingApp ?
+                    <Loading /> :
+                    <NavigationContainer>
 
-                        isFirstTime ?
-                            <FirstNavigation />
-                            : uid ?
-                                <StackNavigation />
+                        {
 
-                                :
-                                <AuthNavigation />
-                    }
-                </NavigationContainer>
+                            isFirstTime ?
+                                <FirstNavigation />
+                                : uid ?
+                                    <StackNavigation />
+
+                                    :
+                                    <AuthNavigation />
+
+                        }
+                    </NavigationContainer>
             }
 
             <StatusBar

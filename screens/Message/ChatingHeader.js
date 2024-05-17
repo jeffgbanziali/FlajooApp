@@ -18,21 +18,50 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { UidContext, useDarkMode } from "../../components/Context/AppContext"
 import { useTranslation } from "react-i18next";
-import { fetchConversations } from "../../actions/conversation.action";
+import { deleteConversation, fetchConversations } from "../../actions/conversation.action";
 import { useDispatch } from "react-redux";
 
 
 
-const ChatingHeader = ({ user, renderLimitedMessage }) => {
+const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conversationToos, initialCreateConversation }) => {
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
-    const { isDarkMode, usersOnline } = useDarkMode();
+    const { isDarkMode, usersOnline, isConnected } = useDarkMode();
     const { t } = useTranslation();
     const [loadStories, setLoadStories] = useState(true);
+
+    const initial = initialCreateConversation || initialConversation
+
+    const [conversation, setConversation] = useState(conversationToos);
+
+
+    useEffect(() => {
+        setConversation(conversationToos);
+    }, [conversationToos]);
 
     const dispatch = useDispatch();
 
     const { uid } = useContext(UidContext);
+
+    const handleDeleteConversation = async () => {
+        console.log("Kondo regarde moi", conversation)
+        try {
+
+            if (conversation && conversation.message && conversation.message.text === '') {
+                await dispatch(deleteConversation(conversation._id));
+                console.log('Conversation deleted successfully', conversation);
+            } else {
+                console.log("No problem, conversation not deleted");
+            }
+        } catch (error) {
+            console.error('Error deleting conversation:', error);
+            console.log("Où se trouve l'erreur ", conversation)
+        }
+    };
+
+
+
+
 
 
     useEffect(() => {
@@ -43,8 +72,9 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
     }, [loadStories, dispatch]);
 
     const handleClickReturnMessageList = () => {
-        console.log("clicked");
+
         setLoadStories(true);
+        handleDeleteConversation()
         navigation.navigate("Messages");
     };
 
@@ -63,7 +93,6 @@ const ChatingHeader = ({ user, renderLimitedMessage }) => {
     };
 
     const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === user._id) && isConnected;
-    console.log("Mon profile est en ligne:", isUserOnline);
 
 
     return (

@@ -48,7 +48,7 @@ const CreateHeader = () => {
                 <MaterialIcons
                     name="arrow-back-ios"
                     size={28}
-                    color={isDarkMode ? "#F5F5F5" : "#F5F5F5"}
+                    color={isDarkMode ? "#F5F5F5" : "#000000"}
                 />
             </TouchableOpacity>
 
@@ -63,9 +63,9 @@ const CreateHeader = () => {
                     style={{
                         fontSize: 20,
                         fontWeight: "500",
-                        color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
+                        color: isDarkMode ? "#F5F5F5" : "#000000",
                     }}>
-                   {t("NewMessagge")}
+                    {t("NewMessagge")}
                 </Text>
                 <Text
                     style={{
@@ -73,7 +73,7 @@ const CreateHeader = () => {
                         fontWeight: "500",
                         color: isDarkMode ? "gray" : "gray",
                     }}>
-                       {t("ChifferBot")}
+                    {t("ChifferBot")}
                 </Text>
 
             </View>

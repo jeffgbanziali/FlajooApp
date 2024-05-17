@@ -31,7 +31,9 @@ import { SafeAreaView } from "react-native";
 import ChatingHeader from "./ChatingHeader";
 import ChatTools from "./ChatTools";
 import ChatSending from "./ChatSending";
-import { createConversation } from "../../actions/conversation.action";
+import { createConversation, fetchConversations } from "../../actions/conversation.action";
+import { useDispatch, useSelector } from "react-redux";
+import ViewProfile from "../../components/MessagesUser/MessageUser/ViewProfile";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -51,30 +53,55 @@ const Message = () => {
   const { conversationId, conversation, conversationData, user } = route.params;
   const { isDarkMode } = useDarkMode();
   const { t } = useTranslation();
-
+  const [loadStories, setLoadStories] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    if (loadStories) {
+      dispatch(fetchConversations(uid));
+      setLoadStories(false);
+    }
+  }, [loadStories, dispatch]);
+
+
+
+
+
 
 
   /*************************************************************** */
+
+
   const conversationMembersId = conversationId || conversationData._id
+
+  const conversationToos = conversationData || conversation
 
 
   const handleSendMessage = async () => {
 
     const promises = [];
-    const message = {
-      senderId: uid,
-      text: newChat,
-      conversationId: conversationMembersId,
-    };
+
 
     const mesSenders = [
       ...new Set(currentChat.map((message) => message.senderId)),
     ];
 
+
+
     const receiverId = mesSenders.find((sender) => sender !== uid) || user._id;
+
+    const message = {
+      senderId: uid,
+      receiverId,
+      text: newChat,
+      conversationId: conversationMembersId,
+    };
+
 
     if (selectedImage) {
       promises.push(uploadMediaToFirebase(selectedImage.uri, `image-${Date.now()}.${selectedImage.uri.split('.').pop()}`, 'image'));
@@ -124,17 +151,35 @@ const Message = () => {
       setSelectedDocument(null);
       setShowImage(false);
       setSelectTools(false);
+      setLoadStories(true);
 
-      if (conversation) {
-        if (!conversation.message || conversation.message.length === 0) {
-          // Mise à jour de la conversation avec le premier message
-          conversation.message = newChat;
-          console.log("Premier message de la conversation:", conversation.message);
+
+      if (conversationToos) {
+        if (!conversationToos.message || !conversationToos.message.text || conversationToos.message.text.length === 0) {
+          // Mettre à jour les membres de la conversation avec de nouvelles valeurs
+          conversationToos.members = {
+            senderId: uid,
+            receiverId: receiverId
+          };
+
+          // Créer le nouveau message
+          conversationToos.message = {
+            text: newChat
+          };
+
+          // Afficher le premier message de la conversation
+          console.log("Premier message de la conversation:", conversationToos.message.text);
+        } else if (!conversationToos.members || !conversationToos.members.senderId || !conversationToos.members.receiverId) {
+          // Si les membres de la conversation ne sont pas définis, les initialiser avec de nouvelles valeurs
+          conversationToos.members = {
+            senderId: uid,
+            receiverId: receiverId
+          };
         }
-
-        // Mise à jour de la conversation avec le dernier message
-        conversation.message = newChat;
       }
+
+
+
 
     } catch (err) {
       console.log(err);
@@ -206,7 +251,7 @@ const Message = () => {
         const response = await axios.get(
           `${APP_API_URL}/api/message/${conversationMembersId}`
         );
-        console.log("Messages Response:", response.data);
+        // console.log("Messages Response:", response.data);
         setChat(response.data);
         setCurrentChat(response.data);
       } catch (err) {
@@ -279,9 +324,6 @@ const Message = () => {
   };
 
 
-
-
-
   return (
     <>
       <SafeAreaView
@@ -294,6 +336,10 @@ const Message = () => {
 
         <ChatingHeader
           user={user}
+          initialConversation={conversation}
+          conversationToos={conversationToos}
+          conversationId={conversationId}
+          initialCreateConversation={conversationData}
           renderLimitedMessage={renderLimitedMessage} />
 
         <KeyboardAvoidingView
@@ -329,6 +375,12 @@ const Message = () => {
                   >
                     <MessagesUser message={item} user={user} own={item.senderId === uid} />
                   </View>
+                )}
+
+                ListHeaderComponent={() => (
+                  <>
+                    <ViewProfile user={user} />
+                  </>
                 )}
               />
 

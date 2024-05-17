@@ -284,12 +284,12 @@ const SignUpScreen = () => {
                         }}>
                         <Image
                             style={{
-                                width: 120,
-                                height: 120,
+                                width: 150,
+                                height: 150,
                                 borderRadius: 100
 
                             }}
-                            source={require("../../assets/Logos/ios/1212.png")} />
+                            source={require("../../assets/Logos/1.png")} />
                     </View>
 
 

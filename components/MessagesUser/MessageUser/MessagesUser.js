@@ -25,7 +25,7 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
 
 
 
-  const isUserOnline = isConnected;
+  const isUserOnline =  isConnected;
 
 
   const messageTools = () => {

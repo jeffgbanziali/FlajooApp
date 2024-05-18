@@ -130,7 +130,7 @@ const Message = () => {
 
       setChat((prevChat) => [...prevChat, response.data]);
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
-      //  console.log("reponse vers notre data", response.data)
+      console.log("reponse vers notre data", response.data)
       setNewChat("");
       setSelectedImage(null);
       setSelectedVideo(null);
@@ -250,9 +250,6 @@ const Message = () => {
   /*************************************************************** */
 
   console.log("mon arrivalChat est où", arrivalChat)
-  //console.log("mon currentChat chatt   est où", currentChat)
-  /// console.log("mon newChat est où", newChat)
-  // console.log("mon chatt est où", chat)
 
   useEffect(() => {
     setCurrentChat(chat);

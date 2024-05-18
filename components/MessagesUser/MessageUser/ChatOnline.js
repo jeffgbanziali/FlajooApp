@@ -31,7 +31,7 @@ const ChatOnline = ({ user }) => {
 
     const renderItem = ({ item }) => {
 
-        const isUserOnline = isConnected;
+        const isUserOnline =  isConnected;
 
         return (
 

@@ -53,7 +53,7 @@ const Profile = () => {
 
 
 
-  const isUserOnline = usersOnline.some(user => user.id === uid) && isConnected
+  const isUserOnline = isConnected
 
   console.log("Mon profile est en ligne:", isUserOnline)
 

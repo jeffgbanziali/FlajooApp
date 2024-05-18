@@ -92,7 +92,7 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
         navigation.navigate("VideoCall", { user: user });
     };
 
-    const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === user._id) && isConnected;
+    const isUserOnline = isConnected;
 
 
     return (

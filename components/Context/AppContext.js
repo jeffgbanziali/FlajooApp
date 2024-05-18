@@ -21,7 +21,7 @@ export const DarkModeProvider = ({ children }) => {
   const [usersOnline, setUsersOnline] = useState(null);
   const [isConnected, setIsConnected] = useState(true);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const initializeSocket = async () => {
       try {
         const storedUid = await AsyncStorage.getItem('uid');
@@ -47,7 +47,7 @@ export const DarkModeProvider = ({ children }) => {
     };
 
     initializeSocket();
-  }, []);
+  }, []);*/
 
 
 

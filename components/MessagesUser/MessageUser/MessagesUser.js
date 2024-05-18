@@ -13,17 +13,19 @@ import { APP_API_URL } from "../../../config";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-const MessagesUser = ({ message, own, user }) => {
+const MessagesUser = ({ message, own, user, conversationToos }) => {
   const userData = useSelector((state) => state.userReducer);
   const [showMessageTools, setMessageTools] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [showImage, setShowImage] = useState(false);
   const [messageHeight, setCommentsHeight] = useState(new Animated.Value(0));
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
   const userImageUri = own ? userData.picture : user.picture;
 
 
 
+
+  const isUserOnline = isConnected;
 
 
   const messageTools = () => {
@@ -159,6 +161,34 @@ const MessagesUser = ({ message, own, user }) => {
                       </Text>
 
                     </View>
+                    {
+                      own && isUserOnline && message.isRead === false ?
+                        <Text
+                          style={{
+                            fontWeight: "400",
+                            marginLeft: 10,
+                            paddingTop: 5,
+                            fontSize: 12,
+                            color: "lightgray",
+                          }}
+                        >
+                          Distribué
+                        </Text>
+                        :
+                        <Text
+                          style={{
+                            fontWeight: "400",
+                            marginLeft: 10,
+                            paddingTop: 5,
+                            fontSize: 12,
+                            color: "lightgray",
+                          }}
+                        >
+                          Lu
+                        </Text>
+                    }
+
+
                   </Pressable>
                 </View >
 
@@ -398,6 +428,7 @@ const MessagesUser = ({ message, own, user }) => {
                           </Text>
                         </Text>
                       </View>
+
                     </Pressable>
                   </View >
                 </>

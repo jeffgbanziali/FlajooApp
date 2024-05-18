@@ -44,7 +44,6 @@ const Message = () => {
   const [newChat, setNewChat] = useState();
   const [arrivalChat, setArrivalChat] = useState([]);
   const [showImage, setShowImage] = useState(false);
-  const [height, setHeight] = useState(40);
   const [selectTools, setSelectTools] = useState();
   const socket = useRef(io(`ws:${MESSAGE_ADRESS_IP}:8900`));
   const { uid } = useContext(UidContext);
@@ -60,21 +59,7 @@ const Message = () => {
   const dispatch = useDispatch();
 
 
-
-  useEffect(() => {
-    if (loadStories) {
-      dispatch(fetchConversations(uid));
-      setLoadStories(false);
-    }
-  }, [loadStories, dispatch]);
-
-
-
-
-
-
-
-  /*************************************************************** */
+  //console.log("Mon socket", socket)
 
 
   const conversationMembersId = conversationId || conversationData._id
@@ -138,20 +123,21 @@ const Message = () => {
         attachment: message.attachment,
       });
 
-      // Envoyer le message via API et vérifier si c'est le premier message
+
       const response = await axios.post(`${APP_API_URL}/api/message/`, message);
-      console.log("Premier message de la conversation:", message);
+
 
 
       setChat((prevChat) => [...prevChat, response.data]);
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
+      //  console.log("reponse vers notre data", response.data)
       setNewChat("");
       setSelectedImage(null);
       setSelectedVideo(null);
       setSelectedDocument(null);
       setShowImage(false);
       setSelectTools(false);
-      setLoadStories(true);
+      //setLoadStories(true);
 
 
       if (conversationToos) {
@@ -187,25 +173,6 @@ const Message = () => {
   };
 
 
-
-  const saveMediaLocally = async (uri, fileName, mediaType) => {
-    return new Promise((resolve, reject) => {
-      RNFS.copyFile(uri, `${RNFS.DocumentDirectoryPath}/${fileName}`)
-        .then(() => {
-          console.log(`${mediaType} sauvegardé avec succès !`);
-          resolve(`${RNFS.DocumentDirectoryPath}/${fileName}`);
-        })
-        .catch((error) => {
-          console.error(`Erreur lors de la sauvegarde du ${mediaType}.`, error);
-          reject(error);
-        });
-    });
-  };
-
-
-  /*************************************************************** */
-
-
   useEffect(() => {
     socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
     socket.current.on("connect", () => {
@@ -220,9 +187,11 @@ const Message = () => {
         ...prevArrivalChat,
         {
           senderId: data.senderId,
+          receiverId: data.receiverId,
           text: hasText ? data.text : "",
           attachment: hasAttachment ? data.attachment : null,
           createdAt: Date.now(),
+
         },
       ]);
     });
@@ -233,7 +202,9 @@ const Message = () => {
   }, [uid]);
 
 
-  /*************************************************************** */
+
+
+
 
   useEffect(() => {
     if (arrivalChat.length > 0) {
@@ -241,9 +212,6 @@ const Message = () => {
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, ...arrivalChat]);
     }
   }, [arrivalChat]);
-
-
-  /*************************************************************** */
 
   useEffect(() => {
     const getMessages = async () => {
@@ -261,7 +229,7 @@ const Message = () => {
     getMessages();
   }, [conversationMembersId]);
 
-  /*************************************************************** */
+
 
 
   useEffect(() => {
@@ -275,26 +243,26 @@ const Message = () => {
         const uniMessages = new Set([...prevCurrentChat, ...arrivalChat]);
         return [...uniMessages];
       });
-      console.log(arrivalChat)
+      console.log("Pourquoi mon arrivalChat ne marche pas ", arrivalChat)
     }
   }, [arrivalChat]);
 
   /*************************************************************** */
 
+  console.log("mon arrivalChat est où", arrivalChat)
+  //console.log("mon currentChat chatt   est où", currentChat)
+  /// console.log("mon newChat est où", newChat)
+  // console.log("mon chatt est où", chat)
 
   useEffect(() => {
     setCurrentChat(chat);
   }, [chat.length]);
 
 
-  /*************************************************************** */
-
 
   useEffect(() => {
     scrollRef?.current?.scrollToEnd({ animated: true });
   }, [chat]);
-
-  /*************************************************************** */
 
 
 
@@ -373,7 +341,11 @@ const Message = () => {
                       width: "100%",
                     }}
                   >
-                    <MessagesUser message={item} user={user} own={item.senderId === uid} />
+                    <MessagesUser
+                      message={item}
+                      user={user}
+                      conversationToos={conversationToos}
+                      own={item.senderId === uid} />
                   </View>
                 )}
 

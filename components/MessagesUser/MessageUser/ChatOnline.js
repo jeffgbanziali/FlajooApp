@@ -31,7 +31,7 @@ const ChatOnline = ({ user }) => {
 
     const renderItem = ({ item }) => {
 
-        const isUserOnline = usersOnline.some(onlineUse => onlineUse.id === item._id) && isConnected;
+        const isUserOnline = isConnected;
 
         return (
 
@@ -77,7 +77,7 @@ const ChatOnline = ({ user }) => {
                             borderRadius: 25,
                             borderWidth: 2,
                             borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                            //top: 60,
+                            top: 56,
                             bottom: 60,
                             zIndex: 100
                         }}>

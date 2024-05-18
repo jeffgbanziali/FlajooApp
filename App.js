@@ -22,7 +22,7 @@ import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
-import NetInfo from "@react-native-community/netinfo";
+
 
 
 
@@ -35,7 +35,7 @@ const App = () => {
 
 
     const connectToRemoteDebugger = () => {
-        NativeDevSettings.setIsDebuggingRemotely(true);
+        NativeDevSettings.setIsDebuggingRemotely(false);
     };
 
 
@@ -82,8 +82,6 @@ const AppW = () => {
 
     const dispatch = useDispatch();
     const { isDarkMode, isConnected } = useDarkMode();
-
-    console.log("vous êtes là mes onlines ?", isConnected)
 
 
 
@@ -132,24 +130,25 @@ const AppW = () => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {
+            {/*
                 isLoadingApp ?
-                    <Loading /> :
-                    <NavigationContainer>
+                    <Loading /> :*/
 
-                        {
-
-                            isFirstTime ?
-                                <FirstNavigation />
-                                : uid ?
-                                    <StackNavigation />
-
-                                    :
-                                    <AuthNavigation />
-
-                        }
-                    </NavigationContainer>
             }
+            <NavigationContainer>
+
+                {
+
+                    isFirstTime ?
+                        <FirstNavigation />
+                        : uid ?
+                            <StackNavigation />
+
+                            :
+                            <AuthNavigation />
+
+                }
+            </NavigationContainer>
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

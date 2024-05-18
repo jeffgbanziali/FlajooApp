@@ -20,6 +20,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  Image,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import NewPostScreen from "../screens/NewPostScreen/NewPostScreen";
@@ -164,8 +165,24 @@ const TabNavigation = () => {
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               <View style={styles.tabIconContainer}>
-                <TouchableOpacity onPress={arePress} style={styles.addButton}>
-                  <Feather name="plus" size={25} style={styles.addButtonText} color="black" />
+                <TouchableOpacity
+                  onPress={arePress}
+                  style={{
+                    backgroundColor: isDarkMode ? "#0D0C0C" : "#0D0C0C",
+                    borderRadius: 10,
+                    width: 40,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                  <Image
+                    style={{
+                      width: "80%",
+                      height: "80%",
+                      borderRadius: 100,
+                    }}
+                    source={isDarkMode ? require("../assets/Logos/1.png") : require("../assets/Logos/1.png")}
+                  />
                 </TouchableOpacity>
               </View>
             ),
@@ -395,30 +412,27 @@ const TabNavigation = () => {
 };
 
 
-const styles = StyleSheet.create({
-  bottomTabIconFocused: {
-    color: "red",
+const styles = StyleSheet.create(
+  {
 
-  },
 
-  tabIconContainer: {
-    flexDirection: "row",
-    width: "80%",
-    justifyContent: "center",
-    alignItems: "center",
 
-  },
-  addButton: {
-    backgroundColor: "#0D73D1",
-    borderRadius: 10,
-    width: 32,
-    height: 32,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  addButtonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-});
+    bottomTabIconFocused: {
+      color: "red",
+
+    },
+
+    tabIconContainer: {
+      flexDirection: "row",
+      width: "80%",
+      justifyContent: "center",
+      alignItems: "center",
+
+    },
+
+    addButtonText: {
+      color: "white",
+      fontWeight: "bold",
+    },
+  });
 export default TabNavigation;

@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
+  Image,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -26,22 +27,19 @@ import { readMessage } from "../../actions/message.actions";
 
 const Message = () => {
 
-  const [currentChat, setCurrentChat] = useState(null);
-
 
   const navigation = useNavigation();
   const { isDarkMode } = useDarkMode();
   const usersData = useSelector((state) => state.usersReducer);
   const conversations = useSelector(state => state.conversationReducer);
   const [loadStories, setLoadStories] = useState(true);
+  const { uid } = useContext(UidContext);
 
 
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    !isEmpty(usersData)[0] && setIsLoading(false);
-  }, [usersData]);
+
 
 
 
@@ -53,7 +51,6 @@ const Message = () => {
   }, [loadStories, dispatch]);
 
 
-  const { uid } = useContext(UidContext);
 
   const dispatch = useDispatch();
 
@@ -62,10 +59,12 @@ const Message = () => {
   const myConversation = conversations.conversations.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
-
-
-
  
+  useEffect(() => {
+    !isEmpty(usersData)[0] && setIsLoading(false);
+  }, [usersData]);
+
+
 
   return (
 
@@ -130,7 +129,7 @@ const Message = () => {
                 >
                   {t('Loading')}
                 </Text>
-                <ActivityIndicator size="large" color="white" />
+                <ActivityIndicator size="small" color={isDarkMode ? "white" : "black"} />
               </View>
               <Text
                 style={{
@@ -142,6 +141,23 @@ const Message = () => {
               >
                 {t('PleaseWait')}
               </Text>
+              <View
+                style={{
+                  width: 140,
+                  height: 140,
+                  marginTop: 20,
+                  borderRadius: 100,
+                  //backgroundColor: "red"
+                }}>
+                <Image
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 100,
+                  }}
+                  source={isDarkMode ? require("../../assets/Logos/1.png") : require("../../assets/Logos/1.png")}
+                />
+              </View>
             </View>
 
           ) : (
@@ -157,11 +173,11 @@ const Message = () => {
                 keyExtractor={(item) => item._id}
                 renderItem={({ item: c }) => {
 
-                 
+
 
                   return (
 
-                    <Conversation setCurrentChat={setCurrentChat} conversation={c} currentUser={uid} />
+                    <Conversation  conversation={c} currentUser={uid} />
                   )
 
                 }}

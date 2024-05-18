@@ -1,8 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
+import { useDarkMode } from '../../Context/AppContext';
 
 const ViewProfile = ({ user }) => {
+
+  const { isDarkMode } = useDarkMode();
+
     return (
         <View style={{
             width: "100%",
@@ -40,7 +44,7 @@ const ViewProfile = ({ user }) => {
                     style={{
                         fontSize: 20,
                         fontWeight: "600",
-                        color: "black"
+                        color: isDarkMode ? "white" : "black",
                     }}>{user.pseudo}
                 </Text>
 

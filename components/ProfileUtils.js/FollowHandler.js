@@ -68,30 +68,28 @@ const FollowHandler = ({ idToFollow, type }) => {
             </View>
           )}
           {type === "profile" && (
-            <View>
-              <View
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#EBF8FF",
+                borderRadius: 10,
+                height: 35,
+                width: 150,
+              }}
+            >
+              <Text
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
+                  color: "black",
+                  textAlign: "center",
+                  fontWeight: "500",
                   justifyContent: "center",
-                  backgroundColor: "#EBF8FF",
-                  borderRadius: 10,
-                  height: 32,
-                  width: 150,
+                  fontSize: 16,
                 }}
               >
-                <Text
-                  style={{
-                    color: "black",
-                    textAlign: "center",
-                    fontWeight: "500",
-                    justifyContent: "center",
-                    fontSize: 16,
-                  }}
-                >
-                  {t("Following")}
-                </Text>
-              </View>
+                {t("Following")}
+              </Text>
             </View>
           )}
           {type === "card" && (

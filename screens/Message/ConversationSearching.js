@@ -48,7 +48,7 @@ const ConversationSearching = () => {
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: isDarkMode ? "gray" : "#F1F1F1",
+                backgroundColor: isDarkMode ? "#171717" : "#F1F1F1",
                 width: "94%",
                 height: 40,
                 borderRadius: 10

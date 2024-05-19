@@ -90,59 +90,68 @@ const PostsUser = () => {
     const renderPost = ({ item, index }) => {
 
         return (
-            < TouchableOpacity
-                key={index} >
-                <View style={{
-                    borderRadius: 10,
-                    overflow: "hidden",
-                    borderWidth: 1,
-                    borderColor: "white",
-                    backgroundColor: "white"
-                }}>
+            <>
 
-                    <Image
-                        source={{ uri: item.media[0]?.mediaUrl }}
-                        style={{
-                            width: imageWidthSize,
-                            height: imageHeightSize,
-                            resizeMode: "cover",
-                        }}
-                    />
-                    <View
-                        style={{
-                            position: "absolute",
-                            width: "100%",
-                            bottom: 0,
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Text style={{
-                            marginLeft: "10%",
-                            fontSize: 16,
-                            fontWeight: "bold",
-                            color: "white",
-                            zIndex: 4,
-                            bottom: "60%",
+                {
+                    item.media && (
+                        < TouchableOpacity
+                            key={index} >
+                            <View style={{
+                                borderRadius: 10,
+                                overflow: "hidden",
+                                borderWidth: 1,
+                                borderColor: "white",
+                                backgroundColor: "white"
+                            }}>
 
-                        }}>
-                            {item.likers ? item.likers.length : 0}
-                        </Text>
-                        <LinearGradient
-                            colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
-                            style={{
-                                position: "absolute",
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                height: 60,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
-                            }}
-                        />
-                    </View>
+                                <Image
+                                    source={{ uri: item.media[0]?.mediaUrl }}
+                                    style={{
+                                        width: imageWidthSize,
+                                        height: imageHeightSize,
+                                        resizeMode: "cover",
+                                    }}
+                                />
+                                <View
+                                    style={{
+                                        position: "absolute",
+                                        width: "100%",
+                                        bottom: 0,
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <Text style={{
+                                        marginLeft: "10%",
+                                        fontSize: 16,
+                                        fontWeight: "bold",
+                                        color: "white",
+                                        zIndex: 4,
+                                        bottom: "60%",
 
-                </View>
-            </TouchableOpacity >
+                                    }}>
+                                        {item.likers ? item.likers.length : 0}
+                                    </Text>
+                                    <LinearGradient
+                                        colors={["transparent", isDarkMode ? "black" : "#4F4F4F"]}
+                                        style={{
+                                            position: "absolute",
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            height: 60,
+                                            borderBottomLeftRadius: 10,
+                                            borderBottomRightRadius: 10,
+                                        }}
+                                    />
+                                </View>
+
+                            </View>
+                        </TouchableOpacity >
+                    )
+                }
+
+            </>
+
         );
     }
 

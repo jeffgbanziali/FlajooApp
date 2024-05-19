@@ -47,7 +47,7 @@ const LikeButton = ({ post, type }) => {
               <Feather
                 name="heart"
                 size={25}
-                color={isDarkMode ? "#F5F5F5" : "white"}
+                color={isDarkMode ? "#F5F5F5" : "black"}
 
               />
             )}

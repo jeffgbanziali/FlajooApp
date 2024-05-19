@@ -16,6 +16,7 @@ import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
+import { StyleSheet } from "react-native";
 
 
 const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
@@ -42,35 +43,44 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
 
 
+    let style = {};
+
+    if (item.height > item.width) {
+        // Portrait
+        style = styles.portrait;
+    } else if (item.height === item.width) {
+        // Square
+        style = styles.square;
+    } else {
+        // Landscape
+        style = styles.landscape;
+    }
 
 
     return (
-        <View
-            style={{
-                width: "100%",
-                height: "100%",
-            }}
-        >
+
+
+
+        <>
+
+
             <View
                 style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "absolute ",
+                    position: "relative ",
                     zIndex: 1,
-                    marginBottom: 8,
-                    top: "2%",
-                    //backgroundColor:"blue"
-
+                    marginBottom: 10,
+                    height: 60,
+                    //backgroundColor:"red"
                 }}
             >
-
-
                 <View
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        marginTop:10
+                        marginTop: 10
                     }}
                 >
                     <TouchableOpacity
@@ -80,7 +90,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                             height: 35,
                             borderRadius: 30,
                             marginLeft: 10,
-                            resizeMode: "cover",
                             zIndex: 1,
                         }}
                         onPress={() => goProfil(post.posterId)}>
@@ -102,11 +111,14 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                 width: "100%",
                                 height: "100%",
                                 borderRadius: 30,
-                                resizeMode: "cover",
+                                //resizeMode: "cover",
                                 zIndex: 1,
                             }}
                         />
                     </TouchableOpacity>
+
+
+
                     <View
                         style={{
                             flexDirection: "column",
@@ -120,7 +132,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         >
                             <Text
                                 style={{
-                                    color: isDarkMode ? "white" : "white",
+                                    color: isDarkMode ? "#F5F5F5" : "black",
                                     marginLeft: 5,
                                     fontWeight: "600",
                                     fontSize: 14,
@@ -135,7 +147,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         </View>
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 fontSize: 10,
                                 marginLeft: 5,
                                 marginTop: 4,
@@ -164,136 +176,53 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     <Feather
                         name="more-horizontal"
                         size={20}
-                        color="white"
+                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                     />
                 </TouchableOpacity>
             </View>
-
-            <Pressable
-                onPress={showModal}
+            <View
                 style={{
-                    borderColor: "red",
-                    width: "100%",
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "absolute",
-                    overflow: "hidden",
+                    zIndex: 1,
+                    width: "90%",
+                    marginLeft: 10,
+                    paddingBottom: 10,
+                    justifyContent: "center"
                 }}
             >
-                <LinearGradient
-                    colors={[isDarkMode ? "black" : "#0F0F0F", "transparent"]}
+                <Text
                     style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        zIndex: 1,
-                        height: 100,
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 20,
+                        color: isDarkMode ? "#F5F5F5" : "black",
+                        fontSize: 16,
+                        fontWeight: "400",
+                        textAlign: "justify",
+                        lineHeight: 20,
                     }}
-                />
-                {
-                    item.mediaType === "image" && (
-                        <Image
-                            source={{
-                                uri: item.mediaUrl,
-                            }}
-                            style={{
-                                borderColor: "red",
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "cover",
-                                borderRadius: 20,
-                                opacity: isDarkMode ? 0.7 : 1,
-                            }}
-                        />
-                    )
-                }
-                {
-                    item.mediaType === "video" && (
-                        <Video
-                            source={{
-                                uri: item.mediaUrl,
-                            }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            isLooping
-                            paused={true}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: "cover",
-                                borderRadius: 20,
-                                opacity: isDarkMode ? 0.7 : 1,
-                            }}
-                        />
-                    )
-                }
-
-                <LinearGradient
-                    colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
-                    style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: 200,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-                    }}
-                />
-            </Pressable>
-
-            <Modal
-                visible={showImage}
-                transparent={true}
-                animationIn="pulse"
-                animationOut="fadeOut"
-                onRequestClose={showModal}
+                >
+                    {post.message}
+                </Text>
+            </View>
+            <View
+                style={[
+                    style, {
+                        // backgroundColor: "red",
+                    }]}
             >
-                <View
+
+
+                <Pressable
+                    onPress={showModal}
                     style={{
                         width: "100%",
                         height: "100%",
-                        alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: isDarkMode ? "black" : "black",
-
-                    }}>
-
-                    <View
-                        style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "10%",
-                            marginTop: "4%",
-                            //backgroundColor: "red",
-                            zIndex: 3
-                        }}
-                    >
-
-                        <Pressable
-
-                            onPress={showModal}
-
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                //backgroundColor: "blue",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                        </Pressable>
-
-                    </View>
-
+                        alignItems: "center",
+                        position: "absolute",
+                        // borderRadius: 20,
+                        backgroundColor: 'rgba(0, 0, 0, 0.93)',
+                        overflow: "hidden",
+                    }}
+                >
 
                     {
                         item.mediaType === "image" && (
@@ -305,18 +234,13 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                     width: "100%",
                                     height: "100%",
                                     resizeMode: "contain",
-                                    borderRadius: 20,
                                     opacity: isDarkMode ? 0.7 : 1,
                                 }}
                             />
                         )
                     }
-
-
-
                     {
                         item.mediaType === "video" && (
-
                             <Video
                                 source={{
                                     uri: item.mediaUrl,
@@ -324,49 +248,121 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                 rate={1.0}
                                 volume={1.0}
                                 isMuted={false}
+                                resizeMode="cover"
                                 isLooping
                                 paused={true}
                                 style={{
                                     width: "100%",
                                     height: "100%",
                                     resizeMode: "contain",
-                                    borderRadius: 20,
                                     opacity: isDarkMode ? 0.7 : 1,
                                 }}
                             />
                         )
-
                     }
 
 
-                </View>
-            </Modal>
+                </Pressable>
 
-            
-            <View
-                style={{
-                    zIndex: 1,
-                    height: "12%",
-                    width: "90%",
-                    marginLeft: 10,
-                    bottom: "14%",
-                    position: "absolute",
-                    //backgroundColor:"blue"
-                    justifyContent: "center"
-                }}
-            >
-                <Text
-                    style={{
-                        color: isDarkMode ? "white" : "#F5F5F5",
-                        fontSize: 16,
-                        fontWeight: "400",
-                        textAlign: "justify",
-                        lineHeight: 20,
-                    }}
+                <Modal
+                    visible={showImage}
+                    transparent={true}
+                    animationIn="pulse"
+                    animationOut="fadeOut"
+                    onRequestClose={showModal}
                 >
-                    {post.message}
-                </Text>
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: isDarkMode ? "black" : "black",
+
+                        }}>
+
+                        <View
+                            style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "10%",
+                                marginTop: "4%",
+                                //backgroundColor: "red",
+                                zIndex: 3
+                            }}
+                        >
+
+                            <Pressable
+
+                                onPress={showModal}
+
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    //backgroundColor: "blue",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                            </Pressable>
+
+                        </View>
+
+
+                        {
+                            item.mediaType === "image" && (
+                                <Image
+                                    source={{
+                                        uri: item.mediaUrl,
+                                    }}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        resizeMode: "contain",
+                                        borderRadius: 20,
+                                        opacity: isDarkMode ? 0.7 : 1,
+                                    }}
+                                />
+                            )
+                        }
+
+
+
+                        {
+                            item.mediaType === "video" && (
+
+                                <Video
+                                    source={{
+                                        uri: item.mediaUrl,
+                                    }}
+                                    rate={1.0}
+                                    volume={1.0}
+                                    isMuted={false}
+                                    isLooping
+                                    paused={true}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        resizeMode: "contain",
+                                        borderRadius: 20,
+                                        opacity: isDarkMode ? 0.7 : 1,
+                                    }}
+                                />
+                            )
+
+                        }
+
+
+                    </View>
+                </Modal>
+
+
+
+
             </View>
+
+
 
 
             <View
@@ -374,10 +370,8 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "absolute",
-                    bottom: "6%",
                     width: "100%",
-                    //backgroundColor: "red"
+                    height: 60,
                 }}
             >
                 <View
@@ -397,7 +391,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         <LikeButton post={post} type={"postPicture"} />
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 textAlign: "center",
                                 fontSize: 16,
                                 fontWeight: "normal",
@@ -426,14 +420,14 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                 <FontAwesome5
                                     name="comment"
                                     size={25}
-                                    color="white"
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
 
                                 />
                             </View>
                         </TouchableOpacity>
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 textAlign: "center",
                                 fontSize: 16,
                                 fontWeight: "normal",
@@ -454,7 +448,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                         <Feather
                             name="send"
                             size={25}
-                            color="white"
+                            color={isDarkMode ? "#F5F5F5" : "black"}
 
                         />
                     </TouchableOpacity>
@@ -473,14 +467,41 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     <Feather
                         name="bookmark"
                         size={25}
-                        color="white"
+                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                     />
                 </TouchableOpacity>
             </View>
+        </>
 
-        </View>
     )
 }
+
+
+
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        margin: 10,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    image: {
+        resizeMode: 'cover',
+    },
+    portrait: {
+        height: 600,
+        width: "100%",
+    },
+    square: {
+        height: 400,
+        width: "100%",
+    },
+    landscape: {
+        height: 300,
+        width: "100%",
+    },
+});
+
 
 export default PostTextAndMedia

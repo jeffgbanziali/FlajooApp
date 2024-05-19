@@ -52,43 +52,43 @@ const NewPostScreen = () => {
 
     const processMedia = async (selectedMedia) => {
         let mediaType = null;
+        let mediaUrl = null;
+        let duration = null;
+        let fileName = null;
+        let fileSize = null;
+        let height = null;
+        let width = null;
 
         if (selectedMedia.type.includes('image')) {
             mediaType = 'image';
         } else if (selectedMedia.type.includes('video')) {
             mediaType = 'video';
+            duration = selectedMedia.duration || null; // Assume duration is provided in the selectedMedia object for videos
         }
 
         if (mediaType) {
-            const mediaName = `${mediaType}-${Date.now()}.${selectedMedia.uri.split('.').pop()}`;
-            const mediaUrl = await uploadImageToFirebase(selectedMedia.uri, mediaName, mediaType);
+            fileName = `${mediaType}-${Date.now()}.${selectedMedia.uri.split('.').pop()}`;
+            fileSize = selectedMedia.fileSize || null; // Assume fileSize is provided in the selectedMedia object
+            height = selectedMedia.height || null; // Assume height is provided in the selectedMedia object
+            width = selectedMedia.width || null; // Assume width is provided in the selectedMedia object
+
+            mediaUrl = await uploadImageToFirebase(selectedMedia.uri, fileName, mediaType);
+            console.log("Le media selectionné est là ", selectedMedia)
             return {
                 mediaUrl,
                 mediaType,
+                duration,
+                fileName,
+                fileSize,
+                height,
+                width
             };
         }
 
         return null;
     };
 
-    /* const processMedia = async (selectedMedia) => {
-         let mediaType = null;
- 
-         if (selectedMedia.type.includes('image')) {
-             mediaType = 'image';
-         } else if (selectedMedia.type.includes('video')) {
-             mediaType = 'video';
-         }
- 
-         if (mediaType) {
-             return {
-                 mediaType,
-                 mediaUrl: selectedMedia.uri,
-             };
-         }
- 
-         return null;
-     };*/
+
 
     const handlePostSubmitError = (error) => {
         console.error('Erreur lors de la création du post :', error);
@@ -150,6 +150,8 @@ const NewPostScreen = () => {
                     setSelectedMediaArray(result.assets);
                     // Affiche les miniatures des images sélectionnées dans ton interface utilisateur
                     setShowImage(true);
+                    console.log('Voici mon image', result.assets);
+
 
                 } else {
                     console.log('Aucun média sélectionné');

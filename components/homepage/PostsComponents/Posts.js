@@ -9,6 +9,7 @@ import {
   Platform,
   Keyboard,
   Pressable,
+  StyleSheet,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
@@ -188,8 +189,7 @@ const Posts = ({ post }) => {
 
 
 
-
-
+  const portrait = mediaData.height > mediaData.height
 
 
 
@@ -353,9 +353,7 @@ const Posts = ({ post }) => {
                   marginBottom: 5,
                   backgroundColor: isDarkMode ? "#171717" : "white",
                   position: "relative",
-                  width: "96%",
-                  height: 600,
-                  borderRadius: 20,
+                  width: "100%",
                   zIndex: 1,
                   shadowColor: isDarkMode ? "white " : "#000",
                   shadowOffset: {
@@ -417,74 +415,11 @@ const Posts = ({ post }) => {
             )}
 
             {mediaDate && !post.message && (
-              <View
-                key={post._id}
-                style={{
-                  marginTop: 8,
-                  marginBottom: 5,
-                  backgroundColor: isDarkMode ? "#171717" : "white",
-                  position: "relative",
-                  width: "96%",
-                  height: 600,
-                  borderRadius: 20,
-                  zIndex: 1,
-                  shadowColor: isDarkMode ? "white " : "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: isDarkMode ? 1 : 2,
-                  },
-                  shadowOpacity: isDarkMode ? 0.16 : 0.6,
-                  shadowRadius: 3.84,
-                  elevation: 2,
-                }}
-              >
-                {isLoading ? (
-                  <View
-                    style={{
-                      width: "100%",
-                      height: "50%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column"
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        width: "30%",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 16,
-                          color: isDarkMode ? "white" : "black",
-                        }}
-                      >
-                        Loading
-                      </Text>
-                      <ActivityIndicator size="large" color="white" />
-                    </View>
-                    <Text
-                      style={{
-                        fontSize: 26,
-                        marginTop: "5%",
-                        textAlign: "center",
-                        color: isDarkMode ? "white" : "black",
-                      }}
-                    >
-                      Please wait
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <PostMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
 
-                  </>
-                )}
-              </View>
+
+              <PostMedia isLoading={isLoading} post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+
+
             )}
           </>
         ) : (

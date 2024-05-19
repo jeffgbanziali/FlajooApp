@@ -18,13 +18,15 @@ import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
+import { StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
-const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments }) => {
+const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
 
@@ -46,362 +48,442 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
         setShowImage(!showImage);
     };
 
+    let style = {};
 
+    if (item.height > item.width) {
+        // Portrait
+        style = styles.portrait;
+    } else if (item.height === item.width) {
+        // Square
+        style = styles.square;
+    } else {
+        // Landscape
+        style = styles.landscape;
+    }
 
 
     return (
         <>
 
-
-
             <View
-                style={{
-                    width: "100%",
-                    height: "100%",
-                }}
-            >
+                key={post._id}
+                style={[
 
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        position: "relative ",
+                    {
+                        marginTop: 8,
+                        marginBottom: 5,
+                        backgroundColor: isDarkMode ? "#171717" : "#FFFFFF",
+                        position: "relative",
+                        width: "100%",
                         zIndex: 1,
-                        marginBottom: 10,
-                        top: "2%",
-                        //backgroundColor:"red"
-                    }}
-                >
+                        shadowColor: isDarkMode ? "white " : "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: isDarkMode ? 1 : 2,
+                        },
+                        shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                        shadowRadius: 3.84,
+                        elevation: 2,
+                    }]}
+            >
+                {isLoading ? (
                     <View
                         style={{
-                            flexDirection: "row",
+                            width: "100%",
+                            height: "50%",
+                            justifyContent: "center",
                             alignItems: "center",
-                            marginTop: 10
+                            flexDirection: "column"
                         }}
                     >
-                        <TouchableOpacity
-
+                        <View
                             style={{
-                                width: 35,
-                                height: 35,
-                                borderRadius: 30,
-                                marginLeft: 10,
-                                zIndex: 1,
+                                flexDirection: "row",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                width: "30%",
                             }}
-                            onPress={() => goProfil(post.posterId)}>
-                            <Image
-                                source={{
-                                    uri:
-                                        !isEmpty(usersData[0]) &&
-                                        usersData
-                                            .map((user) => {
-                                                if (user._id === post.posterId) {
-                                                    return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                                                }
-                                                else
-                                                    return null;
-                                            })
-                                            .join(""),
-                                }}
+                        >
+                            <Text
                                 style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    borderRadius: 30,
-                                    //resizeMode: "cover",
-                                    zIndex: 1,
+                                    textAlign: "center",
+                                    fontSize: 16,
+                                    color: isDarkMode ? "white" : "black",
                                 }}
-                            />
-                        </TouchableOpacity>
+                            >
+                                Loading
+                            </Text>
+                            <ActivityIndicator size="large" color="white" />
+                        </View>
+                        <Text
+                            style={{
+                                fontSize: 26,
+                                marginTop: "5%",
+                                textAlign: "center",
+                                color: isDarkMode ? "white" : "black",
+                            }}
+                        >
+                            Please wait
+                        </Text>
+                    </View>
+                ) : (
 
+                    <>
 
 
                         <View
                             style={{
-                                flexDirection: "column",
-                                marginLeft: 6,
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                position: "relative ",
+                                zIndex: 1,
+                                marginBottom: 10,
+                                height: 60,
+                                //backgroundColor:"red"
                             }}
                         >
                             <View
                                 style={{
                                     flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 10
                                 }}
                             >
-                                <Text
+                                <TouchableOpacity
+
                                     style={{
-                                        color: isDarkMode ? "white" : "white",
-                                        marginLeft: 5,
-                                        fontWeight: "600",
-                                        fontSize: 14,
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: 30,
+                                        marginLeft: 10,
+                                        zIndex: 1,
+                                    }}
+                                    onPress={() => goProfil(post.posterId)}>
+                                    <Image
+                                        source={{
+                                            uri:
+                                                !isEmpty(usersData[0]) &&
+                                                usersData
+                                                    .map((user) => {
+                                                        if (user._id === post.posterId) {
+                                                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                                                        }
+                                                        else
+                                                            return null;
+                                                    })
+                                                    .join(""),
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: 30,
+                                            //resizeMode: "cover",
+                                            zIndex: 1,
+                                        }}
+                                    />
+                                </TouchableOpacity>
+
+
+
+                                <View
+                                    style={{
+                                        flexDirection: "column",
+                                        marginLeft: 6,
                                     }}
                                 >
-                                    {!isEmpty(usersData[0]) &&
-                                        usersData.map((user) => {
-                                            if (user._id === post.posterId) return user.pseudo;
-                                            else return null;
-                                        })}
-                                </Text>
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                color: isDarkMode ? "#F5F5F5" : "black",
+                                                marginLeft: 5,
+                                                fontWeight: "600",
+                                                fontSize: 14,
+                                            }}
+                                        >
+                                            {!isEmpty(usersData[0]) &&
+                                                usersData.map((user) => {
+                                                    if (user._id === post.posterId) return user.pseudo;
+                                                    else return null;
+                                                })}
+                                        </Text>
+                                    </View>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            fontSize: 10,
+                                            marginLeft: 5,
+                                            marginTop: 4,
+                                            fontWeight: "400",
+                                            fontSize: 12,
+                                            lineHeight: 12,
+                                        }}
+                                    >
+                                        {formatPostDate(post.createdAt)}
+                                    </Text>
+                                </View>
                             </View>
-                            <Text
+
+
+                            <TouchableOpacity
+                                onPress={toggleToolings}
                                 style={{
-                                    color: "white",
-                                    fontSize: 10,
-                                    marginLeft: 5,
-                                    marginTop: 4,
-                                    fontWeight: "400",
-                                    fontSize: 12,
-                                    lineHeight: 12,
+                                    width: 40,
+                                    height: 40,
+                                    borderRadius: 30,
+                                    marginRight: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                 }}
                             >
-                                {formatPostDate(post.createdAt)}
-                            </Text>
+                                <Feather
+                                    name="more-horizontal"
+                                    size={20}
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                                />
+                            </TouchableOpacity>
                         </View>
-                    </View>
-
-
-                    <TouchableOpacity
-                        onPress={toggleToolings}
-                        style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 30,
-                            marginRight: 10,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Feather
-                            name="more-horizontal"
-                            size={20}
-                            color="white"
-
-                        />
-                    </TouchableOpacity>
-                </View>
-
-                <Pressable
-                    onPress={showModal}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "absolute",
-                        borderRadius: 20,
-                        backgroundColor: 'rgba(0, 0, 0, 0.93)',
-                        overflow: "hidden",
-                    }}
-                >
-                    <LinearGradient
-                        colors={[isDarkMode ? "black" : "#0F0F0F", "transparent"]}
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            zIndex: 1,
-                            height: 80,
-                            borderTopLeftRadius: 20,
-                            borderTopRightRadius: 20,
-                        }}
-                    />
-
-
-                    {
-                        item.mediaType === "image" && (
-                            <Image
-                                source={{
-                                    uri: item.mediaUrl,
-                                }}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    resizeMode: "cover",
-                                    borderRadius: 20,
-                                    opacity: isDarkMode ? 0.7 : 1,
-                                }}
-                            />
-                        )
-                    }
-                    {
-                        item.mediaType === "video" && (
-
-
-                            <Video
-                                source={{
-                                    uri: item.mediaUrl,
-                                }}
-                                rate={1.0}
-                                volume={1.0}
-                                isMuted={false}
-                                resizeMode="stretch"
-                                isLooping
-                                paused={true}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    resizeMode: "cover",
-                                    borderRadius: 20,
-                                    opacity: isDarkMode ? 0.7 : 1,
-                                }}
-                            />
-                        )
-                    }
-
-
-                    <LinearGradient
-                        colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
-                        style={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            height: 80,
-                            borderBottomLeftRadius: 20,
-                            borderBottomRightRadius: 20,
-                        }}
-                    />
-                </Pressable>
-
-                <Modal
-                    visible={showImage}
-                    transparent={true}
-                    animationIn="pulse"
-                    animationOut="fadeOut"
-                    onRequestClose={showModal}
-                >
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: isDarkMode ? "black" : "black",
-
-                        }}>
 
                         <View
-                            style={{
-                                position: "absolute",
-                                width: "100%",
-                                height: "10%",
-                                marginTop: "4%",
-                                zIndex: 3
-                            }}
+                            style={[
+                                style, {
+                                    // backgroundColor: "red",
+                                }]}
                         >
+
+
 
                             <Pressable
-
                                 onPress={showModal}
-
                                 style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    //backgroundColor: "blue",
-                                    flexDirection: "row",
-                                    alignItems: "center",
+                                    width: "100%",
+                                    height: "100%",
                                     justifyContent: "center",
+                                    alignItems: "center",
+                                    position: "absolute",
+                                    // borderRadius: 20,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.93)',
+                                    overflow: "hidden",
                                 }}
                             >
+
+
+
+                                {
+                                    item.mediaType === "image" && (
+                                        <Image
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                resizeMode: "contain",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+                                {
+                                    item.mediaType === "video" && (
+
+
+                                        <Video
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            rate={1.0}
+                                            volume={1.0}
+                                            isMuted={false}
+                                            resizeMode="stretch"
+                                            isLooping
+                                            paused={true}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                resizeMode: "cover",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+
+
+
                             </Pressable>
 
+                            <Modal
+                                visible={showImage}
+                                transparent={true}
+                                animationIn="pulse"
+                                animationOut="fadeOut"
+                                onRequestClose={showModal}
+                            >
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        backgroundColor: isDarkMode ? "black" : "black",
+
+                                    }}>
+
+                                    <View
+                                        style={{
+                                            position: "absolute",
+                                            width: "100%",
+                                            height: "10%",
+                                            marginTop: "4%",
+                                            zIndex: 3
+                                        }}
+                                    >
+
+                                        <Pressable
+
+                                            onPress={showModal}
+
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                //backgroundColor: "blue",
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                        </Pressable>
+
+                                    </View>
+
+
+                                    {
+                                        item.mediaType === "image" && (
+                                            <Image
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
+
+
+
+                                    {
+                                        item.mediaType === "video" && (
+
+                                            <Video
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                rate={1.0}
+                                                volume={1.0}
+                                                isMuted={false}
+                                                isLooping
+                                                paused={true}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+
+                                    }
+
+
+                                </View>
+                            </Modal>
+
+
                         </View>
 
-
-                        {
-                            item.mediaType === "image" && (
-                                <Image
-                                    source={{
-                                        uri: item.mediaUrl,
-                                    }}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        resizeMode: "contain",
-                                        borderRadius: 20,
-                                        opacity: isDarkMode ? 0.7 : 1,
-                                    }}
-                                />
-                            )
-                        }
-
-
-
-                        {
-                            item.mediaType === "video" && (
-
-                                <Video
-                                    source={{
-                                        uri: item.mediaUrl,
-                                    }}
-                                    rate={1.0}
-                                    volume={1.0}
-                                    isMuted={false}
-                                    isLooping
-                                    paused={true}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        resizeMode: "contain",
-                                        borderRadius: 20,
-                                        opacity: isDarkMode ? 0.7 : 1,
-                                    }}
-                                />
-                            )
-
-                        }
-
-
-                    </View>
-                </Modal>
-
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        position: "absolute",
-                        marginVertical: 10,
-                        bottom: "5%",
-                        width: "100%",
-                        //backgroundColor: "red"
-                    }}
-                >
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            paddingLeft: 12
-                        }}
-                    >
                         <View
                             style={{
                                 flexDirection: "row",
+                                justifyContent: "space-between",
                                 alignItems: "center",
-                                width: "26%",
+                                width: "100%",
+                                height: 60,
                             }}
                         >
-                            <LikeButton post={post} type={"postPicture"} />
-                            <Text
+                            <View
                                 style={{
-                                    color: "white",
-                                    textAlign: "center",
-                                    fontSize: 16,
-                                    fontWeight: "normal",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingLeft: 12
                                 }}
                             >
-                                {post.likers.length}
-                            </Text>
-                        </View>
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                width: "26%",
-                            }}
-                        >
-                            <TouchableOpacity onPress={toggleComments}>
                                 <View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        width: "26%",
+                                    }}
+                                >
+                                    <LikeButton post={post} type={"postPicture"} />
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            textAlign: "center",
+                                            fontSize: 16,
+                                            fontWeight: "normal",
+                                        }}
+                                    >
+                                        {post.likers.length}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        width: "26%",
+                                    }}
+                                >
+                                    <TouchableOpacity onPress={toggleComments}>
+                                        <View
+                                            style={{
+                                                width: 50,
+                                                height: 50,
+                                                borderRadius: 30,
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <FontAwesome5
+                                                name="comment"
+                                                size={25}
+                                                color={isDarkMode ? "#F5F5F5" : "black"}
+
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            textAlign: "center",
+                                            fontSize: 16,
+                                            fontWeight: "normal",
+                                        }}
+                                    >
+                                        {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
+                                    </Text>
+                                </View>
+                                <TouchableOpacity
                                     style={{
                                         width: 50,
                                         height: 50,
@@ -410,67 +492,68 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                                         alignItems: "center",
                                     }}
                                 >
-                                    <FontAwesome5
-                                        name="comment"
+                                    <Feather
+                                        name="send"
                                         size={25}
-                                        color="white"
+                                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                                     />
-                                </View>
-                            </TouchableOpacity>
-                            <Text
+                                </TouchableOpacity>
+                            </View>
+
+                            <TouchableOpacity
                                 style={{
-                                    color: "white",
-                                    textAlign: "center",
-                                    fontSize: 16,
-                                    fontWeight: "normal",
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 30,
+                                    marginRight: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                 }}
                             >
-                                {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
-                            </Text>
+                                <Feather
+                                    name="bookmark"
+                                    size={25}
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                                />
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity
-                            style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: 30,
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Feather
-                                name="send"
-                                size={25}
-                                color="white"
+                    </>
 
-                            />
-                        </TouchableOpacity>
-                    </View>
+                )}
 
-                    <TouchableOpacity
-                        style={{
-                            width: 50,
-                            height: 50,
-                            borderRadius: 30,
-                            marginRight: 10,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Feather
-                            name="bookmark"
-                            size={25}
-                            color="white"
-
-                        />
-                    </TouchableOpacity>
-                </View>
             </View>
-
 
 
         </>
     )
 }
+
+
+
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        margin: 10,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    image: {
+        resizeMode: 'cover',
+    },
+    portrait: {
+        height: 600,
+        width: "100%",
+    },
+    square: {
+        height: 400,
+        width: "100%",
+    },
+    landscape: {
+        height: 300,
+        width: "100%",
+    },
+});
 
 export default PostMedia

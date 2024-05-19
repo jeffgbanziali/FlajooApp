@@ -26,7 +26,7 @@ const FriendsFollowers = () => {
   const navigation = useNavigation();
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.navigate("ProfilFriends", { id });
+    navigation.goBack("ProfilFriends", { id });
   };
   return (
     <KeyboardAvoidingView

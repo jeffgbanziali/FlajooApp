@@ -14,7 +14,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import ProfileFriendsTools from "../../components/ProfileFriendsUtils/ProfileFriendsTools";
 import PostsFriendsUser from "../../components/ProfileFriendsUtils/PostsFriendsUser";
@@ -27,6 +27,7 @@ import FriendsSettings from "../../components/ProfileFriendsUtils/FriendsSetting
 import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
 import { isEmpty } from "../../components/Context/Utils";
 import MaterialTopFriendsNavigation from "../../navigation/MaterialTopFriendsNavigation";
+import { createConversation, fetchConversations } from "../../actions/conversation.action";
 
 
 const ProfileFriends = () => {
@@ -34,35 +35,70 @@ const ProfileFriends = () => {
   const { id } = route.params;
   const { isDarkMode, isConnected } = useDarkMode();
   const navigation = useNavigation();
+  const [loadStories, setLoadStories] = useState(true);
   const { t } = useTranslation();
-
-
-
-  console.log("Mon profile est en ligne:", isUserOnline)
-
-
-
+  const { uid } = useContext(UidContext)
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch()
+  const users = usersData.find((user) => user._id === id);
+
+  const isUserOnline = users.onlineStatus === true
 
 
 
   const handleClickReturnHome = () => {
     console.log("clicked");
-    navigation.navigate("TabNavigation");
+    navigation.goBack("TabNavigation");
   };
+
+  const conversations = useSelector(state => state.conversationReducer);
+
+
+
+
+  const handleCreateConversation = async () => {
+    try {
+
+
+      const senderId = uid;
+
+
+      const receiverId = users._id;
+      const conversationData = await dispatch(createConversation(senderId, receiverId)); // Utilisation de await pour obtenir les données de la réponse
+      console.log("Nouvelle conversation créée :", conversationData.message.text);
+      navigation.navigate("Chatlist", { user: users, conversationData });
+
+      console.log("Nouvelle conversation créée");
+    } catch (error) {
+      console.error("montre moi l'erreur", error.message);
+    }
+  };
+
+
+
+  const conversationExists = conversations.conversations.find(conversation =>
+    (conversation.members.senderId === uid && conversation.members.receiverId === users._id) ||
+    (conversation.members.senderId === users._id && conversation.members.receiverId === uid)
+  );
+
 
 
 
 
   const handleSendMEssage = (id) => {
     console.log("clicked");
-    navigation.navigate("Chatlist", { id });
+    if (conversationExists) {
+      navigation.navigate("Chatlist", {
+        conversationId: conversationExists._id,
+        conversation: conversationExists,
+        user: users
+      });
+    } else {
+      // Créer une nouvelle conversation
+      handleCreateConversation()
+    }
   };
-
-  const users = usersData.find((user) => user._id === id);
-
-  const isUserOnline = users.onlineStatus === true
 
 
   const MAX_MESSAGE_LENGTH = 180;

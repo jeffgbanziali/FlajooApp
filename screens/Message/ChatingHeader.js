@@ -74,7 +74,7 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
 
         setLoadStories(true);
         handleDeleteConversation()
-        navigation.navigate("Messages");
+        navigation.goBack("Messages");
     };
 
 
@@ -92,7 +92,6 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
     };
 
 
-    console.warn("My user online where are you ?", user.onlineStatus)
     const isUserOnline = user.onlineStatus === true;
 
 

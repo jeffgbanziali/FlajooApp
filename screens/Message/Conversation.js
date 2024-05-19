@@ -47,16 +47,12 @@ const Conversation = ({ conversation, currentUser }) => {
   }).filter(user => user !== null)[0];
 
 
-  const isUserOnline = !isEmpty(usersData[0]) &&
-    usersData.map((user) => {
-      if (user._id === friendId) return user.onlineStatus === true;
-      else return null;
-    })
+  const isUserOnline = foundUser.onlineStatus
   const différentv = conversation && conversation.members.receiverId === uid && conversation.members.senderId !== uid
 
 
 
-  //console.log("La conversation en question:", conversation);
+  console.log("La liste de ceux qui sont en ligne là:", isUserOnline);
   //console.log("L'id de la conversation est là:", conversation._id);
   //console.log("Le receiver Id:", conversation.members.receiverId === uid);
   //console.log("Le senderID:", conversation.members.senderId);

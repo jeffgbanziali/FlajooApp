@@ -123,6 +123,10 @@ const AppW = () => {
             dispatch(getUser(uid));
         }
 
+        if (uid === null && isLoadingApp) {
+            <Loading />
+        }
+
 
     }, [isDarkMode, uid, dispatch]);
 
@@ -131,25 +135,24 @@ const AppW = () => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {/*
+            {
                 isLoadingApp ?
-                    <Loading /> :*/
+                    <Loading /> :
+                    <NavigationContainer>
 
+                        {
+
+                            isFirstTime ?
+                                <FirstNavigation />
+                                : uid ?
+                                    <StackNavigation />
+
+                                    :
+                                    <AuthNavigation />
+
+                        }
+                    </NavigationContainer>
             }
-            <NavigationContainer>
-
-                {
-
-                    isFirstTime ?
-                        <FirstNavigation />
-                        : uid ?
-                            <StackNavigation />
-
-                            :
-                            <AuthNavigation />
-
-                }
-            </NavigationContainer>
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

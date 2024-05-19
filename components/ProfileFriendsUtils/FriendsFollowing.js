@@ -28,7 +28,7 @@ const FriendsFollowing = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.navigate("ProfilFriends", { id });
+    navigation.goBack("ProfilFriends", { id });
   };
 
 

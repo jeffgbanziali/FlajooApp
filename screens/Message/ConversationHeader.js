@@ -62,7 +62,7 @@ const ConversationHeader = () => {
 
     const handleClickReturnHome = () => {
         setLoadStories(true);
-        navigation.navigate("TabNavigation");
+        navigation.goBack("TabNavigation");
     };
 
 

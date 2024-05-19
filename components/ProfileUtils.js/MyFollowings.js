@@ -17,7 +17,7 @@ const MyFollowers = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.navigate("TabNavigation");
+    navigation.goBack("TabNavigation");
   };
 
 

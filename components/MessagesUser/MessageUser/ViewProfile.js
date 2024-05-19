@@ -1,12 +1,20 @@
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
 import { useDarkMode } from '../../Context/AppContext';
+import { useNavigation } from '@react-navigation/native';
 
 const ViewProfile = ({ user }) => {
 
-  const { isDarkMode } = useDarkMode();
+    const { isDarkMode } = useDarkMode();
+    const navigation = useNavigation();
 
+
+    const viewProfile = () => {
+        navigation.navigate("ProfilFriends", {
+            id: user._id
+        });
+    };
     return (
         <View style={{
             width: "100%",
@@ -16,12 +24,14 @@ const ViewProfile = ({ user }) => {
             alignItems: "center",
         }}>
 
-            <View style={{
-                width: 100,
-                height: 100,
-                justifyContent: "center",
-                alignItems: "center",
-            }}>
+            <Pressable
+                onPress={viewProfile}
+                style={{
+                    width: 100,
+                    height: 100,
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}>
                 <Image
                     style={{
                         width: "100%",
@@ -31,7 +41,7 @@ const ViewProfile = ({ user }) => {
                     }}
                     source={{ uri: user.picture }}
                 />
-            </View>
+            </Pressable>
             <View
                 style={{
                     //

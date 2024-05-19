@@ -36,10 +36,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
 
   return (
     <View
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
+
     >
       <View
         style={{
@@ -55,7 +52,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            marginTop:10
+            marginTop: 10
           }}
         >
           <TouchableOpacity
@@ -169,9 +166,12 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
       <View
         style={{
           zIndex: 1,
-          height: "12%",
+          //height: "20%",
           width: "90%",
           marginLeft: 10,
+          paddingTop: 10,
+          paddingBottom:20,
+          // backgroundColor:"red"
         }}
       >
         <Text
@@ -183,6 +183,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
             lineHeight: 20,
           }}
         >
+
           {post.message}
         </Text>
       </View>
@@ -193,9 +194,9 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
-          position: "relative",
-          marginVertical: 40,
+          bottom: 10,
+          height: 80
+
         }}
       >
         <View
@@ -296,6 +297,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           />
         </TouchableOpacity>
       </View>
+
     </View>
   )
 }

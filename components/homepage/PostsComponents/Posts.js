@@ -433,7 +433,6 @@ const Posts = ({ post }) => {
                   backgroundColor: isDarkMode ? "#171717" : "white",
                   position: "relative",
                   width: "96%",
-                  height: 200,
                   borderRadius: 20,
                   zIndex: 1,
                   shadowColor: "#000",

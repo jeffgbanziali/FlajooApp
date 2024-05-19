@@ -100,7 +100,7 @@ const DeleteButton = ({ post, toggleToolings }) => {
                     }}>
                     <MaterialCommunityIcons
                         name="delete"
-                        size={28}
+                        size={24}
                         color={isDarkMode ? "red" : "red"}
                     />
 
@@ -111,7 +111,7 @@ const DeleteButton = ({ post, toggleToolings }) => {
                     style={{
                         color: isDarkMode ? "#F5F5F5" : "black",
                         fontWeight: "600",
-                        fontSize: 16
+                        fontSize: 14
                     }}
                 >
                     {t("Delete")}

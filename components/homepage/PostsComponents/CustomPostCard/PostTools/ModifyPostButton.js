@@ -46,7 +46,7 @@ const ModifyPostButton = () => {
                 }}>
                 <MaterialCommunityIcons
                     name="pencil"
-                    size={30}
+                    size={28}
                     color={isDarkMode ? "#F5F5F5" : "black"}
 
                 />
@@ -55,7 +55,7 @@ const ModifyPostButton = () => {
                 style={{
                     color: isDarkMode ? "#F5F5F5" : "black",
                     fontWeight: "600",
-                    fontSize: 16
+                    fontSize: 14
                 }}
             >
                 {t("Modify")}

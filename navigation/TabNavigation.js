@@ -102,12 +102,13 @@ const TabNavigation = () => {
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
             display: "flex",
             backgroundColor: isDarkMode ? "#171717" : "white",
+            justifyContent: "center",
           },
           headerShown: false,
           tabBarActiveTintColor: isDarkMode ? "white" : "black",
@@ -149,12 +150,14 @@ const TabNavigation = () => {
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
+
               <Feather
                 name="search"
                 size={26}
                 color={isDarkMode ? "white" : "black"}
                 style={[focused && styles.bottomTabIconFocused]}
               />
+
             ),
           }}
         />
@@ -164,27 +167,26 @@ const TabNavigation = () => {
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
-              <View style={styles.tabIconContainer}>
-                <TouchableOpacity
-                  onPress={arePress}
+              <TouchableOpacity
+                onPress={arePress}
+                style={{
+                  backgroundColor: isDarkMode ? "#0D0C0C" : "#0D0C0C",
+                  borderRadius: 10,
+                  marginTop: 10,
+                  width: 40,
+                  height: 40,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <Image
                   style={{
-                    backgroundColor: isDarkMode ? "#0D0C0C" : "#0D0C0C",
-                    borderRadius: 10,
-                    width: 40,
-                    height: 40,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
-                  <Image
-                    style={{
-                      width: "80%",
-                      height: "80%",
-                      borderRadius: 100,
-                    }}
-                    source={isDarkMode ? require("../assets/Logos/1.png") : require("../assets/Logos/1.png")}
-                  />
-                </TouchableOpacity>
-              </View>
+                    width: "80%",
+                    height: "80%",
+                    borderRadius: 100,
+                  }}
+                  source={isDarkMode ? require("../assets/Logos/1.png") : require("../assets/Logos/1.png")}
+                />
+              </TouchableOpacity>
             ),
           }}
           listeners={({ navigation, route }) => ({
@@ -407,7 +409,7 @@ const TabNavigation = () => {
 
 
 
-    </View>
+    </>
   );
 };
 
@@ -420,13 +422,15 @@ const styles = StyleSheet.create(
     bottomTabIconFocused: {
       color: "red",
 
+
     },
 
     tabIconContainer: {
       flexDirection: "row",
-      width: "80%",
+      width: "10%",
       justifyContent: "center",
       alignItems: "center",
+      backgroundColor: "red"
 
     },
 

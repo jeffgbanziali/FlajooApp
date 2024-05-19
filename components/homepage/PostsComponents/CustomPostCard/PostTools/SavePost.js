@@ -77,7 +77,7 @@ const SavePost = ({ post }) => {
 
                         <AntDesign
                             name="staro"
-                            size={26}
+                            size={24}
                             color={isDarkMode ? "gray" : "black"} />
                         <Text
                             style={{

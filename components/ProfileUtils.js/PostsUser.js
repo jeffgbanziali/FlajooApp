@@ -97,11 +97,11 @@ const PostsUser = () => {
                         < TouchableOpacity
                             key={index} >
                             <View style={{
-                                borderRadius: 10,
+                                //borderRadius: 10,
                                 overflow: "hidden",
                                 borderWidth: 1,
-                                borderColor: "white",
-                                backgroundColor: "white"
+                                borderColor: isDarkMode ? "black" : "#4F4F4F",
+                                backgroundColor: "black"
                             }}>
 
                                 <Image
@@ -139,8 +139,8 @@ const PostsUser = () => {
                                             left: 0,
                                             right: 0,
                                             height: 60,
-                                            borderBottomLeftRadius: 10,
-                                            borderBottomRightRadius: 10,
+                                           // borderBottomLeftRadius: 10,
+                                            //borderBottomRightRadius: 10,
                                         }}
                                     />
                                 </View>

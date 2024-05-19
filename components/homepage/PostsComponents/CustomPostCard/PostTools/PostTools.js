@@ -56,7 +56,7 @@ const PostTools = ({ post, toggleToolings }) => {
                     <View
                         style={{
                             width: "100%",
-                            height: "20%",
+                            height: "18%",
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "space-around",
@@ -84,7 +84,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                     height: 60,
                                     borderRadius: 100,
                                     backgroundColor: isDarkMode ? "#3F3F3F" : "#F9F8F8",
-                                    borderWidth: 3,
+                                    borderWidth: 1,
                                     borderColor: isDarkMode ? "gray" : "lightgray",
                                     alignItems: "center",
                                     justifyContent: "center"
@@ -115,7 +115,7 @@ const PostTools = ({ post, toggleToolings }) => {
                     <View
                         style={{
                             width: "100%",
-                            height: "10%",
+                            height: "8%",
                             borderTopWidth: 2,
                             borderColor: isDarkMode ? "#343232" : "lightgray",
                             justifyContent: "center",
@@ -155,7 +155,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                         <Text
                                             style={{
                                                 paddingLeft: 10,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: isDarkMode ? "gray" : "black",
                                             }}>
                                             {t("LikeThat")} {""}
@@ -163,7 +163,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                                 style={{
                                                     color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     fontWeight: "600"
                                                 }}
                                             >
@@ -198,7 +198,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                             style={{
                                                 color: isDarkMode ? "gray" : "black",
                                                 paddingLeft: 10,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: isDarkMode ? "gray" : "lightgray"
                                             }}>
                                             {t("LikeThat")} {""}
@@ -223,7 +223,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                     style={{
                                         paddingLeft: 10,
                                         color: isDarkMode ? "gray" : "black",
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: "400",
                                         color: isDarkMode ? "#F5F5F5" : "black",
                                     }}
@@ -262,7 +262,7 @@ const PostTools = ({ post, toggleToolings }) => {
 
                             <Feather
                                 name="share-2"
-                                size={28}
+                                size={24}
                                 color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
@@ -301,7 +301,7 @@ const PostTools = ({ post, toggleToolings }) => {
                             }}>
                             <FontAwesome5
                                 name="user-friends"
-                                size={26}
+                                size={24}
                                 color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
@@ -466,7 +466,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                         <Text
                                             style={{
                                                 paddingLeft: 10,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: isDarkMode ? "gray" : "lightgray",
                                             }}>
                                             {t("LikeThat")} {""}
@@ -474,7 +474,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                                 style={{
                                                     color: isDarkMode ? "gray" : "black",
                                                     paddingLeft: 10,
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     fontWeight: "600"
                                                 }}
                                             >
@@ -508,7 +508,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                         <Text
                                             style={{
                                                 paddingLeft: 10,
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: isDarkMode ? "gray" : "black",
                                             }}>
                                             {t("LikeThat")} {""}
@@ -533,7 +533,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                     style={{
                                         paddingLeft: 10,
                                         color: isDarkMode ? "gray" : "black",
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: "400",
                                         color: isDarkMode ? "#F5F5F5" : "black",
                                     }}
@@ -606,7 +606,7 @@ const PostTools = ({ post, toggleToolings }) => {
                                 }}>
                                 <Feather
                                     name="user"
-                                    size={26}
+                                    size={24}
                                     color={isDarkMode ? "gray" : "black"} />
                                 <Text
                                     style={{
@@ -663,7 +663,7 @@ const PostTools = ({ post, toggleToolings }) => {
                             }}>
                             <Feather
                                 name="eye-off"
-                                size={26}
+                                size={24}
                                 color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
@@ -704,7 +704,7 @@ const PostTools = ({ post, toggleToolings }) => {
                             }}>
                             <Ionicons
                                 name="information-circle-outline"
-                                size={28}
+                                size={24}
                                 color={isDarkMode ? "gray" : "black"} />
                             <Text
                                 style={{
@@ -745,7 +745,7 @@ const PostTools = ({ post, toggleToolings }) => {
                             }}>
                             <MaterialIcons
                                 name="report-problem"
-                                size={26}
+                                size={24}
                                 color={isDarkMode ? "red" : "red"} />
                             <Text
                                 style={{

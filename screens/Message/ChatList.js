@@ -201,9 +201,9 @@ const Message = () => {
       });
     });
 
-    return () => {
+   /* return () => {
       socket.current.disconnect();
-    };
+    };*/
   }, [uid]);
 
 

@@ -30,7 +30,7 @@ const App = () => {
 
     const store = createStore(
         rootReducer,
-        composeWithDevTools(applyMiddleware(thunk, logger))
+        composeWithDevTools(applyMiddleware(thunk,))
     );
 
 
@@ -50,7 +50,9 @@ const App = () => {
     return (
         <Provider store={store}>
             <DarkModeProvider>
+                <OnlineStatusProvider>
                     <AppW />
+                </OnlineStatusProvider>
             </DarkModeProvider>
         </Provider>
     );
@@ -81,8 +83,10 @@ const AppW = () => {
     const [isFirstTime, setIsFirstTime] = useState(true);
 
     const dispatch = useDispatch();
-    const { isDarkMode, isConnected } = useDarkMode();
+    const { isDarkMode } = useDarkMode();
+    const { isConnected, isInternetConnected } = useOnlineStatus();
 
+    console.log("est qu'il est en ligne ? ", isConnected, "est ce que tues connecté ?", isInternetConnected)
 
     useEffect(() => {
         AsyncStorage.getItem('uid')

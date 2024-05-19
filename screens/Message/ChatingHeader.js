@@ -44,7 +44,6 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
     const { uid } = useContext(UidContext);
 
     const handleDeleteConversation = async () => {
-        console.log("Kondo regarde moi", conversation)
         try {
 
             if (conversation && conversation.message && conversation.message.text === '') {
@@ -92,6 +91,8 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
         navigation.navigate("VideoCall", { user: user });
     };
 
+
+    console.warn("My user online where are you ?", user.onlineStatus)
     const isUserOnline = user.onlineStatus === true;
 
 

@@ -23,11 +23,6 @@ const ChatOnline = ({ user }) => {
         }
     };
 
-
-    console.log("est tu connecté ?", usersData)
-
-
-
     const renderItem = ({ item }) => {
 
 

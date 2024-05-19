@@ -44,27 +44,20 @@ export const OnlineStatusProvider = ({ children }) => {
                     //setUid(userIdOnline);
                     console.log('Connected to server');
                     console.log(userData._id, "Utilisateur connecté !!!!", socket.current.id);
-                    if (userData._id) {
-                        socket.current.emit("addUser", userData._id);
+                    socket.current.emit("addUser", userData._id);
 
-                        // Émettre un événement vers le serveur pour informer du changement de statut en ligne
-                        socket.current.emit("onlineStatusChanged", { userId: userData._id, onlineStatus: true });
+                    // Émettre un événement vers le serveur pour informer du changement de statut en ligne
+                    socket.current.emit("onlineStatusChanged", { userId: userData._id, onlineStatus: true });
 
-                        console.log("Tu es en ligne ou pas !!!!", userData.onlineStatus, "donnde moi ton id", userData._id, "donne moi ton pseudo", userData.pseudo);
-                    }
+                    console.log("Tu es en ligne ou pas !!!!", userData.onlineStatus, "donnde moi ton id", userData._id, "donne moi ton pseudo", userData.pseudo);
+
                 });
 
                 socket.current.on('connect_error', (error) => {
                     console.error('Connection error:', error);
                 });
 
-                socket.current.on('disconnect', () => {
-                    setIsConnected(false);
-                    console.log('Disconnected from server');
-                    if (userData._id) {
-                        socket.current.emit("removeUser", userData._id);
-                    }
-                });
+
 
                 // Clean up the event listeners on unmount
                 return () => {
@@ -75,8 +68,17 @@ export const OnlineStatusProvider = ({ children }) => {
                 };
             } else {
                 setIsConnected(false);
-                if (socket.current && userData._id) {
-                    socket.current.emit("removeUser", userData._id);
+                if (socket.current && userData) {
+
+                    socket.current.on('disconnect', () => {
+                        setIsConnected(false);
+                        console.log('Disconnected from server');
+
+                        socket.current.emit("removeUser", userData._id);
+                        socket.current.emit("removeUser", userData._id);
+
+
+                    });
                 }
             }
         }

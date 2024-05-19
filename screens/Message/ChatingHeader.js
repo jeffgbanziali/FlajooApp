@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conversationToos, initialCreateConversation }) => {
     const navigation = useNavigation();
     const [isPressed, setIsPressed] = useState(false);
-    const { isDarkMode, usersOnline, isConnected } = useDarkMode();
+    const { isDarkMode, isConnected } = useDarkMode();
     const { t } = useTranslation();
     const [loadStories, setLoadStories] = useState(true);
 
@@ -92,7 +92,7 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
         navigation.navigate("VideoCall", { user: user });
     };
 
-    const isUserOnline = isConnected;
+    const isUserOnline = user.onlineStatus === true;
 
 
     return (

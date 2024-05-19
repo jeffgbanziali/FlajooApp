@@ -33,12 +33,9 @@ import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const navigation = useNavigation();
-  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
+  const { isDarkMode, isConnected } = useDarkMode();
   const { t } = useTranslation();
   const { uid } = useContext(UidContext)
-
-
-
   const handleClickReturnHome = () => {
     console.log("clicked");
     navigation.navigate("TabNavigation");
@@ -48,12 +45,11 @@ const Profile = () => {
     navigation.navigate("Settings");
   };
 
+  const isUserOnline = userData.onlineStatus === true
 
 
 
 
-
-  const isUserOnline = isConnected
 
   console.log("Mon profile est en ligne:", isUserOnline)
 

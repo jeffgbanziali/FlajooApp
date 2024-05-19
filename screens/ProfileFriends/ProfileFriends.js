@@ -32,12 +32,11 @@ import MaterialTopFriendsNavigation from "../../navigation/MaterialTopFriendsNav
 const ProfileFriends = () => {
   const route = useRoute();
   const { id } = route.params;
-  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
-
+  const { isDarkMode, isConnected } = useDarkMode();
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const isUserOnline = usersOnline.some(user => user.id === id) && isConnected
+
 
   console.log("Mon profile est en ligne:", isUserOnline)
 
@@ -63,7 +62,7 @@ const ProfileFriends = () => {
 
   const users = usersData.find((user) => user._id === id);
 
-
+  const isUserOnline = users.onlineStatus === true
 
 
   const MAX_MESSAGE_LENGTH = 180;

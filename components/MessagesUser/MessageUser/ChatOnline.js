@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
 import { UidContext, useDarkMode } from '../../Context/AppContext';
-import { USER } from '../../../Data/Users';
 import { useSelector } from 'react-redux';
 
 const ChatOnline = ({ user }) => {
-    const { isDarkMode, usersOnline, isConnected } = useDarkMode();
+    const { isDarkMode, isConnected } = useDarkMode();
 
     const { uid } = useContext(UidContext)
-
     const usersData = useSelector((state) => state.usersReducer);
     const firstTenUsers = usersData.slice(10, 40);
     const filteredUsers = firstTenUsers.filter(user => user._id !== uid);
@@ -26,12 +24,15 @@ const ChatOnline = ({ user }) => {
     };
 
 
+    console.log("est tu connecté ?", usersData)
 
 
 
     const renderItem = ({ item }) => {
 
-        const isUserOnline =  isConnected;
+
+        const isUserOnline = item.onlineStatus === true
+
 
         return (
 
@@ -55,7 +56,7 @@ const ChatOnline = ({ user }) => {
                         borderRadius: 100,
                         alignContent: 'center',
                     }}>
-                    <Image source={{ uri: item.picture }}
+                    <Image source={{ uri: item.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png" }}
                         style={{
                             width: "100%",
                             height: "100%",
@@ -124,7 +125,7 @@ const ChatOnline = ({ user }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item) => item._id !== uid}
             />
         </View>
 

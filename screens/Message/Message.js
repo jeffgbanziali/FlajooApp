@@ -59,7 +59,7 @@ const Message = () => {
   const myConversation = conversations.conversations.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
- 
+
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
@@ -177,7 +177,7 @@ const Message = () => {
 
                   return (
 
-                    <Conversation  conversation={c} currentUser={uid} />
+                    <Conversation conversation={c} currentUser={uid} />
                   )
 
                 }}

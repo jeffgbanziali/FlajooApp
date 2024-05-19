@@ -108,7 +108,7 @@ const PostMedia = ({ post, item, selectedComment, toggleToolings, toggleComments
                                     width: "100%",
                                     height: "100%",
                                     borderRadius: 30,
-                                    resizeMode: "cover",
+                                    //resizeMode: "cover",
                                     zIndex: 1,
                                 }}
                             />

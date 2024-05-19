@@ -19,13 +19,12 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const [showImage, setShowImage] = useState(false);
   const [messageHeight, setCommentsHeight] = useState(new Animated.Value(0));
-  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
+  const { isDarkMode, isConnected } = useDarkMode();
   const userImageUri = own ? userData.picture : user.picture;
 
 
 
-
-  const isUserOnline =  isConnected;
+  const isUserOnline = user.onlineStatus === true
 
 
   const messageTools = () => {

@@ -175,31 +175,37 @@ const Message = () => {
 
   useEffect(() => {
     socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
+
     socket.current.on("connect", () => {
       console.log("Utilisateur connecté !!!!", socket.current.id);
       socket.current.emit("addUser", uid);
     });
+
+    socket.current.on("connect_error", (err) => {
+      console.error("Connection Error: ", err);
+    });
+
     socket.current.on("getMessage", (data) => {
       const hasText = data.text !== undefined && data.text !== null;
       const hasAttachment = data.attachment !== undefined && data.attachment !== null;
 
-      setArrivalChat((prevArrivalChat) => [
-        ...prevArrivalChat,
-        {
+      setArrivalChat((prevArrivalChat) => {
+        const newMessage = {
           senderId: data.senderId,
           receiverId: data.receiverId,
           text: hasText ? data.text : "",
           attachment: hasAttachment ? data.attachment : null,
           createdAt: Date.now(),
-
-        },
-      ]);
+        };
+        return [...prevArrivalChat, newMessage];
+      });
     });
 
     return () => {
       socket.current.disconnect();
     };
   }, [uid]);
+
 
 
 

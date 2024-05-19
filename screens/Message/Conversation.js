@@ -19,7 +19,7 @@ import { ActivityIndicator } from "react-native";
 const Conversation = ({ conversation, currentUser }) => {
   const navigation = useNavigation();
   const [isPressed, setIsPressed] = useState(false);
-  const { isDarkMode, usersOnline, isConnected } = useDarkMode();
+  const { isDarkMode, isConnected } = useDarkMode();
   const [showOptions, setShowOptions] = useState(false);
   const { uid } = useContext(UidContext);
   const { t } = useTranslation();
@@ -47,8 +47,11 @@ const Conversation = ({ conversation, currentUser }) => {
   }).filter(user => user !== null)[0];
 
 
-
-  const isUserOnline =  isConnected;
+  const isUserOnline = !isEmpty(usersData[0]) &&
+    usersData.map((user) => {
+      if (user._id === friendId) return user.onlineStatus === true;
+      else return null;
+    })
   const différentv = conversation && conversation.members.receiverId === uid && conversation.members.senderId !== uid
 
 

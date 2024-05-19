@@ -22,7 +22,7 @@ import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
-
+import { useOnlineStatus, OnlineStatusProvider } from "./components/Context/OnlineContext";
 
 
 
@@ -50,7 +50,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <DarkModeProvider>
-                <AppW />
+                    <AppW />
             </DarkModeProvider>
         </Provider>
     );
@@ -82,9 +82,6 @@ const AppW = () => {
 
     const dispatch = useDispatch();
     const { isDarkMode, isConnected } = useDarkMode();
-
-
-
 
 
     useEffect(() => {

@@ -12,6 +12,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-neat-date-picker'
 import CountryPicker from 'react-native-country-picker-modal';
+import LoadingRegister from '../../components/Loading/LoadingRegister';
 
 
 const data = [
@@ -55,7 +56,7 @@ const SignUpScreen = () => {
     const [country, setCountry] = useState('');
     const [value, setValue] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [showDatePickerSingle, setShowDatePickerSingle] = useState(false)
+    const [loading, setLoading] = useState(false);
 
 
 
@@ -107,21 +108,6 @@ const SignUpScreen = () => {
 
 
 
-    const openDatePickerSingle = () => setShowDatePickerSingle(true)
-
-    const onCancelSingle = () => {
-        setShowDatePickerSingle(false)
-    }
-
-    const onConfirmSingle = (output) => {
-        setShowDatePickerSingle(false);
-
-        console.log("the day", output);
-        const selectedDate = new Date(output.dateString);
-        setBirthDate(selectedDate);
-    };
-
-
     const onSelectCountry = (nationality) => {
         setNationality(nationality);
         setModalVisible(false);
@@ -131,6 +117,10 @@ const SignUpScreen = () => {
 
 
     const handleSignUp = async () => {
+
+
+
+        setLoading(true)
         const data = {
             pseudo,
             firstName,
@@ -140,7 +130,7 @@ const SignUpScreen = () => {
             confirmPassword,
             phoneNumber,
             birthDate,
-            nationality,
+            nationality: nationality.name,
             homeAddress: {
                 streetNumber,
                 streetName,
@@ -155,52 +145,53 @@ const SignUpScreen = () => {
         try {
             const url = `${APP_API_URL}/api/user/register`;
 
+            console.log("La data est là", data)
 
             // Validate the form data
-            if (pseudo === '') {
-                Alert.alert("Please enter your pseudo");
-                return;
-            }
-
-            if (firstName === '') {
-                Alert.alert("Please enter your first name");
-                return;
-            }
-
-            if (lastName === '') {
-                Alert.alert("Please enter your last name");
-                return;
-            }
-
-            if (email === '') {
-                Alert.alert("Please enter your email");
-                return;
-            }
-
-            if (!EMAIL_REGEX.test(email)) {
-                Alert.alert("Please enter a valid email");
-                return;
-            }
-
-            if (password === '') {
-                Alert.alert("Please enter your password");
-                return;
-            }
-
-            if (confirmPassword === '') {
-                Alert.alert("Please confirm your password");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                Alert.alert("Passwords do not match");
-                return;
-            }
-
-            if (phoneNumber === '') {
-                Alert.alert("Please enter your phone number");
-                return;
-            }
+            /*  if (pseudo === '') {
+                  Alert.alert("Please enter your pseudo");
+                  return;
+              }
+  
+              if (firstName === '') {
+                  Alert.alert("Please enter your first name");
+                  return;
+              }
+  
+              if (lastName === '') {
+                  Alert.alert("Please enter your last name");
+                  return;
+              }
+  
+              if (email === '') {
+                  Alert.alert("Please enter your email");
+                  return;
+              }
+  
+              if (!EMAIL_REGEX.test(email)) {
+                  Alert.alert("Please enter a valid email");
+                  return;
+              }
+  
+              if (password === '') {
+                  Alert.alert("Please enter your password");
+                  return;
+              }
+  
+              if (confirmPassword === '') {
+                  Alert.alert("Please confirm your password");
+                  return;
+              }
+  
+              if (password !== confirmPassword) {
+                  Alert.alert("Passwords do not match");
+                  return;
+              }
+  
+              if (phoneNumber === '') {
+                  Alert.alert("Please enter your phone number");
+                  return;
+              }*/
 
             // Send the data to the server
             const response = await axios.post(url, data, {
@@ -213,15 +204,21 @@ const SignUpScreen = () => {
             // Handle the server response
             if (response.status === 201) {
                 alert("User created successfully");
-                console.log(response);
-                navigation.navigate("Signin");
+                console.log("La reponse", response);
+                navigation.navigate("Verify", { user: response.data });
             } else {
                 alert("An error ");
-                console.log(response);
+                console.log("C'est quoi l'erreur ?", response);
             }
         } catch (error) {
             console.error(error);
-            alert("An error occurred");
+            alert("An error occurred", error);
+            console.log("C'est quoi l'erreur ?", error);
+
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         }
     };
 
@@ -253,622 +250,517 @@ const SignUpScreen = () => {
 
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{
-                backgroundColor: isDarkMode ? "#171717" : "white",
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: "100%"
-            }}
-        >
 
-            <SafeAreaView
-                style={{
-                    height: "100%",
-                    width: "100%",
-                }}
 
-            >
-                <ScrollView
-                    showsVerticalScrollIndicator={false}>
 
-                    <View
+        <>
+
+
+            {loading ?
+
+                <LoadingRegister />
+
+                :
+
+
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={{
+                        backgroundColor: isDarkMode ? "#171717" : "white",
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: "100%"
+                    }}
+                >
+
+                    <SafeAreaView
                         style={{
+                            height: "100%",
                             width: "100%",
-                            height: 150,
-                            padding: 2,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-
-                        }}>
-                        <Image
-                            style={{
-                                width: 150,
-                                height: 150,
-                                borderRadius: 100
-
-                            }}
-                            source={require("../../assets/Logos/1.png")} />
-                    </View>
-
-
-                    <View
-                        style={{
-                            borderRadius: 20,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-
                         }}
+
                     >
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}>
 
-                        <Text
-                            style={{
-                                fontSize: 20,
-                                color: isDarkMode ? "#FFFFFF" : "black",
-                                fontWeight: 'bold',
-                                marginVertical: 2,
-                                marginBottom: 16
-                            }}>
-                            {t('CreateAccount')}
-                        </Text>
-
-                        <View
-                            style={{
-                                width: "100%",
-                                alignItems: "center",
-                                //backgroundColor: "green",
-                                justifyContent: 'center',
-                                height: adjustedContainerPersoHeightSize,
-
-                            }}>
                             <View
                                 style={{
-                                    width: inputWidthSize,
-                                    //backgroundColor: "red",
-                                    justifyContent: "center",
-                                    paddingLeft: 6
-
+                                    width: "100%",
+                                    height: 150,
+                                    padding: 2,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
 
                                 }}>
+                                <Image
+                                    style={{
+                                        width: 150,
+                                        height: 150,
+                                        borderRadius: 100
+
+                                    }}
+                                    source={require("../../assets/Logos/1.png")} />
+                            </View>
+
+
+                            <View
+                                style={{
+                                    borderRadius: 20,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+
+                                }}
+                            >
+
                                 <Text
                                     style={{
-                                        fontSize: 18,
+                                        fontSize: 20,
                                         color: isDarkMode ? "#FFFFFF" : "black",
-                                        fontWeight: '500',
+                                        fontWeight: 'bold',
+                                        marginVertical: 2,
+                                        marginBottom: 16
                                     }}>
-                                    {t('PersonalInfo')}
+                                    {t('CreateAccount')}
                                 </Text>
-                            </View>
 
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    marginTop: 6,
-                                    width: inputWidthSize,
-                                }}>
-                                <Dropdown
-                                    style={styles.dropdown}
-                                    placeholderStyle={styles.placeholderStyle}
-                                    selectedTextStyle={styles.selectedTextStyle}
-                                    inputSearchStyle={styles.inputSearchStyle}
-                                    iconStyle={styles.iconStyle}
-                                    data={data}
-                                    maxHeight={300}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder="Gender"
-                                    value={value}
-                                    onChange={item => {
-                                        setValue(item.value);
-                                    }}
-                                    renderLeftIcon={() => (
-                                        <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                                    )}
-                                    renderItem={renderItem}
-                                />
-                            </View>
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    overflow: "hidden",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
+                                <View
                                     style={{
-                                        width: '90%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t('Pseudo')}
-                                    placeholderTextColor='gray'
-                                    value={pseudo}
-                                    onChangeText={(text) => setPseudo(text)}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
+                                        width: "100%",
+                                        alignItems: "center",
+                                        //backgroundColor: "green",
+                                        justifyContent: 'center',
+                                        height: adjustedContainerPersoHeightSize,
 
-                            </View>
-
-
-
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    overflow: "hidden",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '90%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t('FirstName')}
-                                    placeholderTextColor='gray'
-                                    value={firstName}
-                                    onChangeText={(text) => setFirstName(text)}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-
-                            </View>
-
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    overflow: "hidden",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '85%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t("LastName")}
-                                    placeholderTextColor='gray'
-                                    value={lastName}
-                                    onChangeText={(text) => setLastName(text)}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-
-                            </View>
-
-
-                            <DatePicker
-                                isVisible={showDatePickerSingle}
-                                mode={'single'}
-                                onCancel={onCancelSingle}
-                                onConfirm={onConfirmSingle}
-                            />
-
-                            <TouchableOpacity
-                                onPress={openDatePickerSingle}
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    alignItems: "center",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-
-
-                                {birthDate ?
-                                    <Text
+                                    }}>
+                                    <View
                                         style={{
-                                            fontSize: 16,
-                                            color: isDarkMode ? 'black' : "black",
-                                        }}>{birthDate.toLocaleDateString(t('dateLanguage'))}</Text> :
-                                    <>
-                                        <View style={{
-                                            paddingRight: 6
+                                            width: inputWidthSize,
+                                            //backgroundColor: "red",
+                                            justifyContent: "center",
+                                            paddingLeft: 6
+
+
                                         }}>
+                                        <Text
+                                            style={{
+                                                fontSize: 18,
+                                                color: isDarkMode ? "#FFFFFF" : "black",
+                                                fontWeight: '500',
+                                            }}>
+                                            {t('PersonalInfo')}
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            marginTop: 6,
+                                            width: inputWidthSize,
+                                        }}>
+                                        <Dropdown
+                                            style={styles.dropdown}
+                                            placeholderStyle={styles.placeholderStyle}
+                                            selectedTextStyle={styles.selectedTextStyle}
+                                            inputSearchStyle={styles.inputSearchStyle}
+                                            iconStyle={styles.iconStyle}
+                                            data={data}
+                                            maxHeight={300}
+                                            labelField="label"
+                                            valueField="value"
+                                            placeholder="Gender"
+                                            value={value}
+                                            onChange={item => {
+                                                setValue(item.value);
+                                            }}
+                                            renderLeftIcon={() => (
+                                                <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                                            )}
+                                            renderItem={renderItem}
+                                        />
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            overflow: "hidden",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '90%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t('Pseudo')}
+                                            placeholderTextColor='gray'
+                                            value={pseudo}
+                                            onChangeText={(text) => setPseudo(text)}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+
+                                    </View>
+
+
+
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            overflow: "hidden",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '90%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t('FirstName')}
+                                            placeholderTextColor='gray'
+                                            value={firstName}
+                                            onChangeText={(text) => setFirstName(text)}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+
+                                    </View>
+
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            overflow: "hidden",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '85%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t("LastName")}
+                                            placeholderTextColor='gray'
+                                            value={lastName}
+                                            onChangeText={(text) => setLastName(text)}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+
+                                    </View>
+
+
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            overflow: "hidden",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <View
+                                            style={{
+                                                paddingRight: 6,
+                                                justifyContent: "center",
+                                                alignItems: "center"
+
+                                            }}>
                                             <Ionicons name="calendar-outline" size={24} color="gray" />
 
                                         </View>
-                                        <Text
-                                            style={{
-                                                fontSize: 16,
-                                                color: isDarkMode ? 'gray' : "black",
-                                            }}>
-                                            {t('birthDate')}
-                                        </Text>
-                                    </>
-
-
-                                }
-
-
-                            </TouchableOpacity>
-
-
-
-                            <TouchableOpacity
-                                onPress={() => setModalVisible(true)}
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    alignItems: "center",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-
-                                {nationality ?
-                                    <>
-
-                                        <Text
-                                            style={{
-                                                fontSize: 16,
-                                                color: isDarkMode ? 'black' : "black",
-                                            }}>{nationality.name}
-                                        </Text>
-                                    </>
-                                    :
-                                    <Text
-                                        style={{
-                                            fontSize: 16,
-                                            color: isDarkMode ? 'gray' : "black",
-                                        }}>
-                                        {t('SelectNationality')}
-                                    </Text>
-                                }
-
-                            </TouchableOpacity>
-
-                            <CountryPicker
-                                withFlag
-                                withCountryNameButton
-                                withCallingCodeButton
-                                withAlphaFilter
-                                onSelect={onSelectCountry}
-                                visible={modalVisible}
-                                onClose={() => setModalVisible(false)}
-                                containerButtonStyle={styles.countryPickerContainer}
-                                modalProps={{ animationType: 'slide', transparent: true }}
-                            />
-
-                        </View>
-
-
-
-
-                        <View
-                            style={{
-                                width: "100%",
-                                height: adjustedContainerInfosHeightSize,
-                                alignItems: "center",
-                                //backgroundColor: "blue",
-                                justifyContent: 'center',
-
-                            }}>
-                            <View
-                                style={{
-                                    width: inputWidthSize,
-                                    height: "10%",
-                                    //backgroundColor: "red",
-                                    justifyContent: "center",
-                                    paddingLeft: 6
-
-
-                                }}>
-                                <Text
-                                    style={{
-                                        fontSize: 18,
-                                        color: isDarkMode ? "#FFFFFF" : "black",
-                                        fontWeight: '500',
-                                    }}>
-                                    {t('AccountInfo')}
-                                </Text>
-                            </View>
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '90%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t('Email')}
-                                    placeholderTextColor='gray'
-                                    onChangeText={(text) => setEmail(text)}
-                                    value={email}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-
-                                />
-                            </View >
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    justifyContent: "center",
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '85%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t('Password')}
-                                    placeholderTextColor='gray'
-                                    onChangeText={(text) => setPassword(text)}
-                                    value={password}
-                                    secureTextEntry={!showPass}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                                <View
-                                    style={{
-                                        width: '15%',
-                                        height: "100%",
-                                        alignItems: "center",
-                                        justifyContent: "center"
-                                    }}
-                                >
-
-                                    <Pressable
-                                        onPress={showPassword}
-                                    >
-                                        {
-                                            showPass ?
-                                                <Ionicons name="eye" size={22} color="gray" /> :
-                                                <Ionicons name="eye-off" size={22} color="gray" />
-                                        }
-                                    </Pressable>
-
-                                </View>
-                            </View>
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    justifyContent: "center",
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '85%',
-                                        height: "100%",
-                                        fontSize: 16
-                                    }}
-                                    placeholder={t('ConfirmPass')}
-                                    placeholderTextColor='gray'
-                                    value={confirmPassword}
-                                    onChangeText={(text) => setConfirmPassword(text)}
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    secureTextEntry={!showConfirmPass}
-                                />
-                                <View
-                                    style={{
-                                        width: '15%',
-                                        height: "100%",
-                                        alignItems: "center",
-                                        justifyContent: "center"
-                                    }}
-                                >
-
-                                    <Pressable
-                                        onPress={showConfirmPassword}
-                                    >
-                                        {
-                                            showConfirmPass ?
-                                                <Ionicons name="eye" size={22} color="gray" /> :
-                                                <Ionicons name="eye-off" size={22} color="gray" />
-                                        }
-                                    </Pressable>
-
-                                </View>
-                            </View>
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    borderColor: "#2e2e2d",
-                                    borderWidth: 1,
-                                    overflow: "hidden",
-                                    backgroundColor: "white",
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    paddingLeft: 14,
-                                    width: inputWidthSize,
-                                    flexDirection: "row"
-                                }}>
-                                <TextInput
-                                    style={{
-                                        width: '90%',
-                                        height: "100%",
-                                        fontSize: 16,
-                                    }}
-                                    placeholder={t('PhoneNumb')}
-                                    placeholderTextColor='gray'
-                                    value={phoneNumber}
-                                    onChangeText={(text) => setPhoneNumber(text)}
-                                    keyboardType="default"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                            </View>
-
-                        </View>
-
-
-
-
-                        <View
-                            style={{
-                                width: "100%",
-                                height: adjustedContainerAdressHeightSize,
-                                alignItems: "center",
-                                //backgroundColor: "red"
-
-                            }}>
-
-                            <View
-                                style={{
-                                    width: inputWidthSize,
-                                    //backgroundColor: "pink",
-                                    justifyContent: "center",
-                                    paddingLeft: 6
-
-
-                                }}>
-                                <Text
-                                    style={{
-                                        fontSize: 18,
-                                        color: isDarkMode ? "#FFFFFF" : "black",
-                                        fontWeight: '500',
-                                    }}>
-                                    {t('Adress')}
-                                </Text>
-                            </View>
-
-
-
-                            <View
-                                style={{
-                                    height: inputHeightSize,
-                                    borderRadius: 10,
-                                    marginTop: 6,
-                                    marginLeft: 30,
-                                    marginRight: 30,
-                                    justifyContent: "space-between",
-                                    width: inputWidthSize,
-                                    flexDirection: "column"
-                                }}>
-
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        width: inputWidthSize,
-                                        justifyContent: "space-between",
-                                        height: inputHeightSize,
-                                    }}
-                                >
-
-
-                                    <View
-                                        style={{
-                                            width: "20%",
-                                            height: inputHeightSize,
-                                            backgroundColor: "white",
-                                            paddingLeft: 10,
-                                            alignItems: "stretch",
-                                            borderRadius: 10,
-                                            borderColor: "#2e2e2d",
-                                            borderWidth: 1,
-                                        }}>
                                         <TextInput
                                             style={{
-                                                width: '90%',
+                                                width: '85%',
                                                 height: "100%",
-                                                fontSize: 16,
+                                                fontSize: 16
                                             }}
-                                            placeholder={t('Number')}
+                                            placeholder={t('birthDate')}
                                             placeholderTextColor='gray'
-                                            value={streetNumber}
-                                            onChangeText={(text) => setStreetNumber(text)}
+                                            value={birthDate}
+                                            onChangeText={(text) => setBirthDate(text)}
                                             keyboardType="default"
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
+
                                     </View>
 
 
-                                    <View
+
+
+
+
+                                    <TouchableOpacity
+                                        onPress={() => setModalVisible(true)}
                                         style={{
-                                            width: "78%",
                                             height: inputHeightSize,
-                                            backgroundColor: "white",
                                             borderRadius: 10,
                                             borderColor: "#2e2e2d",
                                             borderWidth: 1,
+                                            alignItems: "center",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
                                             paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+
+                                        {nationality ?
+                                            <>
+
+                                                <Text
+                                                    style={{
+                                                        fontSize: 16,
+                                                        color: isDarkMode ? 'black' : "black",
+                                                    }}>{nationality.name}
+                                                </Text>
+                                            </>
+                                            :
+                                            <Text
+                                                style={{
+                                                    fontSize: 16,
+                                                    color: isDarkMode ? 'gray' : "black",
+                                                }}>
+                                                {t('SelectNationality')}
+                                            </Text>
+                                        }
+
+                                    </TouchableOpacity>
+
+                                    <CountryPicker
+                                        withFlag
+                                        withCountryNameButton
+                                        withCallingCodeButton
+                                        withAlphaFilter
+                                        onSelect={onSelectCountry}
+                                        visible={modalVisible}
+                                        onClose={() => setModalVisible(false)}
+                                        containerButtonStyle={styles.countryPickerContainer}
+                                        modalProps={{ animationType: 'slide', transparent: true }}
+                                    />
+
+                                </View>
+
+
+
+
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        height: adjustedContainerInfosHeightSize,
+                                        alignItems: "center",
+                                        //backgroundColor: "blue",
+                                        justifyContent: 'center',
+
+                                    }}>
+                                    <View
+                                        style={{
+                                            width: inputWidthSize,
+                                            height: "10%",
+                                            //backgroundColor: "red",
+                                            justifyContent: "center",
+                                            paddingLeft: 6
+
+
+                                        }}>
+                                        <Text
+                                            style={{
+                                                fontSize: 18,
+                                                color: isDarkMode ? "#FFFFFF" : "black",
+                                                fontWeight: '500',
+                                            }}>
+                                            {t('AccountInfo')}
+                                        </Text>
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '90%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t('Email')}
+                                            placeholderTextColor='gray'
+                                            onChangeText={(text) => setEmail(text)}
+                                            value={email}
+                                            keyboardType="default"
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+
+                                        />
+                                    </View >
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            justifyContent: "center",
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '85%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t('Password')}
+                                            placeholderTextColor='gray'
+                                            onChangeText={(text) => setPassword(text)}
+                                            value={password}
+                                            secureTextEntry={!showPass}
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                        />
+                                        <View
+                                            style={{
+                                                width: '15%',
+                                                height: "100%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}
+                                        >
+
+                                            <Pressable
+                                                onPress={showPassword}
+                                            >
+                                                {
+                                                    showPass ?
+                                                        <Ionicons name="eye" size={22} color="gray" /> :
+                                                        <Ionicons name="eye-off" size={22} color="gray" />
+                                                }
+                                            </Pressable>
+
+                                        </View>
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            justifyContent: "center",
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
+                                        }}>
+                                        <TextInput
+                                            style={{
+                                                width: '85%',
+                                                height: "100%",
+                                                fontSize: 16
+                                            }}
+                                            placeholder={t('ConfirmPass')}
+                                            placeholderTextColor='gray'
+                                            value={confirmPassword}
+                                            onChangeText={(text) => setConfirmPassword(text)}
+                                            autoCapitalize="none"
+                                            autoCorrect={false}
+                                            secureTextEntry={!showConfirmPass}
+                                        />
+                                        <View
+                                            style={{
+                                                width: '15%',
+                                                height: "100%",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }}
+                                        >
+
+                                            <Pressable
+                                                onPress={showConfirmPassword}
+                                            >
+                                                {
+                                                    showConfirmPass ?
+                                                        <Ionicons name="eye" size={22} color="gray" /> :
+                                                        <Ionicons name="eye-off" size={22} color="gray" />
+                                                }
+                                            </Pressable>
+
+                                        </View>
+                                    </View>
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            borderColor: "#2e2e2d",
+                                            borderWidth: 1,
+                                            overflow: "hidden",
+                                            backgroundColor: "white",
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            paddingLeft: 14,
+                                            width: inputWidthSize,
+                                            flexDirection: "row"
                                         }}>
                                         <TextInput
                                             style={{
@@ -876,128 +768,16 @@ const SignUpScreen = () => {
                                                 height: "100%",
                                                 fontSize: 16,
                                             }}
-                                            placeholder={t('streetName')}
+                                            placeholder={t('PhoneNumb')}
                                             placeholderTextColor='gray'
-                                            value={streetName}
-                                            onChangeText={(text) => setStreetName(text)}
+                                            value={phoneNumber}
+                                            onChangeText={(text) => setPhoneNumber(text)}
                                             keyboardType="default"
                                             autoCapitalize="none"
                                             autoCorrect={false}
                                         />
                                     </View>
-                                </View>
 
-                                <View
-                                    style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
-
-                                    }}>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('postalCode')}
-                                        placeholderTextColor='gray'
-                                        value={postalCode}
-                                        onChangeText={(text) => setPostalCode(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
-                                </View>
-
-                                <View
-                                    style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
-
-                                    }}>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('City')}
-                                        placeholderTextColor='gray'
-                                        value={city}
-                                        onChangeText={(text) => setCity(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
-                                </View>
-
-
-                                <View
-                                    style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
-
-                                    }}>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('state')}
-                                        placeholderTextColor='gray'
-                                        value={state}
-                                        onChangeText={(text) => setState(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
-                                </View>
-
-                                <View
-                                    style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
-
-                                    }}>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('department')}
-                                        placeholderTextColor='gray'
-                                        value={department}
-                                        onChangeText={(text) => setDepartment(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
                                 </View>
 
 
@@ -1005,123 +785,347 @@ const SignUpScreen = () => {
 
                                 <View
                                     style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
+                                        width: "100%",
+                                        height: adjustedContainerAdressHeightSize,
+                                        alignItems: "center",
+                                        //backgroundColor: "red"
 
                                     }}>
-                                    <TextInput
+
+                                    <View
                                         style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('region')}
-                                        placeholderTextColor='gray'
-                                        value={region}
-                                        onChangeText={(text) => setRegion(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
+                                            width: inputWidthSize,
+                                            //backgroundColor: "pink",
+                                            justifyContent: "center",
+                                            paddingLeft: 6
+
+
+                                        }}>
+                                        <Text
+                                            style={{
+                                                fontSize: 18,
+                                                color: isDarkMode ? "#FFFFFF" : "black",
+                                                fontWeight: '500',
+                                            }}>
+                                            {t('Adress')}
+                                        </Text>
+                                    </View>
+
+
+
+                                    <View
+                                        style={{
+                                            height: inputHeightSize,
+                                            borderRadius: 10,
+                                            marginTop: 6,
+                                            marginLeft: 30,
+                                            marginRight: 30,
+                                            justifyContent: "space-between",
+                                            width: inputWidthSize,
+                                            flexDirection: "column"
+                                        }}>
+
+                                        <View
+                                            style={{
+                                                flexDirection: "row",
+                                                width: inputWidthSize,
+                                                justifyContent: "space-between",
+                                                height: inputHeightSize,
+                                            }}
+                                        >
+
+
+                                            <View
+                                                style={{
+                                                    width: "20%",
+                                                    height: inputHeightSize,
+                                                    backgroundColor: "white",
+                                                    paddingLeft: 10,
+                                                    alignItems: "stretch",
+                                                    borderRadius: 10,
+                                                    borderColor: "#2e2e2d",
+                                                    borderWidth: 1,
+                                                }}>
+                                                <TextInput
+                                                    style={{
+                                                        width: '90%',
+                                                        height: "100%",
+                                                        fontSize: 16,
+                                                    }}
+                                                    placeholder={t('Number')}
+                                                    placeholderTextColor='gray'
+                                                    value={streetNumber}
+                                                    onChangeText={(text) => setStreetNumber(text)}
+                                                    keyboardType="default"
+                                                    autoCapitalize="none"
+                                                    autoCorrect={false}
+                                                />
+                                            </View>
+
+
+                                            <View
+                                                style={{
+                                                    width: "78%",
+                                                    height: inputHeightSize,
+                                                    backgroundColor: "white",
+                                                    borderRadius: 10,
+                                                    borderColor: "#2e2e2d",
+                                                    borderWidth: 1,
+                                                    paddingLeft: 14,
+                                                }}>
+                                                <TextInput
+                                                    style={{
+                                                        width: '90%',
+                                                        height: "100%",
+                                                        fontSize: 16,
+                                                    }}
+                                                    placeholder={t('streetName')}
+                                                    placeholderTextColor='gray'
+                                                    value={streetName}
+                                                    onChangeText={(text) => setStreetName(text)}
+                                                    keyboardType="default"
+                                                    autoCapitalize="none"
+                                                    autoCorrect={false}
+                                                />
+                                            </View>
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('postalCode')}
+                                                placeholderTextColor='gray'
+                                                value={postalCode}
+                                                onChangeText={(text) => setPostalCode(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('City')}
+                                                placeholderTextColor='gray'
+                                                value={city}
+                                                onChangeText={(text) => setCity(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('state')}
+                                                placeholderTextColor='gray'
+                                                value={state}
+                                                onChangeText={(text) => setState(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('department')}
+                                                placeholderTextColor='gray'
+                                                value={department}
+                                                onChangeText={(text) => setDepartment(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+
+
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('region')}
+                                                placeholderTextColor='gray'
+                                                value={region}
+                                                onChangeText={(text) => setRegion(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                height: inputHeightSize,
+                                                borderRadius: 10,
+                                                marginTop: 6,
+                                                justifyContent: "space-between",
+                                                width: inputWidthSize,
+                                                flexDirection: "column",
+                                                backgroundColor: "white",
+                                                paddingLeft: 14,
+
+                                            }}>
+                                            <TextInput
+                                                style={{
+                                                    width: '90%',
+                                                    height: "100%",
+                                                    fontSize: 16,
+                                                }}
+                                                placeholder={t('country')}
+                                                placeholderTextColor='gray'
+                                                value={country}
+                                                onChangeText={(text) => setCountry(text)}
+                                                keyboardType="default"
+                                                autoCapitalize="none"
+                                                autoCorrect={false}
+                                            />
+                                        </View>
+
+
+                                    </View>
+
                                 </View>
 
-                                <View
+
+
+
+                                <TouchableOpacity
                                     style={{
-                                        height: inputHeightSize,
-                                        borderRadius: 10,
-                                        marginTop: 6,
-                                        justifyContent: "space-between",
-                                        width: inputWidthSize,
-                                        flexDirection: "column",
-                                        backgroundColor: "white",
-                                        paddingLeft: 14,
-
+                                        backgroundColor: "#FF1C1C",
+                                        marginLeft: 30,
+                                        marginRight: 30,
+                                        marginTop: 10,
+                                        width: 120,
+                                        height: 48,
+                                        borderRadius: 20,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                    onPress={handleSignUp}
+                                >
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: 16,
+                                        fontWeight: 'bold'
                                     }}>
-                                    <TextInput
-                                        style={{
-                                            width: '90%',
-                                            height: "100%",
-                                            fontSize: 16,
-                                        }}
-                                        placeholder={t('country')}
-                                        placeholderTextColor='gray'
-                                        value={country}
-                                        onChangeText={(text) => setCountry(text)}
-                                        keyboardType="default"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                    />
+                                        {t('ButtonRegis')}
+                                    </Text>
+                                </TouchableOpacity>
+
+
+                                <View style={styles.footerView}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: isDarkMode ? "#FFFFFF" : "black",
+                                    }}>{t('HaveAccount')}{" "}
+                                        <Text
+                                            onPress={() => navigation.navigate("Signin")}
+                                            style={{
+                                                color: isDarkMode ? "#2D75FF" : "#74A0F4",
+                                                fontWeight: "bold",
+                                                fontSize: 16
+                                            }}>
+                                            {t('ButtonSignin')}
+                                        </Text>
+                                    </Text>
                                 </View>
+
+
+
+
 
 
                             </View>
 
-                        </View>
+
+                        </ScrollView>
 
 
-
-
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: "#FF1C1C",
-                                marginLeft: 30,
-                                marginRight: 30,
-                                marginTop: 10,
-                                width: 120,
-                                height: 48,
-                                borderRadius: 20,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                            onPress={handleSignUp}
-                        >
-                            <Text style={{
-                                color: 'white',
-                                fontSize: 16,
-                                fontWeight: 'bold'
-                            }}>
-                                {t('ButtonRegis')}
-                            </Text>
-                        </TouchableOpacity>
-
-
-                        <View style={styles.footerView}>
-                            <Text style={{
-                                fontSize: 16,
-                                color: isDarkMode ? "#FFFFFF" : "black",
-                            }}>{t('HaveAccount')}{" "}
-                                <Text
-                                    onPress={() => navigation.navigate("Signin")}
-                                    style={{
-                                        color: isDarkMode ? "#2D75FF" : "#74A0F4",
-                                        fontWeight: "bold",
-                                        fontSize: 16
-                                    }}>
-                                    {t('ButtonSignin')}
-                                </Text>
-                            </Text>
-                        </View>
-
-
-
-
-
-
-                    </View>
-
-
-                </ScrollView>
-
-
-            </SafeAreaView>
-        </KeyboardAvoidingView >
-
+                    </SafeAreaView>
+                </KeyboardAvoidingView >
+            }
+        </>
     );
 }
 
@@ -1195,7 +1199,7 @@ const styles = StyleSheet.create(
 
         dropdown: {
             height: inputHeightSize,
-            width: 100,
+            width: 130,
             backgroundColor: 'white',
             borderRadius: 12,
             padding: 12,

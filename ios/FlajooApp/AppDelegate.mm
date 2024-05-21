@@ -20,7 +20,7 @@
         if (jsPort == nil) {
             jsPort = @"8081"; // Default port
         }
-        jsCodeLocation = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.0.14:%@/index.bundle?platform=ios&dev=true", jsPort]];
+        jsCodeLocation = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.174:%@/index.bundle?platform=ios&dev=true", jsPort]];
     #else
         jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     #endif

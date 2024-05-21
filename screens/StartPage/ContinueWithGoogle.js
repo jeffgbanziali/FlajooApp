@@ -56,7 +56,6 @@ const ContinueWithGoogle = () => {
       firstName: userInfo.user.givenName,
       lastName: userInfo.user.familyName,
       pseudo: userInfo.user.name,
-      picture: userInfo.user.photo
     }
     console.log('mes bébé vous êtes où?', userInfo)
 
@@ -69,7 +68,11 @@ const ContinueWithGoogle = () => {
         },
       });
 
-      console.log('Réponse du serveur:', response.data);
+      if (response.status === 201) {
+        alert("User created successfully");
+        console.log("La reponse", response);
+        navigation.navigate("VerifyStartPage", { user: response.data });
+      }
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la requête au serveur:', error);

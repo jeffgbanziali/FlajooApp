@@ -10,6 +10,8 @@ import { UidContext } from "../components/Context/AppContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Loading from "../components/Loading/Loading";
+import AccountVerify from "../screens/SignUpScreen/AccountVerify";
+import VerifyViaStartPage from "../screens/StartPage/VerifyViaStartPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +29,8 @@ const FirstNavigation = () => {
             <Stack.Screen name="Start" component={StartPage} />
             <Stack.Screen name="Signin" component={SignInScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
+            <Stack.Screen name="Verify" component={AccountVerify} />
+            <Stack.Screen name="VerifyStartPage" component={VerifyViaStartPage} />
             <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
 
 

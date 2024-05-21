@@ -60,6 +60,8 @@ const SignInScreen = () => {
     setIsLoadingSignIn(true);
 
     const data = { email, password };
+    console.log("ma data est là", data)
+
     try {
       const response = await axios.post(
         `${APP_API_URL}/api/user/login`,

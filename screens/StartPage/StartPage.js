@@ -8,6 +8,8 @@ import { useDarkMode } from '../../components/Context/AppContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
+import ContinueWithGoogle from './ContinueWithGoogle';
+import ContinueWithFacebook from './ContinueWithFacebook';
 
 
 
@@ -28,13 +30,7 @@ function StartPage() {
     }
 
 
-    const goFacebook = () => {
-        console.warn("Facebook")
-    }
 
-    const goGoogle = () => {
-        console.warn("Google")
-    }
 
     const goSignIn = () => {
         navigation.navigate("Signin")
@@ -120,55 +116,10 @@ function StartPage() {
                             </TouchableOpacity>
 
 
-                            <TouchableOpacity
-                                onPress={goFacebook}
-                                style={{
-                                    alignItems: "center",
-                                    width: containWidthSize,
-                                    height: containHeightSize,
-                                    backgroundColor: isDarkMode ? "#171717" : "white",
-                                    flexDirection: "row",
-                                    borderRadius: 30,
-                                    paddingLeft: 10,
-                                    borderWidth: 2,
-                                    borderColor: isDarkMode ? "#343232" : "lightgray",
-                                }}>
-                                <MaterialIcons name="facebook" size={28} color="#0332D8" />
-                                <Text
-                                    style={{
-                                        color: isDarkMode ? "#F5F5F5" : "black",
-                                        marginLeft: "2%",
-                                        fontSize: 20,
-                                    }}>
-                                    {t('Facebook')}
-                                </Text>
-                            </TouchableOpacity>
+                            <ContinueWithFacebook />
 
 
-                            <TouchableOpacity
-                                onPress={goGoogle}
-                                style={{
-                                    alignItems: "center",
-                                    width: containWidthSize,
-                                    height: containHeightSize,
-                                    backgroundColor: isDarkMode ? "#171717" : "white",
-                                    flexDirection: "row",
-                                    borderRadius: 30,
-                                    paddingLeft: 10,
-                                    borderWidth: 2,
-                                    borderColor: isDarkMode ? "#343232" : "lightgray",
-                                }}>
-
-                                <AntDesign name="google" size={28} color="red" />
-                                <Text
-                                    style={{
-                                        color: isDarkMode ? "#F5F5F5" : "black",
-                                        marginLeft: "2%",
-                                        fontSize: 20,
-                                    }}>
-                                    {t('Google')}
-                                </Text>
-                            </TouchableOpacity>
+                            <ContinueWithGoogle />
 
 
 

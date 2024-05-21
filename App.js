@@ -114,17 +114,15 @@ const AppW = () => {
             }
 
             finally {
-                setIsLoadingApp(false);
+                setTimeout(() => {
+                    setIsLoadingApp(false);
+                }, 1500);
             }
         };
 
         fetchToken();
         if (uid) {
             dispatch(getUser(uid));
-        }
-
-        if (uid === null && isLoadingApp) {
-            <Loading />
         }
 
 

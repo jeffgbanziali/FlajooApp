@@ -21,6 +21,8 @@ import Loading from "../../components/Loading/Loading";
 import { APP_API_URL } from "../../config";
 import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ContinueWithGmail from "./ContinueWithGmail";
+import FacebookContinue from "./FacebookContinue";
 
 
 
@@ -47,7 +49,7 @@ const SignInScreen = () => {
 
 
   const containerWidthSize = windowWidth * 0.88;
-  const containerHeightSize = windowHeight * 0.36;
+  const containerHeightSize = windowHeight * 0.40;
 
   const inputWidthSize = windowWidth * 0.75;
   const inputHeightSize = windowHeight * 0.056;
@@ -328,9 +330,24 @@ const SignInScreen = () => {
                     </Text>
                   </Text>
                 </View>
-              </View>
-            </View>
+                <View style={{
+                  width: inputWidthSize,
+                  height: inputHeightSize,
 
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly"
+                }}>
+                  <ContinueWithGmail />
+                  <FacebookContinue />
+
+                </View>
+
+
+              </View>
+
+
+            </View>
 
           </SafeAreaView>
         </KeyboardAvoidingView >
@@ -373,6 +390,7 @@ const styles = StyleSheet.create(
     footerView: {
       alignItems: "center",
       marginTop: 20,
+      marginBottom: 20
     },
   });
 export default SignInScreen;

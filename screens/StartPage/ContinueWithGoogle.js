@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Alert } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TouchableOpacity, Dimensions, Alert, ActivityIndicator } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useDarkMode } from '../../components/Context/AppContext';
+import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import { APP_API_URL } from '../../config';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,6 +19,9 @@ const ContinueWithGoogle = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = useState(null);
+  const { uid, setUid } = useContext(UidContext)
+  const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
+
 
   GoogleSignin.configure({
     webClientId: '210714148369-c875qjkjf1mjh2d6ptsop1sitndur99r.apps.googleusercontent.com',
@@ -26,6 +30,8 @@ const ContinueWithGoogle = () => {
   });
 
   const goGoogle = async () => {
+    setIsLoadingSignIn(true);
+
     try {
       await GoogleSignin.hasPlayServices();
       const googInfos = await GoogleSignin.signIn();
@@ -43,22 +49,25 @@ const ContinueWithGoogle = () => {
         // Une autre erreur s'est produite
       }
     }
+    finally {
+      setTimeout(() => {
+        setIsLoadingSignIn(false);
+      }, 500);
+    }
   };
-
 
   const backendRequest = async (userInfo) => {
     const url = `${APP_API_URL}/api/user/auth/google`;
 
     const idToken = userInfo.idToken; // Assuming idToken is available in userInfo
     const data = {
-
       email: userInfo.user.email,
       firstName: userInfo.user.givenName,
       lastName: userInfo.user.familyName,
       pseudo: userInfo.user.name,
-    }
-    console.log('mes bébé vous êtes où?', userInfo)
+    };
 
+    console.log('mes bébé vous êtes où?', userInfo);
     try {
       const response = await axios.post(url, { idToken, ...data }, { // Send only idToken
         headers: {
@@ -66,23 +75,36 @@ const ContinueWithGoogle = () => {
           'Authorization': `Bearer ${idToken}`,
           'Server-Auth-Code': userInfo.serverAuthCode,
         },
+
+
       });
 
       if (response.status === 201) {
         alert("User created successfully");
         console.log("La reponse", response);
         navigation.navigate("VerifyStartPage", { user: response.data });
+      } else if (response.status === 200) {
+        const user = response.data;
+        if (user) {
+          await AsyncStorage.setItem("user", JSON.stringify(user));
+          console.log("Token saved");
+          setUid(user);
+          console.log("Mon id est bien suavegader", response.data);
+          console.log(user);
+        }
+        console.log("User authenticated successfully");
+        console.log("La reponse", response);
       }
-      return response.data;
+
     } catch (error) {
       console.error('Erreur lors de la requête au serveur:', error);
       throw error;
     }
-  };
-
+  }
 
 
   return (
+
     <TouchableOpacity
       onPress={goGoogle}
       style={{
@@ -97,18 +119,36 @@ const ContinueWithGoogle = () => {
         borderColor: isDarkMode ? "#343232" : "lightgray",
       }}
     >
-      <AntDesign name="google" size={28} color="red" />
-      <Text
-        style={{
-          color: isDarkMode ? "#F5F5F5" : "black",
-          marginLeft: "2%",
-          fontSize: 20,
-        }}
-      >
-        {t('Google')}
-      </Text>
-    </TouchableOpacity>
+      {
+        isLoadingSignIn ?
+          <View
+            style={{
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }} >
+            <ActivityIndicator
+              textAlign="center"
+              size={"large"}
+              color={isDarkMode ? "white" : "black"} />
+          </View>
+          :
+          <>
+            <AntDesign name="google" size={28} color="red" />
+            <Text
+              style={{
+                color: isDarkMode ? "#F5F5F5" : "black",
+                marginLeft: "2%",
+                fontSize: 20,
+              }}
+            >
+              {t('Google')}
+            </Text>
+          </>
+      }
+    </TouchableOpacity >
   );
 };
+
 
 export default ContinueWithGoogle;

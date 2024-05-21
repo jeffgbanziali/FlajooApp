@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
 import ContinueWithGoogle from './ContinueWithGoogle';
 import ContinueWithFacebook from './ContinueWithFacebook';
+import Loading from '../../components/Loading/Loading';
 
 
 
@@ -119,7 +120,8 @@ function StartPage() {
                             <ContinueWithFacebook />
 
 
-                            <ContinueWithGoogle />
+                            <ContinueWithGoogle
+                            />
 
 
 
@@ -170,6 +172,7 @@ function StartPage() {
 
                 </SafeAreaView >
             </LinearGradient >
+
 
         </>
 

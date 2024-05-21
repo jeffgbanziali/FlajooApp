@@ -31,6 +31,8 @@ const VerifyViaStartPage = () => {
 
     const emailGoogleVerify = user.userData.email
     const passwordGoogle = user.userData.password
+    console.log("Email for login:", emailGoogleVerify);
+    console.log("Password for login:", passwordGoogle);
 
 
     const handleClickReturnProfile = () => {
@@ -96,13 +98,13 @@ const VerifyViaStartPage = () => {
     };
 
     const handleGoSignIn = async () => {
-        areYouPressComment()
+        areYouPressComment();
         setIsLoadingSignIn(true);
         const data = {
             email: emailGoogleVerify,
             password: passwordGoogle
         };
-        console.log("Est ce que ce sont de vrai data", data)
+        console.log("Login data:", data);
 
         try {
             const response = await axios.post(
@@ -116,36 +118,36 @@ const VerifyViaStartPage = () => {
                 }
             );
 
+            console.log("Server response:", response);
+
             if (response.status === 200) {
                 const user = response.data;
                 if (user) {
                     await AsyncStorage.setItem("user", JSON.stringify(user));
                     console.log("Token saved");
                     setUid(user);
-                    console.log("Mon id est bien suavegader", response.data);
+                    console.log("User ID saved:", response.data);
                     console.log(user);
                 }
                 alert("User logged in successfully");
             } else {
-                if (
-                    response.data.errors.email !== "" ||
-                    response.data.errors.password !== ""
-                ) {
+                if (response.data.errors) {
                     setErrors(response.data.errors);
                     console.log(response.data.errors);
                 }
                 alert("An error occurred");
             }
         } catch (error) {
-            console.log("Donne moi l'erreur ", error);
+            console.error("Error during sign-in:", error);
+            if (error.response && error.response.data) {
+                console.log("Error details:", error.response.data);
+            }
         } finally {
             setTimeout(() => {
                 setIsLoadingSignIn(false);
             }, 5000);
         }
-
-
-    }
+    };
 
 
 

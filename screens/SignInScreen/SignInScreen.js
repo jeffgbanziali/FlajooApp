@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContinueWithGmail from "./ContinueWithGmail";
 import FacebookContinue from "./FacebookContinue";
+import ContinueWithApple from "./ContinueWithApple";
 
 
 
@@ -340,6 +341,7 @@ const SignInScreen = () => {
                 }}>
                   <ContinueWithGmail />
                   <FacebookContinue />
+                  <ContinueWithApple />
 
                 </View>
 
@@ -363,8 +365,6 @@ const SignInScreen = () => {
 const styles = StyleSheet.create(
 
   {
-
-
 
     error: {
       color: "red",

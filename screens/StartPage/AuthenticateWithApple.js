@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Alert, ActivityIndicator, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Image, ActivityIndicator, Platform } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation } from "@react-navigation/native";
@@ -14,7 +14,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const ContinueWithGmail = () => {
+const AuthenticateWithApple = () => {
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -29,6 +29,10 @@ const ContinueWithGmail = () => {
         scopes: ['https://www.googleapis.com/auth/gmail.readonly'],
     });
 
+
+    if (Platform.OS !== 'ios') {
+        return null;
+    }
     const goGoogle = async () => {
         setIsLoadingSignIn(true);
 
@@ -109,49 +113,64 @@ const ContinueWithGmail = () => {
             onPress={goGoogle}
             style={{
                 alignItems: "center",
-                width: 60,
-                height: 60,
+                width: windowWidth * 0.8,
+                height: windowHeight * 0.062,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 flexDirection: "row",
                 borderRadius: 30,
-                alignItems: "center",
-                justifyContent: "center",
+                paddingLeft: 10,
                 borderWidth: 2,
                 borderColor: isDarkMode ? "#343232" : "lightgray",
             }}
         >
-
-            <View
-                style={{
-                    width: 35,
-                    height: 35,
-                    alignItems: "center",
-                    justifyContent: "center",
-                }} >
-                {
-                    isLoadingSignIn ?
-
+            {
+                isLoadingSignIn ?
+                    <View
+                        style={{
+                            width: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }} >
                         <ActivityIndicator
                             textAlign="center"
                             size={"large"}
                             color={isDarkMode ? "white" : "black"} />
-                        :
-                        <Image
-                            source={{ uri: "https://logos-marques.com/wp-content/uploads/2021/03/Nouveau-logo-Google.png" }}
+                    </View>
+                    :
+                    <>
+                        <View
                             style={{
-                                width: "100%",
-                                height: "100%"
+                                width: 30,
+                                height: 30,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }} >
+
+
+                            <Image
+                                source={{ uri: isDarkMode ? "https://www.iconsdb.com/icons/preview/white/apple-xxl.png" : "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png" }}
+                                style={{
+                                    width: "100%",
+                                    height: "100%"
+                                }}
+                            />
+
+
+                        </View>
+                        <Text
+                            style={{
+                                color: isDarkMode ? "#F5F5F5" : "black",
+                                marginLeft: "2%",
+                                fontSize: 20,
                             }}
-                        />
-
-                }
-
-            </View>
-
-
+                        >
+                            {t('Apple')}
+                        </Text>
+                    </>
+            }
         </TouchableOpacity >
     );
 };
 
 
-export default ContinueWithGmail;
+export default AuthenticateWithApple;

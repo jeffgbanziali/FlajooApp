@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -47,18 +48,21 @@ const FacebookContinue = () => {
             style={{
                 alignItems: "center",
                 width: 60,
-                height: windowHeight * 0.062,
+                height: 60,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 flexDirection: "row",
                 borderRadius: 30,
                 borderWidth: 2,
+                alignItems: "center",
+                justifyContent: "center",
                 borderColor: isDarkMode ? "#343232" : "lightgray",
             }}
         >
 
             <View
                 style={{
-                    width: "100%",
+                    width: 35,
+                    height: 35,
                     alignItems: "center",
                     justifyContent: "center",
                 }} >
@@ -70,7 +74,14 @@ const FacebookContinue = () => {
                             size={"large"}
                             color={isDarkMode ? "white" : "black"} />
                         :
-                        <MaterialIcons name="facebook" size={34} color="#0332D8" />
+                        <Image
+                            source={{ uri: "https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png" }}
+                            style={{
+                                width: "100%",
+                                height: "100%"
+                            }}
+                        />
+
                 }
 
             </View>

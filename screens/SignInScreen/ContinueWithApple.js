@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Alert, ActivityIndicator, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Alert, ActivityIndicator, Image, Platform } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation } from "@react-navigation/native";
@@ -14,7 +14,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const ContinueWithGmail = () => {
+const ContinueWithApple = () => {
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -29,6 +29,10 @@ const ContinueWithGmail = () => {
         scopes: ['https://www.googleapis.com/auth/gmail.readonly'],
     });
 
+
+    if (Platform.OS !== 'ios') {
+        return null;
+    }
     const goGoogle = async () => {
         setIsLoadingSignIn(true);
 
@@ -121,6 +125,10 @@ const ContinueWithGmail = () => {
             }}
         >
 
+
+
+
+
             <View
                 style={{
                     width: 35,
@@ -137,7 +145,7 @@ const ContinueWithGmail = () => {
                             color={isDarkMode ? "white" : "black"} />
                         :
                         <Image
-                            source={{ uri: "https://logos-marques.com/wp-content/uploads/2021/03/Nouveau-logo-Google.png" }}
+                            source={{ uri: isDarkMode ? "https://www.iconsdb.com/icons/preview/white/apple-xxl.png" : "https://assets.stickpng.com/images/580b57fcd9996e24bc43c516.png" }}
                             style={{
                                 width: "100%",
                                 height: "100%"
@@ -154,4 +162,4 @@ const ContinueWithGmail = () => {
 };
 
 
-export default ContinueWithGmail;
+export default ContinueWithApple;

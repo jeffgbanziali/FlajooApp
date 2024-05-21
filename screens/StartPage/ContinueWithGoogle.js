@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Image, ActivityIndicator } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation } from "@react-navigation/native";
@@ -134,7 +134,25 @@ const ContinueWithGoogle = () => {
           </View>
           :
           <>
-            <AntDesign name="google" size={28} color="red" />
+            <View
+              style={{
+                width: 30,
+                height: 30,
+                alignItems: "center",
+                justifyContent: "center",
+              }} >
+
+
+              <Image
+                source={{ uri: "https://logos-marques.com/wp-content/uploads/2021/03/Nouveau-logo-Google.png" }}
+                style={{
+                  width: "100%",
+                  height: "100%"
+                }}
+              />
+
+
+            </View>
             <Text
               style={{
                 color: isDarkMode ? "#F5F5F5" : "black",

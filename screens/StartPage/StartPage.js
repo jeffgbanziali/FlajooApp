@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Image, Platform } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import ContinueWithGoogle from './ContinueWithGoogle';
 import ContinueWithFacebook from './ContinueWithFacebook';
 import Loading from '../../components/Loading/Loading';
+import ContinueWithEmail from './ContinueWithEmail';
+import AuthenticateWithApple from './AuthenticateWithApple';
 
 
 
@@ -68,53 +70,48 @@ function StartPage() {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 width: "100%",
-                                height: "20%",
+                                height: "40%",
                                 zIndex: 10,
 
                             }}
                         >
 
                             <Text style={{ color: "white", fontSize: 40, }}>{t('Welcome')}</Text>
+
+
+                            <View
+                                style={{
+                                    width: 140,
+                                    height: 140,
+                                    borderRadius: 100,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    //backgroundColor: "black"
+                                }}
+                            >
+                                <Image
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        borderRadius: 100,
+                                    }}
+                                    source={isDarkMode ? require("../../assets/Logos/1.png") : require("../../assets/Logos/1.png")}
+                                />
+                            </View>
                             <Text style={{ color: "white", marginTop: "4%", fontSize: 40 }}>{t('LetStart')}</Text>
 
                         </View>
+
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
                             //backgroundColor: "red",
                             width: "100%",
-                            height: "35%",
+                            height: Platform.OS === "ios" ? "42%" : "35%",
                             marginTop: "2%",
                             justifyContent: "space-evenly",
                         }}>
-
-                            <TouchableOpacity
-                                onPress={goEmailSignUp}
-                                style={{
-                                    alignItems: "center",
-                                    width: containWidthSize,
-                                    height: containHeightSize,
-                                    backgroundColor: isDarkMode ? "#171717" : "white",
-                                    flexDirection: "row",
-                                    borderRadius: 30,
-                                    paddingLeft: 10,
-                                    borderWidth: 2,
-                                    borderColor: isDarkMode ? "#343232" : "lightgray",
-                                }}>
-                                <Feather
-                                    name="mail"
-                                    size={26}
-                                    color={isDarkMode ? "#FFFFFF" : "black"}
-                                />
-                                <Text
-                                    style={{
-                                        color: isDarkMode ? "#F5F5F5" : "black",
-                                        marginLeft: "2%",
-                                        fontSize: i18n.language === 'fr' ? 16 : 20
-                                    }}>
-                                    {t('SignWithEmail')}
-                                </Text>
-                            </TouchableOpacity>
+                            <ContinueWithEmail />
 
 
                             <ContinueWithFacebook />
@@ -122,6 +119,7 @@ function StartPage() {
 
                             <ContinueWithGoogle
                             />
+                            <AuthenticateWithApple />
 
 
 
@@ -160,7 +158,7 @@ function StartPage() {
 
                                 <Text
                                     style={{
-                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        color: isDarkMode ? "#F5F5F5" : "#F5F5F5",
                                         fontSize: i18n.language === 'fr' ? 16 : 16,
                                         fontWeight: "600"
                                     }}>{t('ButtonSignin')}</Text>

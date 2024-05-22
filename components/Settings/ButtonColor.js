@@ -346,7 +346,6 @@ const ButtonColor = () => {
               borderColor: isDarkMode ? "#343232" : "lightgray",
               borderBottomWidth: 1,
               alignItems: "center",
-              backgroundColor: "red"
             }}>
             <TouchableOpacity
               onPress={() => setVisible(false)}

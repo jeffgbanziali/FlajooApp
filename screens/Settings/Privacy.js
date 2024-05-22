@@ -72,7 +72,7 @@ const Privacy = () => {
 
                 <View style={styles.section}>
 
-                    <Text style={styles.header}>Politique de Confidentialité</Text>
+                    <Text style={styles.header}>{t("privacy_policy")}</Text>
                     <View
                         style={{
                             width: "100%",
@@ -101,87 +101,96 @@ const Privacy = () => {
                 </View>
 
                 <View style={styles.section}>
-                    <Text style={styles.subHeader}>1. Introduction</Text>
+                    <Text style={styles.subHeader}>{t("introduction")}</Text>
                     <Text style={styles.text}>
-                        Bienvenue sur Flajoo. Nous nous engageons à protéger et à respecter votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons, et partageons vos informations lorsque vous utilisez notre application.
+                        {t('policy_content.introduction')}
                     </Text>
                 </View>
-                <View style={styles.section}>
-                    <Text style={styles.subHeader}>2. Informations que Nous Collectons</Text>
-                    <Text style={styles.text}>
-                        Nous collectons différents types d'informations en fonction de la manière dont vous interagissez avec notre application :
-                        {"\n"}
-                    </Text>
-                    <Text style={styles.text}>
-                        <Text style={styles.bold}>Informations que vous nous fournissez directement :</Text>
-                        {'\n'}
-                        {" "} - Informations de compte : Lorsque vous créez un compte, nous recueillons des informations telles que votre nom, adresse e-mail, numéro de téléphone, date de naissance, et photo de profil.{'\n'}
-                        {" "} - Contenu partagé : Toutes les publications, messages, commentaires, et autres contenus que vous partagez sur Flajoo.{"\n"}
-                    </Text>
-                    <Text style={styles.text}>
-                        <Text style={styles.bold}>Informations que nous collectons automatiquement :</Text>{'\n'}
-                        {" "} - Données d'utilisation : Informations sur vos interactions avec l'application, y compris les pages que vous visitez, les fonctions que vous utilisez, et les heures de connexion.{'\n'}
-                        {" "}  - Données de localisation : Avec votre consentement, nous pouvons collecter des informations sur votre localisation.
-                        {"\n"}
-                    </Text>
-                    <Text style={styles.text}>
-                        <Text style={styles.bold}>Informations provenant de tiers :</Text>{'\n'}
-                        {" "} - Connexion via réseaux sociaux : Si vous choisissez de vous connecter via des services tiers (par exemple, Facebook, Google), nous pouvons recevoir des informations de ces services en fonction de leurs politiques de confidentialité.
-                    </Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.subHeader}>3. Utilisation des Informations</Text>
-                    <Text style={styles.text}>
-                        Nous utilisons les informations collectées pour :{"\n"}
-                        {" "} - Fournir, personnaliser, et améliorer notre service.{"\n"}
-                        {" "} - Faciliter les communications entre utilisateurs.{"\n"}
-                        {" "} - Analyser l'utilisation et les tendances afin d'améliorer l'expérience utilisateur.{"\n"}
-                        {" "} - Assurer la sécurité et l'intégrité de notre application.{"\n"}
-                        {" "} - Vous envoyer des notifications et des mises à jour importantes concernant l'application.
-                    </Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.subHeader}>4. Partage des Informations</Text>
-                    <Text style={styles.text}>
-                        Nous ne partageons vos informations personnelles avec des tiers que dans les circonstances suivantes :{"\n"}
-                        {" "} - Avec votre consentement : Lorsque vous avez donné votre accord pour un partage spécifique.{"\n"}
-                        {" "} - Fournisseurs de services : Nous pouvons partager vos informations avec des fournisseurs tiers qui nous aident à fournir et à améliorer notre service.{"\n"}
-                        {" "} - Obligations légales : Lorsque nous sommes tenus de le faire par la loi ou pour répondre à des procédures judiciaires.
-                    </Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.subHeader}>5. Vos Droits</Text>
-                    <Text style={styles.text}>
-                        Selon votre localisation, vous pouvez avoir certains droits concernant vos informations personnelles, y compris :{"\n"}
 
-                        {" "} - Le droit d'accéder à vos informations et de demander leur rectification ou suppression.{"\n"}
-                        {" "} - Le droit de vous opposer au traitement de vos données.{"\n"}
-                        {" "} - Le droit à la portabilité des données.{"\n"}
-                        {" "} - Le droit de retirer votre consentement à tout moment.
+                <View style={styles.section}>
+                    <Text style={styles.subHeader}>{t('information_collected')}</Text>
+                    <Text style={styles.text}>
+                        {t('policy_content.information_collected')}
+                        {"\n"}
+                    </Text>
+                    <Text style={styles.text}>
+                        <Text style={styles.bold}>{t('Information.Title1')}</Text>
+                        {'\n'}
+                        {" "} {t('Information.One1')}{'\n'}
+                        {" "} {t('Information.Two1')}{"\n"}
+                    </Text>
+                    <Text style={styles.text}>
+                        <Text style={styles.bold}>{t('Information.Title2')}</Text>{'\n'}
+                        {" "} {t('Information.One2')}{'\n'}
+                        {" "} {t('Information.Two2')}{"\n"}
+                        {"\n"}
+                    </Text>
+                    <Text style={styles.text}>
+                        <Text style={styles.bold}>{t('Information.Title3')}</Text>{'\n'}
+                        {" "} {t('Information.One3')}{'\n'} </Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.subHeader}>{t('use_of_information')}</Text>
+                    <Text style={styles.text}>
+                        {t('policy_content.use_of_information')} {"\n"}
+                        {" "} {t('use_information.One')}{"\n"}
+                        {" "} {t('use_information.Two')}{"\n"}
+                        {" "} {t('use_information.Three')}{"\n"}
+                        {" "} {t('use_information.Four')}{"\n"}
+                        {" "} {t('use_information.Five')}
                     </Text>
                 </View>
+
                 <View style={styles.section}>
-                    <Text style={styles.subHeader}>6. Sécurité des Informations</Text>
+                    <Text style={styles.subHeader}>{t("sharing_information")}</Text>
                     <Text style={styles.text}>
-                        Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos informations contre tout accès non autorisé, utilisation abusive, perte, ou destruction.
+                        {t('policy_content.sharing_information')} {"\n"}
+                        {" "} {t('user_sharing_information.One')}{"\n"}
+                        {" "} {t('user_sharing_information.Two')}{"\n"}
+                        {" "} {t('user_sharing_information.Three')}
                     </Text>
                 </View>
+
                 <View style={styles.section}>
-                    <Text style={styles.subHeader}>7. Conservation des Données</Text>
+                    <Text style={styles.subHeader}>{t("your_rights")}</Text>
                     <Text style={styles.text}>
-                        Nous conservons vos informations aussi longtemps que nécessaire pour vous fournir notre service et pour d'autres objectifs légitimes tels que le respect de nos obligations légales, la résolution des litiges, et l'application de nos accords.
+                        {t('policy_content.your_rights')} {"\n"}
+
+                        {" "} {t('rights.One')}{"\n"}
+                        {" "} {t('rights.Two')}{"\n"}
+                        {" "} {t('rights.Three')}{"\n"}
+                        {" "} {t('rights.Four')}
                     </Text>
                 </View>
+
                 <View style={styles.section}>
-                    <Text style={styles.subHeader}>8. Modifications de cette Politique</Text>
+                    <Text style={styles.subHeader}>{t("information_security")}</Text>
                     <Text style={styles.text}>
-                        Nous pouvons mettre à jour cette politique de confidentialité de temps en temps. Nous vous informerons de toute modification en publiant la nouvelle politique sur notre application et en vous envoyant une notification.
+                        {t('policy_content.information_security')}
                     </Text>
                 </View>
+
+
                 <View style={styles.section}>
-                    <Text style={styles.subHeader}>9. Contact</Text>
+                    <Text style={styles.subHeader}>{t("data_retention")}</Text>
                     <Text style={styles.text}>
-                        Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter à l'adresse suivante : <Text
+                        {t('policy_content.data_retention')}
+                    </Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.subHeader}>{t('policy_changes')}</Text>
+                    <Text style={styles.text}>
+                        {t('policy_content.policy_changes')}
+                    </Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.subHeader}>{t('contact_us')}</Text>
+                    <Text style={styles.text}>
+                        {t('policy_content.contact_us')}
+                        <Text
                             style={{
                                 color: "#004AAD"
                             }}>gbazialij@gmail.com.</Text>

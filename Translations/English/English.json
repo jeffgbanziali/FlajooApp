@@ -196,5 +196,56 @@
     "AddPosting": "Add a post",
     "AddReels": "Add a réels",
     "AddStory": "Add a story",
-    "LiveStream": "Live stream"
+    "LiveStream": "Live stream",
+    "welcome": "Welcome to Flajoo",
+    "privacy_policy": "Privacy Policy",
+    "introduction": "1. Introduction",
+    "information_collected": "2. Information We Collect",
+    "use_of_information": "3. Use of Information",
+    "sharing_information": "4. Sharing of Information",
+    "your_rights": "5. Your Rights",
+    "information_security": "6. Information Security",
+    "data_retention": "7. Data Retention",
+    "policy_changes": "8. Changes to this Policy",
+    "contact_us": "9. Contact Us",
+    "policy_content": {
+        "introduction": "Welcome to Flajoo. We are committed to protecting and respecting your privacy. This privacy policy explains how we collect, use, and share your information when you use our application.",
+        "information_collected": "We collect different types of information depending on how you interact with our application :",
+        "use_of_information": "We use the information collected to :",
+        "sharing_information": "We share your personal information with third parties only in the following circumstances :",
+        "your_rights": "Depending on your location, you may have certain rights regarding your personal information, including :",
+        "information_security": "We implement technical and organizational security measures to protect your information against unauthorized access, misuse, loss, or destruction.",
+        "data_retention": "We retain your information for as long as necessary to provide you with our service and for other legitimate purposes such as compliance with our legal obligations, resolution of disputes, and enforcement of our agreements.",
+        "policy_changes": "We may update this privacy policy from time to time. We will inform you of any changes by posting the new policy on our application and sending you a notification.",
+        "contact_us": "If you have any questions regarding this privacy policy, please contact us at : "
+    },
+    
+    "Information": {
+        "Title1": "Information you provide to us directly:",
+        "One1": "- Account information: When you create an account, we collect information such as your name, email address, phone number, date of birth, and profile photo.",
+        "Two1": "- Shared content: All publications, messages, comments, and other content that you share on Flajoo.",
+        "Title2": "Information we collect automatically:",
+        "One2": "- Usage Data: Information about your interactions with the application, including the pages you visit, the functions you use, and connection times.",
+        "Two2": "- Location data: With your consent, we may collect information about your location.",
+        "Title3": "Information from third parties:",
+        "One3": "- Login via social networks: If you choose to log in via third-party services (e.g. Facebook, Google), we may receive information from those services based on their privacy policies."
+    },
+    "use_information": {
+        "One": "- Provide, personalize, and improve our service.",
+        "Two": "- Facilitate communications between users.",
+        "Three": "- Analyze usage and trends to improve user experience.",
+        "Four": "- Ensure the security and integrity of our application.",
+        "Five": "- Send you important notifications and updates about the app."
+    },
+    "user_sharing_information": {
+        "One": "- With your consent: When you have given your consent for a specific sharing.",
+        "Two": "- Service Providers: We may share your information with third party providers who help us provide and improve our Service.",
+        "Three": " - Legal obligations: Where we are required to do so by law or to respond to legal proceedings."
+    },
+    "rights": {
+        "One": "- The right to access your information and request its rectification or deletion.",
+        "Two": "- The right to object to the processing of your data.",
+        "Three": "- The right to data portability.",
+        "Four": "- The right to withdraw your consent at any time."
+    }
 }

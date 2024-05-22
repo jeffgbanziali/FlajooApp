@@ -198,5 +198,55 @@
     "AddPosting": "Ajouter un post",
     "AddReels": "Ajouter un réels",
     "AddStory": "Ajouter une story",
-    "LiveStream": "Direct"
+    "LiveStream": "Direct",
+    "welcome": "Bienvenue sur Flajoo",
+    "privacy_policy": "Politique de Confidentialité",
+    "introduction": "1. Introduction",
+    "information_collected": "2. Informations que Nous Collectons",
+    "use_of_information": "3. Utilisation des Informations",
+    "sharing_information": "4. Partage des Informations",
+    "your_rights": "5. Vos Droits",
+    "information_security": "6. Sécurité des Informations",
+    "data_retention": "7. Conservation des Données",
+    "policy_changes": "8. Modifications de cette Politique",
+    "contact_us": "9. Contact",
+    "policy_content": {
+        "introduction": "Bienvenue sur Flajoo. Nous nous engageons à protéger et à respecter votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et partageons vos informations lorsque vous utilisez notre application.",
+        "information_collected": "Nous collectons différents types d'informations en fonction de la manière dont vous interagissez avec notre application :",
+        "use_of_information": "Nous utilisons les informations collectées pour :",
+        "sharing_information": "Nous ne partageons vos informations personnelles avec des tiers que dans les circonstances suivantes :",
+        "your_rights": "Selon votre localisation, vous pouvez avoir certains droits concernant vos informations personnelles, y compris :",
+        "information_security": "Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour protéger vos informations contre tout accès non autorisé, utilisation abusive, perte ou destruction.",
+        "data_retention": "Nous conservons vos informations aussi longtemps que nécessaire pour vous fournir notre service et pour d'autres objectifs légitimes tels que le respect de nos obligations légales, la résolution des litiges et l'application de nos accords.",
+        "policy_changes": "Nous pouvons mettre à jour cette politique de confidentialité de temps en temps. Nous vous informerons de toute modification en publiant la nouvelle politique sur notre application et en vous envoyant une notification.",
+        "contact_us": "Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter à l'adresse suivante : "
+    },
+    "Information": {
+        "Title1": "Informations que vous nous fournissez directement :",
+        "One1": "- Informations de compte : Lorsque vous créez un compte, nous recueillons des informations telles que votre nom, adresse e-mail, numéro de téléphone, date de naissance, et photo de profil.",
+        "Two1": "- Contenu partagé : Toutes les publications, messages, commentaires, et autres contenus que vous partagez sur Flajoo.",
+        "Title2": "Informations que nous collectons automatiquement :",
+        "One2": "- Données d'utilisation : Informations sur vos interactions avec l'application, y compris les pages que vous visitez, les fonctions que vous utilisez, et les heures de connexion.",
+        "Two2": "- Données de localisation : Avec votre consentement, nous pouvons collecter des informations sur votre localisation.",
+        "Title3": "Informations provenant de tiers :",
+        "One3": "- Connexion via réseaux sociaux : Si vous choisissez de vous connecter via des services tiers (par exemple, Facebook, Google), nous pouvons recevoir des informations de ces services en fonction de leurs politiques de confidentialité."
+    },
+    "use_information": {
+        "One": "- Fournir, personnaliser, et améliorer notre service.",
+        "Two": "- Faciliter les communications entre utilisateurs.",
+        "Three": "- Analyser l'utilisation et les tendances afin d'améliorer l'expérience utilisateur.",
+        "Four": "- Assurer la sécurité et l'intégrité de notre application.",
+        "Five": "- Vous envoyer des notifications et des mises à jour importantes concernant l'application."
+    },
+    "user_sharing_information": {
+        "One": "- Avec votre consentement : Lorsque vous avez donné votre accord pour un partage spécifique.",
+        "Two": "- Fournisseurs de services : Nous pouvons partager vos informations avec des fournisseurs tiers qui nous aident à fournir et à améliorer notre service.",
+        "Three": " - Obligations légales : Lorsque nous sommes tenus de le faire par la loi ou pour répondre à des procédures judiciaires."
+    },
+    "rights": {
+        "One": "- Le droit d'accéder à vos informations et de demander leur rectification ou suppression.",
+        "Two": "- Le droit de vous opposer au traitement de vos données.",
+        "Three": "- Le droit à la portabilité des données.",
+        "Four": "- Le droit de retirer votre consentement à tout moment."
+    }
 }

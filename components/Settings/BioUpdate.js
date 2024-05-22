@@ -36,7 +36,7 @@ const BioUpdate = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
-    navigation.navigate("EditProfil");
+    navigation.goBack("EditProfil");
     setLoadUSers(true);
   };
 

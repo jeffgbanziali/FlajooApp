@@ -89,6 +89,7 @@ const MyStory = () => {
                       <View
                         style={{
                           backgroundColor: isDarkMode ? "#171717" : "white",
+                          borderRadius: 10,
                           shadowColor: "#000",
                           shadowOffset: {
                             width: 0,

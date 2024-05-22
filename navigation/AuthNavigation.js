@@ -19,7 +19,6 @@ const AuthNavigation = () => {
                 headerShown: false,
             }}
         >
-            <Stack.Screen name="Start" component={StartPage} />
             <Stack.Screen name="Signin" component={SignInScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
             <Stack.Screen name="VerifyStartPage" component={VerifyViaStartPage} />

@@ -73,7 +73,7 @@ const ProfileEdit = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
-    navigation.navigate("Settings");
+    navigation.goBack("Settings");
     setLoadUSers(true);
 
   };
@@ -187,7 +187,7 @@ const ProfileEdit = () => {
   return (
 
     <>
-    
+
       <SafeAreaView
         style={{
           flex: 1,
@@ -234,6 +234,8 @@ const ProfileEdit = () => {
             {t('ProfileEdit')}
           </Text>
         </View>
+
+
         <ScrollView
           vertical
           howsHorizontalScrollIndicator={false}

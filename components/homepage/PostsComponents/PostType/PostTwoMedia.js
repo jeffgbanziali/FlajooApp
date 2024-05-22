@@ -20,6 +20,7 @@ import { Dimensions } from "react-native";
 import Pagination from "../CustomPostCard/Pagination"
 import Video from 'react-native-video';
 import { Modal } from "react-native";
+import { StyleSheet } from "react-native";
 
 
 
@@ -27,7 +28,7 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
 
 
 
-const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
+const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
 
@@ -83,14 +84,23 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
     }).current;
 
 
-    return (
-        <View
-            style={{
-                width: "100%",
-                height: "100%",
-            }}
-        >
+    const media = mediaItem?.map(mediaItem => mediaItem);
+    let style = {};
 
+    if (media[0].height > media[0].width) {
+        // Portrait
+        style = styles.portrait;
+    } else if (media[0].height === media[0].width) {
+        // Square
+        style = styles.square;
+    } else {
+        // Landscape
+        style = styles.landscape;
+    }
+
+    return (
+
+        <>
             <View
                 style={{
                     flexDirection: "row",
@@ -99,7 +109,8 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     position: "relative ",
                     zIndex: 1,
                     marginBottom: 10,
-                    top: "2%",
+                    height: 60,
+                    //backgroundColor:"red"
                 }}
             >
                 <View
@@ -109,10 +120,6 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         marginTop: 10
                     }}
                 >
-
-
-
-
                     <TouchableOpacity
 
                         style={{
@@ -120,7 +127,6 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             height: 35,
                             borderRadius: 30,
                             marginLeft: 10,
-                            resizeMode: "cover",
                             zIndex: 1,
                         }}
                         onPress={() => goProfil(post.posterId)}>
@@ -142,13 +148,11 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                 width: "100%",
                                 height: "100%",
                                 borderRadius: 30,
-                                resizeMode: "cover",
+                                //resizeMode: "cover",
                                 zIndex: 1,
                             }}
                         />
                     </TouchableOpacity>
-
-
 
 
 
@@ -165,7 +169,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         >
                             <Text
                                 style={{
-                                    color: isDarkMode ? "white" : "white",
+                                    color: isDarkMode ? "#F5F5F5" : "black",
                                     marginLeft: 5,
                                     fontWeight: "600",
                                     fontSize: 14,
@@ -180,7 +184,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         </View>
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 fontSize: 10,
                                 marginLeft: 5,
                                 marginTop: 4,
@@ -193,6 +197,8 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         </Text>
                     </View>
                 </View>
+
+
                 <TouchableOpacity
                     onPress={toggleToolings}
                     style={{
@@ -207,160 +213,37 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     <Feather
                         name="more-horizontal"
                         size={20}
-                        color="white"
+                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                     />
                 </TouchableOpacity>
             </View>
+           
 
-
-            <Pressable
-                onPress={showModal}
-
-                style={{
-                    borderColor: "red",
-                    width: windowWidth,
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "absolute",
-                    overflow: "hidden",
-                    borderRadius: 20,
-
-                }}>
-                <FlatList
-                    data={mediaItem}
-                    horizontal
-                    pagingEnabled
-                    snapToAlignment="center"
-                    showsHorizontalScrollIndicator={false}
-                    onScroll={handleOnScroll}
-                    onViewableItemsChanged={handleOnViewableItemsChanged}
-                    viewabilityConfig={viewabilityConfig}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                        <>
-                            <LinearGradient
-                                colors={[isDarkMode ? "black" : "#0F0F0F", "transparent"]}
-                                style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    right: 0,
-                                    zIndex: 1,
-                                    height: 100,
-                                    borderTopLeftRadius: 20,
-                                    borderTopRightRadius: 20,
-                                }}
-                            />
-                            {
-                                item.mediaType === "image" && (
-                                    <Image
-                                        source={{
-                                            uri: item.mediaUrl,
-                                        }}
-                                        style={{
-                                            borderColor: "red",
-                                            width: windowWidth,
-                                            height: "100%",
-                                            resizeMode: "cover",
-                                            borderRadius: 20,
-                                            opacity: isDarkMode ? 0.7 : 1,
-                                        }}
-                                    />
-                                )
-                            }
-                            {
-                                item.mediaType === "video" && (
-                                    <Video
-                                        source={{
-                                            uri: item.mediaUrl,
-                                        }}
-                                        rate={1.0}
-                                        volume={1.0}
-                                        isMuted={false}
-                                        resizeMode="contain"
-                                        isLooping
-                                        paused={true}
-                                        style={{
-                                            width: windowWidth,
-                                            height: "100%",
-                                            borderRadius: 20,
-                                            opacity: isDarkMode ? 0.7 : 1,
-                                        }}
-                                    />
-                                )
-                            }
-
-                            <LinearGradient
-                                colors={["transparent", isDarkMode ? "black" : "#0F0F0F"]}
-                                style={{
-                                    position: "absolute",
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    height: 200,
-                                    borderBottomLeftRadius: 20,
-                                    borderBottomRightRadius: 20,
-                                }}
-                            />
-
-                        </>
-
-
-                    )}
-                />
-
-                <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
-            </Pressable>
-
-
-
-            <Modal
-                visible={showImage}
-                transparent={true}
-                animationIn="pulse"
-                animationOut="fadeOut"
-                onRequestClose={showModal}
+            <View
+                style={[
+                    style, {
+                        // backgroundColor: "red",
+                    }]}
             >
-                <View
+
+
+
+
+                <Pressable
+                    onPress={showModal}
+
                     style={{
-                        width: "100%",
+                        borderColor: "red",
+                        width: windowWidth,
                         height: "100%",
-                        alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: isDarkMode ? "black" : "black",
+                        alignItems: "center",
+                        position: "absolute",
+                        overflow: "hidden",
+                        backgroundColor: 'rgba(0, 0, 0, 0.93)',
 
                     }}>
-
-                    <View
-                        style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "10%",
-                            marginTop: "4%",
-                            //backgroundColor: "red",
-                            zIndex: 3
-                        }}
-                    >
-
-                        <Pressable
-
-                            onPress={showModal}
-
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                //backgroundColor: "blue",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                        </Pressable>
-
-                    </View>
-
                     <FlatList
                         data={mediaItem}
                         horizontal
@@ -385,7 +268,6 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                                 width: windowWidth,
                                                 height: "100%",
                                                 resizeMode: "contain",
-                                                borderRadius: 20,
                                                 opacity: isDarkMode ? 0.7 : 1,
                                             }}
                                         />
@@ -406,12 +288,12 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                             style={{
                                                 width: windowWidth,
                                                 height: "100%",
-                                                borderRadius: 20,
                                                 opacity: isDarkMode ? 0.7 : 1,
                                             }}
                                         />
                                     )
                                 }
+
 
 
                             </>
@@ -421,9 +303,122 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     />
 
                     <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
+                </Pressable>
 
-                </View>
-            </Modal>
+
+
+                <Modal
+                    visible={showImage}
+                    transparent={true}
+                    animationIn="pulse"
+                    animationOut="fadeOut"
+                    onRequestClose={showModal}
+                >
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: isDarkMode ? "black" : "black",
+
+                        }}>
+
+                        <View
+                            style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "20%",
+                                marginTop: "4%",
+                                // backgroundColor: "red",
+                                zIndex: 3
+                            }}
+                        >
+
+                            <Pressable
+
+                                onPress={showModal}
+
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    //backgroundColor: "blue",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                            </Pressable>
+
+                        </View>
+
+                        <FlatList
+                            data={mediaItem}
+                            horizontal
+                            pagingEnabled
+                            snapToAlignment="center"
+                            showsHorizontalScrollIndicator={false}
+                            onScroll={handleOnScroll}
+                            onViewableItemsChanged={handleOnViewableItemsChanged}
+                            viewabilityConfig={viewabilityConfig}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <>
+
+                                    {
+                                        item.mediaType === "image" && (
+                                            <Image
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                style={{
+                                                    borderColor: "red",
+                                                    width: windowWidth,
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
+                                    {
+                                        item.mediaType === "video" && (
+                                            <Video
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                rate={1.0}
+                                                volume={1.0}
+                                                isMuted={false}
+                                                resizeMode="contain"
+                                                isLooping
+                                                paused={true}
+                                                style={{
+                                                    width: windowWidth,
+                                                    height: "100%",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
+
+
+                                </>
+
+
+                            )}
+                        />
+
+                        <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
+
+                    </View>
+                </Modal>
+
+
+
+            </View>
 
 
             <View
@@ -431,18 +426,15 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    position: "absolute",
-                    marginVertical: 10,
-                    bottom: "2%",
                     width: "100%",
-                    //backgroundColor: "red"
+                    height: 60,
                 }}
             >
                 <View
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        paddingLeft: 10
+                        paddingLeft: 12
                     }}
                 >
                     <View
@@ -455,7 +447,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         <LikeButton post={post} type={"postPicture"} />
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 textAlign: "center",
                                 fontSize: 16,
                                 fontWeight: "normal",
@@ -464,8 +456,6 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             {post.likers.length}
                         </Text>
                     </View>
-
-
                     <View
                         style={{
                             flexDirection: "row",
@@ -486,14 +476,14 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                                 <FontAwesome5
                                     name="comment"
                                     size={25}
-                                    color="white"
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
 
                                 />
                             </View>
                         </TouchableOpacity>
                         <Text
                             style={{
-                                color: "white",
+                                color: isDarkMode ? "#F5F5F5" : "black",
                                 textAlign: "center",
                                 fontSize: 16,
                                 fontWeight: "normal",
@@ -502,13 +492,11 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                             {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
                         </Text>
                     </View>
-
                     <TouchableOpacity
                         style={{
                             width: 50,
                             height: 50,
                             borderRadius: 30,
-                            paddingLeft: 10,
                             justifyContent: "center",
                             alignItems: "center",
                         }}
@@ -516,7 +504,7 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                         <Feather
                             name="send"
                             size={25}
-                            color="white"
+                            color={isDarkMode ? "#F5F5F5" : "black"}
 
                         />
                     </TouchableOpacity>
@@ -535,16 +523,39 @@ const PostTwoMedia = ({ post, mediaItem, toggleToolings, toggleComments }) => {
                     <Feather
                         name="bookmark"
                         size={25}
-                        color="white"
+                        color={isDarkMode ? "#F5F5F5" : "black"}
 
                     />
                 </TouchableOpacity>
             </View>
-        </View>
+        </>
+
     )
 }
 
 
 
+const styles = StyleSheet.create({
+    imageContainer: {
+        margin: 10,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    image: {
+        resizeMode: 'cover',
+    },
+    portrait: {
+        height: 600,
+        width: "100%",
+    },
+    square: {
+        height: 400,
+        width: "100%",
+    },
+    landscape: {
+        height: 300,
+        width: "100%",
+    },
+});
 
 export default PostTwoMedia

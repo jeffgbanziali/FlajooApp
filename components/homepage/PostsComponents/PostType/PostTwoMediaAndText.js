@@ -3,11 +3,12 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Modal,
+    FlatList,
+    Animated,
     Pressable,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import React, { useContext, useState, } from "react";
+import React, { useContext, useRef, useState, } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LikeButton from "../LikeButton/LikeButton"
@@ -15,27 +16,39 @@ import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
 import { LinearGradient } from "react-native-linear-gradient";
+import { Dimensions } from "react-native";
+import Pagination from "../CustomPostCard/Pagination"
 import Video from 'react-native-video';
+import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
 
 
-const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
+
+
+
+const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
 
-
-
+    const [index, setIndex] = useState(0);
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
     const { isDarkMode } = useDarkMode();
 
+    const scrollX = useRef(new Animated.Value(0)).current
+
     const goProfil = (id) => {
         if (uid === id) {
+            console.log("go to my profil", id);
             navigation.navigate("Profile", { id });
         } else {
             navigation.navigate("ProfilFriends", { id });
+            console.log("go to profile friends", id);
         }
     };
+
 
     const showModal = () => {
         setShowImage(!showImage);
@@ -43,12 +56,41 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
 
 
+
+    const handleOnScroll = event => {
+        Animated.event(
+            [
+                {
+                    nativeEvent: {
+                        contentOffset: {
+                            x: scrollX,
+                        },
+                    },
+                },
+            ],
+            {
+                useNativeDriver: false,
+            },
+        )(event);
+    };
+
+    const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
+        // console.log('viewableItems', viewableItems);
+        setIndex(viewableItems[0].index);
+    }).current;
+
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 50,
+    }).current;
+
+
+    const media = mediaItem?.map(mediaItem => mediaItem);
     let style = {};
 
-    if (item.height > item.width) {
+    if (media[0].height > media[0].width) {
         // Portrait
         style = styles.portrait;
-    } else if (item.height === item.width) {
+    } else if (media[0].height === media[0].width) {
         // Square
         style = styles.square;
     } else {
@@ -56,14 +98,10 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
         style = styles.landscape;
     }
 
-
+    console.log("Viens dans mes DM", media)
     return (
 
-
-
         <>
-
-
             <View
                 style={{
                     flexDirection: "row",
@@ -181,7 +219,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
-            
             <View
                 style={{
                     zIndex: 1,
@@ -212,59 +249,84 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
             >
 
 
+
+
                 <Pressable
                     onPress={showModal}
+
                     style={{
-                        width: "100%",
+                        borderColor: "red",
+                        width: windowWidth,
                         height: "100%",
                         justifyContent: "center",
                         alignItems: "center",
                         position: "absolute",
-                        // borderRadius: 20,
-                        backgroundColor: 'rgba(0, 0, 0, 0.93)',
                         overflow: "hidden",
-                    }}
-                >
+                        backgroundColor: 'rgba(0, 0, 0, 0.93)',
 
-                    {
-                        item.mediaType === "image" && (
-                            <Image
-                                source={{
-                                    uri: item.mediaUrl,
-                                }}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    resizeMode: "contain",
-                                    opacity: isDarkMode ? 0.7 : 1,
-                                }}
-                            />
-                        )
-                    }
-                    {
-                        item.mediaType === "video" && (
-                            <Video
-                                source={{
-                                    uri: item.mediaUrl,
-                                }}
-                                rate={1.0}
-                                volume={1.0}
-                                isMuted={false}
-                                resizeMode="cover"
-                                isLooping
-                                paused={true}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    resizeMode: "contain",
-                                    opacity: isDarkMode ? 0.7 : 1,
-                                }}
-                            />
-                        )
-                    }
+                    }}>
+                    <FlatList
+                        data={mediaItem}
+                        horizontal
+                        pagingEnabled
+                        snapToAlignment="center"
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={handleOnScroll}
+                        onViewableItemsChanged={handleOnViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <>
+
+                                {
+                                    item.mediaType === "image" && (
+                                        <Image
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            style={{
+                                                borderColor: "red",
+                                                width: windowWidth,
+                                                height: "100%",
+                                                resizeMode: "contain",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+                                {
+                                    item.mediaType === "video" && (
+                                        <Video
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            rate={1.0}
+                                            volume={1.0}
+                                            isMuted={false}
+                                            resizeMode="contain"
+                                            isLooping
+                                            paused={true}
+                                            style={{
+                                                width: windowWidth,
+                                                height: "100%",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
 
 
+
+                            </>
+
+
+                        )}
+                    />
+
+                    <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
                 </Pressable>
+
+
 
                 <Modal
                     visible={showImage}
@@ -287,9 +349,9 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                             style={{
                                 position: "absolute",
                                 width: "100%",
-                                height: "10%",
+                                height: "20%",
                                 marginTop: "4%",
-                                //backgroundColor: "red",
+                                // backgroundColor: "red",
                                 zIndex: 3
                             }}
                         >
@@ -311,60 +373,73 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
                         </View>
 
+                        <FlatList
+                            data={mediaItem}
+                            horizontal
+                            pagingEnabled
+                            snapToAlignment="center"
+                            showsHorizontalScrollIndicator={false}
+                            onScroll={handleOnScroll}
+                            onViewableItemsChanged={handleOnViewableItemsChanged}
+                            viewabilityConfig={viewabilityConfig}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <>
 
-                        {
-                            item.mediaType === "image" && (
-                                <Image
-                                    source={{
-                                        uri: item.mediaUrl,
-                                    }}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        resizeMode: "contain",
-                                        borderRadius: 20,
-                                        opacity: isDarkMode ? 0.7 : 1,
-                                    }}
-                                />
-                            )
-                        }
+                                    {
+                                        item.mediaType === "image" && (
+                                            <Image
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                style={{
+                                                    borderColor: "red",
+                                                    width: windowWidth,
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
+                                    {
+                                        item.mediaType === "video" && (
+                                            <Video
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                rate={1.0}
+                                                volume={1.0}
+                                                isMuted={false}
+                                                resizeMode="contain"
+                                                isLooping
+                                                paused={true}
+                                                style={{
+                                                    width: windowWidth,
+                                                    height: "100%",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
 
 
+                                </>
 
-                        {
-                            item.mediaType === "video" && (
 
-                                <Video
-                                    source={{
-                                        uri: item.mediaUrl,
-                                    }}
-                                    rate={1.0}
-                                    volume={1.0}
-                                    isMuted={false}
-                                    isLooping
-                                    paused={true}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        resizeMode: "contain",
-                                        borderRadius: 20,
-                                        opacity: isDarkMode ? 0.7 : 1,
-                                    }}
-                                />
-                            )
+                            )}
+                        />
 
-                        }
-
+                        <Pagination data={mediaItem} scrollX={scrollX} indexion={index} />
 
                     </View>
                 </Modal>
 
 
 
-
             </View>
-
-
 
 
             <View
@@ -481,7 +556,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
 
 
-
 const styles = StyleSheet.create({
     imageContainer: {
         margin: 10,
@@ -505,5 +579,4 @@ const styles = StyleSheet.create({
     },
 });
 
-
-export default PostTextAndMedia
+export default PostTwoMediaAndText

@@ -4,6 +4,7 @@ import Logout from "../Profile/Logout";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from "@react-navigation/native";
 import { useDarkMode } from "../../components/Context/AppContext";
@@ -17,7 +18,7 @@ const Settings = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked home");
-    navigation.navigate("Profile");
+    navigation.goBack("Profile");
   };
 
   const handleClickAppli = () => {
@@ -26,7 +27,7 @@ const Settings = () => {
   };
 
   const handleAccount = () => {
-    console.warn("clicked");
+    navigation.navigate("AccountSetting");
   };
 
   const handleEditProfil = () => {
@@ -45,6 +46,8 @@ const Settings = () => {
 
       }}
     >
+
+
       <View
         style={{
           paddingBottom: 2,
@@ -128,6 +131,7 @@ const Settings = () => {
             </Text>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={handleClickAppli}
 
@@ -165,6 +169,7 @@ const Settings = () => {
             </Text>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={handleEditProfil}
           style={{
@@ -201,6 +206,118 @@ const Settings = () => {
             </Text>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleEditProfil}
+          style={{
+            marginTop: 12,
+            width: "98%",
+            height: "6%",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: 10,
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            borderRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <MaterialIcons
+              name="privacy-tip"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
+            <Text
+              style={{
+                marginLeft: 10,
+                color: isDarkMode ? "white" : "black",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {t('PricacyPolicy')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleEditProfil}
+          style={{
+            marginTop: 12,
+            width: "98%",
+            height: "6%",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: 10,
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            borderRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Feather
+              name="file-text"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
+            <Text
+              style={{
+                marginLeft: 10,
+                color: isDarkMode ? "white" : "black",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {t('TermsUsing')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleEditProfil}
+          style={{
+            marginTop: 12,
+            width: "98%",
+            height: "6%",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: 10,
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            borderRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Feather
+              name="file-text"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
+            <Text
+              style={{
+                marginLeft: 10,
+                color: isDarkMode ? "white" : "black",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {t('FAQ')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         <View
           style={{
             marginTop: 12,
@@ -215,6 +332,8 @@ const Settings = () => {
           <Logout />
         </View>
       </View>
+
+
     </SafeAreaView>
   );
 };

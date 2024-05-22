@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 import { useDarkMode } from "../Context/AppContext";
 import i18next, { languageResources } from "../../Translations/Services/i18next"
 import languagesList from "../../Translations/Services/LanguagesList.json"
@@ -25,7 +26,7 @@ const ButtonColor = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.navigate("Settings");
+    navigation.goBack("Settings");
   };
 
 
@@ -49,6 +50,8 @@ const ButtonColor = () => {
         style={{
           flex: 1,
           backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
+          width: "100%",
+          height: "100%",
         }}
       >
         <View
@@ -90,17 +93,105 @@ const ButtonColor = () => {
 
         <View
           style={{
-            marginTop: 12,
             flexDirection: "column",
             justifyContent: "space-around",
             alignItems: "center",
             padding: 4,
             width: "100%",
-            height: "22%",
+            // height: "22%",
             borderRadius: 10,
             backgroundColor: isDarkMode ? "#202020" : "#D9D9D9",
           }}
         >
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingRight: 6,
+              borderRadius: 10,
+              margin: 4,
+              backgroundColor: isDarkMode ? "#171717" : "#F6F6F6",
+              width: inputWidthSize,
+              height: inputHeightSize,
+            }}
+          >
+            <View
+              style={{
+                marginLeft: 12,
+                flexDirection: "row",
+              }}
+            >
+              <Feather
+                name="sliders"
+                size={24}
+                color={isDarkMode ? "white" : "black"}
+              />
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                }}
+              >
+                {t('News')}
+              </Text>
+            </View>
+
+            <MaterialIcons
+              name="arrow-forward-ios"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
+          </View>
+
+
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingRight: 6,
+              borderRadius: 10,
+              margin: 4,
+              backgroundColor: isDarkMode ? "#171717" : "#F6F6F6",
+              width: inputWidthSize,
+              height: inputHeightSize,
+            }}
+          >
+            <View
+              style={{
+                marginLeft: 12,
+                flexDirection: "row",
+              }}
+            >
+              <MaterialIcons
+                name="emoji-nature"
+                size={24}
+                color={isDarkMode ? "white" : "black"}
+              />
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: isDarkMode ? "white" : "black",
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                }}
+              >
+                {t('ReactionsPrefer')}
+              </Text>
+            </View>
+
+            <MaterialIcons
+              name="arrow-forward-ios"
+              size={24}
+              color={isDarkMode ? "white" : "black"}
+            />
+          </View>
+
           <View
             style={{
               flexDirection: "row",
@@ -108,6 +199,7 @@ const ButtonColor = () => {
               justifyContent: "space-between",
               backgroundColor: isDarkMode ? "#171717" : "#F6F6F6",
               paddingRight: 6,
+              margin: 4,
               borderRadius: 10,
               width: inputWidthSize,
               height: inputHeightSize,
@@ -154,6 +246,7 @@ const ButtonColor = () => {
               alignItems: "center",
               justifyContent: "space-between",
               paddingRight: 6,
+              margin: 4,
               borderRadius: 10,
               backgroundColor: isDarkMode ? "#171717" : "#F6F6F6",
               width: inputWidthSize,
@@ -201,6 +294,7 @@ const ButtonColor = () => {
               justifyContent: "space-between",
               paddingRight: 6,
               borderRadius: 10,
+              margin: 4,
               width: inputWidthSize,
               height: inputHeightSize,
               backgroundColor: isDarkMode ? "#171717" : "#F6F6F6",
@@ -235,6 +329,7 @@ const ButtonColor = () => {
             />
           </TouchableOpacity>
         </View>
+
       </SafeAreaView>
 
       <Modal

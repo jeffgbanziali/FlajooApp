@@ -27,6 +27,7 @@ import PostMedia from "./PostType/PostMedia";
 import PostTwoMedia from "./PostType/PostTwoMedia";
 import PostTextAndMedia from "./PostType/PostTextAndMedia";
 import PostTools from "./CustomPostCard/PostTools/PostTools";
+import PostTwoMediaAndText from "./PostType/PostTwoMediaAndText";
 
 
 
@@ -189,9 +190,6 @@ const Posts = ({ post }) => {
 
 
 
-  const portrait = mediaData.height > mediaData.height
-
-
 
   return (
     <>
@@ -206,16 +204,14 @@ const Posts = ({ post }) => {
                 marginBottom: 5,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 position: "relative",
-                width: "96%",
-                height: 800,
-                borderRadius: 20,
+                width: "100%",
                 zIndex: 1,
                 shadowColor: isDarkMode ? "white " : "#000",
                 shadowOffset: {
                   width: 0,
                   height: isDarkMode ? 1 : 2,
                 },
-                shadowOpacity: isDarkMode ? 0.16 : 0.3,
+                shadowOpacity: isDarkMode ? 0.16 : 0.4,
                 shadowRadius: 3.84,
                 elevation: 2,
               }}
@@ -263,8 +259,7 @@ const Posts = ({ post }) => {
                   </View>
                 ) : (
                   <>
-                    <PostTwoMedia post={post} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
-
+                    <PostTwoMediaAndText post={post} currentMediaIndex={currentMediaIndex} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
                   </>
                 )}
             </View>
@@ -278,16 +273,14 @@ const Posts = ({ post }) => {
                 marginBottom: 5,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 position: "relative",
-                width: "96%",
-                height: 600,
-                borderRadius: 20,
+                width: "100%",
                 zIndex: 1,
                 shadowColor: isDarkMode ? "white " : "#000",
                 shadowOffset: {
                   width: 0,
                   height: isDarkMode ? 1 : 2,
                 },
-                shadowOpacity: isDarkMode ? 0.16 : 0.6,
+                shadowOpacity: isDarkMode ? 0.16 : 0.4,
                 shadowRadius: 3.84,
                 elevation: 2,
               }}

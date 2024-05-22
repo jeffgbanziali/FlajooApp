@@ -98,6 +98,7 @@ const ContinueWithGmail = () => {
 
         } catch (error) {
             console.error('Erreur lors de la requête au serveur:', error);
+            console.log("ou esy l'erreur ")
             throw error;
         }
     }

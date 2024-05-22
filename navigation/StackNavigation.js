@@ -41,6 +41,7 @@ import PostsUser from "../components/ProfileUtils.js/PostsUser";
 import CreateNewConversation from "../components/MessagesUser/CreateConversation/CreateNewConversation";
 import Loading from "../components/Loading/Loading";
 import AccountSetting from "../screens/Settings/AccountSetting";
+import Privacy from "../screens/Settings/Privacy";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="EditProfil" component={ProfileEdit} />
       <Stack.Screen name="AccountSetting" component={AccountSetting} />
+      <Stack.Screen name="Privacy" component={Privacy} />
       <Stack.Screen name="buttonning" component={ButtonColor} />
       <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
       <Stack.Screen name="StoryCreate" component={CreateMyStory} />

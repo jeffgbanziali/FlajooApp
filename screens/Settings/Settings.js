@@ -30,11 +30,22 @@ const Settings = () => {
     navigation.navigate("AccountSetting");
   };
 
+  const handlePrivacy = () => {
+    navigation.navigate("Privacy");
+  };
+
+  const handleUseTerms = () => {
+    navigation.navigate("Privacy");
+  };
+
+  const handleFaq = () => {
+    navigation.navigate("Privacy");
+  };
+
   const handleEditProfil = () => {
     console.log("clicked");
     navigation.navigate("EditProfil");
   };
-
 
 
   return (
@@ -94,6 +105,7 @@ const Settings = () => {
           alignItems: "center",
         }}
       >
+        {/**Account setting */}
         <TouchableOpacity
           onPress={handleAccount}
 
@@ -132,6 +144,7 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
 
+        {/**App setting */}
         <TouchableOpacity
           onPress={handleClickAppli}
 
@@ -170,6 +183,7 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
 
+        {/**PRofile update */}
         <TouchableOpacity
           onPress={handleEditProfil}
           style={{
@@ -207,8 +221,10 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
 
+
+        {/**Privacy */}
         <TouchableOpacity
-          onPress={handleEditProfil}
+          onPress={handlePrivacy}
           style={{
             marginTop: 12,
             width: "98%",
@@ -244,8 +260,10 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
 
+
+        {/**Use terms */}
         <TouchableOpacity
-          onPress={handleEditProfil}
+          onPress={handleUseTerms}
           style={{
             marginTop: 12,
             width: "98%",
@@ -281,8 +299,10 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
 
+
+        {/**Faq */}
         <TouchableOpacity
-          onPress={handleEditProfil}
+          onPress={handleFaq}
           style={{
             marginTop: 12,
             width: "98%",

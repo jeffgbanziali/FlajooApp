@@ -18,6 +18,7 @@ const AccountSetting = () => {
     const { isDarkMode } = useDarkMode();
     const navigation = useNavigation();
     const { t } = useTranslation();
+    
     const handleClickReturnProfile = () => {
         console.log("clicked home");
         navigation.goBack("Profile");
@@ -106,6 +107,46 @@ const AccountSetting = () => {
                         }}
                     >
                         {t('UserInformation')}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+
+
+            {/*Activityt me*/}
+            <TouchableOpacity
+                //onPress={handleClickAppli}
+
+                style={{
+                    marginTop: 12,
+                    width: "98%",
+                    height: "6%",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingLeft: 10,
+                    backgroundColor: isDarkMode ? "#171717" : "white",
+                    borderRadius: 10,
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                    }}
+                >
+                    <Feather
+                        name="activity"
+                        size={30}
+                        color={isDarkMode ? "white" : "black"}
+                    />
+                    <Text
+                        style={{
+                            marginLeft: i18next.language === 'fr' ? 8 : 10,
+                            color: isDarkMode ? "white" : "black",
+                            fontWeight: "bold",
+                            fontSize: i18next.language === 'fr' ? 18 : 16,
+                        }}
+                    >
+                        {t('AccountActivity')}
                     </Text>
                 </View>
             </TouchableOpacity>

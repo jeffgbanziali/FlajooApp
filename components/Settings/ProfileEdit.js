@@ -191,7 +191,7 @@ const ProfileEdit = () => {
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: isDarkMode ? '#0D0C0C' : '#FFFFFF',
+          backgroundColor: isDarkMode ? '#0D0C0C' : '#F3F2F2',
         }}
       >
         <View
@@ -310,6 +310,7 @@ const ProfileEdit = () => {
               </TouchableOpacity>
             </View>
           </View>
+
           <View
             style={{
               marginTop: 10,
@@ -374,6 +375,7 @@ const ProfileEdit = () => {
               </View>
             </Pressable>
           </View>
+
           <View
             style={{
               marginTop: 10,
@@ -416,7 +418,10 @@ const ProfileEdit = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+
+            
             <TouchableOpacity>
+
               <View
                 style={{
                   flexDirection: "row",
@@ -425,11 +430,11 @@ const ProfileEdit = () => {
                   padding: 4,
                 }}
               >
+
                 <View
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -442,6 +447,7 @@ const ProfileEdit = () => {
                     color={isDarkMode ? "white" : "black"}
                   />
                 </View>
+
                 <View
                   style={{
                     justifyContent: "center",
@@ -469,8 +475,10 @@ const ProfileEdit = () => {
                     Mobile
                   </Text>
                 </View>
+
               </View>
             </TouchableOpacity>
+
             <TouchableOpacity>
               <View
                 style={{
@@ -484,7 +492,6 @@ const ProfileEdit = () => {
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -516,6 +523,7 @@ const ProfileEdit = () => {
                 </View>
               </View>
             </TouchableOpacity>
+
           </View>
 
 
@@ -560,6 +568,7 @@ const ProfileEdit = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+
             <TouchableOpacity>
               <View
                 style={{
@@ -572,7 +581,6 @@ const ProfileEdit = () => {
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -609,11 +617,13 @@ const ProfileEdit = () => {
                       marginLeft: 10,
                     }}
                   >
-                    {t('Gender')}
+                    {userData.gender}
                   </Text>
                 </View>
               </View>
             </TouchableOpacity>
+
+
             <TouchableOpacity>
               <View
                 style={{
@@ -626,7 +636,6 @@ const ProfileEdit = () => {
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -669,6 +678,7 @@ const ProfileEdit = () => {
               </View>
             </TouchableOpacity>
           </View>
+
           <View
             style={{
               marginTop: 10,
@@ -710,6 +720,7 @@ const ProfileEdit = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+
             <TouchableOpacity>
               <View
                 style={{
@@ -722,7 +733,6 @@ const ProfileEdit = () => {
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -765,6 +775,7 @@ const ProfileEdit = () => {
                 </View>
               </View>
             </TouchableOpacity>
+
             <TouchableOpacity>
               <View
                 style={{
@@ -777,7 +788,6 @@ const ProfileEdit = () => {
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#3D3939",
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -819,6 +829,8 @@ const ProfileEdit = () => {
                 </View>
               </View>
             </TouchableOpacity>
+
+
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -927,129 +939,6 @@ const ProfileEdit = () => {
       </Modal>
 
 
-      {/* <Modal
-        isVisible={showTools}
-        onBackdropPress={toggleProfile}
-        style={{ margin: 0, justifyContent: "flex-end" }}
-        backdropOpacity={0.5}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
-        useNativeDriverForBackdrop
-      >
-        <View
-          style={{
-            backgroundColor: isDarkMode ? "#171717" : "white",
-            height: "50%",
-            borderTopLeftRadius: 40,
-            borderTopRightRadius: 40,
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: "80%",
-              height: "30%",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-
-          >
-            <View
-              style={{
-                width: "80%",
-                height: "60%",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-
-              <Text
-                style={{
-                  fontSize: 40,
-                  color: isDarkMode ? "white" : "black",
-                }}
-              >
-                {t('Upload')}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: isDarkMode ? "gray" : "black",
-                }}>
-                {t('Choose')}
-              </Text>
-            </View>
-
-          </View>
-          <View
-            style={{
-              width: "90%",
-              height: "50%",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <TouchableOpacity
-              onPress={handleSelectImage}
-              style={{
-                width: "90%",
-                height: "24%",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#053BF7",
-                borderRadius: 20
-              }}
-
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: isDarkMode ? "white" : "black",
-                }}>
-                {t('TakePhoto')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleSelectImage}
-              style={{
-                width: "90%",
-                height: "24%",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#7AF350",
-                borderRadius: 20
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: isDarkMode ? "white" : "black",
-                }}>
-                {t('ChooseFrom')}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-
-              onPress={toggleProfile}
-              style={{
-                width: "90%",
-                height: "24%",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#FF0F0F",
-                borderRadius: 20
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: isDarkMode ? "white" : "black",
-                }}>
-                {t('Cancel')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>*/}
     </>
 
   );

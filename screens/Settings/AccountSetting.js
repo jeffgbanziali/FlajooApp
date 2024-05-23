@@ -18,11 +18,18 @@ const AccountSetting = () => {
     const { isDarkMode } = useDarkMode();
     const navigation = useNavigation();
     const { t } = useTranslation();
-    
+
     const handleClickReturnProfile = () => {
         console.log("clicked home");
         navigation.goBack("Profile");
     };
+
+    const handleUserInfos = () => {
+        console.log("clicked home");
+        navigation.navigate("UserInformation");
+    };
+
+
 
     return (
         <SafeAreaView
@@ -72,9 +79,9 @@ const AccountSetting = () => {
             </View>
 
 
-            {/*News*/}
+            {/*UserInformation*/}
             <TouchableOpacity
-                //onPress={handleAccount}
+                onPress={handleUserInfos}
 
                 style={{
                     marginTop: 12,

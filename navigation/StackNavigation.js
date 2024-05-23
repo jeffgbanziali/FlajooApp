@@ -43,6 +43,7 @@ import Loading from "../components/Loading/Loading";
 import AccountSetting from "../screens/Settings/AccountSetting";
 import Privacy from "../screens/Settings/Privacy";
 import UseTerms from "../screens/Settings/UseTerms";
+import ProfileInformationScreen from "../screens/Settings/ProfileInformationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ const StackNavigation = () => {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="EditProfil" component={ProfileEdit} />
+      <Stack.Screen name="UserInformation" component={ProfileInformationScreen} />
       <Stack.Screen name="AccountSetting" component={AccountSetting} />
       <Stack.Screen name="Privacy" component={Privacy} />
       <Stack.Screen name="UseTerms" component={UseTerms} />

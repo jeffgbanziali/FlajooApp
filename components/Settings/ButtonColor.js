@@ -328,6 +328,7 @@ const ButtonColor = () => {
               color={isDarkMode ? "white" : "black"}
             />
           </TouchableOpacity>
+          
         </View>
 
       </SafeAreaView>

@@ -164,12 +164,14 @@ const UseTerms = () => {
                         {t('OneMoreTitle7')}
                     </Text>
                 </View>
+
                 <View style={styles.section}>
                     <Text style={styles.subHeader}>{t('Title8')}</Text>
                     <Text style={styles.text}>
                         {t('OneMoreTitle8')}
                     </Text>
                 </View>
+
                 <View style={styles.section}>
                     <Text style={styles.subHeader}>{t('Title9')}</Text>
                     <Text style={styles.text}>

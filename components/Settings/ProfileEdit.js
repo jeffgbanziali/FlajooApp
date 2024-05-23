@@ -19,7 +19,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { launchImageLibrary } from 'react-native-image-picker';
-import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 import { getUser, updateProfile } from "../../actions/user.action";
 import { firestore, uploadProfileToFirebase } from "../../Data/FireStore";
 import { addDoc, collection, getDoc } from "firebase/firestore";
@@ -307,8 +307,46 @@ const ProfileEdit = () => {
                     borderRadius: 100,
                   }}
                 />
+                <View
+                  style={{
+                    backgroundColor: "lightgray",
+                    position: "absolute",
+                    left: 105,
+                    right: 10,
+                    bottom: 0,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 100,
+                    borderWidth: 2,
+                    borderColor: isDarkMode ? "#F3F2F2" : "#F3F2F2",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 100,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 100,
+
+                    }}>
+                    <Feather
+                      name="camera"
+                      size={20}
+                      color={"black"}
+                    />
+                  </View>
+
+
+                </View>
+
               </TouchableOpacity>
+
             </View>
+
           </View>
 
           <View
@@ -419,7 +457,7 @@ const ProfileEdit = () => {
               </TouchableOpacity>
             </View>
 
-            
+
             <TouchableOpacity>
 
               <View

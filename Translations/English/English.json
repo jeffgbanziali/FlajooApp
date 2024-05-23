@@ -219,7 +219,6 @@
         "policy_changes": "We may update this privacy policy from time to time. We will inform you of any changes by posting the new policy on our application and sending you a notification.",
         "contact_us": "If you have any questions regarding this privacy policy, please contact us at : "
     },
-    
     "Information": {
         "Title1": "Information you provide to us directly:",
         "One1": "- Account information: When you create an account, we collect information such as your name, email address, phone number, date of birth, and profile photo.",
@@ -247,5 +246,29 @@
         "Two": "- The right to object to the processing of your data.",
         "Three": "- The right to data portability.",
         "Four": "- The right to withdraw your consent at any time."
-    }
+    },
+    "UserTems": "Terms of use",
+    "Updating": "Last update",
+    "IntroTerms": "Welcome to Flajoo, a social network where you can connect with friends, share moments of your life, and explore interesting content. Use of Flajoo is subject to the terms described below. By accessing or by using Flajoo, you agree to be bound by these terms. Please read them carefully.",
+    "Title1": "1. Acceptance of conditions",
+    "OneMoreTitle1": "By using Flajoo, you agree to these terms of use, as well as our Privacy Policy. If you do not agree to these terms, please do not use Flajoo.",
+    "Title2": "2. Minimum age",
+    "OneMoreTitle2": "You must be at least 13 years old to use Flajoo. If you are under 13 years old, please do not use Flajoo.",
+    "Title3": "3. User account",
+    "OneMoreTitle3:": "To use certain features of Flajoo, you must create a user account. You are responsible for maintaining the confidentiality of your account and password, and for any activity that occurs under your account.",
+    "Title4": "4. User Content",
+    "OneMoreTitle3": "You are solely responsible for the content you post on Flajoo. You warrant that you have all necessary rights to post such content and that it does not violate the intellectual property rights or rights of any other person .",
+    "Title5": "5. Acceptable use",
+    "OneMoreTitle5": "You agree not to use Flajoo in any way that could harm other users or compromise the security of Flajoo. This includes, but is not limited to, spamming, harassing other users, the distribution of viruses or other malicious software, and any illegal activity.",
+    "Title6": "6. Intellectual property",
+    "OneMoreTitle6": "Flajoo and its content, including but not limited to text, images, logos and trademarks, are the property of Flajoo or its licensors and are protected by the laws of intellectual property You may not use, reproduce or distribute Flajoo content without authorization.",
+    "Title7": "7. Modification and termination",
+    "OneMoreTitle7": "Flajoo reserves the right to modify or terminate these Terms of Use at any time, without notice. We also reserve the right to terminate or suspend your access to Flajoo for any reason, including including in the event of violation of these conditions.",
+    "Title8": "8. Limitation of liability",
+    "OneMoreTitle8:": "To the fullest extent permitted by law, Flajoo disclaims all liability for any direct, indirect, incidental, special or consequential damages arising from your use of, or inability to use, Flajoo.",
+    "Title9": "9. Applicable law",
+    "OneMoreTitle9": "These conditions of use are governed by the laws in force in France and the Central African Republic. Any dispute arising from these conditions will be subject to the exclusive jurisdiction of the French and Central African courts.",
+    "Title10": "10. Contact",
+    "OneMoreTitle10": "If you have any questions or concerns regarding these Terms of Use, please contact us at ",
+    "ThankYourForUSe": "Thank you for using Flajoo!"
 }

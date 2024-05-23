@@ -410,7 +410,7 @@ const ButtonColor = () => {
                     fontWeight: "600",
                     color: isDarkMode ? "white" : "black",
                   }}>
-                    {languagesList[item].nativeName}
+                    {languagesList[item].name}
                   </Text>
                 </TouchableOpacity>
 

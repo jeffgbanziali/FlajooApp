@@ -42,6 +42,7 @@ import CreateNewConversation from "../components/MessagesUser/CreateConversation
 import Loading from "../components/Loading/Loading";
 import AccountSetting from "../screens/Settings/AccountSetting";
 import Privacy from "../screens/Settings/Privacy";
+import UseTerms from "../screens/Settings/UseTerms";
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +75,7 @@ const StackNavigation = () => {
       <Stack.Screen name="EditProfil" component={ProfileEdit} />
       <Stack.Screen name="AccountSetting" component={AccountSetting} />
       <Stack.Screen name="Privacy" component={Privacy} />
+      <Stack.Screen name="UseTerms" component={UseTerms} />
       <Stack.Screen name="buttonning" component={ButtonColor} />
       <Stack.Screen name="NewPostScreen" component={NewPostScreen} />
       <Stack.Screen name="StoryCreate" component={CreateMyStory} />

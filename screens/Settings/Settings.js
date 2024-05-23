@@ -35,7 +35,7 @@ const Settings = () => {
   };
 
   const handleUseTerms = () => {
-    navigation.navigate("Privacy");
+    navigation.navigate("UseTerms");
   };
 
   const handleFaq = () => {

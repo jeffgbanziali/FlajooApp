@@ -31,6 +31,8 @@ const AccountSetting = () => {
 
 
 
+   
+
     return (
         <SafeAreaView
             style={{

@@ -1,0 +1,45 @@
+{
+    "niveaux_etudes": [
+      {
+        "id": 1,
+        "titre": "Baccalauréat",
+        "diplome": "Baccalauréat"
+      },
+      {
+        "id": 2,
+        "titre": "Bac+1",
+        "diplome": "Licence"
+      },
+      
+      {
+        "id": 3,
+        "titre": "Bac+2",
+        "diplome": "Licence"
+      },
+
+      {
+        "id": 4,
+        "titre": "Bac+3",
+        "diplome": "Licence"
+      },
+
+      {
+        "id": 5,
+        "titre": "Bac+4",
+        "diplome": "Master"
+      },
+
+      {
+        "id": 6,
+        "titre": "Bac+5",
+        "diplome": "Master"
+      },
+
+      {
+        "id": 7,
+        "titre": "Doctorat",
+        "diplome": "Doctorat"
+      }
+    ]
+  }
+  

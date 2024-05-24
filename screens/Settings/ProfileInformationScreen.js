@@ -28,6 +28,8 @@ import Modal from "react-native-modal";
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFS from 'react-native-fs';
 import { useDarkMode } from "../../components/Context/AppContext";
+import UserTools from "../../components/Settings/ProfilUserInformation/UserTools";
+import Studies from "../../components/Settings/ProfilUserInformation/Studies";
 
 
 const ProfileInformationScreen = () => {
@@ -58,6 +60,7 @@ const ProfileInformationScreen = () => {
 
 
             }}>
+
             <View
                 style={{
                     paddingBottom: 2,
@@ -87,15 +90,16 @@ const ProfileInformationScreen = () => {
                 </TouchableOpacity>
                 <Text
                     style={{
-                        fontSize: 40,
+                        fontSize: 25,
                         color: isDarkMode ? "white" : "black",
                         fontWeight: "bold",
                         marginLeft: 10,
                     }}>
-                    {t('AccountSetting')}
+                    {t('UserInformation')}
                 </Text>
             </View>
-            <Text>ProfileInformationScreen</Text>
+            <UserTools />
+            <Studies />
         </SafeAreaView>
     )
 }

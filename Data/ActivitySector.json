@@ -1,0 +1,173 @@
+{
+    "ActivitySector": [
+      {
+        "nom": "Sciences Humaines et Sociales",
+        "disciplines": [
+          "Sociologie",
+          "Psychologie",
+          "Histoire",
+          "Géographie",
+          "Philosophie",
+          "Anthropologie",
+          "Sciences de l'éducation",
+          "Démographie",
+          "Archéologie",
+          "Linguistique"
+        ]
+      },
+      {
+        "nom": "Sciences et Technologies",
+        "disciplines": [
+          "Mathématiques",
+          "Physique",
+          "Chimie",
+          "Informatique",
+          "Biologie",
+          "Géologie",
+          "Astrophysique",
+          "Sciences des matériaux",
+          "Sciences de la Terre",
+          "Sciences de l'environnement"
+        ]
+      },
+      {
+        "nom": "Lettres, Langues et Arts",
+        "disciplines": [
+          "Littérature",
+          "Linguistique",
+          "Langues étrangères",
+          "Histoire de l'art",
+          "Musique",
+          "Arts plastiques",
+          "Théâtre",
+          "Cinéma",
+          "Design",
+          "Traduction et interprétation"
+        ]
+      },
+      {
+        "nom": "Droit, Economie, Gestion",
+        "disciplines": [
+          "Droit public",
+          "Droit privé",
+          "Economie",
+          "Gestion",
+          "Sciences politiques",
+          "Comptabilité",
+          "Marketing",
+          "Ressources humaines",
+          "Finance",
+          "Entrepreneuriat"
+        ]
+      },
+      {
+        "nom": "Santé",
+        "disciplines": [
+          "Médecine",
+          "Pharmacie",
+          "Odontologie",
+          "Maïeutique",
+          "Ergothérapie",
+          "Kinésithérapie",
+          "Orthophonie",
+          "Infirmier",
+          "Psychomotricité",
+          "Nutrition"
+        ]
+      },
+      {
+        "nom": "Sciences de l'Ingénieur",
+        "disciplines": [
+          "Génie civil",
+          "Génie électrique",
+          "Génie mécanique",
+          "Automatique",
+          "Électronique",
+          "Télécommunications",
+          "Génie industriel",
+          "Génie chimique",
+          "Génie des systèmes",
+          "Génie environnemental"
+        ]
+      },
+      {
+        "nom": "Sciences Agronomiques et Agroalimentaires",
+        "disciplines": [
+          "Agronomie",
+          "Agroalimentaire",
+          "Sciences animales",
+          "Sciences végétales",
+          "Environnement",
+          "Foresterie",
+          "Viticulture",
+          "Pêche et aquaculture",
+          "Technologies alimentaires",
+          "Agriculture biologique"
+        ]
+      },
+      {
+        "nom": "Architecture, Urbanisme et Paysage",
+        "disciplines": [
+          "Architecture",
+          "Urbanisme",
+          "Paysagisme",
+          "Géomatique",
+          "Aménagement du territoire",
+          "Construction durable",
+          "Design urbain",
+          "Rénovation urbaine"
+        ]
+      },
+      {
+        "nom": "Éducation et Formation",
+        "disciplines": [
+          "Sciences de l'éducation",
+          "Pédagogie",
+          "Formation des adultes",
+          "Didactique",
+          "Psychopédagogie",
+          "Administration scolaire"
+        ]
+      },
+      {
+        "nom": "Sciences de l'Information et de la Communication",
+        "disciplines": [
+          "Journalisme",
+          "Communication",
+          "Publicité",
+          "Relations publiques",
+          "Médias numériques",
+          "Études culturelles",
+          "Documentation",
+          "Bibliothéconomie"
+        ]
+      },
+      {
+        "nom": "Tourisme, Hôtellerie et Restauration",
+        "disciplines": [
+          "Tourisme",
+          "Gestion hôtelière",
+          "Restauration",
+          "Événementiel",
+          "Loisirs",
+          "Gestion de voyages",
+          "Culinaire",
+          "Œnologie"
+        ]
+      },
+      {
+        "nom": "Arts et Design",
+        "disciplines": [
+          "Beaux-Arts",
+          "Design graphique",
+          "Mode",
+          "Photographie",
+          "Illustration",
+          "Sculpture",
+          "Céramique",
+          "Design d'intérieur"
+        ]
+      }
+    ]
+  }
+  

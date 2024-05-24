@@ -307,6 +307,7 @@ const ProfileEdit = () => {
                     borderRadius: 100,
                   }}
                 />
+                
                 <View
                   style={{
                     backgroundColor: "lightgray",
@@ -324,6 +325,7 @@ const ProfileEdit = () => {
                     zIndex: 100,
                   }}
                 >
+
                   <View
                     style={{
                       width: "100%",
@@ -343,11 +345,15 @@ const ProfileEdit = () => {
 
                 </View>
 
+
               </TouchableOpacity>
+
 
             </View>
 
+
           </View>
+
 
           <View
             style={{
@@ -413,6 +419,7 @@ const ProfileEdit = () => {
               </View>
             </Pressable>
           </View>
+
 
           <View
             style={{
@@ -717,6 +724,7 @@ const ProfileEdit = () => {
             </TouchableOpacity>
           </View>
 
+
           <View
             style={{
               marginTop: 10,
@@ -870,7 +878,11 @@ const ProfileEdit = () => {
 
 
           </View>
+
+
         </ScrollView>
+
+
       </SafeAreaView>
 
 

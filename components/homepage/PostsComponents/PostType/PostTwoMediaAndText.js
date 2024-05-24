@@ -98,7 +98,6 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
         style = styles.landscape;
     }
 
-    console.log("Viens dans mes DM", media)
     return (
 
         <>

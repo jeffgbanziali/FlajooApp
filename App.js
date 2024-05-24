@@ -86,8 +86,6 @@ const AppW = () => {
     const { isDarkMode } = useDarkMode();
     const { isConnected, isInternetConnected } = useOnlineStatus();
 
-    console.log("est qu'il est en ligne ? ", isConnected, "est ce que tues connecté ?", isInternetConnected)
-
     useEffect(() => {
         AsyncStorage.getItem('uid')
             .then((storedUid) => {
@@ -133,9 +131,9 @@ const AppW = () => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {
+            {/*
                 isLoadingApp ?
-                    <Loading /> :
+                    <Loading /> :   */ }
                     <NavigationContainer>
 
                         {
@@ -150,7 +148,7 @@ const AppW = () => {
 
                         }
                     </NavigationContainer>
-            }
+        
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

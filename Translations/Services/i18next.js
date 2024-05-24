@@ -3,13 +3,15 @@ import { initReactI18next } from "react-i18next";
 import English from "../English/English.json";
 import French from "../French/French.json";
 import Sango from "../Sango/Sango.json"
+import Spanish from "../Spanish/Spanish.json"
 
 
 
 export const languageResources = {
+    es: { translation: Spanish },
     en: { translation: English },
     fr: { translation: French },
-    sg: { translation: Sango }
+    sg: { translation: Sango },
 
 };
 

@@ -32,15 +32,15 @@ export const OnlineStatusProvider = ({ children }) => {
 
 
                 socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
-                console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);
+                //console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);
 
                 socket.current.on('connect', () => {
                     setIsConnected(true);
-                    console.log('Connected to server');
-                    console.log(userData._id, "Utilisateur connecté !!!!", socket.current.id);
+                  //  console.log('Connected to server');
+                   // console.log(userData._id, "Utilisateur connecté !!!!", socket.current.id);
                     socket.current.emit("addUser", userData._id);
                     socket.current.emit("onlineStatusChanged", { userId: userData._id, onlineStatus: true });
-                    console.log("Tu es en ligne ou pas !!!!", userData.onlineStatus, "donnde moi ton id", userData._id, "donne moi ton pseudo", userData.pseudo);
+                    //console.log("Tu es en ligne ou pas !!!!", userData.onlineStatus, "donnde moi ton id", userData._id, "donne moi ton pseudo", userData.pseudo);
                 });
 
                 socket.current.on('connect_error', (error) => {
@@ -50,7 +50,7 @@ export const OnlineStatusProvider = ({ children }) => {
                 // Gérer la déconnexion
                 socket.current.on('disconnect', () => {
                     setIsConnected(false);
-                    console.log('Disconnected from server');
+                   // console.log('Disconnected from server');
                     if (userData) {
                         socket.current.emit("removeUser", userData._id);
                     }

@@ -51,7 +51,7 @@ const Profile = () => {
           style={{
             //backgroundColor: "red",
             width: "100%",
-            maxHeight: 380,
+            maxHeight: 400,
           }}>
 
           <ProfilsStatements />

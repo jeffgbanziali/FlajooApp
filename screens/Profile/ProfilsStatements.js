@@ -9,20 +9,16 @@ import {
     Pressable,
 } from "react-native";
 import { useSelector } from "react-redux";
-import ProfileUtils from "../../components/ProfileUtils.js/ProfileUtils";
-import NavButtonProfile from "../../components/ProfileUtils.js/NavButtonProfile";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from "@react-navigation/native";
-import PostsUser from "../../components/ProfileUtils.js/PostsUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
-import { KeyboardAvoidingView } from "react-native";
-import VideoRéelsUser from "../../components/ProfileUtils.js/VideoRéelsUser";
-import { SafeAreaView } from "react-native";
 import { useTranslation } from "react-i18next";
-import MaterialTopNavigation from "../../navigation/MaterialTopNavigation";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EducationModal from "./EducationScreen/EducationModal";
+
+
 
 
 
@@ -241,6 +237,7 @@ const ProfilsStatements = () => {
                     </Text>
 
                 </View>
+
                 <View
                     style={{
                         alignItems: "center",
@@ -260,12 +257,12 @@ const ProfilsStatements = () => {
                         {renderLimitedMessage(userData.bio)}
                     </Text>
                 </View>
-                <View
 
+                <View
 
                     style={{
                         alignItems: "center",
-                        width: "60%",
+                        width: "40%",
                         height: 60,
                         marginTop: 10,
                         //backgroundColor: "blue",
@@ -297,7 +294,27 @@ const ProfilsStatements = () => {
                             borderRadius: 100,
                             backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                         }}>
+                        <MaterialIcons
+                            name="work-outline"
+                            size={28}
+                            color={isDarkMode ? "white" : "black"}
+                        />
+                    </View>
 
+                    <View
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 100,
+                            backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        }}>
+                        <MaterialCommunityIcons
+                            name="brain"
+                            size={28}
+                            color={isDarkMode ? "white" : "black"}
+                        />
                     </View>
 
                 </View>

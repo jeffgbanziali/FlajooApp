@@ -14,6 +14,8 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useDispatch, useSelector } from "react-redux";
@@ -287,12 +289,12 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                     </View>
                     <SendMessage users={users} />
                 </View>
-                <View
 
+                <View
 
                     style={{
                         alignItems: "center",
-                        width: "60%",
+                        width: "40%",
                         height: 60,
                         marginTop: 10,
                         //backgroundColor: "blue",
@@ -324,7 +326,27 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                             borderRadius: 100,
                             backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
                         }}>
+                        <MaterialIcons
+                            name="work-outline"
+                            size={28}
+                            color={isDarkMode ? "white" : "black"}
+                        />
+                    </View>
 
+                    <View
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 100,
+                            backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        }}>
+                        <MaterialCommunityIcons
+                            name="brain"
+                            size={28}
+                            color={isDarkMode ? "white" : "black"}
+                        />
                     </View>
 
                 </View>

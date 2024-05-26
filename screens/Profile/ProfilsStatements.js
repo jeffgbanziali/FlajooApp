@@ -250,7 +250,7 @@ const ProfilsStatements = () => {
                         style={{
                             fontSize: 12,
                             textAlign: "left",
-                            color: "lightgray",
+                            color: "#5F5858",
                             fontWeight: "500",
                         }}
                     >

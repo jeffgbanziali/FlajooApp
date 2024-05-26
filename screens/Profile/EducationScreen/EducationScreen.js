@@ -52,8 +52,7 @@ const EducationScreen = () => {
             style={{
                 flex: 1,
                 backgroundColor: "black",
-                backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
-
+                backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
 
             }}>
             <View

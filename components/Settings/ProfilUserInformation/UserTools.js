@@ -75,7 +75,7 @@ const UserTools = () => {
                 backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: 10,
+                paddingTop: 10,
                 marginBottom: 10,
             }}>
 

@@ -68,7 +68,7 @@ const Studies = () => {
                 <Text
                     style={{
                         fontSize: 24,
-                        color: "white",
+                        color: isDarkMode ? "white" : "black",
                         fontWeight: '500',
                     }}>
                     {t('Education')}

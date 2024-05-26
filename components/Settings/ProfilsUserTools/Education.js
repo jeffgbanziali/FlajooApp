@@ -1,8 +1,26 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import { dateParser, FormationDateParser } from '../../Context/Utils'
+import { useTranslation } from 'react-i18next';
+import Octicons from 'react-native-vector-icons/Octicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDarkMode } from '../../Context/AppContext';
 
 const Education = ({ education }) => {
+
+
+    const [showFullText, setShowFullText] = useState(false);
+
+    const toggleText = () => {
+        setShowFullText(!showFullText);
+    };
+    const { isDarkMode } = useDarkMode();
+    const { t } = useTranslation();
+
+    const maxLength = 100;
+    const description = education.description
+
+
     return (
         <View
             style={{
@@ -23,9 +41,14 @@ const Education = ({ education }) => {
                     style={{
                         width: 70,
                         height: 70,
-                        backgroundColor: "red",
+                        justifyContent: "center",
+                        alignItems: "center"
                     }}>
-
+                    <Ionicons
+                        name="school-outline"
+                        size={60}
+                        color={isDarkMode ? "white" : "black"}
+                    />
                 </View>
             </View>
             <View
@@ -45,7 +68,7 @@ const Education = ({ education }) => {
                             color: "white",
                             fontWeight: '600',
                         }}>
-                        {education[0].institution}
+                        {education.institution}
                     </Text>
                     <Text
                         style={{
@@ -54,7 +77,7 @@ const Education = ({ education }) => {
                             color: "white",
                             fontWeight: '400',
                         }}>
-                        {education[0].degree}
+                        {education.degree}
                     </Text>
 
                     <View
@@ -68,7 +91,7 @@ const Education = ({ education }) => {
                                 color: "gray",
                                 fontWeight: '500',
                             }}>
-                            {FormationDateParser(education[0].startDate)}{" - "}
+                            {FormationDateParser(education.startDate)}{" - "}
                         </Text>
                         <Text
                             style={{
@@ -76,29 +99,23 @@ const Education = ({ education }) => {
                                 color: "gray",
                                 fontWeight: '500',
                             }}>
-                            {FormationDateParser(education[0].endDate)}
+                            {FormationDateParser(education.endDate)}
                         </Text>
                     </View>
 
                 </View>
 
-                <View
-                    style={{
-                        width: "100%",
-                        paddingLeft: 10,
-                        marginBottom: 10,
-
-                    }}>
-                    <Text
-                        style={{
-                            fontSize: 16,
-                            color: "white",
-                            fontWeight: '400',
-                            paddingRight: 10,
-                        }}>
-                        {education[0].description}
+                <View style={{ width: "100%", paddingLeft: 10, marginBottom: 10 }}>
+                    <Text style={{ fontSize: 16, color: "white", fontWeight: '400', paddingRight: 10 }}>
+                        {showFullText ? description : `${description.substring(0, maxLength)}${description.length > maxLength ? '...' : ''}`}
                     </Text>
-
+                    {description.length > maxLength && (
+                        <TouchableOpacity onPress={toggleText}>
+                            <Text style={{ color: "lightblue", marginTop: 5 }}>
+                                {showFullText ? "Afficher moins" : "Afficher plus"}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
 
                 <View
@@ -115,7 +132,7 @@ const Education = ({ education }) => {
                             fontWeight: '600',
                             paddingRight: 10,
                         }}>
-                        {education[0].skills}
+                        {t('Skills')}{education.skills}
                     </Text>
 
                 </View>
@@ -123,6 +140,8 @@ const Education = ({ education }) => {
             </View>
 
         </View>
+
+
     )
 }
 

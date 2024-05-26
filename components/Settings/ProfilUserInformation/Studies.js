@@ -9,6 +9,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Feather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 import Education from '../ProfilsUserTools/Education';
+import { FlatList } from 'react-native';
 
 const Studies = () => {
     const dispatch = useDispatch();
@@ -39,7 +40,13 @@ const Studies = () => {
     }, []);
 
 
-    console.log("My userEducation", userData.education)
+    const [showFullEducation, setShowFullEducation] = useState(false);
+
+    const toggleText = () => {
+        console.warn("Je suis là")
+    };
+
+
 
     return (
         <View
@@ -110,7 +117,36 @@ const Studies = () => {
             {
                 userData.education.length > 0 ? (
                     <>
-                        <Education education={userData.education} />
+
+                        <FlatList
+                            data={userData.education}
+                            keyExtractor={(item) => item._id}
+                            renderItem={({ item }) => {
+                                return (
+                                    <Education education={item} />
+                                )
+                            }}
+
+                        />
+                        {userData.education.length > 1 && (
+                            <TouchableOpacity
+                                style={{
+                                    height: 40,
+                                    width: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }}
+                                onPress={toggleText}>
+                                <Text style={{
+                                    color: isDarkMode ? "white" : "black",
+                                    fontWeight: '600',
+                                    fontSize: 16,
+                                }}>
+                                    Afficher les {userData.education.length} formations
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+
                     </>
                 ) :
                     (
@@ -126,6 +162,7 @@ const Studies = () => {
                                 style={{
                                     fontSize: 20,
                                     color: "white",
+                                    fontWeight: '500',
                                     fontWeight: '500',
                                 }}>
                                 Ajouter vos formations

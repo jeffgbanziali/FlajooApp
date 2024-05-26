@@ -196,6 +196,7 @@
     "FirsName": "Prénom",
     "LastName": "Nom",
     "ConfirmPass": "Confirmez le mot de passe",
+    "Education":"Education",
     "PhoneNumb": "Numéro de téléphone",
     "ButtonRegis": "Enregistrer",
     "HaveAccount": "Avez-vous un compte ? ",

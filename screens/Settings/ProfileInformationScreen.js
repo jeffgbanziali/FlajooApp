@@ -98,8 +98,11 @@ const ProfileInformationScreen = () => {
                     {t('UserInformation')}
                 </Text>
             </View>
-            <UserTools />
-            <Studies />
+            <ScrollView>
+                <UserTools />
+                <Studies />
+            </ScrollView>
+
         </SafeAreaView>
     )
 }

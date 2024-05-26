@@ -7,9 +7,10 @@ const Education = ({ education }) => {
         <View
             style={{
                 width: "100%",
-                height: 300,
                 paddingTop: 10,
-                flexDirection: "row"
+                flexDirection: "row",
+                borderBottomWidth: 1,
+                borderColor: "gray"
             }}>
             <View
                 style={{
@@ -30,13 +31,13 @@ const Education = ({ education }) => {
             <View
                 style={{
                     width: "80%",
-                    height: 80,
                     marginTop: 10,
                 }}>
                 <View
                     style={{
-                        width: "80%",
+                        width: "100%",
                         paddingLeft: 10,
+                        marginBottom: 10,
                     }}>
                     <Text
                         style={{
@@ -55,6 +56,7 @@ const Education = ({ education }) => {
                         }}>
                         {education[0].degree}
                     </Text>
+
                     <View
                         style={{
                             flexDirection: "row",
@@ -77,6 +79,44 @@ const Education = ({ education }) => {
                             {FormationDateParser(education[0].endDate)}
                         </Text>
                     </View>
+
+                </View>
+
+                <View
+                    style={{
+                        width: "100%",
+                        paddingLeft: 10,
+                        marginBottom: 10,
+
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            color: "white",
+                            fontWeight: '400',
+                            paddingRight: 10,
+                        }}>
+                        {education[0].description}
+                    </Text>
+
+                </View>
+
+                <View
+                    style={{
+                        width: "100%",
+                        paddingLeft: 10,
+                        marginBottom: 10,
+
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 14,
+                            color: "white",
+                            fontWeight: '600',
+                            paddingRight: 10,
+                        }}>
+                        {education[0].skills}
+                    </Text>
 
                 </View>
 

@@ -29,7 +29,7 @@ import RNFS from 'react-native-fs';
 import { useDarkMode } from "../../../components/Context/AppContext";
 import ExperienceTools from "./ExperienceTools";
 
-const ExperienceScreen = () => {
+const ExperienceModal = ({ showModal }) => {
 
 
     const navigation = useNavigation();
@@ -44,9 +44,9 @@ const ExperienceScreen = () => {
     const { t } = useTranslation();
 
     const handleClickReturnProfile = () => {
-        console.log("clicked home");
-        navigation.goBack("Profile");
+        showModal()
     };
+    
     return (
         <SafeAreaView
             style={{
@@ -171,4 +171,4 @@ const ExperienceScreen = () => {
     )
 }
 
-export default ExperienceScreen
+export default ExperienceModal

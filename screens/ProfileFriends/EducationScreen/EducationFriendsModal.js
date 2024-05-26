@@ -47,7 +47,7 @@ const EducationFriendsModal = ({ showModal, users }) => {
             style={{
                 flex: 1,
                 backgroundColor: "black",
-                backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
+                backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
 
 
             }}>
@@ -87,43 +87,6 @@ const EducationFriendsModal = ({ showModal, users }) => {
                     {t('Education')}
                 </Text>
 
-                <View
-                    style={{
-                        width: 120,
-                        height: "100%",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-evenly"
-                    }}>
-                    <TouchableOpacity
-                        style={{
-                            width: 50,
-                            height: 50,
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}>
-                        <Feather
-                            name="plus"
-                            size={28}
-                            color={isDarkMode ? "white" : "black"}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            width: 50,
-                            height: 50,
-                            alignItems: "center",
-                            justifyContent: "center",
-
-                        }}>
-                        <Octicons
-                            name="pencil"
-                            size={20}
-                            color={isDarkMode ? "white" : "black"}
-                        />
-                    </TouchableOpacity>
-
-                </View>
             </View>
             {
                 users.education.length > 0 ? (
@@ -154,11 +117,11 @@ const EducationFriendsModal = ({ showModal, users }) => {
                             <Text
                                 style={{
                                     fontSize: 20,
-                                    color: "white",
+                                    color: isDarkMode ? "white" : "black",
                                     fontWeight: '500',
                                     fontWeight: '500',
                                 }}>
-                                Ajouter vos formations
+                                Pas de formation enregistrée
                             </Text>
                         </View>
                     )

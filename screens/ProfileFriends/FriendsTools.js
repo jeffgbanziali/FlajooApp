@@ -24,12 +24,14 @@ import { useTranslation } from "react-i18next";
 import { isEmpty } from "../../components/Context/Utils";
 import SendMessage from "../../components/ProfileUtils.js/SendMessage";
 import EducationFriendsModal from "./EducationScreen/EducationFriendsModal";
+import ExperienceFriendsModal from "./ExpérienceScreen/ExperienceFriendsModal";
 
 
 const FriendsTools = ({ users, areYouPressComment }) => {
 
 
     const [showEducation, setShowEducation] = useState(false);
+    const [showExperience, setShowExperience] = useState(false);
 
     const navigation = useNavigation();
     const { isDarkMode, isConnected } = useDarkMode();
@@ -65,6 +67,10 @@ const FriendsTools = ({ users, areYouPressComment }) => {
     const showModal = () => {
         setShowEducation(!showEducation);
     };
+
+    const showExperienceModal = () => {
+        setShowExperience(!showExperience);
+    }
 
 
     return (
@@ -317,7 +323,8 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                             color={isDarkMode ? "white" : "black"}
                         />
                     </TouchableOpacity>
-                    <View
+                    <TouchableOpacity
+                        onPress={showExperienceModal}
                         style={{
                             alignItems: "center",
                             justifyContent: "center",
@@ -331,7 +338,7 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                             size={28}
                             color={isDarkMode ? "white" : "black"}
                         />
-                    </View>
+                    </TouchableOpacity>
 
                     <View
                         style={{
@@ -360,6 +367,17 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                     onRequestClose={showModal}
                 >
                     <EducationFriendsModal users={users} showModal={showModal} />
+
+                </Modal>
+
+                <Modal
+                    visible={showExperience}
+                    transparent={true}
+                    animationIn="pulse"
+                    animationOut="fadeOut"
+                    onRequestClose={showModal}
+                >
+                    <ExperienceFriendsModal users={users} showModal={showExperienceModal} />
 
                 </Modal>
             </View>

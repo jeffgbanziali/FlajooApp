@@ -1,95 +1,78 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Image,
-    TextInput,
-    Pressable,
-    ScrollView,
-    KeyboardAvoidingView,
-    Platform,
-    SafeAreaView,
-    Animated,
-    FlatList,
-    Alert,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, Dimensions, Pressable, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useDarkMode } from '../../Context/AppContext';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { launchImageLibrary } from 'react-native-image-picker';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Feather from 'react-native-vector-icons/Feather';
-import Entypo from 'react-native-vector-icons/Entypo';
-import { useTranslation } from 'react-i18next'
-import Modal from "react-native-modal";
-import ImagePicker from 'react-native-image-crop-picker';
-import RNFS from 'react-native-fs';
-import { useDarkMode } from "../../../components/Context/AppContext";
-import EducationTools from "./EducationTools";
+import axios from 'axios';
+import Education from '../ProfilsUserTools/Education';
+import { FlatList } from 'react-native';
+import ExpeAlls from '../ProfilsUserTools/ExpeAlls';
 
-const EducationScreen = () => {
-
-
-    const navigation = useNavigation();
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [showImage, setShowImage] = useState(false);
-    const [loadUsers, setLoadUSers] = useState(true);
-    const userData = useSelector((state) => state.userReducer);
+const Experiences = () => {
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
-    const [showTools, setShowTools] = useState(false);
-    const [toolsHeight, setToolsHeight] = useState(new Animated.Value(0));
     const { t } = useTranslation();
 
-    const handleClickReturnProfile = () => {
-        console.log("clicked home");
-        navigation.goBack("Profile");
+    const [disciplines, setDisciplines] = useState([]);
+    const [secteurs, setSecteurs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [universities, setUniversities] = useState([]);
+    const userData = useSelector((state) => state.userReducer);
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        const fetchSecteurs = async () => {
+            try {
+                const data = require('../../../Data/ActivitySector.json');
+                setSecteurs(data.ActivitySector);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSecteurs();
+    }, []);
+
+    const toggleText = () => {
+        navigation.navigate("Experience")
     };
+
+
+
     return (
-        <SafeAreaView
+        <View
             style={{
-                flex: 1,
-                backgroundColor: "black",
+                width: "100%",
                 backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
-
-
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 10,
             }}>
+
             <View
                 style={{
-                    marginLeft: 10,
-                    marginRight: 10,
-                    flexDirection: "row",
-                    borderBottomColor: "gray",
-                    borderBottomWidth: 1,
+                    width: "100%",
+                    height: 50,
                     alignItems: "center",
+                    paddingLeft: 10,
                     justifyContent: "space-between",
+                    flexDirection: "row",
                 }}>
-                <TouchableOpacity onPress={() => handleClickReturnProfile()}>
-                    <View
-                        style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: 40,
-                            height: 40,
-                            borderRadius: 30,
-                        }}
-                    >
-                        <MaterialIcons
-                            name="arrow-back"
-                            size={28}
-                            color={isDarkMode ? "white" : "black"}
-                        />
-                    </View>
-                </TouchableOpacity>
                 <Text
                     style={{
-                        fontSize: 25,
+                        fontSize: 24,
                         color: isDarkMode ? "white" : "black",
-                        fontWeight: "bold",
+                        fontWeight: '500',
                     }}>
-                    {t('Education')}
+                    {t('Experiences')}
                 </Text>
 
                 <View
@@ -131,19 +114,37 @@ const EducationScreen = () => {
                 </View>
             </View>
             {
-                userData.education.length > 0 ? (
+                userData.experience.length > 0 ? (
                     <>
 
                         <FlatList
-                            data={userData.education}
+                            data={userData.experience}
                             keyExtractor={(item) => item._id}
                             renderItem={({ item }) => {
                                 return (
-                                    <EducationTools education={item} />
+                                    <ExpeAlls experience={item} />
                                 )
                             }}
 
                         />
+                        {userData.experience.length > 2 && (
+                            <TouchableOpacity
+                                style={{
+                                    height: 40,
+                                    width: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }}
+                                onPress={toggleText}>
+                                <Text style={{
+                                    color: isDarkMode ? "white" : "black",
+                                    fontWeight: '600',
+                                    fontSize: 16,
+                                }}>
+                                    Afficher les {userData.experience.length} formations
+                                </Text>
+                            </TouchableOpacity>
+                        )}
 
                     </>
                 ) :
@@ -158,18 +159,19 @@ const EducationScreen = () => {
 
                             <Text
                                 style={{
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: "white",
                                     fontWeight: '500',
                                     fontWeight: '500',
                                 }}>
-                                Ajouter vos formations
+                                Ajouter vos expériences professionnelles
                             </Text>
                         </View>
                     )
             }
-        </SafeAreaView>
+
+        </View>
     )
 }
 
-export default EducationScreen
+export default Experiences

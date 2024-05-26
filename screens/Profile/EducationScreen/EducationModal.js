@@ -155,7 +155,7 @@ const EducationFriendsModal = ({ showModal }) => {
                             <Text
                                 style={{
                                     fontSize: 20,
-                                    color: "white",
+                                    color: isDarkMode ? "white" : "black",
                                     fontWeight: '500',
                                     fontWeight: '500',
                                 }}>

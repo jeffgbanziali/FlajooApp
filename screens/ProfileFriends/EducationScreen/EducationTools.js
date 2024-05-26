@@ -28,6 +28,7 @@ const EducationTools = ({ education }) => {
                 paddingTop: 10,
                 flexDirection: "row",
                 borderBottomWidth: 1,
+                backgroundColor: isDarkMode ? "#171717" : "white",
                 borderColor: "gray"
             }}>
             <View
@@ -65,7 +66,7 @@ const EducationTools = ({ education }) => {
                     <Text
                         style={{
                             fontSize: 18,
-                            color: "white",
+                            color: isDarkMode ? "white" : "black",
                             fontWeight: '600',
                         }}>
                         {education.institution}
@@ -74,7 +75,7 @@ const EducationTools = ({ education }) => {
                         style={{
                             paddingTop: 2,
                             fontSize: 15,
-                            color: "white",
+                            color: isDarkMode ? "white" : "black",
                             fontWeight: '400',
                         }}>
                         {education.degree}
@@ -105,8 +106,19 @@ const EducationTools = ({ education }) => {
 
                 </View>
 
-                <View style={{ width: "100%", paddingLeft: 10, marginBottom: 10 }}>
-                    <Text style={{ fontSize: 16, color: "white", fontWeight: '400', paddingRight: 10 }}>
+                <View
+                    style={{
+                        width: "100%",
+                        paddingLeft: 10,
+                        marginBottom: 10
+                    }}>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            color: isDarkMode ? "white" : "black",
+                            fontWeight: '400',
+                            paddingRight: 10
+                        }}>
                         {description}
                     </Text>
 
@@ -122,7 +134,7 @@ const EducationTools = ({ education }) => {
                     <Text
                         style={{
                             fontSize: 14,
-                            color: "white",
+                            color: isDarkMode ? "white" : "black",
                             fontWeight: '600',
                             paddingRight: 10,
                         }}>

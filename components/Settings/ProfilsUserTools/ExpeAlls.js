@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { dateParser, FormationDateParser } from '../../Context/Utils'
 import { useTranslation } from 'react-i18next';
 import Octicons from 'react-native-vector-icons/Octicons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDarkMode } from '../../Context/AppContext';
 
-const Education = ({ education }) => {
+const ExpeAlls = ({ experience }) => {
 
 
     const [showFullText, setShowFullText] = useState(false);
@@ -18,7 +18,7 @@ const Education = ({ education }) => {
     const { t } = useTranslation();
 
     const maxLength = 100;
-    const description = education.description
+    const description = experience.description
 
 
     return (
@@ -44,8 +44,8 @@ const Education = ({ education }) => {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                    <Ionicons
-                        name="school-outline"
+                    <MaterialIcons
+                        name="work-outline"
                         size={40}
                         color={isDarkMode ? "white" : "black"}
                     />
@@ -68,7 +68,7 @@ const Education = ({ education }) => {
                             color: isDarkMode ? "white" : "black",
                             fontWeight: '600',
                         }}>
-                        {education.institution}
+                        {experience.company}
                     </Text>
                     <Text
                         style={{
@@ -77,7 +77,7 @@ const Education = ({ education }) => {
                             color: isDarkMode ? "white" : "black",
                             fontWeight: '400',
                         }}>
-                        {education.degree}
+                        {experience.role}
                     </Text>
 
                     <View
@@ -91,7 +91,7 @@ const Education = ({ education }) => {
                                 color: "gray",
                                 fontWeight: '500',
                             }}>
-                            {FormationDateParser(education.startDate)}{" - "}
+                            {FormationDateParser(experience.startDate)}{" - "}
                         </Text>
                         <Text
                             style={{
@@ -99,7 +99,7 @@ const Education = ({ education }) => {
                                 color: "gray",
                                 fontWeight: '500',
                             }}>
-                            {FormationDateParser(education.endDate)}
+                            {FormationDateParser(experience.endDate)}
                         </Text>
                     </View>
 
@@ -132,7 +132,7 @@ const Education = ({ education }) => {
                             fontWeight: '600',
                             paddingRight: 10,
                         }}>
-                        {t('Skills')}{education.skills}
+                        {t('Skills')}{experience.skills}
                     </Text>
 
                 </View>
@@ -145,4 +145,4 @@ const Education = ({ education }) => {
     )
 }
 
-export default Education
+export default ExpeAlls

@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EducationModal from "./EducationScreen/EducationModal";
+import ExperienceModal from "./ExpérienceScreen/ExperienceModal";
 
 
 
@@ -25,6 +26,7 @@ import EducationModal from "./EducationScreen/EducationModal";
 
 const ProfilsStatements = () => {
     const [showEducation, setShowEducation] = useState(false);
+    const [showExperience, setShowExperience] = useState(false);
 
     const userData = useSelector((state) => state.userReducer);
     const navigation = useNavigation();
@@ -59,6 +61,10 @@ const ProfilsStatements = () => {
     const showModal = () => {
         setShowEducation(!showEducation);
     };
+
+    const showExperienceModal = () => {
+        setShowExperience(!showExperience);
+    }
 
 
     return (
@@ -285,7 +291,8 @@ const ProfilsStatements = () => {
                             color={isDarkMode ? "white" : "black"}
                         />
                     </TouchableOpacity>
-                    <View
+                    <TouchableOpacity
+                        onPress={showExperienceModal}
                         style={{
                             alignItems: "center",
                             justifyContent: "center",
@@ -299,7 +306,7 @@ const ProfilsStatements = () => {
                             size={28}
                             color={isDarkMode ? "white" : "black"}
                         />
-                    </View>
+                    </TouchableOpacity>
 
                     <View
                         style={{
@@ -328,6 +335,17 @@ const ProfilsStatements = () => {
                 onRequestClose={showModal}
             >
                 <EducationModal showModal={showModal} />
+
+            </Modal>
+
+            <Modal
+                visible={showExperience}
+                transparent={true}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onRequestClose={showModal}
+            >
+                <ExperienceModal showModal={showExperienceModal} />
 
             </Modal>
 

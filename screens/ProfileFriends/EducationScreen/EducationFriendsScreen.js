@@ -29,7 +29,7 @@ import RNFS from 'react-native-fs';
 import { useDarkMode } from "../../../components/Context/AppContext";
 import EducationTools from "./EducationTools";
 
-const EducationFriendsModal = ({ showModal }) => {
+const EducationScreen = () => {
 
 
     const navigation = useNavigation();
@@ -37,11 +37,15 @@ const EducationFriendsModal = ({ showModal }) => {
     const [showImage, setShowImage] = useState(false);
     const [loadUsers, setLoadUSers] = useState(true);
     const userData = useSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
+    const [showTools, setShowTools] = useState(false);
+    const [toolsHeight, setToolsHeight] = useState(new Animated.Value(0));
     const { t } = useTranslation();
 
     const handleClickReturnProfile = () => {
-        showModal()
+        console.log("clicked home");
+        navigation.goBack("Profile");
     };
     return (
         <SafeAreaView
@@ -168,4 +172,4 @@ const EducationFriendsModal = ({ showModal }) => {
     )
 }
 
-export default EducationFriendsModal
+export default EducationScreen

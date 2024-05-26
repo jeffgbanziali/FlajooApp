@@ -8,8 +8,10 @@ import {
     Image,
     KeyboardAvoidingView,
     Animated, Easing,
-    Pressable
+    Pressable,
+    Modal
 } from "react-native";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -19,11 +21,13 @@ import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { useTranslation } from "react-i18next";
 import { isEmpty } from "../../components/Context/Utils";
 import SendMessage from "../../components/ProfileUtils.js/SendMessage";
+import EducationFriendsModal from "./EducationScreen/EducationFriendsModal";
 
 
 const FriendsTools = ({ users, areYouPressComment }) => {
 
 
+    const [showEducation, setShowEducation] = useState(false);
 
     const navigation = useNavigation();
     const { isDarkMode, isConnected } = useDarkMode();
@@ -54,6 +58,11 @@ const FriendsTools = ({ users, areYouPressComment }) => {
         }
     };
 
+
+
+    const showModal = () => {
+        setShowEducation(!showEducation);
+    };
 
 
     return (
@@ -278,6 +287,59 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                     </View>
                     <SendMessage users={users} />
                 </View>
+                <View
+
+
+                    style={{
+                        alignItems: "center",
+                        width: "60%",
+                        height: 60,
+                        marginTop: 10,
+                        //backgroundColor: "blue",
+                        justifyContent: "space-between",
+                        flexDirection: "row"
+                    }}>
+                    <TouchableOpacity
+                        onPress={showModal}
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 100,
+                            backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        }}>
+                        <Ionicons
+                            name="school-outline"
+                            size={28}
+                            color={isDarkMode ? "white" : "black"}
+                        />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 50,
+                            height: 50,
+                            borderRadius: 100,
+                            backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        }}>
+
+                    </View>
+
+                </View>
+
+
+                <Modal
+                    visible={showEducation}
+                    transparent={true}
+                    animationIn="pulse"
+                    animationOut="fadeOut"
+                    onRequestClose={showModal}
+                >
+                    <EducationFriendsModal users={users} showModal={showModal} />
+
+                </Modal>
             </View>
 
 

@@ -93,7 +93,7 @@ const ProfileFriends = () => {
             style={{
               //backgroundColor: "red",
               width: "100%",
-              maxHeight: 400,
+              maxHeight: 450,
             }}>
 
             <FriendsTools

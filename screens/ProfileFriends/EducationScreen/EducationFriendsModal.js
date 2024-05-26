@@ -29,14 +29,13 @@ import RNFS from 'react-native-fs';
 import { useDarkMode } from "../../../components/Context/AppContext";
 import EducationTools from "./EducationTools";
 
-const EducationFriendsModal = ({ showModal }) => {
+const EducationFriendsModal = ({ showModal, users }) => {
 
 
     const navigation = useNavigation();
     const [selectedImage, setSelectedImage] = useState(null);
     const [showImage, setShowImage] = useState(false);
     const [loadUsers, setLoadUSers] = useState(true);
-    const userData = useSelector((state) => state.userReducer);
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
 
@@ -127,11 +126,11 @@ const EducationFriendsModal = ({ showModal }) => {
                 </View>
             </View>
             {
-                userData.education.length > 0 ? (
+                users.education.length > 0 ? (
                     <>
 
                         <FlatList
-                            data={userData.education}
+                            data={users.education}
                             keyExtractor={(item) => item._id}
                             renderItem={({ item }) => {
                                 return (

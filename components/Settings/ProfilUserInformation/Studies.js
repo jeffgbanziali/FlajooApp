@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 import Education from '../ProfilsUserTools/Education';
 import { FlatList } from 'react-native';
+import Modal from "react-native-modal";
+import AddEducation from '../../../screens/Profile/EducationScreen/AddEducation';
 
 const Studies = () => {
     const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const Studies = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [universities, setUniversities] = useState([]);
+    const [addEducation, setAddEducation] = useState(false)
     const userData = useSelector((state) => state.userReducer);
     const navigation = useNavigation();
 
@@ -44,6 +47,9 @@ const Studies = () => {
         navigation.navigate("Education")
     };
 
+    const showModal = () => {
+        setAddEducation(!addEducation)
+    }
 
 
     return (
@@ -83,6 +89,7 @@ const Studies = () => {
                         justifyContent: "space-evenly"
                     }}>
                     <TouchableOpacity
+                        onPress={showModal}
                         style={{
                             width: 50,
                             height: 50,
@@ -168,7 +175,21 @@ const Studies = () => {
                         </View>
                     )
             }
-
+            <Modal
+                isVisible={addEducation}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onBackdropPress={showModal}
+                style={{ margin: 0, justifyContent: 'center' }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2"
+                    }}>
+                    <AddEducation showModal={showModal} />
+                </View>
+            </Modal>
         </View>
     )
 }

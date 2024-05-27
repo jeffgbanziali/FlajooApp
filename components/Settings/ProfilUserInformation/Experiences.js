@@ -127,7 +127,7 @@ const Experiences = () => {
                             }}
 
                         />
-                        {userData.experience.length > 2 && (
+                        {userData.experience.length > 1 && (
                             <TouchableOpacity
                                 style={{
                                     height: 40,

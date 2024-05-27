@@ -7,9 +7,12 @@ export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const SIGNIN_USER = "SIGNIN_USER";
 export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
+export const ADD_EDUCATION_REQUEST = 'ADD_EDUCATION_REQUEST';
+export const ADD_EDUCATION_SUCCESS = 'ADD_EDUCATION_SUCCESS';
+export const ADD_EDUCATION_FAILURE = 'ADD_EDUCATION_FAILURE';
 export const LOGOUT_USER = "LOGOUT_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
-export const ADD_FAVORITE_POST = "ADD_FAVORITE_POST"
+export const ADD_EDUCATION = "ADD_EDUCATION"
 export const REMOVE_FAVORITE_POST = "REMOVE_FAVORITE_POST"
 export const SAVED_POST = "SAVED_POST"
 export const REMOVE_SAVED_POST = "REMOVE_SAVED_POST"
@@ -33,7 +36,22 @@ export const getUser = (uid) => {
 
 
 
-
+export const addEducation = (userId, education) => async (dispatch) => {
+    dispatch({ type: ADD_EDUCATION_REQUEST });
+  
+    try {
+      const response = await axios.post(`${APP_API_URL}/api/user/add-education`, { userId, education });
+      dispatch({
+        type: ADD_EDUCATION_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_EDUCATION_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
 
 
 

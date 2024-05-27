@@ -13,7 +13,10 @@ import {
     ADD_FAVORITE_POST,
     REMOVE_FAVORITE_POST,
     REMOVE_SAVED_POST,
-    SAVED_POST
+    SAVED_POST,
+    ADD_EDUCATION_REQUEST,
+    ADD_EDUCATION_SUCCESS,
+    ADD_EDUCATION_FAILURE
 } from '../actions/user.action';
 
 const initialState = {
@@ -29,6 +32,25 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 picture: action.payload,
+            };
+
+        case ADD_EDUCATION_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case ADD_EDUCATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                error: null,
+            };
+        case ADD_EDUCATION_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
             };
 
         case SIGNIN_USER:

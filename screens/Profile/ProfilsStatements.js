@@ -3,10 +3,11 @@ import {
     View,
     Text,
     StyleSheet,
-    Modal,
     TouchableOpacity,
     Image,
     Pressable,
+    Easing,
+    Animated,
 } from "react-native";
 import { useSelector } from "react-redux";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -16,8 +17,7 @@ import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import EducationModal from "./EducationScreen/EducationModal";
-import ExperienceModal from "./ExpérienceScreen/ExperienceModal";
+import Modal from "react-native-modal";
 
 
 
@@ -25,7 +25,6 @@ import ExperienceModal from "./ExpérienceScreen/ExperienceModal";
 
 
 const ProfilsStatements = () => {
-    const [showEducation, setShowEducation] = useState(false);
     const [showExperience, setShowExperience] = useState(false);
 
     const userData = useSelector((state) => state.userReducer);
@@ -58,12 +57,15 @@ const ProfilsStatements = () => {
     };
 
 
+
     const showModal = () => {
-        setShowEducation(!showEducation);
+        navigation.navigate('Education')
     };
 
+
     const showExperienceModal = () => {
-        setShowExperience(!showExperience);
+        navigation.navigate('Experience')
+
     }
 
 
@@ -291,6 +293,7 @@ const ProfilsStatements = () => {
                             color={isDarkMode ? "white" : "black"}
                         />
                     </TouchableOpacity>
+
                     <TouchableOpacity
                         onPress={showExperienceModal}
                         style={{
@@ -327,27 +330,8 @@ const ProfilsStatements = () => {
                 </View>
             </View>
 
-            <Modal
-                visible={showEducation}
-                transparent={true}
-                animationIn="pulse"
-                animationOut="fadeOut"
-                onRequestClose={showModal}
-            >
-                <EducationModal showModal={showModal} />
 
-            </Modal>
 
-            <Modal
-                visible={showExperience}
-                transparent={true}
-                animationIn="pulse"
-                animationOut="fadeOut"
-                onRequestClose={showModal}
-            >
-                <ExperienceModal showModal={showExperienceModal} />
-
-            </Modal>
 
         </>
 

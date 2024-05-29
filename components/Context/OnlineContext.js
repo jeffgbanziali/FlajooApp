@@ -34,7 +34,7 @@ export const OnlineStatusProvider = ({ children }) => {
     useEffect(() => {
         const fetchUid = async () => {
             const storedUid = await AsyncStorage.getItem("uid") || await AsyncStorage.getItem("user")
-            console.log("Mon user uid", storedUid)
+
             setUid(storedUid);
         };
 
@@ -50,7 +50,11 @@ export const OnlineStatusProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserOnline = async () => {
 
-            if (isInternetConnected) {
+            const token = await AsyncStorage.getItem("token")
+            console.log("Mon user token", token)
+
+
+            if (isInternetConnected && token) {
 
                 socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
                 //console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);

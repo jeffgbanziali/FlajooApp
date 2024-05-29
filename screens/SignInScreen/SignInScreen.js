@@ -80,13 +80,13 @@ const SignInScreen = () => {
         const userIdSave = response.data.user;
         if (userIdSave) {
           await AsyncStorage.setItem("user", JSON.stringify(userIdSave));
-          console.log("Token saved");
+          //  console.log("Token saved");
           setUid(userIdSave);
-          console.log("Mon id est bien suavegader", userIdSave);
-          console.log(userIdSave);
+          // console.log("Mon id est bien suavegader", userIdSave);
+          // console.log(userIdSave);
         }
-        console.log("User authenticated successfully");
-        console.log("La reponse", response);
+        // console.log("User authenticated successfully");
+        //console.log("La reponse", response);
         //alert("User logged in successfully");
       } else {
         if (

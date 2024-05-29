@@ -86,14 +86,28 @@ const Stories = () => {
 
 
 
-    /* console.log("viens à moi mon container", item._id)
-     console.log("viens à moi ma story", item.container.stories[0]._id)
-     console.log("viens à moi mon id", uid)*/
+    const foundUser = usersData.map(user => {
+      if (user._id === item.container.posterId) {
+        return user;
+      }
+      return null;
+    }).filter(user => user !== null)[0]
+
+
+    const isUserOnline = foundUser.onlineStatus === true
+
+
+
+    console.log("viens à moi mon container", foundUser.onlineStatus)
+    /* console.log("viens à moi ma story", item.container.stories[0]._id)
+     console.log("viens à moi mon id", uid) */
+
 
 
     return (
 
-      <View key={item._id}>
+
+      < View key={item._id} >
 
 
         <TouchableOpacity
@@ -212,58 +226,46 @@ const Stories = () => {
               position: "relative",
             }}
           />
-          <View
+
+          {isUserOnline && (<View
             style={{
-              borderRadius: 30,
-              marginLeft: 60,
-              marginTop: -28,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "#09C03C",
-                width: 12,
-                height: 12,
-                borderRadius: 25,
-                borderWidth: 2,
-                borderColor: "#000000",
-                justifyContent: "center",
-                alignSelf: "center",
-                alignItems: "center",
-                marginLeft: -18,
-                marginTop: 10,
-                zIndex: 100,
-              }}
-            ></View>
-          </View>
-          <View
-            style={{
-              marginLeft: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 12,
-                fontWeight: "600",
-                marginTop: 10,
-              }}
-            >
-              {!isEmpty(usersData[0]) &&
-                usersData.map((user) => {
-                  if (user._id === item.container.posterId) return user.pseudo;
-                  else return null;
-                })}
-            </Text>
-          </View>
+              backgroundColor: "#09C03C",
+              position: "absolute",
+              right: 30,
+              width: 10,
+              height: 10,
+              borderRadius: 25,
+              borderWidth: 2,
+              borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+              top: 30,
+              zIndex: 100
+            }}>
+          </View>)}
+
+
         </View>
-
-
-      </View>
+        <View
+          style={{
+            marginLeft: 10,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontSize: 12,
+              fontWeight: "600",
+            }}
+          >
+            {!isEmpty(usersData[0]) &&
+              usersData.map((user) => {
+                if (user._id === item.container.posterId) return user.pseudo;
+                else return null;
+              })}
+          </Text>
+        </View>
+      </View >
     );
   }
 

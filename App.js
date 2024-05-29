@@ -35,7 +35,7 @@ const App = () => {
 
 
     const connectToRemoteDebugger = () => {
-        NativeDevSettings.setIsDebuggingRemotely(true);
+        NativeDevSettings.setIsDebuggingRemotely(false);
     };
 
 
@@ -106,7 +106,6 @@ const AppW = () => {
                 });
                 setUid(response.data);
                 AsyncStorage.setItem('uid', response.data);
-                console.log("C'est toi ma repose?", response.data);
 
                 //AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
             } catch (error) {

@@ -98,7 +98,7 @@ const Stories = () => {
 
 
 
-    console.log("viens à moi mon container", foundUser.onlineStatus)
+    console.log("viens à moi mon container", foundUser.pseudo)
     /* console.log("viens à moi ma story", item.container.stories[0]._id)
      console.log("viens à moi mon id", uid) */
 

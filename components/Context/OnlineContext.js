@@ -54,7 +54,7 @@ export const OnlineStatusProvider = ({ children }) => {
             console.log("Mon user token", token)
 
 
-            if (isInternetConnected && token) {
+            if (isInternetConnected) {
 
                 socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
                 //console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);

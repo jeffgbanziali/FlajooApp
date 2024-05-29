@@ -93,7 +93,7 @@ const AppW = () => {
                     setIsFirstTime(false);
                 }
             });
-    }, [isFirstTime]);
+    }, []);
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -106,15 +106,13 @@ const AppW = () => {
                 });
                 setUid(response.data);
                 AsyncStorage.setItem('uid', response.data);
-                AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+                //AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
             } catch (error) {
                 console.log("No token", error);
             }
 
             finally {
-                setTimeout(() => {
-                    setIsLoadingApp(false);
-                }, 1500);
+                setIsLoadingApp(false);
             }
         };
 
@@ -124,32 +122,41 @@ const AppW = () => {
         }
 
 
-    }, [isDarkMode, uid, dispatch]);
+    }, [uid, dispatch]);
 
+    if (!isConnected && !isInternetConnected) {
+        return <Loading />;
+    }
+    
     return (
 
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {/*
+            {
                 isLoadingApp ?
-                    <Loading /> :   */ }
+                    <Loading /> :
                     <NavigationContainer>
 
                         {
-
-                            isFirstTime ?
-                                <FirstNavigation />
-                                : uid ?
+                            isFirstTime ? (
+                                uid ? (
                                     <StackNavigation />
-
-                                    :
+                                ) : (
+                                    <FirstNavigation />
+                                )
+                            ) : (
+                                uid ? (
+                                    <StackNavigation />
+                                ) : (
                                     <AuthNavigation />
-
+                                )
+                            )
                         }
-                    </NavigationContainer>
-        
 
+                    </NavigationContainer>
+
+            }
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}
             />

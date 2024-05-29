@@ -2,8 +2,10 @@ import React, { createContext, useContext, useState, useEffect, useRef } from 'r
 import io from 'socket.io-client';
 import NetInfo from '@react-native-community/netinfo';
 import { MESSAGE_ADRESS_IP } from '../../config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getUser } from '../../actions/user.action';
+import { UidContext } from './AppContext';
 
 // Créer le contexte
 const OnlineStatusContext = createContext();
@@ -15,6 +17,8 @@ export const OnlineStatusProvider = ({ children }) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
     const socket = useRef(null);
     const userData = useSelector((state) => state.userReducer);
+    const [uid, setUid] = useState(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const unsubscribeNetInfo = NetInfo.addEventListener(state => {
@@ -25,22 +29,36 @@ export const OnlineStatusProvider = ({ children }) => {
             unsubscribeNetInfo();
         };
     }, []);
+    useEffect(() => {
+        const fetchUid = async () => {
+            const storedUid = await AsyncStorage.getItem("uid");
+            setUid(storedUid);
+        };
+
+        fetchUid();
+
+    }, []);
+
+    useEffect(() => {
+        dispatch(getUser(uid));
+    }, [dispatch, uid]);
+
 
     useEffect(() => {
         const fetchUserOnline = async () => {
-            if (isInternetConnected) {
 
+            if (isInternetConnected) {
 
                 socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
                 //console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);
 
                 socket.current.on('connect', () => {
                     setIsConnected(true);
-                  //  console.log('Connected to server');
-                   // console.log(userData._id, "Utilisateur connecté !!!!", socket.current.id);
-                    socket.current.emit("addUser", userData._id);
-                    socket.current.emit("onlineStatusChanged", { userId: userData._id, onlineStatus: true });
-                    //console.log("Tu es en ligne ou pas !!!!", userData.onlineStatus, "donnde moi ton id", userData._id, "donne moi ton pseudo", userData.pseudo);
+                    console.log('Connected to server');
+                    console.log(uid, "Utilisateur connecté !!!!", socket.current.id);
+                    socket.current.emit("addUser", uid);
+                    socket.current.emit("onlineStatusChanged", { userId: uid, onlineStatus: true });
+                    //console.log("Tu es en ligne ou pas !!!!", userData, "donnde moi ton id", uid, "donne moi ton pseudo", userData.pseudo);
                 });
 
                 socket.current.on('connect_error', (error) => {
@@ -50,15 +68,15 @@ export const OnlineStatusProvider = ({ children }) => {
                 // Gérer la déconnexion
                 socket.current.on('disconnect', () => {
                     setIsConnected(false);
-                   // console.log('Disconnected from server');
-                    if (userData) {
-                        socket.current.emit("removeUser", userData._id);
+                    // console.log('Disconnected from server');
+                    if (uid) {
+                        socket.current.emit("removeUser", uid);
                     }
                 });
             } else {
                 setIsConnected(false);
-                if (socket.current && userData) {
-                    socket.current.emit("removeUser", userData._id);
+                if (socket.current && uid) {
+                    socket.current.emit("removeUser", uid);
                 }
             }
         };
@@ -74,7 +92,7 @@ export const OnlineStatusProvider = ({ children }) => {
                 socket.current.disconnect();
             }
         };
-    }, [isInternetConnected, userData._id]);
+    }, [isInternetConnected, uid]);
 
     return (
         <OnlineStatusContext.Provider value={{ isConnected, isInternetConnected }}>

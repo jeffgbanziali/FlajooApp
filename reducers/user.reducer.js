@@ -16,7 +16,10 @@ import {
     SAVED_POST,
     ADD_EDUCATION_REQUEST,
     ADD_EDUCATION_SUCCESS,
-    ADD_EDUCATION_FAILURE
+    ADD_EDUCATION_FAILURE,
+    ADD_EXPERIENCE_REQUEST,
+    ADD_EXPERIENCE_SUCCESS,
+    ADD_EXPERIENCE_FAILURE
 } from '../actions/user.action';
 
 const initialState = {
@@ -47,6 +50,25 @@ export default function userReducer(state = initialState, action) {
                 error: null,
             };
         case ADD_EDUCATION_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+
+        case ADD_EXPERIENCE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case ADD_EXPERIENCE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                error: null,
+            };
+        case ADD_EXPERIENCE_FAILURE:
             return {
                 ...state,
                 loading: false,

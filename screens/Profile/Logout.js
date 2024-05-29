@@ -16,7 +16,6 @@ const Logout = () => {
     try {
       setIsLoadingSignOut(true);
       await AsyncStorage.removeItem("token");
-      await AsyncStorage.removeItem("userId");
       await axios.get(`${APP_API_URL}/api/user/logout`);
       setUid(null);
       console.log("Logged out");

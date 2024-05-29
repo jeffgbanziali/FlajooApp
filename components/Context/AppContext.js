@@ -17,7 +17,7 @@ export const DarkModeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [isConnected, setIsConnected] = useState(true);
-  
+
   useEffect(() => {
     // Écoutez les changements de connexion réseau
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -31,8 +31,16 @@ export const DarkModeProvider = ({ children }) => {
 
 
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
+
+  const toggleDarkMode = async () => {
+    try {
+      // Inverse la valeur de isDarkMode
+      setIsDarkMode(prevMode => !prevMode);
+      // Enregistre la nouvelle valeur dans AsyncStorage
+      await AsyncStorage.setItem('isDarkMode', JSON.stringify(!isDarkMode));
+    } catch (error) {
+      console.error("Error toggling dark mode:", error);
+    }
   };
 
   const changeLanguage = async (language) => {

@@ -10,6 +10,9 @@ export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 export const ADD_EDUCATION_REQUEST = 'ADD_EDUCATION_REQUEST';
 export const ADD_EDUCATION_SUCCESS = 'ADD_EDUCATION_SUCCESS';
 export const ADD_EDUCATION_FAILURE = 'ADD_EDUCATION_FAILURE';
+export const ADD_EXPERIENCE_REQUEST = 'ADD_EXPERIENCE_REQUEST';
+export const ADD_EXPERIENCE_SUCCESS = 'ADD_EXPERIENCE_SUCCESS';
+export const ADD_EXPERIENCE_FAILURE = 'ADD_EXPERIENCE_FAILURE';
 export const LOGOUT_USER = "LOGOUT_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const ADD_EDUCATION = "ADD_EDUCATION"
@@ -38,20 +41,38 @@ export const getUser = (uid) => {
 
 export const addEducation = (userId, education) => async (dispatch) => {
     dispatch({ type: ADD_EDUCATION_REQUEST });
-  
+
     try {
-      const response = await axios.post(`${APP_API_URL}/api/user/add-education`, { userId, education });
-      dispatch({
-        type: ADD_EDUCATION_SUCCESS,
-        payload: response.data,
-      });
+        const response = await axios.post(`${APP_API_URL}/api/user/add-education`, { userId, education });
+        dispatch({
+            type: ADD_EDUCATION_SUCCESS,
+            payload: response.data,
+        });
     } catch (error) {
-      dispatch({
-        type: ADD_EDUCATION_FAILURE,
-        payload: error.message,
-      });
+        dispatch({
+            type: ADD_EDUCATION_FAILURE,
+            payload: error.message,
+        });
     }
-  };
+};
+
+
+export const addExperience = (userId, education) => async (dispatch) => {
+    dispatch({ type: ADD_EXPERIENCE_REQUEST });
+
+    try {
+        const response = await axios.post(`${APP_API_URL}/api/user/add-education`, { userId, education });
+        dispatch({
+            type: ADD_EXPERIENCE_SUCCESS,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch({
+            type: ADD_EXPERIENCE_FAILURE,
+            payload: error.message,
+        });
+    }
+};
 
 
 

@@ -28,6 +28,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RNFS from 'react-native-fs';
 import { useDarkMode } from "../../../components/Context/AppContext";
 import ExperienceTools from "./ExperienceTools";
+import AddExperience from "./addExpérience";
 
 const ExperienceScreen = () => {
 
@@ -37,6 +38,7 @@ const ExperienceScreen = () => {
     const [showImage, setShowImage] = useState(false);
     const [loadUsers, setLoadUSers] = useState(true);
     const userData = useSelector((state) => state.userReducer);
+    const [addingExperience, setAddingExperience] = useState(false)
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
     const [showTools, setShowTools] = useState(false);
@@ -47,6 +49,12 @@ const ExperienceScreen = () => {
         console.log("clicked home");
         navigation.goBack("Profile");
     };
+
+
+    const showModal = () => {
+        setAddingExperience(!addingExperience)
+    }
+
     return (
         <SafeAreaView
             style={{
@@ -100,6 +108,7 @@ const ExperienceScreen = () => {
                         justifyContent: "space-evenly"
                     }}>
                     <TouchableOpacity
+                        onPress={showModal}
                         style={{
                             width: 50,
                             height: 50,
@@ -167,6 +176,23 @@ const ExperienceScreen = () => {
                         </View>
                     )
             }
+
+            <Modal
+                isVisible={addingExperience}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onBackdropPress={showModal}
+                style={{ margin: 0, justifyContent: 'center' }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2"
+                    }}>
+                    <AddExperience showModal={showModal} />
+                </View>
+            </Modal>
+
         </SafeAreaView>
     )
 }

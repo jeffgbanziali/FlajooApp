@@ -67,7 +67,7 @@ const ContinueWithGmail = () => {
             pseudo: userInfo.user.name,
         };
 
-        console.log('mes bébé vous êtes où?', userInfo);
+        // console.log('mes bébé vous êtes où?', userInfo);
         try {
             const response = await axios.post(url, { idToken, ...data }, { // Send only idToken
                 headers: {
@@ -84,13 +84,13 @@ const ContinueWithGmail = () => {
                 console.log("La reponse", response);
                 navigation.navigate("VerifyStartPage", { user: response.data });
             } else if (response.status === 200) {
-                const user = response.data;
-                if (user) {
-                    await AsyncStorage.setItem("user", JSON.stringify(user));
+                const userIdSave = response.data.user;
+                if (userIdSave) {
+                    await AsyncStorage.setItem("user", JSON.stringify(userIdSave));
                     console.log("Token saved");
-                    setUid(user);
-                    console.log("Mon id est bien suavegader", response.data);
-                    console.log(user);
+                    setUid(userIdSave);
+                    console.log("Mon id est bien suavegader", userIdSave);
+                    console.log(userIdSave);
                 }
                 console.log("User authenticated successfully");
                 console.log("La reponse", response);

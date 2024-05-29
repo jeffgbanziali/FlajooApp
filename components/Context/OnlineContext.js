@@ -29,9 +29,12 @@ export const OnlineStatusProvider = ({ children }) => {
             unsubscribeNetInfo();
         };
     }, []);
+
+
     useEffect(() => {
         const fetchUid = async () => {
-            const storedUid = await AsyncStorage.getItem("uid");
+            const storedUid = await AsyncStorage.getItem("uid") || await AsyncStorage.getItem("user")
+            console.log("Mon user uid", storedUid)
             setUid(storedUid);
         };
 

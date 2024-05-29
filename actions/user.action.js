@@ -57,11 +57,11 @@ export const addEducation = (userId, education) => async (dispatch) => {
 };
 
 
-export const addExperience = (userId, education) => async (dispatch) => {
+export const addExperience = (userId, experience) => async (dispatch) => {
     dispatch({ type: ADD_EXPERIENCE_REQUEST });
 
     try {
-        const response = await axios.post(`${APP_API_URL}/api/user/add-education`, { userId, education });
+        const response = await axios.post(`${APP_API_URL}/api/user/add-experience`, { userId, experience });
         dispatch({
             type: ADD_EXPERIENCE_SUCCESS,
             payload: response.data,

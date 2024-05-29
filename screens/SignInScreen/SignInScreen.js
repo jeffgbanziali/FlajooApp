@@ -63,7 +63,6 @@ const SignInScreen = () => {
     setIsLoadingSignIn(true);
 
     const data = { email, password };
-    console.log("ma data est là", data)
 
     try {
       const response = await axios.post(
@@ -78,15 +77,17 @@ const SignInScreen = () => {
       );
 
       if (response.status === 200) {
-        const user = response.data;
-        if (user) {
-          await AsyncStorage.setItem("user", JSON.stringify(user));
+        const userIdSave = response.data.user;
+        if (userIdSave) {
+          await AsyncStorage.setItem("user", JSON.stringify(userIdSave));
           console.log("Token saved");
-          setUid(user);
-          console.log("Mon id est bien suavegader", response.data);
-          console.log(user);
+          setUid(userIdSave);
+          console.log("Mon id est bien suavegader", userIdSave);
+          console.log(userIdSave);
         }
-        alert("User logged in successfully");
+        console.log("User authenticated successfully");
+        console.log("La reponse", response);
+        //alert("User logged in successfully");
       } else {
         if (
           response.data.errors.email !== "" ||

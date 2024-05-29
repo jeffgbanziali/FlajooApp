@@ -11,6 +11,9 @@ import axios from 'axios';
 import Education from '../ProfilsUserTools/Education';
 import { FlatList } from 'react-native';
 import ExpeAlls from '../ProfilsUserTools/ExpeAlls';
+import Modal from "react-native-modal";
+import AddExperience from '../../../screens/Profile/ExpérienceScreen/addExpérience';
+
 
 const Experiences = () => {
     const dispatch = useDispatch();
@@ -19,6 +22,7 @@ const Experiences = () => {
 
     const [disciplines, setDisciplines] = useState([]);
     const [secteurs, setSecteurs] = useState([]);
+    const [addingExperience, setAddingExperience] = useState(false)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [universities, setUniversities] = useState([]);
@@ -45,7 +49,9 @@ const Experiences = () => {
         navigation.navigate("Experience")
     };
 
-
+    const showModal = () => {
+        setAddingExperience(!addingExperience)
+    }
 
     return (
         <View
@@ -84,6 +90,7 @@ const Experiences = () => {
                         justifyContent: "space-evenly"
                     }}>
                     <TouchableOpacity
+                        onPress={showModal}
                         style={{
                             width: 50,
                             height: 50,
@@ -169,7 +176,21 @@ const Experiences = () => {
                         </View>
                     )
             }
-
+            <Modal
+                isVisible={addingExperience}
+                animationIn="pulse"
+                animationOut="fadeOut"
+                onBackdropPress={showModal}
+                style={{ margin: 0, justifyContent: 'center' }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2"
+                    }}>
+                    <AddExperience showModal={showModal} />
+                </View>
+            </Modal>
         </View>
     )
 }

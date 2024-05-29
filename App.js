@@ -35,7 +35,7 @@ const App = () => {
 
 
     const connectToRemoteDebugger = () => {
-        NativeDevSettings.setIsDebuggingRemotely(false);
+        NativeDevSettings.setIsDebuggingRemotely(true);
     };
 
 

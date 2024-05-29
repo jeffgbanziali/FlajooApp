@@ -13,6 +13,7 @@ import FollowHandler from "../ProfileUtils.js/FollowHandler";
 import { TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { useDarkMode } from "../Context/AppContext";
 
 const FriendsFollowing = () => {
   const route = useRoute();
@@ -20,6 +21,7 @@ const FriendsFollowing = () => {
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const users = usersData.find((user) => user._id === id);
+  const { isDarkMode, isConnected } = useDarkMode();
 
   const navigation = useNavigation();
 
@@ -40,7 +42,7 @@ const FriendsFollowing = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
       }}
     >
       <SafeAreaView >
@@ -55,7 +57,7 @@ const FriendsFollowing = () => {
             style={{
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "#161414",
+              backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
               width: 40,
               height: 40,
               borderRadius: 30,
@@ -63,19 +65,17 @@ const FriendsFollowing = () => {
               marginTop: "1.5%",
             }}
           >
-            <View>
-              <AntDesign
-                name="arrowleft"
-                size={25}
-                color="#5F5858"
-              />
-            </View>
+            <AntDesign
+              name="arrowleft"
+              size={25}
+              color={isDarkMode ? "white" : "black"}
+            />
           </TouchableOpacity>
           <Text
             style={{
               fontSize: 28,
               fontWeight: "semibold",
-              color: "#F6F6F6",
+              color: isDarkMode ? "white" : "black",
               textAlign: "center",
               marginRight: "4.5%",
             }}
@@ -135,7 +135,7 @@ const FriendsFollowing = () => {
                           style={{
                             fontSize: 16,
                             fontWeight: "bold",
-                            color: "#F6F6F6",
+                            color: isDarkMode ? "white" : "black",
                             textAlign: "center",
                             marginLeft: 16,
                             justifyContent: "center",
@@ -160,7 +160,7 @@ const FriendsFollowing = () => {
                           <Text
                             style={{
                               fontSize: 20,
-                              color: "white"
+                              color: isDarkMode ? "white" : "black",
                             }}>
                             {t('You')}
                           </Text>

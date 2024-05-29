@@ -12,11 +12,13 @@ import FollowHandler from "./FollowHandler";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useTranslation } from "react-i18next";
+import { useDarkMode } from "../Context/AppContext";
 
 
 const MyFollowers = () => {
   const userData = useSelector((state) => state.userReducer);
   const usersData = useSelector((state) => state.usersReducer);
+  const { isDarkMode, isConnected } = useDarkMode();
 
 
   const { t } = useTranslation();
@@ -37,7 +39,8 @@ const MyFollowers = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+
       }}
     >
       <SafeAreaView>
@@ -51,8 +54,8 @@ const MyFollowers = () => {
             onPress={handleClickReturnProfile}
             style={{
               justifyContent: "center",
-              alignSelf: "center",
-              backgroundColor: "#161414",
+              alignItems: "center",
+              backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
               width: 40,
               height: 40,
               borderRadius: 30,
@@ -60,25 +63,18 @@ const MyFollowers = () => {
               marginTop: "1.5%",
             }}
           >
-            <View>
-              <AntDesign
-                name="arrowleft"
-                size={25}
-                color="#5F5858"
-                style={{
-                  alignSelf: "center",
-                  alignContent: "center",
-                  alignItems: "center",
-                  resizeMode: "contain",
-                }}
-              />
-            </View>
+            <AntDesign
+              name="arrowleft"
+              size={25}
+              color={isDarkMode ? "white" : "black"}
+
+            />
           </TouchableOpacity>
           <Text
             style={{
               fontSize: 28,
               fontWeight: "semibold",
-              color: "#F6F6F6",
+              color: isDarkMode ? "white" : "black",
               textAlign: "center",
               marginRight: "4.5%",
             }}
@@ -137,7 +133,7 @@ const MyFollowers = () => {
                             style={{
                               fontSize: 16,
                               fontWeight: "bold",
-                              color: "#F6F6F6",
+                              color: isDarkMode ? "white" : "black",
                               textAlign: "center",
                               marginLeft: 16,
                               justifyContent: "center",

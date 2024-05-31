@@ -1,11 +1,23 @@
-import { GET_POSTS, DELETE_POST, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR, LIKE_COMMENT, UNLIKE_COMMENT, LIKE_REPLY, UNLIKE_REPLY, DELETE_COMMENT } from "../actions/post.actions";
+import { GET_POSTS, DELETE_POST, LIKE_POST, UNLIKE_POST, ADD_COMMENT, ADD_REPLY, CREATE_POST_ERROR, LIKE_COMMENT, UNLIKE_COMMENT, LIKE_REPLY, UNLIKE_REPLY, DELETE_COMMENT, FETCH_RECOMMENDATIONS } from "../actions/post.actions";
 
-const initialState = {};
+const initialState = {
+    recommendations: [],
+    post: [],
+};
 
 export default function postReducer(state = initialState, action) {
     switch (action.type) {
+
+
+        case FETCH_RECOMMENDATIONS:
+            return {
+                recommendations: action.payload,
+            };
+
         case GET_POSTS:
-            return action.payload;
+            return {
+                post: action.payload
+            };
         case DELETE_POST:
             // Supprime le post du state en filtrant les posts ayant un id différent de celui supprimé
             return state.filter(post => post._id !== action.payload.postId);

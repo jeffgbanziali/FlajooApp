@@ -16,7 +16,22 @@ export const LIKE_REPLY = 'LIKE_REPLY';
 export const UNLIKE_REPLY = 'UNLIKE_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
+export const FETCH_RECOMMENDATIONS = 'FETCH_RECOMMENDATIONS';
 
+
+
+export const fetchRecommendations = (userId) => {
+    return async dispatch => {
+
+        try {
+            const response = await axios.get(`${APP_API_URL}/api/post/actuality-file/my-user/${userId}`);
+            dispatch({ type: FETCH_RECOMMENDATIONS, payload: response.data });
+            
+        } catch (error) {
+            console.error('Error while fetching posts:', error);
+        }
+    }
+};
 
 
 

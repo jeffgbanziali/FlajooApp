@@ -30,11 +30,18 @@ const FriendsFollowing = () => {
 
   const handleClickReturnProfile = () => {
     console.log("clicked");
-    navigation.goBack("ProfilFriends", { id });
+    navigation.goBack();
   };
 
 
 
+  const goProfil = (id) => {
+    if (userData._id === id) {
+      navigation.navigate("Profile", { id });
+    } else {
+      navigation.navigate("ProfilFriends", { id });
+    }
+  };
 
 
   return (
@@ -109,7 +116,8 @@ const FriendsFollowing = () => {
                       }}
                       key={user._id}
                     >
-                      <View
+                      <TouchableOpacity
+                        onPress={() => goProfil(user._id)}
                         style={{
                           padding: 5,
                           marginTop: 10,
@@ -146,7 +154,7 @@ const FriendsFollowing = () => {
                         >
                           {user.pseudo}
                         </Text>
-                      </View>
+                      </TouchableOpacity>
 
                       <View
                         style={{

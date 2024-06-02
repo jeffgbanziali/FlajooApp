@@ -25,12 +25,21 @@ const MyFollowers = () => {
 
 
   const navigation = useNavigation();
+
+
   const handleClickReturnProfile = () => {
     console.log("clicked");
     navigation.goBack("TabNavigation");
   };
 
 
+  const goProfil = (id) => {
+    if (userData._id === id) {
+      navigation.navigate("Profile", { id });
+    } else {
+      navigation.navigate("ProfilFriends", { id });
+    }
+  };
 
 
 
@@ -107,7 +116,8 @@ const MyFollowers = () => {
                           width: "100%"
                         }}
                       >
-                        <View
+                        <TouchableOpacity
+                          onPress={() => goProfil(user._id)}
                           style={{
                             padding: 5,
                             marginTop: 10,
@@ -144,7 +154,7 @@ const MyFollowers = () => {
                           >
                             {user.pseudo}
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                         <View
                           style={{
                             padding: 5,

@@ -30,6 +30,18 @@ const FriendsFollowers = () => {
     console.log("clicked");
     navigation.goBack("ProfilFriends", { id });
   };
+
+
+
+  const goProfil = (id) => {
+    if (userData._id === id) {
+      navigation.navigate("Profile", { id });
+    } else {
+      navigation.navigate("ProfilFriends", { id });
+    }
+  };
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -100,7 +112,8 @@ const FriendsFollowers = () => {
                         width: "100%"
                       }}
                     >
-                      <View
+                      <TouchableOpacity
+                        onPress={() => goProfil(user._id)}
                         style={{
                           padding: 5,
                           marginTop: 10,
@@ -137,7 +150,7 @@ const FriendsFollowers = () => {
                         >
                           {user.pseudo}
                         </Text>
-                      </View>
+                      </TouchableOpacity>
 
                       <View
                         style={{

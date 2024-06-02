@@ -30,28 +30,25 @@ const App = () => {
 
     const store = createStore(
         rootReducer,
-        composeWithDevTools(applyMiddleware(thunk,))
+        composeWithDevTools(applyMiddleware(thunk))
     );
 
 
     const connectToRemoteDebugger = () => {
-        NativeDevSettings.setIsDebuggingRemotely(false);
+        NativeDevSettings.setIsDebuggingRemotely(true);
     };
 
 
     connectToRemoteDebugger()
 
 
-    store.dispatch(getUsers());
-    store.dispatch(getPosts());
-    store.dispatch(getStories());
-    store.dispatch(getVideoReels());
+
 
     return (
         <Provider store={store}>
             <DarkModeProvider>
                 <OnlineStatusProvider>
-                    <AppW />
+                    <AppW store={store} />
                 </OnlineStatusProvider>
             </DarkModeProvider>
         </Provider>
@@ -75,7 +72,7 @@ axios.interceptors.request.use(
 
 
 
-const AppW = () => {
+const AppW = ({ store }) => {
 
     const [uid, setUid] = useState(null);
 
@@ -85,6 +82,16 @@ const AppW = () => {
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
     const { isConnected, isInternetConnected } = useOnlineStatus();
+
+
+
+    store.dispatch(getUsers());
+    store.dispatch(getPosts(uid));
+    store.dispatch(getStories());
+    store.dispatch(getVideoReels());
+
+
+
 
     useEffect(() => {
         AsyncStorage.getItem('uid')
@@ -97,7 +104,7 @@ const AppW = () => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            setIsLoadingApp(true)
+            // setIsLoadingApp(true)
             try {
                 const response = await axios({
                     method: "get",
@@ -112,9 +119,9 @@ const AppW = () => {
                 console.log("No token", error);
             }
 
-            finally {
-                setIsLoadingApp(false);
-            }
+            /* finally {
+                 setIsLoadingApp(false);
+             }*/
         };
 
         fetchToken();
@@ -134,30 +141,31 @@ const AppW = () => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {
+            {/*
                 isLoadingApp ?
                     <Loading /> :
-                    <NavigationContainer>
+       */     }
 
-                        {
-                            isFirstTime ? (
-                                uid ? (
-                                    <StackNavigation />
-                                ) : (
-                                    <FirstNavigation />
-                                )
-                            ) : (
-                                uid ? (
-                                    <StackNavigation />
-                                ) : (
-                                    <AuthNavigation />
-                                )
-                            )
-                        }
+            <NavigationContainer>
 
-                    </NavigationContainer>
+                {
+                    isFirstTime ? (
+                        uid ? (
+                            <StackNavigation />
+                        ) : (
+                            <FirstNavigation />
+                        )
+                    ) : (
+                        uid ? (
+                            <StackNavigation />
+                        ) : (
+                            <AuthNavigation />
+                        )
+                    )
+                }
 
-            }
+            </NavigationContainer>
+
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}
             />

@@ -12,32 +12,30 @@ const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
   //const posting = useSelector((state) => state.postReducer.post);
-  const userRequire = useSelector(state => state.postReducer.recommendations);
+  const userRequire = useSelector(state => state.postReducer.post);
   const { isDarkMode } = useDarkMode();
   const { uid } = useContext(UidContext)
 
 
   const actualityFile = userRequire ? userRequire.recommendations : null
 
+  console.log('tu étias ou quand ça arrive', userRequire)
 
-  
-
-  useEffect(() => {
-    dispatch(fetchRecommendations(uid));
-  }, [dispatch, uid]);
 
 
   useEffect(() => {
     if (loadPost) {
-      dispatch(getPosts());
+      dispatch(getPosts(uid));
       setLoadPost(false);
     }
   }, [loadPost, dispatch]);
 
+
+
   const renderItem = ({ item }) => {
 
-    const usuallyPost = item.post
-    console.log("mes post", usuallyPost)
+
+
 
     return (
       <View
@@ -45,9 +43,9 @@ const Thread = () => {
           alignItems: "center",
           backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
         }}
-        key={usuallyPost._id}
+        key={item._id}
       >
-        <Posts post={usuallyPost} />
+        <Posts post={item} />
       </View>)
   }
 
@@ -55,7 +53,7 @@ const Thread = () => {
   return (
     <GestureHandlerRootView>
       <FlatList
-        data={actualityFile}
+        data={userRequire}
         keyExtractor={(post) => post._id}
         onEndReachedThreshold={0.5}
         renderItem={renderItem}

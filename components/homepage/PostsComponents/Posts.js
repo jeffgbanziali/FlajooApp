@@ -127,9 +127,6 @@ const Posts = ({ post }) => {
 
 
 
-
-
-
   useEffect(() => {
     !isEmpty(usersData)[0] && setIsLoading(false);
   }, [usersData]);
@@ -188,7 +185,7 @@ const Posts = ({ post }) => {
   const commentary = post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
 
 
-
+//console.log("Mes commentaires",commentary)
 
 
   return (

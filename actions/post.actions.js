@@ -16,17 +16,17 @@ export const LIKE_REPLY = 'LIKE_REPLY';
 export const UNLIKE_REPLY = 'UNLIKE_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
-export const FETCH_RECOMMENDATIONS = 'FETCH_RECOMMENDATIONS';
 
 
 
-export const fetchRecommendations = (userId) => {
+
+export const getPosts = (userId) => {
     return async dispatch => {
-
         try {
             const response = await axios.get(`${APP_API_URL}/api/post/actuality-file/my-user/${userId}`);
-            dispatch({ type: FETCH_RECOMMENDATIONS, payload: response.data });
-            
+            dispatch({ type: GET_POSTS, payload: response.data });
+            console.log('Mes posts sont là', response.data)
+
         } catch (error) {
             console.error('Error while fetching posts:', error);
         }
@@ -36,7 +36,7 @@ export const fetchRecommendations = (userId) => {
 
 
 
-export const getPosts = (num) => {
+/*export const getPosts = (num) => {
     return async (dispatch) => {
         try {
             const response = await axios.get(`${APP_API_URL}/api/post`);
@@ -46,15 +46,15 @@ export const getPosts = (num) => {
             console.error('Error while fetching posts:', error);
         }
     };
-};
+};*/
 
 
 
+// Add post
 export const addPosts = (data) => {
     return async (dispatch) => {
         try {
             const res = await axios.post(`${APP_API_URL}/api/post`, data);
-
             if (res.data.errors) {
                 dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
             } else {
@@ -67,37 +67,28 @@ export const addPosts = (data) => {
     };
 };
 
-
-
-
-
+// Delete post
 export const deletePost = (postId) => {
     return async (dispatch) => {
         try {
-            // Envoyer une requête DELETE pour supprimer le post avec l'ID spécifié
             const res = await axios.delete(`${APP_API_URL}/api/post/${postId}`);
-
-            // Si la suppression réussit, dispatchez une action DELETE_POST avec l'ID du post supprimé
             if (res.data.errors) {
                 dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
             } else {
                 dispatch({ type: DELETE_POST, payload: { postId } });
             }
         } catch (error) {
-            // En cas d'erreur, affichez l'erreur dans la console
             console.error('Erreur lors de la suppression du post:', error);
-            // Dispatchez une action CREATE_POST_ERROR avec un message d'erreur approprié
             dispatch({ type: CREATE_POST_ERROR, payload: 'Une erreur s\'est produite lors de la suppression du post.' });
         }
     };
 };
 
-
-
+// Like post
 export const likePost = (postId, userId) => {
     return async (dispatch) => {
         try {
-            await axios.patch(`${APP_API_URL}/api/post/like-post/` + postId, { id: userId });
+            await axios.patch(`${APP_API_URL}/api/post/like-post/${postId}`, { id: userId });
             dispatch({ type: LIKE_POST, payload: { postId, userId } });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du like:', error);
@@ -105,17 +96,11 @@ export const likePost = (postId, userId) => {
     };
 };
 
-
-
-
-
-
-
-
+// Unlike post
 export const unlikePost = (postId, userId) => {
     return async (dispatch) => {
         try {
-            await axios.patch(`${APP_API_URL}/api/post/unlike-post/` + postId, { id: userId });
+            await axios.patch(`${APP_API_URL}/api/post/unlike-post/${postId}`, { id: userId });
             dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du unlike:', error);
@@ -123,7 +108,7 @@ export const unlikePost = (postId, userId) => {
     };
 };
 
-
+// Like comment
 export const likeComment = (postId, commentId, userId) => {
     return async (dispatch) => {
         try {
@@ -135,7 +120,7 @@ export const likeComment = (postId, commentId, userId) => {
     };
 };
 
-
+// Unlike comment
 export const unlikeComment = (postId, commentId, userId) => {
     return async (dispatch) => {
         try {
@@ -147,7 +132,7 @@ export const unlikeComment = (postId, commentId, userId) => {
     };
 };
 
-
+// Like reply
 export const likeReply = (postId, commentId, replyId, userId) => {
     return async (dispatch) => {
         try {
@@ -159,7 +144,7 @@ export const likeReply = (postId, commentId, replyId, userId) => {
     };
 };
 
-
+// Unlike reply
 export const unlikeReply = (postId, commentId, replyId, userId) => {
     return async (dispatch) => {
         try {
@@ -171,90 +156,45 @@ export const unlikeReply = (postId, commentId, replyId, userId) => {
     };
 };
 
-
-
+// Add comment
 export const addComment = (postId, commenterId, text, commenterPseudo, commentMedia, commentType) => {
-
-    return (dispatch) => {
-        return axios({
-            method: "patch",
-            url: `${APP_API_URL}/api/post/comment-post/${postId}`,
-            data: { commenterId, text, commenterPseudo, commentMedia, commentType },
-        })
-            .then((res) => {
-                const comment = res.data.comment;
-                dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
-            })
-            .catch((err) => console.log(err));
+    return async (dispatch) => {
+        try {
+            const res = await axios.patch(`${APP_API_URL}/api/post/comment-post/${postId}`, { commenterId, text, commenterPseudo, commentMedia, commentType });
+            const comment = res.data.comment;
+            dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout du commentaire :', error);
+        }
     };
 };
 
-
+// Add reply
 export const replyComment = (postId, commentId, replierId, replierPseudo, text, replyMedia, replyType, repliedTo) => {
-
-
-    return (dispatch) => {
-        return axios({
-            method: 'post',
-            url: `${APP_API_URL}/api/post/comment-post/${postId}/reply`,
-            data: {
-                commentId,
-                replierId,
-                replierPseudo,
-                text,
-                replyMedia,
-                replyType,
-                repliedTo,
-            },
-        })
-            .then((res) => {
-                const reply = res.data;
-                dispatch({ type: ADD_REPLY, payload: { postId, commentId, reply } });
-            })
-            .catch((err) => console.log(err));
+    return async (dispatch) => {
+        try {
+            const res = await axios.post(`${APP_API_URL}/api/post/comment-post/${postId}/reply`, { commentId, replierId, replierPseudo, text, replyMedia, replyType, repliedTo });
+            const reply = res.data;
+            dispatch({ type: ADD_REPLY, payload: { postId, commentId, reply } });
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout de la réponse :', error);
+        }
     };
 };
 
-
-
-
-
+// Delete comment
 export const deleteComment = (postId, commentId) => {
     return async (dispatch) => {
         try {
-            // Envoyer une requête DELETE pour supprimer le post avec l'ID spécifié
-            const res = axios.delete(`${APP_API_URL}api/post/delete-comment-post/${postId}`, { data: { commentId } });
-
-            // Si la suppression réussit, dispatchez une action DELETE_POST avec l'ID du commentaire supprimé
+            const res = await axios.delete(`${APP_API_URL}/api/post/delete-comment-post/${postId}`, { data: { commentId } });
             if (res.data && res.data.errors) {
                 dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
             } else {
                 dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
             }
-
         } catch (error) {
-            // En cas d'erreur, affichez l'erreur dans la console
             console.error('Erreur lors de la suppression du commentaire:', error);
-            // Dispatchez une action CREATE_POST_ERROR avec un message d'erreur approprié
             dispatch({ type: CREATE_POST_ERROR, payload: 'Une erreur s\'est produite lors de la suppression du commentaire.' });
         }
     };
 };
-
-
-
-
-/*export const eleteComment = (postId, commentId) => {
-    return (dispatch) => {
-        return axios({
-            method: "patch",
-            url: `${APP_API_URL}api/post/delete-comment-post/${postId}`,
-            data: { commentId },
-        })
-            .then((res) => {
-                dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
-            })
-            .catch((err) => console.log(err));
-    };
-};*/
-

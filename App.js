@@ -104,7 +104,7 @@ const AppW = ({ store }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            // setIsLoadingApp(true)
+             setIsLoadingApp(true)
             try {
                 const response = await axios({
                     method: "get",
@@ -119,9 +119,9 @@ const AppW = ({ store }) => {
                 console.log("No token", error);
             }
 
-            /* finally {
-                 setIsLoadingApp(false);
-             }*/
+            finally {
+                setIsLoadingApp(false);
+            }
         };
 
         fetchToken();
@@ -141,30 +141,30 @@ const AppW = ({ store }) => {
 
         <UidContext.Provider value={{ uid, setUid }}>
 
-            {/*
+            {
                 isLoadingApp ?
                     <Loading /> :
-       */     }
 
-            <NavigationContainer>
+                    <NavigationContainer>
 
-                {
-                    isFirstTime ? (
-                        uid ? (
-                            <StackNavigation />
-                        ) : (
-                            <FirstNavigation />
-                        )
-                    ) : (
-                        uid ? (
-                            <StackNavigation />
-                        ) : (
-                            <AuthNavigation />
-                        )
-                    )
-                }
+                        {
+                            isFirstTime ? (
+                                uid ? (
+                                    <StackNavigation />
+                                ) : (
+                                    <FirstNavigation />
+                                )
+                            ) : (
+                                uid ? (
+                                    <StackNavigation />
+                                ) : (
+                                    <AuthNavigation />
+                                )
+                            )
+                        }
 
-            </NavigationContainer>
+                    </NavigationContainer>
+            }
 
             <StatusBar
                 barStyle={isDarkMode ? "light-content" : "dark-content"}

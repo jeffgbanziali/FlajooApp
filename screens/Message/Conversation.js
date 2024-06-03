@@ -11,7 +11,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import FollowHandler from "../../components/ProfileUtils.js/FollowHandler";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchConversations, markConversationAsRead } from "../../actions/conversation.action";
+import { fetchConversations, markConversationAsRead, markMessagesAsRead } from "../../actions/conversation.action";
 import { readMessage } from "../../actions/message.actions";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator } from "react-native";
@@ -63,17 +63,18 @@ const Conversation = ({ conversation, currentUser }) => {
     dispatch(readMessage(conversation._id));
   }, [dispatch, conversation._id]);
 
-  const filteredMessages = messages.filter(message => message.isRead === false);
-
+  const filteredMessages = messages.filter(message => message.isRead === false && message.senderId !== uid);
+  console.log("Mes messages", filteredMessages)
 
   const handleOpenConversation = async () => {
 
     try {
       if (différentv && conversation && conversation._id && conversation.message.isRead === false) {
         await dispatch(markConversationAsRead(conversation._id));
-        //console.log("Conversation marquée comme lue :", conversation._id);
+        console.log("Conversation marquée comme lue :", conversation._id);
       } else if (différentv === false || différentv === true && conversation && conversation._id && conversation.message.isRead === true) {
-        // console.log("Bonne humeur aujourd'hui")
+        console.log("Bonne humeur aujourd'hui")
+
       } else {
         console.error("ID de conversation non défini :", conversation);
       }
@@ -81,8 +82,6 @@ const Conversation = ({ conversation, currentUser }) => {
       console.error("Erreur lors de la mise à jour de la conversation :", error);
     }
   };
-
-
 
 
   const handleClickMessage = () => {
@@ -330,7 +329,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
                         //backgroundColor: "red",
                         height: "100%",
-                        width: "82%"
+                        width: "80%"
                       }}>
                       <Text
                         style={{
@@ -363,14 +362,14 @@ const Conversation = ({ conversation, currentUser }) => {
                       style={{
                         alignItems: "flex-end",
                         justifyContent: "center",
-                        width: "18%",
-                        //backgroundColor: "blue",
+                        width: "20%",
+                        //  backgroundColor: "blue",
                         paddingRight: 10,
                         height: "80%",
                       }}>
                       <Text
                         style={{
-                          fontSize: 14,
+                          fontSize: 13,
                           alignItems: "center",
                           fontWeight: "600",
                           color: isDarkMode ? (
@@ -386,8 +385,8 @@ const Conversation = ({ conversation, currentUser }) => {
                         différentv && conversation.message.isRead === false && (
                           <View
                             style={{
-                              width: 18,
-                              height: 18,
+                              width: 16,
+                              height: 16,
                               borderRadius: 100,
                               backgroundColor: "red",
                               alignItems: "center",

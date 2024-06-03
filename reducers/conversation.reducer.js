@@ -1,10 +1,12 @@
 // conversationReducer.js
 
-import { CONVERSATION_CREATED, CONVERSATION_DELETE, CONVERSATION_DELETE_ERROR, CONVERSATION_ERROR, CONVERSATION_MARKED_AS_READ, FETCH_CONVERSATION_INFO_FAILURE, FETCH_CONVERSATION_INFO_SUCCESS, FETCH_CONVERSATIONS_FAILURE, FETCH_CONVERSATIONS_SUCCESS } from "../actions/conversation.action";
+import { CONVERSATION_CREATED, CONVERSATION_DELETE, CONVERSATION_DELETE_ERROR, CONVERSATION_ERROR, CONVERSATION_MARKED_AS_READ, FETCH_CONVERSATION_INFO_FAILURE, FETCH_CONVERSATION_INFO_SUCCESS, FETCH_CONVERSATIONS_FAILURE, FETCH_CONVERSATIONS_SUCCESS, MARK_MESSAGES_AS_READ_FAILURE, MARK_MESSAGES_AS_READ_REQUEST, MARK_MESSAGES_AS_READ_SUCCESS } from "../actions/conversation.action";
 
 const initialState = {
     conversations: [],
+    loading: false,
     error: null,
+    successMessage: null,
 };
 
 const conversationReducer = (state = initialState, action) => {
@@ -69,6 +71,26 @@ const conversationReducer = (state = initialState, action) => {
                     return conversation;
                 }),
                 error: null
+            };
+
+        case MARK_MESSAGES_AS_READ_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                successMessage: null,
+            };
+        case MARK_MESSAGES_AS_READ_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                successMessage: action.payload.message,
+            };
+        case MARK_MESSAGES_AS_READ_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
             };
         default:
 

@@ -12,6 +12,9 @@ export const CONVERSATION_ERROR = "CONVERSATION_ERROR";
 export const CONVERSATION_DELETE = "CONVERSATION_DELETE";
 export const CONVERSATION_DELETE_ERROR = "CONVERSATION_DELETE_ERROR";
 export const CONVERSATION_MARKED_AS_READ = "CONVERSATION_MARKED_AS_READ"
+export const MARK_MESSAGES_AS_READ_REQUEST = "MARK_MESSAGES_AS_READ_REQUEST";
+export const MARK_MESSAGES_AS_READ_SUCCESS = "MARK_MESSAGES_AS_READ_SUCCESS";
+export const MARK_MESSAGES_AS_READ_FAILURE = "MARK_MESSAGES_AS_READ_FAILURE"
 
 
 
@@ -92,6 +95,29 @@ export const markConversationAsRead = (conversationId) => {
             });
         } catch (error) {
             console.error('Error while marking conversation as read:', error);
+        }
+    };
+};
+
+
+export const markMessagesAsRead = (conversationId, userId) => {
+    return async (dispatch) => {
+        dispatch({ type: MARK_MESSAGES_AS_READ_REQUEST });
+
+        try {
+            const response = await axios.put(`/api/conversations/${conversationId}/mark-read`, { userId });
+
+            dispatch({
+                type: MARK_MESSAGES_AS_READ_SUCCESS,
+                payload: response.data
+
+            });
+            console.lgo("voici ma reponse ", response.data)
+        } catch (error) {
+            dispatch({
+                type: MARK_MESSAGES_AS_READ_FAILURE,
+                payload: error.message
+            });
         }
     };
 };

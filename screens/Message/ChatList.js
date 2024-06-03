@@ -77,7 +77,6 @@ const Message = () => {
     ];
 
 
-
     const receiverId = mesSenders.find((sender) => sender !== uid) || user._id;
 
     const message = {
@@ -255,7 +254,7 @@ const Message = () => {
 
   /*************************************************************** */
 
-  console.log("mon arrivalChat est où", arrivalChat)
+  //console.log("mon arrivalChat est où", arrivalChat)
 
   useEffect(() => {
     setCurrentChat(chat);

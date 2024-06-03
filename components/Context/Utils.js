@@ -18,7 +18,7 @@ export const dateParser = (num) => {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-       weekday: "long",
+        weekday: "long",
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -37,7 +37,7 @@ export const FormationDateParser = (num) => {
         //hour: "2-digit",
         //minute: "2-digit",
         //second: "2-digit",
-       // weekday: "long",
+        // weekday: "long",
         year: "numeric",
         month: "short",
         //day: "numeric",
@@ -138,8 +138,15 @@ export const formatConversationDate = (conversationDate) => {
     } else if (timeDifference >= millisecondsPerDay && timeDifference < millisecondsPerDay * 2) {
         return "Hier";
     } else if (timeDifference >= millisecondsPerDay * 2 && timeDifference < millisecondsPerDay * 7) {
+        const getDayOfWeek = (daysAgo) => {
+            const daysOfWeek = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+            const today = new Date();
+            const pastDate = new Date(today.setDate(today.getDate() - daysAgo));
+            return daysOfWeek[pastDate.getDay()];
+        };
         const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
-        return `Il y a ${daysAgo} jour${daysAgo > 1 ? "s" : ""}`;
+        const dayOfWeek = getDayOfWeek(daysAgo);
+        return dayOfWeek;;
     } else if (timeDifference >= millisecondsPerDay * 7) {
         return messageDate.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
     }

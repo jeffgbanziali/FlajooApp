@@ -225,6 +225,7 @@ const Conversation = ({ conversation, currentUser }) => {
         ) : (
           <>
             <TouchableOpacity
+              key={conversation._id}
               onPressIn={() => setIsPressed(true)}
               onPressOut={() => setIsPressed(false)}
               onPress={handleClickMessage}

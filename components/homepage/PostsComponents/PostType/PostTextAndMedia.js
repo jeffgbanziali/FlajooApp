@@ -181,7 +181,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                     />
                 </TouchableOpacity>
             </View>
-            
+
             <View
                 style={{
                     zIndex: 1,
@@ -250,13 +250,11 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                 rate={1.0}
                                 volume={1.0}
                                 isMuted={false}
-                                resizeMode="cover"
                                 isLooping
                                 paused={true}
                                 style={{
                                     width: "100%",
                                     height: "100%",
-                                    resizeMode: "contain",
                                     opacity: isDarkMode ? 0.7 : 1,
                                 }}
                             />
@@ -346,7 +344,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
                                     style={{
                                         width: "100%",
                                         height: "100%",
-                                        resizeMode: "contain",
                                         borderRadius: 20,
                                         opacity: isDarkMode ? 0.7 : 1,
                                     }}

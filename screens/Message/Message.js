@@ -170,9 +170,8 @@ const Message = () => {
             >
               <FlatList
                 data={myConversation}
-                keyExtractor={(item) => item._id}
+              //  keyExtractor={(item) => item._id}
                 renderItem={({ item: c }) => {
-
 
 
                   return (

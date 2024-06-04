@@ -33,6 +33,7 @@ const ChatOnline = ({ user }) => {
 
 
             <View
+                key={item._id}
                 style={{
                     flexDirection: 'column',
                     height: "100%",
@@ -120,7 +121,7 @@ const ChatOnline = ({ user }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
-                keyExtractor={(item) => item._id !== uid}
+               // keyExtractor={(item) => item._id !== uid}
             />
         </View>
 

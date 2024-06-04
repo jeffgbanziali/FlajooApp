@@ -300,13 +300,11 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                             rate={1.0}
                                             volume={1.0}
                                             isMuted={false}
-                                            resizeMode="stretch"
                                             isLooping
                                             paused={true}
                                             style={{
                                                 width: "100%",
                                                 height: "100%",
-                                                resizeMode: "cover",
                                                 opacity: isDarkMode ? 0.7 : 1,
                                             }}
                                         />

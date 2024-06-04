@@ -22,7 +22,6 @@ export default function postReducer(state = initialState, action) {
 
         case GET_POSTS:
             return {
-                ...state,
                 post: action.payload
             };
 

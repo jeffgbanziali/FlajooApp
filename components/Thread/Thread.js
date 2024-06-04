@@ -17,20 +17,35 @@ const Thread = () => {
   const { uid } = useContext(UidContext)
 
 
-  const actualityFile = userRequire ? userRequire.recommendations : null
-
-  console.log('tu étias ou quand ça arrive', userRequire)
-
 
 
   useEffect(() => {
-    if (loadPost) {
-      dispatch(getPosts(uid));
-      setLoadPost(false);
+    if (uid) {
+      setLoadPost(true); // Démarre le chargement
+      dispatch(getPosts(uid))
+        .finally(() => {
+          setLoadPost(false); // Arrête le chargement après la requête
+        });
     }
-  }, [loadPost, dispatch]);
+  }, [uid, dispatch]);
 
+  if (!uid) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Waiting for user ID...</Text>
+      </View>
+    );
+  }
 
+  if (loadPost) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading posts...</Text>
+      </View>
+    );
+  }
 
   const renderItem = ({ item }) => {
 

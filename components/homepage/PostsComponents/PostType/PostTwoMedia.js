@@ -218,7 +218,7 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
                     />
                 </TouchableOpacity>
             </View>
-           
+
 
             <View
                 style={[
@@ -282,12 +282,12 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
                                             rate={1.0}
                                             volume={1.0}
                                             isMuted={false}
-                                            resizeMode="contain"
                                             isLooping
                                             paused={true}
                                             style={{
                                                 width: windowWidth,
                                                 height: "100%",
+                                                resizeMode: "contain",
                                                 opacity: isDarkMode ? 0.7 : 1,
                                             }}
                                         />

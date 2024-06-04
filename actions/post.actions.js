@@ -25,14 +25,12 @@ export const getPosts = (userId) => {
         try {
             const response = await axios.get(`${APP_API_URL}/api/post/actuality-file/my-user/${userId}`);
             dispatch({ type: GET_POSTS, payload: response.data });
-            console.log('Mes posts sont là', response.data)
 
         } catch (error) {
             console.error('Error while fetching posts:', error);
         }
     }
 };
-
 
 
 

@@ -1,25 +1,64 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useDarkMode } from "../../Context/AppContext";
+import { UidContext, useDarkMode } from "../../Context/AppContext";
+import { readMessage } from "../../../actions/message.actions";
+import { fetchConversations } from "../../../actions/conversation.action";
 
 const Header = () => {
   const userData = useSelector((state) => state.userReducer);
+  const messages = useSelector((state) => state.messageReducer.messages)
   const { isDarkMode } = useDarkMode();
+  const conversations = useSelector(state => state.conversationReducer);
+  const [loadPost, setLoadPost] = useState(true);
+  const { uid } = useContext(UidContext);
+  const dispatch = useDispatch()
 
+
+
+  useEffect(() => {
+    if (uid) {
+      setLoadPost(true); // Démarre le chargement
+      dispatch(fetchConversations(uid))
+        .finally(() => {
+          setLoadPost(false); // Arrête le chargement après la requête
+        });
+    }
+  }, [uid, dispatch]);
+
+
+  const foundConversation = conversations.conversations.map(conversation => {
+    return conversation;
+  }).filter(conversation => conversation !== null)[0];
+
+  const différentv = foundConversation && foundConversation.members.receiverId === uid && foundConversation.members.senderId !== uid
+
+  console.log("Mes conersation", foundConversation)
+
+
+  useEffect(() => {
+    dispatch(readMessage(foundConversation?._id));
+  }, [dispatch, foundConversation?._id]);
 
   const navigation = useNavigation(false);
+  const filteredMessages = messages.filter(message => message.isRead === false && message.senderId !== uid);
+  console.log("Mes messages", filteredMessages)
+
+
+
   const handleClickProfile = () => {
     console.log("clicked");
     navigation.navigate("Profile");
   };
+
   const handleClickMessage = () => {
     console.log("clicked");
     navigation.navigate("Messages");
   };
+
   const handleClickNotifications = () => {
     console.log("clicked");
     navigation.navigate("Notifications");
@@ -108,32 +147,35 @@ const Header = () => {
             }}
           >
             <TouchableOpacity onPress={handleClickMessage}>
-              <View
-                style={{
-                  backgroundColor: "red",
-                  position: "absolute",
-                  left: 10,
-                  width: 20,
-                  height: 20,
-                  borderRadius: 25,
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  marginLeft: 6,
-                  marginTop: -8,
-                  zIndex: 100,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: 12,
-                  }}
-                >
-                  2
-                </Text>
-              </View>
+              {
+                différentv && foundConversation.message.isRead === false && (
+                  <View
+                    style={{
+                      backgroundColor: "red",
+                      position: "absolute",
+                      left: 10,
+                      width: 20,
+                      height: 20,
+                      borderRadius: 25,
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      alignItems: "center",
+                      marginLeft: 6,
+                      marginTop: -8,
+                      zIndex: 100,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 12,
+                      }}
+                    >
+                      {filteredMessages.length}
+                    </Text>
+                  </View>
+                )}
               <AntDesign
                 name="message1"
                 size={25}

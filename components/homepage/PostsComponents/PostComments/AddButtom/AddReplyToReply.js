@@ -105,7 +105,7 @@ const AddReplyToReply = ({ post, selectedComment, selectedReply, partVisible }) 
 
 
 
-                dispatch(getPosts());
+                dispatch(getPosts(userData._id));
                 setText("");
                 setSelectedImage(null);
                 setSelectedVideo(null);
@@ -150,7 +150,7 @@ const AddReplyToReply = ({ post, selectedComment, selectedReply, partVisible }) 
 
     useEffect(() => {
         if (loadPost) {
-            dispatch(getPosts());
+            dispatch(getPosts(userData._id));
             setLoadPost(false);
         }
     }, [loadPost, dispatch]);

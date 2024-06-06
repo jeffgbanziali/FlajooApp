@@ -106,9 +106,7 @@ const ProfileFriends = () => {
 
           </View >
 
-          {
-
-         /* <View
+          <View
             style={{
               backgroundColor: "red",
               width: "100%",
@@ -118,7 +116,7 @@ const ProfileFriends = () => {
             <MaterialTopFriendsNavigation users={users} />
 
 
-          </View>*/}
+          </View>
         </ScrollView >
 
 

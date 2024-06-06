@@ -36,7 +36,7 @@ const Header = () => {
 
   const différentv = foundConversation && foundConversation.members.receiverId === uid && foundConversation.members.senderId !== uid
 
-  console.log("Mes conersation", foundConversation)
+  //console.log("Mes conersation", foundConversation)
 
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Header = () => {
 
   const navigation = useNavigation(false);
   const filteredMessages = messages.filter(message => message.isRead === false && message.senderId !== uid);
-  console.log("Mes messages", filteredMessages)
+  //console.log("Mes messages", filteredMessages)
 
 
 

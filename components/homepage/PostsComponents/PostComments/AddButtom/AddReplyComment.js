@@ -88,7 +88,7 @@ const AddReplyComment = ({ post, selectedComment, partVisible }) => {
                     )
                 );
 
-                dispatch(getPosts());
+                dispatch(getPosts(userData._id));
                 setText("");
                 setSelectedImage(null);
                 setSelectedVideo(null);
@@ -146,7 +146,7 @@ const AddReplyComment = ({ post, selectedComment, partVisible }) => {
 
     useEffect(() => {
         if (loadPost) {
-            dispatch(getPosts());
+            dispatch(getPosts(userData._id));
             setLoadPost(false);
         }
     }, [loadPost, dispatch]);

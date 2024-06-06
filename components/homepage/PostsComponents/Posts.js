@@ -35,7 +35,7 @@ import PostTwoMediaAndText from "./PostType/PostTwoMediaAndText";
 
 
 
-const Posts = ({ post }) => {
+const Posts = ({ post, loadPost, userId }) => {
 
 
 
@@ -55,7 +55,7 @@ const Posts = ({ post }) => {
   const [response, setResponse] = useState(false)
   const [responseToResponse, setResponseToResponse] = useState(false)
   const { isDarkMode } = useDarkMode();
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
 
 
@@ -77,27 +77,6 @@ const Posts = ({ post }) => {
     setSelectedReply(reply);
   };
 
-
-  /*useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardActive(true);
-      }
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardActive(false);
-      }
-    );
-
-    // Nettoyez les écouteurs lorsqu'ils ne sont plus nécessaires
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);*/
 
 
   useEffect(() => {
@@ -185,7 +164,7 @@ const Posts = ({ post }) => {
   const commentary = post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
 
 
-//console.log("Mes commentaires",commentary)
+  //console.log("Mes commentaires",commentary)
 
 
   return (
@@ -214,11 +193,11 @@ const Posts = ({ post }) => {
               }}
             >
               {
-                isLoading ? (
+                isLoading /*|| loadPost || !userId*/ ? (
                   <View
                     style={{
                       width: "100%",
-                      height: "50%",
+                      height: 400,
                       justifyContent: "center",
                       alignItems: "center",
                       flexDirection: "column"
@@ -356,11 +335,11 @@ const Posts = ({ post }) => {
                 }}
               >
                 {
-                  isLoading ? (
+                  isLoading /*|| loadPost || !userId*/ ? (
                     <View
                       style={{
                         width: "100%",
-                        height: "50%",
+                        height: 400,
                         justifyContent: "center",
                         alignItems: "center",
                         flexDirection: "column"
@@ -435,53 +414,54 @@ const Posts = ({ post }) => {
                   elevation: 5,
                 }}
               >
-                {isLoading ? (
-                  <View
-                    style={{
-                      width: "100%",
-                      height: "50%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column"
-                    }}
-                  >
+                {
+                  isLoading /*|| loadPost || !userId */? (
                     <View
                       style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
+                        width: "100%",
+                        height: 400,
+                        justifyContent: "center",
                         alignItems: "center",
-                        width: "30%",
+                        flexDirection: "column"
                       }}
                     >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-around",
+                          alignItems: "center",
+                          width: "30%",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            fontSize: 16,
+                            color: isDarkMode ? "white" : "black",
+                          }}
+                        >
+                          Loading
+                        </Text>
+                        <ActivityIndicator size="large" color="white" />
+                      </View>
                       <Text
                         style={{
+                          fontSize: 26,
+                          marginTop: "5%",
                           textAlign: "center",
-                          fontSize: 16,
                           color: isDarkMode ? "white" : "black",
                         }}
                       >
-                        Loading
+                        Please wait
                       </Text>
-                      <ActivityIndicator size="large" color="white" />
                     </View>
-                    <Text
-                      style={{
-                        fontSize: 26,
-                        marginTop: "5%",
-                        textAlign: "center",
-                        color: isDarkMode ? "white" : "black",
-                      }}
-                    >
-                      Please wait
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <PostText post={post} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+                  ) : (
+                    <>
+                      <PostText post={post} toggleToolings={toggleToolings} toggleComments={toggleComments} />
 
 
-                  </>
-                )}
+                    </>
+                  )}
               </View>
             )}
 

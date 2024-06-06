@@ -65,8 +65,6 @@ const EducationScreen = () => {
                         marginLeft: 10,
                         marginRight: 10,
                         flexDirection: "row",
-                        borderBottomColor: "gray",
-                        borderBottomWidth: 1,
                         alignItems: "center",
                         justifyContent: "space-between",
                     }}>

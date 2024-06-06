@@ -92,7 +92,6 @@ const CameraScreen = () => {
                                     alignSelf: 'center',
                                     alignContent: 'center',
                                     alignItems: 'center',
-                                    resizeMode: "contain"
                                 }} />
                             </View>
                         </TouchableOpacity>

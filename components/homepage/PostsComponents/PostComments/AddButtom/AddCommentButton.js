@@ -87,7 +87,7 @@ const AddCommentButton = ({ post, partVisible }) => {
         );
 
 
-        dispatch(getPosts());
+        dispatch(getPosts(userData._id));
         setText("");
         setSelectedImage(null);
         setSelectedVideo(null);
@@ -109,7 +109,7 @@ const AddCommentButton = ({ post, partVisible }) => {
 
     useEffect(() => {
       if (loadPost) {
-        dispatch(getPosts());
+        dispatch(getPosts(userData._id));
         setLoadPost(false);
       }
     }, [loadPost, dispatch]);

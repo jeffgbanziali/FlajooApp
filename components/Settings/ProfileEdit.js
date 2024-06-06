@@ -200,8 +200,6 @@ const ProfileEdit = () => {
             marginLeft: 10,
             marginRight: 10,
             flexDirection: "row",
-            borderBottomColor: "gray",
-            borderBottomWidth: 1,
             justifyContent: "space-between",
             alignItems: "center",
           }}

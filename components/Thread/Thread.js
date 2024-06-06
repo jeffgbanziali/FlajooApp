@@ -1,54 +1,55 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { View, FlatList, ActivityIndicator, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRecommendations, getPosts } from "../../actions/post.actions";
+import { fetchRecommendations, getPosts, markPostAsViewed } from "../../actions/post.actions"; // Ajoutez markPostAsViewed à partir des actions
 import Posts from "../homepage/PostsComponents/Posts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Header from "../homepage/Header/Header";
 import Stories from "../homepage/Stories/Story/Stories";
 import { UidContext, useDarkMode } from "../Context/AppContext";
+import { Dimensions } from "react-native";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
-  //const posting = useSelector((state) => state.postReducer.post);
   const userRequire = useSelector(state => state.postReducer.post);
   const { isDarkMode } = useDarkMode();
-  const { uid } = useContext(UidContext)
-
-
-
+  const { uid } = useContext(UidContext);
 
   useEffect(() => {
     if (uid) {
-      setLoadPost(true); // Démarre le chargement
+      setLoadPost(true);
       dispatch(getPosts(uid))
         .finally(() => {
-          setLoadPost(false); // Arrête le chargement après la requête
+          setLoadPost(false);
         });
     }
   }, [uid, dispatch]);
 
-  if (!uid) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Waiting for user ID...</Text>
-      </View>
-    );
-  }
+  /*const postHeight = 600; 
 
-  if (loadPost) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Loading posts...</Text>
-      </View>
-    );
-  }
+
+  const handleScroll = async (event) => {
+    try {
+      const offsetY = event.nativeEvent.contentOffset.y;
+
+      // Calculer l'index de la publication visible actuellement
+      const viewedPostIndex = Math.floor(offsetY / postHeight);
+      const viewedPost = userRequire[viewedPostIndex];
+
+      // Enregistrer la vue de la publication visible
+      const response = await dispatch(markPostAsViewed(viewedPost._id, uid));
+      console.log("Réponse de la requête de marquage comme vu :", response);
+    } catch (err) {
+      console.error("Erreur lors du marquage de la publication comme vue :", err);
+    }
+  };*/
+
+
+
+
 
   const renderItem = ({ item }) => {
-
 
 
 
@@ -60,18 +61,27 @@ const Thread = () => {
         }}
         key={item._id}
       >
-        <Posts post={item} />
+        <Posts loadPost={loadPost} user={uid} post={item} />
       </View>)
   }
 
-
   return (
     <GestureHandlerRootView>
+{/* <View style={{
+        width: "100%",
+        height: postHeight,
+        backgroundColor: "red",
+        position: "absolute",
+        zIndex: 9999
+      }}>
+
+      </View>*/}
       <FlatList
         data={userRequire}
         keyExtractor={(post) => post._id}
-        onEndReachedThreshold={0.5}
         renderItem={renderItem}
+        onEndReachedThreshold={0.5}
+      //  onScroll={handleScroll} // Ajoutez la fonction handleScroll ici
         ListHeaderComponent={() => (
           <>
             <Header />

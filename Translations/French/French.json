@@ -171,6 +171,8 @@
     "MessageHolder": "Message",
     "placeholder": "Ajouter une légende",
     "Chat": "Chat",
+    "PostSucces": "Votre post a été publié avec succès !",
+    "StorySucces":"Votre story a été publié avec succès !",
     "Messages": "Messages",
     "PleaseWait": "S'il vous plaît, attendez",
     "secondAgo": "il y a %{count} seconde(s)",

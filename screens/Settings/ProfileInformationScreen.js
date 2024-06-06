@@ -68,8 +68,8 @@ const ProfileInformationScreen = () => {
                     marginLeft: 10,
                     marginRight: 10,
                     flexDirection: "row",
-                    borderBottomColor: "gray",
-                    borderBottomWidth: 1,
+                    /*borderBottomColor: "gray",
+                    borderBottomWidth: 1,*/
                     justifyContent: "space-between",
                 }}>
                 <TouchableOpacity onPress={() => handleClickReturnProfile()}>

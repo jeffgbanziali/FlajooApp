@@ -79,10 +79,7 @@ const PostsFriendsUser = ({ users }) => {
 
             {item.media.length > 1 ? (
                 <View style={{
-                    borderRadius: 10,
                     overflow: "hidden",
-                    borderWidth: 1,
-                    borderColor: "white",
                     backgroundColor: "white"
                 }}>
                     <View
@@ -145,8 +142,6 @@ const PostsFriendsUser = ({ users }) => {
                                 left: 0,
                                 right: 0,
                                 height: 60,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
                             }}
                         />
                     </View>
@@ -154,10 +149,7 @@ const PostsFriendsUser = ({ users }) => {
                 </View>
             ) : (
                 <View style={{
-                    borderRadius: 10,
                     overflow: "hidden",
-                    borderWidth: 1,
-                    borderColor: "white",
                     backgroundColor: "white"
                 }}>
                     <View
@@ -202,8 +194,6 @@ const PostsFriendsUser = ({ users }) => {
                                 left: 0,
                                 right: 0,
                                 height: 60,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
                             }}
                         />
                     </View>
@@ -236,15 +226,18 @@ const PostsFriendsUser = ({ users }) => {
                     paddingLeft: user.length <= 2 ? 4 : 0
                 }
                 }>
-                <FlatList
-                    data={user}
-                    renderItem={renderPost}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={3}
-                    columnWrapperStyle={{
-                        justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
-                    }}
-                />
+                    <FlatList
+                        data={user}
+                        renderItem={renderPost}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={3}
+                        columnWrapperStyle={{
+                            justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
+                        }}
+                    />
+
+              
+
             </View>
         </SafeAreaView>
     );

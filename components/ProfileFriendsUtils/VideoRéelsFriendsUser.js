@@ -168,6 +168,7 @@ const VideoRéelsFriendsUser = ({ users }) => {
                         justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
                     }}
                 />
+
             </View>
         </SafeAreaView>
     );

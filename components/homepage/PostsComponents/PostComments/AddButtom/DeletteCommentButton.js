@@ -28,10 +28,10 @@ const DeletteCommentButton = ({ post, comment, areYouPressComment }) => {
     const [pressComment, setPressComment] = useState(new Animated.Value(0));
 
 
-    
+
     useEffect(() => {
         if (loadPost) {
-            dispatch(getPosts());
+            dispatch(getPosts(userData._id));
             setLoadPost(false);
         }
     }, [loadPost, dispatch]);

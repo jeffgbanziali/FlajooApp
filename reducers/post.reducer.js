@@ -11,6 +11,8 @@ import {
     LIKE_REPLY,
     UNLIKE_REPLY,
     DELETE_COMMENT,
+    VIEW_POST,
+    VIEW_POST_FAILED,
 } from "../actions/post.actions";
 
 const initialState = {
@@ -30,7 +32,27 @@ export default function postReducer(state = initialState, action) {
                 ...state,
                 post: state.post.filter(post => post._id !== action.payload.postId)
             };
+        case VIEW_POST:
+            return {
+                ...state,
+                post: state.post.map(post =>
+                    post._id === action.payload.postId
+                        ? {
+                            ...post,
+                            views: post.views.some(view => view.viewerId === action.payload.viewerId)
+                                ? post.views // Ne pas mettre à jour les vues si l'utilisateur a déjà vu le post
+                                : [...post.views, { viewerId: action.payload.viewerId, viewed_at: Date.now() }],
+                        }
+                        : post
+                ),
+                error: null
+            };
 
+        case VIEW_POST_FAILED:
+            return {
+                ...state,
+                error: action.payload
+            };
         case LIKE_POST:
             return {
                 ...state,

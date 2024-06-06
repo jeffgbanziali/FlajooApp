@@ -21,6 +21,8 @@ import { KeyboardAvoidingView } from 'react-native';
 import ShowImage from './ShowImage';
 import ShowText from './ShowText';
 import Loading from '../../../Loading/Loading';
+import LoadingStorySubmit from './LoadingStorySubmit';
+import CustomAlert from './CustomAlert';
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -37,6 +39,8 @@ const CreateStory = () => {
     const [galleryMedia, setGalleryMedia] = useState([]);
     const navigation = useNavigation();
     const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [progress, setProgress] = useState(0);
     const [police, setPolice] = useState(['normal', 'Arial', 'serif', ' Times New Roman', ' monospace', 'Courier New']);
     const [indicePolice, setIndicePolice] = useState(0);
     const policeActuelle = police[indicePolice];
@@ -109,17 +113,40 @@ const CreateStory = () => {
         };
 
         // Sauvegarde localement avant l'envoi au serveur
-        saveStoryLocally(storyData);
+        ///    saveStoryLocally(storyData);
+
+        setProgress(0.6); // Progression à 60% avant l'envoi des données du post
+
+        // Simuler la progression avec un intervalle
+        let progressInterval = setInterval(() => {
+            setProgress((prevProgress) => {
+                if (prevProgress >= 0.95) { // Limite la progression à 95% avant la soumission réelle
+                    clearInterval(progressInterval);
+                    return prevProgress;
+                }
+                return prevProgress + 0.01; // Incrémente la progression
+            });
+        }, 3000); // Intervalle de 100ms pour une progression fluide
+
+        // Attendre que la soumission soit terminée
+
+
+        setProgress(1);
+
+        if (progress === 1) {
+            console.log("Voici ma log", response)
+        }
 
         // Envoyer la story au serveur ou à d'autres utilisateurs
         dispatch(addStory(storyData));
+
         console.log("viens me voir ma story ", storyData)
-        Alert.alert('Succès', 'Votre story a été publiée avec succès !');
         setPostText('');
         setSelectedImage(null);
         setSelectedVideo(null);
         setLoadStories(true);
-        navigation.goBack('TabNavigation');
+        closeImageModal()
+        //navigation.goBack('TabNavigation');
     };
 
     const handleStorySubmit = async () => {
@@ -153,7 +180,8 @@ const CreateStory = () => {
         finally {
             setTimeout(() => {
                 setIsLoadingSignIn(false);
-            }, 5000);
+                setShowAlert(true);
+            }, 3000);
         }
 
     };
@@ -248,7 +276,6 @@ const CreateStory = () => {
         }
     };
 
-    /*************************** système de création d'une story ********************************************/
 
 
     const closeImageModal = () => {
@@ -294,7 +321,7 @@ const CreateStory = () => {
         <>
             {
                 isLoadingSignIn ? (
-                    <Loading />
+                    <LoadingStorySubmit progress={progress} />
                 ) : (
                     <>
                         <SafeAreaView
@@ -566,6 +593,13 @@ const CreateStory = () => {
                             </KeyboardAvoidingView>
 
                         </Modal>
+
+                        <CustomAlert
+                            visible={showAlert}
+                            setLoadStories={setLoadStories}
+                            onClose={() => setShowAlert(false)}
+
+                        />
                     </>
                 )
             }

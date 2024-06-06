@@ -94,7 +94,7 @@ const PostsUser = () => {
 
                 {
                     item.media && (
-                        < TouchableOpacity
+                        <TouchableOpacity
                             key={index} >
                             <View style={{
                                 //borderRadius: 10,

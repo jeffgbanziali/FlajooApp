@@ -57,7 +57,7 @@ const Experiences = () => {
         <View
             style={{
                 width: "100%",
-                backgroundColor: isDarkMode ? "#2C2C2C" : "#E6E6E6",
+                backgroundColor: isDarkMode ? "#171717" : "#E6E6E6",
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: 10,

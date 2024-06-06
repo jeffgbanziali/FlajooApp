@@ -16,12 +16,19 @@ export const LIKE_REPLY = 'LIKE_REPLY';
 export const UNLIKE_REPLY = 'UNLIKE_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
+export const VIEW_POST = 'VIEW_POST';
+export const VIEW_POST_FAILED = "VIEW_POST_FAILED"
 
 
 
 
 export const getPosts = (userId) => {
     return async dispatch => {
+        if (userId === null) {
+            console.log('User ID is null. Skipping API call.');
+            return;
+        }
+
         try {
             const response = await axios.get(`${APP_API_URL}/api/post/actuality-file/my-user/${userId}`);
             dispatch({ type: GET_POSTS, payload: response.data });
@@ -57,6 +64,7 @@ export const addPosts = (data) => {
                 dispatch({ type: CREATE_POST_ERROR, payload: res.data.errors });
             } else {
                 dispatch({ type: ADD_POSTS_SUCCESS });
+                return res
             }
         } catch (error) {
             console.error('Erreur lors de la création du post :', error);
@@ -196,3 +204,23 @@ export const deleteComment = (postId, commentId) => {
         }
     };
 };
+
+
+
+
+
+
+
+export const markPostAsViewed = (postId, viewerId) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post(`${APP_API_URL}/api/post/view/${postId}`, { viewerId });
+            dispatch({ type: VIEW_POST, payload: { postId, viewer: response.data } });
+            console.log('ma response ', response)
+            return response
+        } catch (error) {
+            console.error("Error in viewPost:", error);
+            dispatch({ type: VIEW_POST_FAILED, payload: error.message });
+        }
+    }
+}

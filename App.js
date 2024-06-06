@@ -104,7 +104,7 @@ const AppW = ({ store }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-             setIsLoadingApp(true)
+            setIsLoadingApp(true)
             try {
                 const response = await axios({
                     method: "get",

@@ -31,6 +31,8 @@ export const OnlineStatusProvider = ({ children }) => {
     }, []);
 
 
+
+
     useEffect(() => {
         const fetchUid = async () => {
             const storedUid = await AsyncStorage.getItem("uid") || await AsyncStorage.getItem("user")
@@ -47,14 +49,14 @@ export const OnlineStatusProvider = ({ children }) => {
     }, [dispatch, uid]);
 
 
+   
+
+
     useEffect(() => {
         const fetchUserOnline = async () => {
 
-            const token = await AsyncStorage.getItem("token")
-            console.log("Mon user token", token)
 
-
-            if (isInternetConnected) {
+            if (isInternetConnected ) {
 
                 socket.current = io(`ws:${MESSAGE_ADRESS_IP}:8900`);
                 //console.log(`Attempting to connect to ws:${MESSAGE_ADRESS_IP}:8900`);
@@ -73,24 +75,18 @@ export const OnlineStatusProvider = ({ children }) => {
                 });
 
                 // Gérer la déconnexion
-                socket.current.on('disconnect', () => {
-                    setIsConnected(false);
-                    // console.log('Disconnected from server');
-                    if (uid) {
-                        socket.current.emit("removeUser", uid);
-                    }
-                });
+
             } else {
                 setIsConnected(false);
                 if (socket.current && uid) {
                     socket.current.emit("removeUser", uid);
                 }
+
             }
         };
 
         fetchUserOnline();
 
-        // Nettoyer les événements lors du démontage
         return () => {
             if (socket.current) {
                 socket.current.off('connect');

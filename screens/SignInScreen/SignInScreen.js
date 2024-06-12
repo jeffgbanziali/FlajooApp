@@ -80,32 +80,38 @@ const SignInScreen = () => {
         const userIdSave = response.data.user;
         if (userIdSave) {
           await AsyncStorage.setItem("user", JSON.stringify(userIdSave));
-          //  console.log("Token saved");
           setUid(userIdSave);
-          // console.log("Mon id est bien suavegader", userIdSave);
-          // console.log(userIdSave);
         }
-        // console.log("User authenticated successfully");
-        //console.log("La reponse", response);
-        //alert("User logged in successfully");
       } else {
-        if (
-          response.data.errors.email !== "" ||
-          response.data.errors.password !== ""
-        ) {
-          setErrors(response.data.errors);
-          console.log(response.data.errors);
-        }
-        alert("An error occurred");
+        // Cette partie sera rarement atteinte car les erreurs devraient être capturées dans catch
+        alert("Une erreur s'est produite.");
       }
     } catch (error) {
-      console.log("Donne moi l'erreur ", error);
-    } finally {
+      if (password === "" && email === "") {
+        setErrors("Entrez votre adresse e-mail et votre mot de passe !!!");
+      } else if (password === "") {
+        setErrors("Entrez votre mot de passe !!!");
+      } else if (email === "") {
+        setErrors("Entrez votre adresse e-mail !!!");
+      }
+      else if (error.response && error.response.data && error.response.data.errors) {
+        const serverErrors = error.response.data.errors;
+        setErrors(serverErrors);
+
+      } else {
+        // D'autres erreurs que vous souhaitez traiter, par exemple des erreurs réseau
+        alert("Une erreur s'est produite lors de la connexion.");
+      }
+    }
+
+    finally {
       setTimeout(() => {
         setIsLoadingSignIn(false);
-      }, 5000);
+      }, 1000);
     }
   };
+
+  console.log("Erreur de la vie ", errors)
 
 
 
@@ -185,7 +191,30 @@ const SignInScreen = () => {
                   source={isDarkMode ? require("../../assets/Logos/1.png") : require("../../assets/Logos/1.png")}
                 />
               </View>
-
+              <View
+                style={{
+                  width: '100%',
+                  height: 30,
+                  marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                {errors.email ?
+                  < Text style={{
+                    color: "#ED3237",
+                    fontSize: 14,
+                    fontWeight: "600",
+                  }}> {errors.email}
+                  </Text> :
+                  < Text style={{
+                    color: "#ED3237",
+                    fontSize: 14,
+                    fontWeight: "600",
+                  }}> {errors}
+                  </Text>
+                }
+              </View>
 
             </View>
 
@@ -217,8 +246,6 @@ const SignInScreen = () => {
                 }}
               >
 
-                {errors.email && <Text style={styles.error}>{errors.email}</Text>}
-
                 <View
                   style={{
                     width: inputWidthSize,
@@ -249,10 +276,21 @@ const SignInScreen = () => {
                     autoCapitalize="none"
                   />
                 </View>
-
-                {errors.password && (
-                  <Text style={styles.error}>{errors.password}</Text>
-                )}
+                <View
+                  style={{
+                    width: '85%',
+                    justifyContent: "center",
+                  }}
+                >
+                  {/*errors.password && (
+                    <Text
+                      style={{
+                        color: "#ED3237",
+                        fontSize: 14,
+                        fontWeight: "600",
+                      }} >{errors.password}</Text>
+                  )*/}
+                </View>
                 <View
                   style={{
                     width: inputWidthSize,
@@ -367,14 +405,8 @@ const styles = StyleSheet.create(
 
   {
 
-    error: {
-      color: "red",
-      fontSize: 12,
-      marginBottom: 10,
-      marginLeft: 30,
-      marginRight: 30,
-    }
-    ,
+
+
     button: {
       backgroundColor: "red",
       marginTop: 10,

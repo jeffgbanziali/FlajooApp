@@ -50,7 +50,10 @@ const LikeButton = ({ post, type }) => {
               <Feather
                 name="heart"
                 size={20}
-                color={isDarkMode ? "#F5F5F5" : "black"}
+                color={isDarkMode ? "gray" : "gray"}
+                style={{
+                  fontWeight: '600'
+                }}
 
               />
             )}
@@ -58,16 +61,16 @@ const LikeButton = ({ post, type }) => {
               <Feather
                 name="heart"
                 size={20}
-                color={isDarkMode ? "#F5F5F5" : "black"}
+                color={isDarkMode ? "gray" : "gray"}
 
               />
             )}
             <Text
               style={{
-                color: isDarkMode ? "#F5F5F5" : "black",
+                color: isDarkMode ? "gray" : "gray",
                 textAlign: "center",
                 fontSize: 16,
-                fontWeight: "normal",
+                fontWeight: "600",
               }}
             >
               J'aime
@@ -96,6 +99,7 @@ const LikeButton = ({ post, type }) => {
                 size={20}
                 color="red"
 
+
               />
             )}
             {type === "postMessage" && (
@@ -110,7 +114,7 @@ const LikeButton = ({ post, type }) => {
                 color: isDarkMode ? "red" : "red",
                 textAlign: "center",
                 fontSize: 16,
-                fontWeight: "normal",
+                fontWeight: "600",
               }}
             >
               J'aime

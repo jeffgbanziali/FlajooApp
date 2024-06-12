@@ -73,9 +73,10 @@ const PostFooter = ({ post, toggleComments }) => {
 
                                 <Text
                                     style={{
+                                        color: isDarkMode ? "gray" : "gray",
                                         paddingLeft: 10,
                                         fontSize: 12,
-                                        color: isDarkMode ? "gray" : "black",
+                                        fontWeight: "500",
                                     }}>
                                     {t("LikeThat")} {""}
                                     <Text
@@ -124,10 +125,10 @@ const PostFooter = ({ post, toggleComments }) => {
                                     }}>
                                     <Text
                                         style={{
-                                            color: isDarkMode ? "gray" : "black",
                                             paddingLeft: 10,
                                             fontSize: 12,
-                                            color: isDarkMode ? "gray" : "lightgray"
+                                            color: isDarkMode ? "gray" : "gray",
+                                            fontWeight: "500",
                                         }}>
                                         {t("LikeThat")} {""}
                                         <Text
@@ -150,7 +151,7 @@ const PostFooter = ({ post, toggleComments }) => {
                         <Text
                             style={{
                                 paddingLeft: 10,
-                                color: isDarkMode ? "gray" : "black",
+                                color: isDarkMode ? "gray" : "gray",
                                 fontSize: 12,
                                 fontWeight: "400",
                                 color: isDarkMode ? "#F5F5F5" : "black",
@@ -218,15 +219,15 @@ const PostFooter = ({ post, toggleComments }) => {
                                 <FontAwesome5
                                     name="comment"
                                     size={20}
-                                    color={isDarkMode ? "#F5F5F5" : "black"}
+                                    color={isDarkMode ? "gray" : "gray"}
 
                                 />
                                 <Text
                                     style={{
-                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        color: isDarkMode ? "gray" : "gray",
                                         textAlign: "center",
-                                        fontSize: 14,
-                                        fontWeight: "normal",
+                                        fontSize: 16,
+                                        fontWeight: "600",
                                     }}
                                 >
                                     Commenter
@@ -257,15 +258,15 @@ const PostFooter = ({ post, toggleComments }) => {
                             <Feather
                                 name="send"
                                 size={18}
-                                color={isDarkMode ? "#F5F5F5" : "black"}
+                                color={isDarkMode ? "gray" : "gray"}
 
                             />
                             <Text
                                 style={{
-                                    color: isDarkMode ? "#F5F5F5" : "black",
+                                    color: isDarkMode ? "gray" : "gray",
                                     textAlign: "center",
                                     fontSize: 16,
-                                    fontWeight: "normal",
+                                    fontWeight: "600",
                                 }}
                             >
                                 Partager
@@ -287,7 +288,7 @@ const PostFooter = ({ post, toggleComments }) => {
                     <Feather
                         name="bookmark"
                         size={20}
-                        color={isDarkMode ? "#F5F5F5" : "black"}
+                        color={isDarkMode ? "gray" : "gray"}
 
                     />
                 </TouchableOpacity>
@@ -311,10 +312,10 @@ const PostFooter = ({ post, toggleComments }) => {
                     }}>
                     <Text
                         style={{
-                            color: isDarkMode ? "#F5F5F5" : "black",
+                            color: isDarkMode ? "gray" : "gray",
                             textAlign: "center",
                             fontSize: 14,
-                            fontWeight: "normal",
+                            fontWeight: "500",
                         }}
                     >
                         {post.likers.length} J'aime
@@ -337,10 +338,10 @@ const PostFooter = ({ post, toggleComments }) => {
                         }}>
                         <Text
                             style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
+                                color: isDarkMode ? "gray" : "gray",
                                 textAlign: "center",
                                 fontSize: 14,
-                                fontWeight: "normal",
+                                fontWeight: "500",
                             }}
                         >
                             <Text
@@ -363,10 +364,10 @@ const PostFooter = ({ post, toggleComments }) => {
                         }}>
                         <Text
                             style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
+                                color: isDarkMode ? "gray" : "gray",
                                 textAlign: "center",
                                 fontSize: 14,
-                                fontWeight: "normal",
+                                fontWeight: "500",
                             }}
                         >
                             0 Partages

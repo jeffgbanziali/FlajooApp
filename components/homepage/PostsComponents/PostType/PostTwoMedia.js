@@ -107,7 +107,7 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
     }).filter(user => user !== null)[0];
 
     const isUserOnline = user.onlineStatus === true
-    console.log("Mon user va faire sale", user)
+    
     return (
 
         <>

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useState, } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
@@ -19,17 +19,22 @@ import Video from 'react-native-video';
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import PostFooter from "../CustomPostCard/PostFooter";
+import { markPostAsViewed } from "../../../../actions/post.actions";
 
 
 const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
     const { t } = useTranslation();
+    const { uid } = useContext(UidContext);
+    const dispatch = useDispatch()
 
+
+    //console.log("Mon post est là", post)
+    //console.log("Mon user identifiant est là", uid)
 
 
     const navigation = useNavigation();
-    const { uid } = useContext(UidContext);
     const { isDarkMode } = useDarkMode();
 
     const goProfil = (id) => {
@@ -40,8 +45,21 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
         }
     };
 
+    const handleViewView = () => {
+        const meViewPost = post.views.find((user) => user._id === uid);
+
+        if (meViewPost) {
+            console.log("Il est là");
+        } else {
+            dispatch(markPostAsViewed(post._id, uid))
+            console.log("il a stocké le bail")
+        }
+    };
+
     const showModal = () => {
         setShowImage(!showImage);
+        console.log("Je te vois")
+        handleViewView()
     };
 
 
@@ -67,7 +85,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
     }).filter(user => user !== null)[0];
 
     const isUserOnline = user.onlineStatus === true
-    console.log("Mon user va faire sale", user)
 
     return (
 

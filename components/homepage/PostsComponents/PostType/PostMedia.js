@@ -72,7 +72,6 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
     }).filter(user => user !== null)[0];
 
     const isUserOnline = user.onlineStatus === true
-    console.log("Mon user va faire sale", user)
 
 
     return (

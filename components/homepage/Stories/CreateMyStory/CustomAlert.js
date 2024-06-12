@@ -3,7 +3,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useDarkMode } from '../../../Context/AppContext';
 
-const CustomAlert = ({ visible, onClose,setLoadStories }) => {
+const CustomAlert = ({ visible, onClose, setLoadStories }) => {
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
 
@@ -20,9 +20,9 @@ const CustomAlert = ({ visible, onClose,setLoadStories }) => {
             onRequestClose={onClose}
         >
             <View style={styles.overlay}>
-                <View style={[styles.alertContainer, { backgroundColor: isDarkMode ? '#333' : '#fff' }]}>
-                    <Text style={[styles.title, { color: isDarkMode ? '#fff' : '#000' }]}>Succès</Text>
-                    <Text style={[styles.message, { color: isDarkMode ? '#ccc' : '#333' }]}>
+                <View style={[styles.alertContainer, { backgroundColor: isDarkMode ? '#171717' : '#E6E6E6' }]}>
+                    <Text style={[styles.title, { color: isDarkMode ? 'green' : 'green' }]}>Succès</Text>
+                    <Text style={[styles.message, { color: isDarkMode ? 'white' : '#333' }]}>
                         {t('StorySucces')}</Text>
                     <TouchableOpacity onPress={closing} style={styles.button}>
                         <Text style={styles.buttonText}>OK</Text>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     alertContainer: {
         width: 300,
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 20,
         alignItems: 'center',
     },
     title: {
@@ -54,13 +54,14 @@ const styles = StyleSheet.create({
     message: {
         fontSize: 16,
         textAlign: 'center',
+        color: "red",
         marginBottom: 20,
     },
     button: {
         backgroundColor: '#2196F3',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 10,
     },
     buttonText: {
         color: '#fff',

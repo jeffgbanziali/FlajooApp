@@ -33,7 +33,7 @@ export const addStory = (data) => {
       if (response.data.message === 'Story added to container successfully!') {
         dispatch({ type: ADD_STORY, payload: response.data.story });
       } else {
-        console.log('I adding story:', response.data.message);
+        console.log('I adding adding story:', response.data.messge);
       }
     } catch (error) {
       console.error('Error adding story:', error);

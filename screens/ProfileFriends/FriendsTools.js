@@ -365,6 +365,7 @@ const FriendsTools = ({ users, areYouPressComment }) => {
                     animationIn="pulse"
                     animationOut="fadeOut"
                     onRequestClose={showModal}
+                    style={{ margin: 0, justifyContent: 'center' }}
                 >
                     <EducationFriendsModal users={users} showModal={showModal} />
 

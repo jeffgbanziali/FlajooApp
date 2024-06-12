@@ -225,14 +225,16 @@ const TabNavigation = () => {
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (
               focused ? (
-                <FontAwesome
-                  name="user"
+                <Feather
+
+                  name="menu"
                   size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
               ) : (
-                <AntDesign name="user" size={26}
+                <Feather
+                  name="menu" size={26}
                   color={isDarkMode ? "white" : "black"}
                   style={[focused && styles.bottomTabIconFocused]}
                 />
@@ -270,8 +272,8 @@ const TabNavigation = () => {
           <View
             style={{
               borderRadius: 10,
-              width: 220,
-              height: 200,
+              width: 240,
+              height: 220,
               borderRadius: 20,
               padding: 2,
               backgroundColor: isDarkMode ? "#171717" : "white",

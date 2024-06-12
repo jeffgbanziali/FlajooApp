@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 import LikeButton from "../LikeButton/LikeButton"
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import PostFooter from "../CustomPostCard/PostFooter";
+
 
 const PostText = ({ post, toggleToolings, toggleComments }) => {
 
@@ -32,6 +34,16 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
 
 
   const { t } = useTranslation();
+
+  const user = usersData.map(user => {
+    if (user._id === post.posterId) {
+      return user;
+    }
+    return null;
+  }).filter(user => user !== null)[0];
+
+  const isUserOnline = user.onlineStatus === true
+  console.log("Mon user va faire sale", user)
 
 
   return (
@@ -62,7 +74,6 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
               height: 35,
               borderRadius: 30,
               marginLeft: 10,
-              resizeMode: "cover",
               zIndex: 1,
             }}
             onPress={() => goProfil(post.posterId)}>
@@ -88,6 +99,21 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
                 zIndex: 1,
               }}
             />
+            {isUserOnline && (<View
+              style={{
+                backgroundColor: "#09C03C",
+                position: "absolute",
+                left: 28,
+                width: 8,
+                height: 8,
+                borderRadius: 25,
+                borderWidth: 1,
+                borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                top: 25,
+                zIndex: 100
+              }}>
+            </View>
+            )}
           </TouchableOpacity>
 
 
@@ -170,7 +196,7 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
           width: "90%",
           marginLeft: 10,
           paddingTop: 10,
-          paddingBottom:20,
+          paddingBottom: 20,
           // backgroundColor:"red"
         }}
       >
@@ -194,89 +220,19 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          bottom: 10,
-          height: 80
+          width: "100%",
 
         }}
       >
         <View
           style={{
-            flexDirection: "row",
+            flexDirection: 'column',
             alignItems: "center",
-            paddingLeft: 12
+            paddingLeft: 1,
+            paddingRight: 1
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "26%",
-            }}
-          >
-            <LikeButton post={post} type={"postMessage"} />
-            <Text
-              style={{
-                color: isDarkMode ? "#F5F5F5" : "black",
-                textAlign: "center",
-                fontSize: 16,
-                fontWeight: "normal",
-              }}
-            >
-              {post.likers.length}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "26%",
-            }}
-          >
-            <TouchableOpacity onPress={toggleComments}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 30,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesome5
-                  name="comment"
-                  size={25}
-                  color={isDarkMode ? "#F5F5F5" : "black"}
-
-                />
-              </View>
-            </TouchableOpacity>
-            <Text
-              style={{
-                color: isDarkMode ? "#F5F5F5" : "black",
-                textAlign: "center",
-                fontSize: 16,
-                fontWeight: "normal",
-              }}
-            >
-              {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Feather
-              name="send"
-              size={25}
-              color={isDarkMode ? "#F5F5F5" : "black"}
-
-            />
-          </TouchableOpacity>
+          <PostFooter post={post} toggleComments={toggleComments} />
         </View>
 
         <TouchableOpacity

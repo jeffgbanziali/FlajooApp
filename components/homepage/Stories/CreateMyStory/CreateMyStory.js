@@ -67,6 +67,7 @@ const CreateStory = () => {
         setLoadStories(true);
 
     };
+
     const handleTakePicture = () => {
         navigation.navigate('Photo');
     };
@@ -117,10 +118,9 @@ const CreateStory = () => {
 
         setProgress(0.6); // Progression à 60% avant l'envoi des données du post
 
-        // Simuler la progression avec un intervalle
         let progressInterval = setInterval(() => {
             setProgress((prevProgress) => {
-                if (prevProgress >= 0.95) { // Limite la progression à 95% avant la soumission réelle
+                if (prevProgress >= 0.95) { // Limite la progression à 95% avant la soumission de la story
                     clearInterval(progressInterval);
                     return prevProgress;
                 }
@@ -130,23 +130,20 @@ const CreateStory = () => {
 
         // Attendre que la soumission soit terminée
 
-
         setProgress(1);
 
         if (progress === 1) {
             console.log("Voici ma log", response)
         }
 
-        // Envoyer la story au serveur ou à d'autres utilisateurs
         dispatch(addStory(storyData));
-
+    
         console.log("viens me voir ma story ", storyData)
         setPostText('');
         setSelectedImage(null);
         setSelectedVideo(null);
         setLoadStories(true);
         closeImageModal()
-        //navigation.goBack('TabNavigation');
     };
 
     const handleStorySubmit = async () => {
@@ -195,7 +192,7 @@ const CreateStory = () => {
 
     const saveStoryLocally = async (story) => {
         try {
-            // Récupérer les stories existantes
+            // Récupère les stories existantes
             const existingStoriesStr = await AsyncStorage.getItem('localStories');
             const existingStories = existingStoriesStr ? JSON.parse(existingStoriesStr) : [];
 
@@ -211,6 +208,7 @@ const CreateStory = () => {
             throw error;
         }
     };
+
 
 
     const handleModalImage = async (item) => {
@@ -339,9 +337,10 @@ const CreateStory = () => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
-                                    borderBottomWidth: 1,
-                                    paddingRight: 6,
-                                    borderColor: isDarkMode ? "#F5F5F5" : "lightgray",
+                                    // borderBottomWidth: 1,
+                                    paddingRight: 10,
+                                    paddingBottom: 4,
+                                    //borderColor: isDarkMode ? "#F6F6F5" : "lightgray",
                                     //backgroundColor: 'red'
                                 }}>
                                 <View

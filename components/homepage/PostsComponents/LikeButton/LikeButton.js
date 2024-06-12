@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, TouchableOpacity, } from "react-native";
+import { View, TouchableOpacity, Text, } from "react-native";
 import { useDispatch } from "react-redux";
 import { likePost, unlikePost } from "../../../../actions/post.actions";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
@@ -37,10 +37,11 @@ const LikeButton = ({ post, type }) => {
         <>
           <TouchableOpacity
             style={{
-              width: 50,
-              height: 50,
-              borderRadius: 30,
-              justifyContent: "center",
+              width: 90,
+              height: 38,
+              flexDirection: "row",
+              borderRadius: 12,
+              justifyContent: "space-evenly",
               alignItems: "center",
             }}
             onPress={like}
@@ -48,7 +49,7 @@ const LikeButton = ({ post, type }) => {
             {type === "postPicture" && (
               <Feather
                 name="heart"
-                size={25}
+                size={20}
                 color={isDarkMode ? "#F5F5F5" : "black"}
 
               />
@@ -56,43 +57,68 @@ const LikeButton = ({ post, type }) => {
             {type === "postMessage" && (
               <Feather
                 name="heart"
-                size={25}
+                size={20}
                 color={isDarkMode ? "#F5F5F5" : "black"}
 
               />
             )}
+            <Text
+              style={{
+                color: isDarkMode ? "#F5F5F5" : "black",
+                textAlign: "center",
+                fontSize: 16,
+                fontWeight: "normal",
+              }}
+            >
+              J'aime
+            </Text>
           </TouchableOpacity>
         </>
-      )}
-      {uid && liked && (
-        <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={unlike}
-        >
-          {type === "postPicture" && (
-            <AntDesign
-              name="heart"
-              size={25}
-              color="red"
+      )
+      }
+      {
+        uid && liked && (
+          <TouchableOpacity
+            style={{
+              width: 90,
+              height: 38,
+              // backgroundColor: "green",
+              flexDirection: "row",
+              borderRadius: 12,
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+            onPress={unlike}
+          >
+            {type === "postPicture" && (
+              <AntDesign
+                name="heart"
+                size={20}
+                color="red"
 
-            />
-          )}
-          {type === "postMessage" && (
-            <AntDesign
-              name="heart"
-              size={25}
-              color="red"
-            />
-          )}
-        </TouchableOpacity>
-      )}
-    </View>
+              />
+            )}
+            {type === "postMessage" && (
+              <AntDesign
+                name="heart"
+                size={20}
+                color="red"
+              />
+            )}
+            <Text
+              style={{
+                color: isDarkMode ? "red" : "red",
+                textAlign: "center",
+                fontSize: 16,
+                fontWeight: "normal",
+              }}
+            >
+              J'aime
+            </Text>
+          </TouchableOpacity>
+        )
+      }
+    </View >
   );
 };
 

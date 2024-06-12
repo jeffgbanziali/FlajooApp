@@ -230,11 +230,10 @@ const AddCommentButton = ({ post, partVisible }) => {
           {partVisible && (
             <View
               style={{
-                paddingTop: 10,
                 flexDirection: "row",
                 width: "100%",
                 alignItems: "center",
-                //backgroundColor: "red",
+               // backgroundColor: "red",
                 height: "40%"
               }}>
               <View
@@ -259,7 +258,7 @@ const AddCommentButton = ({ post, partVisible }) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Ionicons name="images-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
+                  <Ionicons name="images-outline" size={24} color={isDarkMode ? "#F5F5F5" : "black"} />
 
                 </Pressable>
                 <Pressable
@@ -274,7 +273,7 @@ const AddCommentButton = ({ post, partVisible }) => {
                     justifyContent: "center",
                   }}
                 >
-                  <MaterialCommunityIcons name="file-gif-box" size={35} color={isDarkMode ? "#F5F5F5" : "black"} />
+                  <MaterialCommunityIcons name="file-gif-box" size={30} color={isDarkMode ? "#F5F5F5" : "black"} />
 
                 </Pressable>
                 <Pressable
@@ -289,7 +288,7 @@ const AddCommentButton = ({ post, partVisible }) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Ionicons name="mic-outline" size={28} color={isDarkMode ? "#F5F5F5" : "black"} />
+                  <Ionicons name="mic-outline" size={24} color={isDarkMode ? "#F5F5F5" : "black"} />
 
                 </Pressable>
                 <Pressable
@@ -318,14 +317,14 @@ const AddCommentButton = ({ post, partVisible }) => {
               flexDirection: "row",
               width: "100%",
               alignItems: "center",
-              //backgroundColor: "blue",
-              height: "60%"
+              // backgroundColor: "blue",
+              height: "50%"
             }}
           >
             <View
               style={{
-                width: 45,
-                height: 45,
+                width: 40,
+                height: 40,
                 marginLeft: "2.5%",
               }}
             >

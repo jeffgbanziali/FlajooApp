@@ -111,8 +111,6 @@ const SignInScreen = () => {
   };
 
 
-  console.log("Mon on oeir ", errors)
-
 
   const showPassword = () => {
     setShowPass(!showPass);
@@ -328,7 +326,22 @@ const SignInScreen = () => {
                   </View>
                 </View>
 
-
+                <TouchableOpacity
+                  style={{
+                    width: '100%',
+                    height: 30,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <Text style={{
+                    color: isDarkMode ? "gray" : "black",
+                    fontSize: 16,
+                    fontWeight: "600",
+                  }}>
+                    Mot de passe oublié ?
+                  </Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button} onPress={handleSignIn}>
                   <Text style={[styles.buttonTitle, { fontSize: i18n.language === 'fr' ? 14 : 16 }]}
@@ -392,7 +405,7 @@ const styles = StyleSheet.create(
 
 
     button: {
-      backgroundColor: "red",
+      backgroundColor: "#ED3237",
       marginTop: 10,
       width: 120,
       height: 46,

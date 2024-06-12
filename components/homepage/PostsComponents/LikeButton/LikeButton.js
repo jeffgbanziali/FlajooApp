@@ -97,7 +97,7 @@ const LikeButton = ({ post, type }) => {
               <AntDesign
                 name="heart"
                 size={20}
-                color="red"
+                color="#ED3237"
 
 
               />
@@ -106,12 +106,12 @@ const LikeButton = ({ post, type }) => {
               <AntDesign
                 name="heart"
                 size={20}
-                color="red"
+                color="#ED3237"
               />
             )}
             <Text
               style={{
-                color: isDarkMode ? "red" : "red",
+                color: isDarkMode ? "#ED3237" : "#ED3237",
                 textAlign: "center",
                 fontSize: 16,
                 fontWeight: "600",

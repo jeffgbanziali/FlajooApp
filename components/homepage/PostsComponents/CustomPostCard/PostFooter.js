@@ -344,16 +344,8 @@ const PostFooter = ({ post, toggleComments }) => {
                                 fontWeight: "500",
                             }}
                         >
-                            <Text
-                                style={{
-                                    color: isDarkMode ? "#F5F5F5" : "black",
-                                    textAlign: "center",
-                                    fontSize: 14,
-                                    fontWeight: "normal",
-                                }}
-                            >
-                                {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}
-                            </Text> Commentaires
+
+                            {post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)}{" "}Commentaires
                         </Text>
                     </View>
                     <View

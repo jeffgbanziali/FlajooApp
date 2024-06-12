@@ -22,6 +22,7 @@ import Video from 'react-native-video';
 import { Modal } from "react-native";
 import { StyleSheet } from "react-native";
 import PostFooter from "../CustomPostCard/PostFooter";
+import { markPostAsViewed } from "../../../../actions/post.actions";
 
 
 
@@ -51,8 +52,21 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
     };
 
 
+    const handleViewView = () => {
+        const meViewPost = post.views.find((user) => user._id === uid);
+
+        if (meViewPost) {
+            console.log("Il est là");
+        } else {
+            dispatch(markPostAsViewed(post._id, uid))
+            console.log("il a stocké le bail")
+        }
+    };
+
     const showModal = () => {
         setShowImage(!showImage);
+        console.log("Je te vois")
+        handleViewView()
     };
 
 

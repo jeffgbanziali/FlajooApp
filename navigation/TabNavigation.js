@@ -422,7 +422,7 @@ const styles = StyleSheet.create(
 
 
     bottomTabIconFocused: {
-      color: "red",
+      color: "#ED3237",
 
 
     },
@@ -432,7 +432,7 @@ const styles = StyleSheet.create(
       width: "10%",
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "red"
+      backgroundColor: "#ED3237"
 
     },
 

@@ -45,7 +45,7 @@ const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false)
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
   const { uid, setUid } = useContext(UidContext)
 
 
@@ -99,7 +99,6 @@ const SignInScreen = () => {
         setErrors(serverErrors);
 
       } else {
-        // D'autres erreurs que vous souhaitez traiter, par exemple des erreurs réseau
         alert("Une erreur s'est produite lors de la connexion.");
       }
     }
@@ -111,9 +110,8 @@ const SignInScreen = () => {
     }
   };
 
-  console.log("Erreur de la vie ", errors)
 
-
+  console.log("Mon on oeir ", errors)
 
 
   const showPassword = () => {
@@ -191,6 +189,7 @@ const SignInScreen = () => {
                   source={isDarkMode ? require("../../assets/Logos/1.png") : require("../../assets/Logos/1.png")}
                 />
               </View>
+
               <View
                 style={{
                   width: '100%',
@@ -201,20 +200,19 @@ const SignInScreen = () => {
                 }}
               >
                 {errors.email ?
-                  < Text style={{
+                  <Text style={{
                     color: "#ED3237",
                     fontSize: 14,
                     fontWeight: "600",
-                  }}> {errors.email}
-                  </Text> :
-                  < Text style={{
+                  }}>{errors.email}</Text> :
+                  <Text style={{
                     color: "#ED3237",
                     fontSize: 14,
                     fontWeight: "600",
-                  }}> {errors}
-                  </Text>
+                  }}>{errors}</Text>
                 }
               </View>
+
 
             </View>
 
@@ -276,21 +274,7 @@ const SignInScreen = () => {
                     autoCapitalize="none"
                   />
                 </View>
-                <View
-                  style={{
-                    width: '85%',
-                    justifyContent: "center",
-                  }}
-                >
-                  {/*errors.password && (
-                    <Text
-                      style={{
-                        color: "#ED3237",
-                        fontSize: 14,
-                        fontWeight: "600",
-                      }} >{errors.password}</Text>
-                  )*/}
-                </View>
+
                 <View
                   style={{
                     width: inputWidthSize,

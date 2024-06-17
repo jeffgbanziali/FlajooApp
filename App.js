@@ -15,7 +15,6 @@ import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import logger from "redux-logger";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
@@ -119,12 +118,11 @@ const AppW = () => {
         }
     }, [uid, dispatch]);
 
-    // Dispatch actions lorsqu'on a l'UID
     useEffect(() => {
         updateUserData();
     }, [updateUserData]);
 
-    console.log("Viens ici, kondo", uid)
+    console.log("Viens ici, kondo", uid);
 
     if (!isConnected && !isInternetConnected) {
         return <Loading />;

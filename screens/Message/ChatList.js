@@ -11,7 +11,7 @@ import {
   FlatList,
   Animated
 } from "react-native";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -200,9 +200,9 @@ const Message = () => {
       });
     });
 
-   /* return () => {
-      socket.current.disconnect();
-    };*/
+    /* return () => {
+       socket.current.disconnect();
+     };*/
   }, [uid]);
 
 
@@ -280,6 +280,27 @@ const Message = () => {
 
 
 
+  const renderItem = useCallback(({ item, index }) => (
+    <View
+      key={index}
+      style={{
+        position: "relative",
+        bottom: 10,
+        width: "100%",
+      }}
+    >
+      <MessagesUser
+        message={item}
+        user={user}
+        conversationToos={conversationToos}
+        own={item.senderId === uid}
+      />
+    </View>
+  ));
+
+  const renderHeader = useCallback(() => (
+    <ViewProfile user={user} />
+  ));
 
 
   const MAX_MESSAGE_LENGTH = 15;
@@ -325,37 +346,13 @@ const Message = () => {
           {currentChat ? (
             <>
               <FlatList
-                ref={(ref) => {
-                  scrollRef.current = ref;
-                }}
+                ref={scrollRef}
                 onContentSizeChange={() => scrollRef.current.scrollToEnd({ animated: true })}
-                style={{
-                  marginTop: "4%"
-                }}
+                style={{ marginTop: "4%" }}
                 data={chat}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => (
-                  <View
-                    key={index}
-                    style={{
-                      position: "relative",
-                      bottom: 10,
-                      width: "100%",
-                    }}
-                  >
-                    <MessagesUser
-                      message={item}
-                      user={user}
-                      conversationToos={conversationToos}
-                      own={item.senderId === uid} />
-                  </View>
-                )}
-
-                ListHeaderComponent={() => (
-                  <>
-                    <ViewProfile user={user} />
-                  </>
-                )}
+                renderItem={renderItem}
+                ListHeaderComponent={renderHeader}
               />
 
               {

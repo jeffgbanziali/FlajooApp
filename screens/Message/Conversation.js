@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Pressable, Modal } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { APP_API_URL } from "../../config";
@@ -84,28 +84,29 @@ const Conversation = ({ conversation, currentUser }) => {
   };
 
 
-  const handleClickMessage = () => {
-    handleOpenConversation()
+
+  const handleClickMessage = useCallback(() => {
+    handleOpenConversation();
     navigation.navigate("Chatlist", {
       conversationId: conversation._id,
       conversation: conversation,
       user: foundUser
     });
-  };
+  }, [handleOpenConversation, conversation, foundUser, navigation]);
 
-
-
-  const viewProfile = () => {
+  const viewProfile = useCallback(() => {
     setShowOptions(!showOptions);
-  };
-  const closeModal = () => {
-    setShowOptions(false);
-  };
-  const goProfil = (id) => {
+  }, [showOptions]);
 
+  const closeModal = useCallback(() => {
+    setShowOptions(false);
+  }, []);
+
+  const goProfil = useCallback((id) => {
     navigation.navigate("ProfilFriends", { id });
     closeModal();
-  };
+  }, [closeModal, navigation]);
+
 
   const MAX_MESSAGE_LENGTH = 36;
 

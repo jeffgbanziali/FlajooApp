@@ -6,7 +6,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Conversation from "./Conversation";
 import ChatOnline from "../../components/MessagesUser/MessageUser/ChatOnline";
@@ -56,8 +56,8 @@ const Message = () => {
 
 
 
-  const myConversation = conversations.conversations.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  const myConversation = useCallback(conversations.conversations.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)))
 
 
   useEffect(() => {
@@ -170,7 +170,7 @@ const Message = () => {
             >
               <FlatList
                 data={myConversation}
-              //  keyExtractor={(item) => item._id}
+                //  keyExtractor={(item) => item._id}
                 renderItem={({ item: c }) => {
 
 

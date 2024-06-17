@@ -269,7 +269,7 @@ const Stories = () => {
       style={{
         height: 160,
         width: "100%",
-        marginTop: 5,
+        marginTop: 8,
         backgroundColor: isDarkMode ? "#171717" : "white",
         shadowColor: "#000",
         shadowOffset: {

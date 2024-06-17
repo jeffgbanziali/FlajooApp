@@ -177,6 +177,7 @@ const PostFooter = ({ post, toggleComments }) => {
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
+                            paddingLeft: 6,
 
                         }}
                     >
@@ -207,7 +208,7 @@ const PostFooter = ({ post, toggleComments }) => {
                             >
                                 <FontAwesome
                                     name="comments-o"
-                                    size={24}
+                                    size={22}
                                     color={isDarkMode ? "gray" : "gray"}
 
                                 />
@@ -215,7 +216,7 @@ const PostFooter = ({ post, toggleComments }) => {
                                     style={{
                                         color: isDarkMode ? "gray" : "gray",
                                         textAlign: "center",
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: "600",
                                     }}
                                 >
@@ -235,7 +236,7 @@ const PostFooter = ({ post, toggleComments }) => {
                     >
                         <TouchableOpacity
                             style={{
-                                width: 120,
+                                width: 100,
                                 height: 38,
                                 borderRadius: 12,
                                 //  backgroundColor: "blue",
@@ -254,7 +255,7 @@ const PostFooter = ({ post, toggleComments }) => {
                                 style={{
                                     color: isDarkMode ? "gray" : "gray",
                                     textAlign: "center",
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     fontWeight: "600",
                                 }}
                             >

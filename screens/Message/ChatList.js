@@ -280,7 +280,7 @@ const Message = () => {
 
 
 
-  const renderItem = useCallback(({ item, index }) => (
+  const renderItem = ({ item, index }) => (
     <View
       key={index}
       style={{
@@ -296,11 +296,11 @@ const Message = () => {
         own={item.senderId === uid}
       />
     </View>
-  ));
+  );
 
-  const renderHeader = useCallback(() => (
+  const renderHeader = () => (
     <ViewProfile user={user} />
-  ));
+  );
 
 
   const MAX_MESSAGE_LENGTH = 15;

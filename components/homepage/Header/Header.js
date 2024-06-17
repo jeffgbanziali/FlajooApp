@@ -73,11 +73,12 @@ const Header = () => {
 
 
   return (
-    <View style={{
-      backgroundColor: isDarkMode ? "#171717" : "white",
-      borderBottomWidth: 2,
+    <View
+      style={{
+        backgroundColor: isDarkMode ? "#171717" : "white",
+        padding: 2
 
-    }}>
+      }}>
       <View
         style={{
           display: "flex",

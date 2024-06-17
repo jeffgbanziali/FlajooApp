@@ -65,6 +65,8 @@ const CreateStory = () => {
     const handleClickReturnHome = () => {
         navigation.navigate('TabNavigation');
         setLoadStories(true);
+        console.log("My big asssss", loadStories)
+
 
     };
 
@@ -137,7 +139,7 @@ const CreateStory = () => {
         }
 
         dispatch(addStory(storyData));
-    
+
         console.log("viens me voir ma story ", storyData)
         setPostText('');
         setSelectedImage(null);

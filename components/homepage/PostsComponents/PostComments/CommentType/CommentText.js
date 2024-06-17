@@ -65,13 +65,6 @@ const CommentText = ({areYouPressComment, post, comment, toggle, toAnswering, to
 
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts());
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
-
 
     return (
         <View

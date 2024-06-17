@@ -45,7 +45,7 @@ const PostFooter = ({ post, toggleComments }) => {
                     }}
                 >
 
-                    {post.likers && post.likers.length > 0 ? (
+                    {post.likers && post.likers.length > 0 && (
                         post.likers.length === 1 ? (
                             <View
                                 style={{
@@ -147,18 +147,6 @@ const PostFooter = ({ post, toggleComments }) => {
                                 </View>
                             </View>
                         )
-                    ) : (
-                        <Text
-                            style={{
-                                paddingLeft: 10,
-                                color: isDarkMode ? "gray" : "gray",
-                                fontSize: 12,
-                                fontWeight: "400",
-                                color: isDarkMode ? "#F5F5F5" : "black",
-                            }}
-                        >
-                            {t("NoOneLikedYet")}
-                        </Text>
                     )}
                 </View>
 

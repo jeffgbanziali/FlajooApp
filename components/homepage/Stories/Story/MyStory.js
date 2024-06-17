@@ -23,6 +23,8 @@ const MyStory = () => {
   const handleCreateStory = () => {
     console.log("Create Story");
     navigation.navigate("StoryCreate");
+    console.log("My big asssss", loadStories)
+
   };
 
   const handleViewStory = (id, media_type) => {
@@ -35,6 +37,7 @@ const MyStory = () => {
   useEffect(() => {
     if (loadStories) {
       dispatch(getStories());
+
       setLoadStories(false);
     }
   }, [loadStories, dispatch]);

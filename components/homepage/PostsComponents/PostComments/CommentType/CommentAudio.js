@@ -78,15 +78,6 @@ const CommentAudio = ({ areYouPressComment, post, comment, toggle, toAnswering, 
 
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts());
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
-
-
-
 
 
 

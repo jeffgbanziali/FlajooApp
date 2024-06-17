@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
@@ -6,55 +6,31 @@ import { DarkModeProvider, UidContext, useDarkMode } from "./components/Context/
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.action";
+import { getUsers } from "./actions/users.action";
+import { getPosts } from "./actions/post.actions";
+import { getStories } from "./actions/story.action";
+import { getVideoReels } from "./actions/réels.action";
 import rootReducer from "./reducers";
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import { getUsers } from "./actions/users.action";
-import { getPosts } from "./actions/post.actions";
-import { getStories } from "./actions/story.action";
-import { getVideoReels } from "./actions/réels.action";
 import { NavigationContainer } from "@react-navigation/native";
-import { APP_API_URL, MESSAGE_ADRESS_IP } from "./config";
 import AuthNavigation from "./navigation/AuthNavigation";
 import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 import { useOnlineStatus, OnlineStatusProvider } from "./components/Context/OnlineContext";
+import { APP_API_URL } from "./config";
 
+// Création du store
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
-
-const App = () => {
-
-    const store = createStore(
-        rootReducer,
-        composeWithDevTools(applyMiddleware(thunk))
-    );
-
-
-    const connectToRemoteDebugger = () => {
-        NativeDevSettings.setIsDebuggingRemotely(true);
-    };
-
-
-    connectToRemoteDebugger()
-
-
-
-
-    return (
-        <Provider store={store}>
-            <DarkModeProvider>
-                <OnlineStatusProvider>
-                    <AppW store={store} />
-                </OnlineStatusProvider>
-            </DarkModeProvider>
-        </Provider>
-    );
-};
-
+// Configuration axios interceptor
 axios.interceptors.request.use(
     async (config) => {
         const token = await AsyncStorage.getItem("token");
@@ -68,30 +44,34 @@ axios.interceptors.request.use(
     }
 );
 
+const App = () => {
 
+    useEffect(() => {
+        const connectToRemoteDebugger = () => {
+            NativeDevSettings.setIsDebuggingRemotely(false);
+        };
+        connectToRemoteDebugger();
+    }, []);
 
+    return (
+        <Provider store={store}>
+            <DarkModeProvider>
+                <OnlineStatusProvider>
+                    <AppW />
+                </OnlineStatusProvider>
+            </DarkModeProvider>
+        </Provider>
+    );
+};
 
-
-const AppW = ({ store }) => {
-
+const AppW = () => {
     const [uid, setUid] = useState(null);
-
     const [isLoadingApp, setIsLoadingApp] = useState(false);
     const [isFirstTime, setIsFirstTime] = useState(true);
 
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
     const { isConnected, isInternetConnected } = useOnlineStatus();
-
-
-
-    store.dispatch(getUsers());
-    store.dispatch(getPosts(uid));
-    store.dispatch(getStories());
-    store.dispatch(getVideoReels());
-
-
-
 
     useEffect(() => {
         AsyncStorage.getItem('uid')
@@ -104,79 +84,53 @@ const AppW = ({ store }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            setIsLoadingApp(true)
+            setIsLoadingApp(true);
             try {
-                const response = await axios({
-                    method: "get",
-                    url: `${APP_API_URL}/jwtid`,
-                    withCredentials: true,
-                });
+                const response = await axios.get(`${APP_API_URL}/jwtid`, { withCredentials: true });
                 setUid(response.data);
                 AsyncStorage.setItem('uid', response.data);
-
-                //AsyncStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
             } catch (error) {
                 console.log("No token", error);
-            }
-
-            finally {
+            } finally {
                 setIsLoadingApp(false);
             }
         };
 
         fetchToken();
+    }, []);
+
+    useEffect(() => {
         if (uid) {
             dispatch(getUser(uid));
+            dispatch(getUsers());
+            dispatch(getPosts(uid));
+            dispatch(getStories());
+            dispatch(getVideoReels());
         }
-
-
     }, [uid, dispatch]);
+
+    console.log("Viens ici, kondo", uid)
 
     if (!isConnected && !isInternetConnected) {
         return <Loading />;
     }
 
     return (
-
-
         <UidContext.Provider value={{ uid, setUid }}>
-
             {
-                isLoadingApp ?
-                    <Loading /> :
-
+                isLoadingApp ? <Loading /> : (
                     <NavigationContainer>
-
-                        {
-                            isFirstTime ? (
-                                uid ? (
-                                    <StackNavigation />
-                                ) : (
-                                    <FirstNavigation />
-                                )
-                            ) : (
-                                uid ? (
-                                    <StackNavigation />
-                                ) : (
-                                    <AuthNavigation />
-                                )
-                            )
-                        }
-
+                        {isFirstTime ? (
+                            uid ? <StackNavigation /> : <FirstNavigation />
+                        ) : (
+                            uid ? <StackNavigation /> : <AuthNavigation />
+                        )}
                     </NavigationContainer>
+                )
             }
-
-            <StatusBar
-                barStyle={isDarkMode ? "light-content" : "dark-content"}
-            />
+            <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
         </UidContext.Provider>
-
     );
 };
 
-
 export default App;
-
-
-
-

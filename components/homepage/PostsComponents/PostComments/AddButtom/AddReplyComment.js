@@ -144,12 +144,12 @@ const AddReplyComment = ({ post, selectedComment, partVisible }) => {
 
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts(userData._id));
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
+    /* useEffect(() => {
+         if (loadPost) {
+             dispatch(getPosts(userData._id));
+             setLoadPost(false);
+         }
+     }, [loadPost, dispatch]);*/
 
     const { t } = useTranslation();
 

@@ -16,6 +16,7 @@ export const ADD_EXPERIENCE_FAILURE = 'ADD_EXPERIENCE_FAILURE';
 export const LOGOUT_USER = "LOGOUT_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const ADD_EDUCATION = "ADD_EDUCATION"
+export const ADD_FAVORITE_POST = "ADD_FAVORITE_POST"
 export const REMOVE_FAVORITE_POST = "REMOVE_FAVORITE_POST"
 export const SAVED_POST = "SAVED_POST"
 export const REMOVE_SAVED_POST = "REMOVE_SAVED_POST"
@@ -24,17 +25,25 @@ export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const SEARCH_USERS = "SEARCH_USERS";
 
+
+
+
 export const getUser = (uid) => {
-    return (dispatch) => {
-        return axios
-            .get(`${APP_API_URL}/api/user/${uid}`)
-            .then((res) => {
-                dispatch({ type: GET_USER, payload: res.data });
-            })
-            .catch((err) => console.log(err));
+    return async (dispatch) => {
+        if (uid === null) {
+            console.log('User ID is null. il ne marche pas vraiment.');
+            return;
+        }
+
+        try {
+            const res = await axios.get(`${APP_API_URL}/api/user/${uid}`);
+            dispatch({ type: GET_USER, payload: res.data });
+            console.log("Il est mis à jour ");
+        } catch (err) {
+            console.log('Error fetching user data:', err);
+        }
     };
 };
-
 
 
 

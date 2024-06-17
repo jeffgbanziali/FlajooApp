@@ -9,6 +9,8 @@ import Stories from "../homepage/Stories/Story/Stories";
 import { UidContext, useDarkMode } from "../Context/AppContext";
 import { Dimensions } from "react-native";
 
+
+
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
@@ -17,33 +19,40 @@ const Thread = () => {
   const { uid } = useContext(UidContext);
 
   useEffect(() => {
-    if (uid) {
-      setLoadPost(true);
-      dispatch(getPosts(uid))
-        .finally(() => {
-          setLoadPost(false);
-        });
-    }
+    const fetchPosts = async () => {
+      try {
+        if (uid) {
+          setLoadPost(true);
+          await dispatch(getPosts(uid));
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoadPost(false);
+      }
+    };
+
+    fetchPosts();
+
   }, [uid, dispatch]);
 
-  /*const postHeight = 600; 
+  /*useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        if (uid) {
+          setLoadPost(true);
+          await dispatch(getPosts());
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoadPost(false);
+      }
+    };
 
+    fetchPosts();
 
-  const handleScroll = async (event) => {
-    try {
-      const offsetY = event.nativeEvent.contentOffset.y;
-
-      // Calculer l'index de la publication visible actuellement
-      const viewedPostIndex = Math.floor(offsetY / postHeight);
-      const viewedPost = userRequire[viewedPostIndex];
-
-      // Enregistrer la vue de la publication visible
-      const response = await dispatch(markPostAsViewed(viewedPost._id, uid));
-      console.log("Réponse de la requête de marquage comme vu :", response);
-    } catch (err) {
-      console.error("Erreur lors du marquage de la publication comme vue :", err);
-    }
-  };*/
+  }, [uid, dispatch]);*/
 
 
 
@@ -67,21 +76,11 @@ const Thread = () => {
 
   return (
     <GestureHandlerRootView>
-{/* <View style={{
-        width: "100%",
-        height: postHeight,
-        backgroundColor: "red",
-        position: "absolute",
-        zIndex: 9999
-      }}>
-
-      </View>*/}
       <FlatList
         data={userRequire}
         keyExtractor={(post) => post._id}
         renderItem={renderItem}
         onEndReachedThreshold={0.5}
-      //  onScroll={handleScroll} // Ajoutez la fonction handleScroll ici
         ListHeaderComponent={() => (
           <>
             <Header />

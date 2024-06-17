@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Modal,
     Pressable,
+    Dimensions,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useState, } from "react";
@@ -20,6 +21,9 @@ import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import PostFooter from "../CustomPostCard/PostFooter";
 import { markPostAsViewed } from "../../../../actions/post.actions";
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+
 
 
 const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
@@ -46,7 +50,9 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
     };
 
     const handleViewView = () => {
-        const meViewPost = post.views.find((user) => user._id === uid);
+        const meViewPost = post.views.find((user) => user.viewerId === uid);
+
+        console.log("Mon user viewer", meViewPost)
 
         if (meViewPost) {
             console.log("Il est là");
@@ -425,15 +431,15 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     portrait: {
-        height: 600,
+        height: windowHeight * 0.6,
         width: "100%",
     },
     square: {
-        height: 400,
+        height: windowHeight * 0.5,
         width: "100%",
     },
     landscape: {
-        height: 300,
+        height: windowHeight * 0.4,
         width: "100%",
     },
 });

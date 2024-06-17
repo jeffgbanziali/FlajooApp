@@ -22,7 +22,6 @@ const ContinueWithApple = () => {
     const { uid, setUid } = useContext(UidContext)
     const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
 
-
     GoogleSignin.configure({
         webClientId: '210714148369-c875qjkjf1mjh2d6ptsop1sitndur99r.apps.googleusercontent.com',
         iosClientId: '210714148369-n4svjl21159pba8a987ibu96p8b5rluv.apps.googleusercontent.com',

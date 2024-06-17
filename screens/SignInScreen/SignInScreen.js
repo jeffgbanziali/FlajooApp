@@ -50,12 +50,20 @@ const SignInScreen = () => {
 
 
   const containerWidthSize = windowWidth * 0.88;
-  const containerHeightSize = windowHeight * 0.40;
+
+  const containerHeightSize = windowHeight > 680 ? windowHeight >= 932
+    ? windowHeight * 0.40
+    : windowHeight * 0.42
+    : windowHeight * 0.50;
+
+
 
   const inputWidthSize = windowWidth * 0.75;
   const inputHeightSize = windowHeight * 0.056;
 
 
+  console.log("WindWidth", windowWidth)
+  console.log("WindHeight", windowHeight)
 
 
 
@@ -161,17 +169,17 @@ const SignInScreen = () => {
             <View
               style={{
                 alignItems: "center",
-                height: "25%",
+                height: windowHeight * 0.20,
                 width: "100%",
                 justifyContent: "center",
-                //backgroundColor:"red"
+
 
               }}>
 
               <View
                 style={{
-                  width: 150,
-                  height: 150,
+                  width: windowWidth * 0.4,
+                  height: windowWidth * 0.4,
                   borderRadius: 100,
                   justifyContent: "center",
                   alignItems: "center",

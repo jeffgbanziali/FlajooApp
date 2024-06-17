@@ -68,13 +68,7 @@ const CommentImage = ({ areYouPressComment,post, comment, toggle, toAnswering, t
 
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts());
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
-
+ 
 
     return (
         <View

@@ -37,6 +37,7 @@ const Stories = () => {
     if (loadStories) {
       dispatch(getStories());
       setLoadStories(false);
+      console.log("Ou est tu ?")
     }
   }, [loadStories, dispatch]);
 

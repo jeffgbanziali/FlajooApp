@@ -29,12 +29,12 @@ const DeletteCommentButton = ({ post, comment, areYouPressComment }) => {
 
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts(userData._id));
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
+    /*  useEffect(() => {
+          if (loadPost) {
+              dispatch(getPosts(userData._id));
+              setLoadPost(false);
+          }
+      }, [loadPost, dispatch]);*/
 
     const areYouDelete = () => {
         setDeleting(!deleting);

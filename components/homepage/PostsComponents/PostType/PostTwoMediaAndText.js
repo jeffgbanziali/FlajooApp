@@ -53,7 +53,7 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
 
 
     const handleViewView = () => {
-        const meViewPost = post.views.find((user) => user._id === uid);
+        const meViewPost = post.views.find((user) => user.viewerId === uid);
 
         if (meViewPost) {
             console.log("Il est là");
@@ -496,15 +496,15 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     portrait: {
-        height: 600,
+        height: windowHeight * 0.6,
         width: "100%",
     },
     square: {
-        height: 400,
+        height: windowHeight * 0.5,
         width: "100%",
     },
     landscape: {
-        height: 300,
+        height: windowHeight * 0.4,
         width: "100%",
     },
 });

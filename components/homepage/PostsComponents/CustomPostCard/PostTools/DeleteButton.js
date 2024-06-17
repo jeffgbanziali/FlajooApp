@@ -1,9 +1,9 @@
 import { View, Text, Pressable, TouchableOpacity, Alert, Animated, Easing } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDarkMode } from '../../../../Context/AppContext';
+import { UidContext, useDarkMode } from '../../../../Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -23,14 +23,15 @@ const DeleteButton = ({ post, toggleToolings }) => {
     const [loadPost, setLoadPost] = useState(true);
     const [deleting, setDeleting] = useState(false);
     const [pressComment, setPressComment] = useState(new Animated.Value(0));
+    const { uid } = useContext(UidContext);
 
 
-    useEffect(() => {
-        if (loadPost) {
-            dispatch(getPosts());
-            setLoadPost(false);
-        }
-    }, [loadPost, dispatch]);
+    /* useEffect(() => {
+         if (loadPost) {
+             dispatch(getPosts(uid));
+             setLoadPost(false);
+         }
+     }, [loadPost, dispatch]);*/
 
     const areYouDelete = () => {
         setDeleting(!deleting);
@@ -43,6 +44,7 @@ const DeleteButton = ({ post, toggleToolings }) => {
         try {
             dispatch(deletePost(post._id));
             setLoadPost(true);
+            dispatch(getPosts(uid));
             areYouDelete();
             toggleToolings();
             Alert.alert(`${t("DeletePosting")}`)

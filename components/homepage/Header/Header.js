@@ -26,8 +26,11 @@ const Header = () => {
         .finally(() => {
           setLoadPost(false); // Arrête le chargement après la requête
         });
+
     }
-  }, [uid, dispatch]);
+    console.log("Mon user Id est lancé depuyis non ", userData._id)
+
+  }, [uid]);
 
 
   const foundConversation = conversations.conversations.map(conversation => {
@@ -199,8 +202,7 @@ const Header = () => {
             <TouchableOpacity onPress={handleClickProfile}>
               <Image
                 source={{
-                  uri: userData.picture
-                    ? userData.picture
+                  uri: userData.picture ? userData.picture
                     : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png",
                 }}
                 style={{

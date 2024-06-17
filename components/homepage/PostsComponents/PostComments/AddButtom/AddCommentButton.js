@@ -102,19 +102,19 @@ const AddCommentButton = ({ post, partVisible }) => {
       console.error("Error handling comment:", error);
     }
 
-  }; -
-
-
-
-
-    useEffect(() => {
-      if (loadPost) {
-        dispatch(getPosts(userData._id));
-        setLoadPost(false);
-      }
-    }, [loadPost, dispatch]);
+  };
 
   const { t } = useTranslation();
+
+
+
+  /*useEffect(() => {
+    if (loadPost) {
+      dispatch(getPosts(userData._id));
+      setLoadPost(false);
+    }
+  }, [loadPost, dispatch]);*/
+
 
 
 
@@ -233,7 +233,7 @@ const AddCommentButton = ({ post, partVisible }) => {
                 flexDirection: "row",
                 width: "100%",
                 alignItems: "center",
-               // backgroundColor: "red",
+                // backgroundColor: "red",
                 height: "40%"
               }}>
               <View

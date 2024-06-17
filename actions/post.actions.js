@@ -32,6 +32,7 @@ export const getPosts = (userId) => {
         try {
             const response = await axios.get(`${APP_API_URL}/api/post/actuality-file/my-user/${userId}`);
             dispatch({ type: GET_POSTS, payload: response.data });
+            // console.log("Il est mis à jour ")
 
         } catch (error) {
             console.error('Error while fetching posts:', error);
@@ -47,6 +48,8 @@ export const getPosts = (userId) => {
             const response = await axios.get(`${APP_API_URL}/api/post`);
             const array = response.data.slice(0, num); // Slice the response data to get the specified number of posts
             dispatch({ type: GET_POSTS, payload: array });
+
+            console.log('My post', array)
         } catch (error) {
             console.error('Error while fetching posts:', error);
         }

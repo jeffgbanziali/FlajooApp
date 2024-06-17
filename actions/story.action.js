@@ -18,8 +18,8 @@ export const getStories = (num) => {
     return axios
       .get(`${APP_API_URL}/api/stories`)
       .then((res) => {
-        const array = res.data.slice(0, num);
-        dispatch({ type: GET_STORIES, payload: array });
+       // const array = res.data.slice(0, num);
+        dispatch({ type: GET_STORIES, payload: res.data });
       })
       .catch((err) => console.log(err));
   };
@@ -38,7 +38,6 @@ export const addStory = (data) => {
     } catch (error) {
       console.error('Error adding story:', error);
 
-      // Gérer les erreurs ici (si nécessaire)
     }
   };
 };

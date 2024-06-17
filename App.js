@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StatusBar } from "react-native";
 import StackNavigation from "./navigation/StackNavigation";
 import axios from "axios";
@@ -74,33 +74,43 @@ const AppW = () => {
     const { isConnected, isInternetConnected } = useOnlineStatus();
 
     useEffect(() => {
+        console.log('useEffect AsyncStorage.getItem uid');
         AsyncStorage.getItem('uid')
             .then((storedUid) => {
                 if (storedUid) {
+                    console.log('Stored UID found:', storedUid);
+                    setUid(storedUid);
                     setIsFirstTime(false);
                 }
+            })
+            .catch((error) => {
+                console.error('Error getting UID from AsyncStorage:', error);
             });
     }, []);
 
     useEffect(() => {
         const fetchToken = async () => {
+            console.log('useEffect fetchToken');
             setIsLoadingApp(true);
             try {
                 const response = await axios.get(`${APP_API_URL}/jwtid`, { withCredentials: true });
-                setUid(response.data);
-                AsyncStorage.setItem('uid', response.data);
+                console.log('Token fetched, setting UID:', response.data);
+                if (response.data) {
+                    setUid(response.data);
+                    await AsyncStorage.setItem('uid', response.data);
+                }
             } catch (error) {
                 console.log("No token", error);
             } finally {
                 setIsLoadingApp(false);
             }
         };
-
         fetchToken();
     }, []);
 
-    useEffect(() => {
+    const updateUserData = useCallback(() => {
         if (uid) {
+            console.log('useEffect dispatch actions with UID:', uid);
             dispatch(getUser(uid));
             dispatch(getUsers());
             dispatch(getPosts(uid));
@@ -108,6 +118,11 @@ const AppW = () => {
             dispatch(getVideoReels());
         }
     }, [uid, dispatch]);
+
+    // Dispatch actions lorsqu'on a l'UID
+    useEffect(() => {
+        updateUserData();
+    }, [updateUserData]);
 
     console.log("Viens ici, kondo", uid)
 

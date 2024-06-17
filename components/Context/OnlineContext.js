@@ -63,8 +63,8 @@ export const OnlineStatusProvider = ({ children }) => {
 
                 socket.current.on('connect', () => {
                     setIsConnected(true);
-                    console.log('Connected to server');
-                    console.log(uid, "Utilisateur connecté !!!!", socket.current.id);
+                   // console.log('Connected to server');
+                   // console.log(uid, "Utilisateur connecté !!!!", socket.current.id);
                     socket.current.emit("addUser", uid);
                     socket.current.emit("onlineStatusChanged", { userId: uid, onlineStatus: true });
                     //console.log("Tu es en ligne ou pas !!!!", userData, "donnde moi ton id", uid, "donne moi ton pseudo", userData.pseudo);

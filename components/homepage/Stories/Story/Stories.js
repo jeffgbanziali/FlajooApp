@@ -37,7 +37,6 @@ const Stories = () => {
     if (loadStories) {
       dispatch(getStories());
       setLoadStories(false);
-      console.log("Ou est tu ?")
     }
   }, [loadStories, dispatch]);
 
@@ -97,11 +96,6 @@ const Stories = () => {
 
     const isUserOnline = foundUser.onlineStatus === true
 
-
-
-    console.log("viens à moi mon container", foundUser.pseudo)
-    /* console.log("viens à moi ma story", item.container.stories[0]._id)
-     console.log("viens à moi mon id", uid) */
 
 
 

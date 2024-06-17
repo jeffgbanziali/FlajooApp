@@ -9,28 +9,33 @@ import { readMessage } from "../../../actions/message.actions";
 import { fetchConversations } from "../../../actions/conversation.action";
 
 const Header = () => {
-  const userData = useSelector((state) => state.userReducer);
-  const messages = useSelector((state) => state.messageReducer.messages)
   const { isDarkMode } = useDarkMode();
-  const conversations = useSelector(state => state.conversationReducer);
   const [loadPost, setLoadPost] = useState(true);
   const { uid } = useContext(UidContext);
   const dispatch = useDispatch()
 
+  const userData = useSelector((state) => {
+    return state.userReducer;
+  });
+  const messages = useSelector((state) => {
+    return state.messageReducer.messages;
+  });
+  const conversations = useSelector((state) => {
+    return state.conversationReducer;
+  });
 
 
   useEffect(() => {
     if (uid) {
-      setLoadPost(true); // Démarre le chargement
+      setLoadPost(true);
       dispatch(fetchConversations(uid))
         .finally(() => {
-          setLoadPost(false); // Arrête le chargement après la requête
+          setLoadPost(false);
         });
 
     }
-    console.log("Mon user Id est lancé depuyis non ", userData._id)
 
-  }, [uid]);
+  }, [uid, dispatch]);
 
 
   const foundConversation = conversations.conversations.map(conversation => {
@@ -39,38 +44,38 @@ const Header = () => {
 
   const différentv = foundConversation && foundConversation.members.receiverId === uid && foundConversation.members.senderId !== uid
 
-  //console.log("Mes conersation", foundConversation)
 
 
   useEffect(() => {
-    dispatch(readMessage(foundConversation?._id));
+    if (foundConversation?._id) {
+      dispatch(readMessage(foundConversation._id));
+    }
   }, [dispatch, foundConversation?._id]);
+
 
   const navigation = useNavigation(false);
   const filteredMessages = messages.filter(message => message.isRead === false && message.senderId !== uid);
-  //console.log("Mes messages", filteredMessages)
 
 
 
   const handleClickProfile = () => {
-    console.log("clicked");
     navigation.navigate("Profile");
   };
 
   const handleClickMessage = () => {
-    console.log("clicked");
     navigation.navigate("Messages");
   };
 
   const handleClickNotifications = () => {
-    console.log("clicked");
     navigation.navigate("Notifications");
   };
+
+
+
   return (
     <View style={{
       backgroundColor: isDarkMode ? "#171717" : "white",
       borderBottomWidth: 2,
-      borderColor: isDarkMode ? "#343232" : "lightgray",
 
     }}>
       <View

@@ -12,6 +12,8 @@ import {
 import Thread from '../../components/Thread/Thread';
 import { useDarkMode } from '../../components/Context/AppContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import Header from '../../components/homepage/Header/Header';
+import Stories from '../../components/homepage/Stories/Story/Stories';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 

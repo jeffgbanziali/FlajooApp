@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { isEmpty } from '../../../Context/Utils';
 import LikeButton from '../LikeButton/LikeButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const PostFooter = ({ post, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
@@ -204,9 +205,9 @@ const PostFooter = ({ post, toggleComments }) => {
                                     alignItems: "center",
                                 }}
                             >
-                                <FontAwesome5
-                                    name="comment"
-                                    size={20}
+                                <FontAwesome
+                                    name="comments-o"
+                                    size={24}
                                     color={isDarkMode ? "gray" : "gray"}
 
                                 />

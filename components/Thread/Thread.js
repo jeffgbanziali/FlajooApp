@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { View, FlatList, ActivityIndicator, Text } from "react-native";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { View, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRecommendations, getPosts, markPostAsViewed } from "../../actions/post.actions"; // Ajoutez markPostAsViewed à partir des actions
+import { getPosts } from "../../actions/post.actions";
 import Posts from "../homepage/PostsComponents/Posts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Header from "../homepage/Header/Header";
 import Stories from "../homepage/Stories/Story/Stories";
 import { UidContext, useDarkMode } from "../Context/AppContext";
-import { Dimensions } from "react-native";
-
-
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
-  const userRequire = useSelector(state => state.postReducer.post);
+  const userRequire = useSelector((state) => state.postReducer.post);
   const { isDarkMode } = useDarkMode();
   const { uid } = useContext(UidContext);
 
@@ -33,46 +30,28 @@ const Thread = () => {
     };
 
     fetchPosts();
-
   }, [uid, dispatch]);
 
-  /*useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        if (uid) {
-          setLoadPost(true);
-          await dispatch(getPosts());
-        }
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setLoadPost(false);
-      }
-    };
+  const renderItem = useCallback(({ item }) => (
+    <View
+      style={{
+        alignItems: "center",
+        backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray",
+      }}
+      key={item._id}
+    >
+      <Posts loadPost={loadPost} user={uid} post={item} />
+    </View>
+  ), [isDarkMode, loadPost, uid]);
 
-    fetchPosts();
-
-  }, [uid, dispatch]);*/
-
-
-
-
-
-  const renderItem = ({ item }) => {
-
-
-
-    return (
-      <View
-        style={{
-          alignItems: "center",
-          backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
-        }}
-        key={item._id}
-      >
-        <Posts loadPost={loadPost} user={uid} post={item} />
-      </View>)
-  }
+  const ListHeaderComponent = useCallback(() => (
+    <View style={{
+      backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray",
+    }}>
+      <Header />
+      <Stories />
+    </View>
+  ), []);
 
   return (
     <GestureHandlerRootView>
@@ -81,12 +60,7 @@ const Thread = () => {
         keyExtractor={(post) => post._id}
         renderItem={renderItem}
         onEndReachedThreshold={0.5}
-        ListHeaderComponent={() => (
-          <>
-            <Header />
-            <Stories />
-          </>
-        )}
+        ListHeaderComponent={ListHeaderComponent}
       />
     </GestureHandlerRootView>
   );

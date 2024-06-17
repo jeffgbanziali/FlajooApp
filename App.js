@@ -48,7 +48,7 @@ const App = () => {
 
     useEffect(() => {
         const connectToRemoteDebugger = () => {
-            NativeDevSettings.setIsDebuggingRemotely(false);
+            NativeDevSettings.setIsDebuggingRemotely(true);
         };
         connectToRemoteDebugger();
     }, []);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, ScrollView, ActivityIndicator, Text } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../actions/post.actions";
 import Posts from "../homepage/PostsComponents/Posts";
@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Header from "../homepage/Header/Header";
 import Stories from "../homepage/Stories/Story/Stories";
 import { UidContext, useDarkMode } from "../Context/AppContext";
+import PlaceholderComponent from "../homepage/PostsComponents/CustomPostCard/PlaceholderComponent";
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
@@ -32,6 +33,12 @@ const Thread = () => {
     fetchPosts();
   }, [uid, dispatch]);
 
+  const renderPlaceholders = () => {
+    return Array(userRequire.length || 5).fill(null).map((_, index) => (
+      <PlaceholderComponent key={index} />
+    ));
+  };
+
   return (
     <GestureHandlerRootView>
       <ScrollView
@@ -42,7 +49,7 @@ const Thread = () => {
         <Header />
         <Stories />
         {loadPost ? (
-          <ActivityIndicator size="large" color={isDarkMode ? "white" : "black"} />
+          renderPlaceholders()
         ) : (
           userRequire.map((item) => (
             <View
@@ -60,5 +67,12 @@ const Thread = () => {
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    backgroundColor: "#0D0D0D",
+  },
+});
 
 export default Thread;

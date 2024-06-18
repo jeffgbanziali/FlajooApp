@@ -130,6 +130,9 @@ const NewPostScreen = () => {
                 media: mediaArray,
             };
 
+            console.log("Ma data", postData)
+
+
             if ((postText && mediaArray.length > 0) || (!postText && mediaArray.length > 0) || (postText && !mediaArray.length)) {
                 setProgress(0.6); // Progression à 60% avant l'envoi des données du post
 
@@ -154,7 +157,7 @@ const NewPostScreen = () => {
                     console.log("Voici ma log", response)
 
                 }
-
+                dispatch(getPosts(userData._id));
                 setPostText('');
                 setSelectedMediaArray([]);
                 setLoadPost(true);

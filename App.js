@@ -23,6 +23,7 @@ import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 import { useOnlineStatus, OnlineStatusProvider } from "./components/Context/OnlineContext";
 import { APP_API_URL } from "./config";
+import NoConnection from "./components/Loading/NoConnection";
 
 // Création du store
 const store = createStore(
@@ -74,7 +75,7 @@ const AppW = () => {
     const { isConnected, isInternetConnected } = useOnlineStatus();
 
     useEffect(() => {
-        console.log('useEffect AsyncStorage.getItem uid');
+        //  console.log('useEffect AsyncStorage.getItem uid');
         AsyncStorage.getItem('uid')
             .then((storedUid) => {
                 if (storedUid) {
@@ -90,7 +91,7 @@ const AppW = () => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            console.log('useEffect fetchToken');
+            //  console.log('useEffect fetchToken');
             setIsLoadingApp(true);
             try {
                 const response = await axios.get(`${APP_API_URL}/jwtid`, { withCredentials: true });
@@ -110,7 +111,7 @@ const AppW = () => {
 
     const updateUserData = useCallback(() => {
         if (uid) {
-            console.log('useEffect dispatch actions with UID:', uid);
+            // console.log('useEffect dispatch actions with UID:', uid);
             dispatch(getUser(uid));
             dispatch(getUsers());
             dispatch(getPosts(uid));
@@ -124,10 +125,10 @@ const AppW = () => {
         updateUserData();
     }, [updateUserData]);
 
-    console.log("Viens ici, kondo", uid)
+    //console.log("Viens ici, kondo", uid)
 
     if (!isConnected && !isInternetConnected) {
-        return <Loading />;
+        return <NoConnection />;
     }
 
     return (

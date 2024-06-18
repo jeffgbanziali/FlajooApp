@@ -415,7 +415,7 @@ const Posts = ({ post, loadPost, userId }) => {
                 }}
               >
                 {
-                  isLoading /*|| loadPost || !userId */? (
+                  isLoading /*|| loadPost || !userId */ ? (
                     <View
                       style={{
                         width: "100%",
@@ -543,7 +543,7 @@ const Posts = ({ post, loadPost, userId }) => {
                         style={{
                           color: isDarkMode ? "#F5F5F5" : "black",
                           textAlign: "center",
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: "bold",
                         }}>
                         {t("TheFirsComment")}

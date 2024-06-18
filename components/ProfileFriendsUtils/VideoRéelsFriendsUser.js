@@ -67,7 +67,7 @@ const VideoRéelsFriendsUser = ({ users }) => {
 
 
 
-    const renderPost = ({ item, index }) => (
+    const RenderPost = ({ item, index }) => (
         < TouchableOpacity key={index} >
             <View style={{
                 borderRadius: 10,
@@ -159,15 +159,17 @@ const VideoRéelsFriendsUser = ({ users }) => {
                     paddingLeft: user.length <= 2 ? 4 : 0
                 }
                 }>
-                <FlatList
-                    data={user}
-                    renderItem={renderPost}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={3}
-                    columnWrapperStyle={{
-                        justifyContent: user.length <= 2 ? 'space-evenly' : 'space-evenly',
-                    }}
-                />
+                <View style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-evenly',
+                }}>
+                    {
+                        user.map((item, index) => (
+                            <RenderPost item={item} index={index} key={index} />
+                        ))
+                    }
+                </View>
 
             </View>
         </SafeAreaView>

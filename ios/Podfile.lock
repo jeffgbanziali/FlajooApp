@@ -18,17 +18,79 @@ PODS:
     - React-Core (= 0.73.8)
     - React-jsi (= 0.73.8)
     - ReactCommon/turbomodule/core (= 0.73.8)
+  - Firebase/CoreOnly (10.27.0):
+    - FirebaseCore (= 10.27.0)
+  - Firebase/Messaging (10.27.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.27.0)
+  - FirebaseCore (10.27.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreExtension (10.28.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseCoreInternal (10.28.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseInstallations (10.28.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.27.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleDataTransport (9.4.1):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - GoogleSignIn (7.0.0):
     - AppAuth (~> 1.5)
     - GTMAppAuth (< 3.0, >= 1.3)
     - GTMSessionFetcher/Core (< 4.0, >= 1.1)
+  - GoogleUtilities/AppDelegateSwizzler (7.13.3):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (7.13.3):
+    - GoogleUtilities/Privacy
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.13.3):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (7.13.3):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.13.3)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (7.13.3)
+  - GoogleUtilities/Reachability (7.13.3):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (7.13.3):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - GTMAppAuth (2.0.0):
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.4.1)
   - JitsiWebRTC (111.0.2)
+  - nanopb (2.30910.0):
+    - nanopb/decode (= 2.30910.0)
+    - nanopb/encode (= 2.30910.0)
+  - nanopb/decode (2.30910.0)
+  - nanopb/encode (2.30910.0)
+  - PromisesObjC (2.4.0)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -914,6 +976,8 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+  - react-native-restart (0.0.27):
+    - React-Core
   - react-native-safe-area-context (4.9.0):
     - React-Core
   - react-native-slider (4.5.1):
@@ -1110,6 +1174,14 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.13.1):
     - React-Core
+  - RNFBApp (20.1.0):
+    - Firebase/CoreOnly (= 10.27.0)
+    - React-Core
+  - RNFBMessaging (20.1.0):
+    - Firebase/Messaging (= 10.27.0)
+    - FirebaseCoreExtension
+    - React-Core
+    - RNFBApp
   - RNFS (2.20.0):
     - React-Core
   - RNGestureHandler (2.16.0):
@@ -1203,6 +1275,7 @@ DEPENDENCIES:
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
+  - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-video (from `../node_modules/react-native-video`)
@@ -1235,6 +1308,8 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -1251,11 +1326,21 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - Bolts
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreExtension
+    - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebaseMessaging
     - fmt
+    - GoogleDataTransport
     - GoogleSignIn
+    - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
     - JitsiWebRTC
+    - nanopb
+    - PromisesObjC
     - SocketRocket
     - TOCropViewController
     - VoxImplantSDK
@@ -1344,6 +1429,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
+  react-native-restart:
+    :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-slider:
@@ -1408,6 +1495,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNFBApp:
+    :path: "../node_modules/@react-native-firebase/app"
+  RNFBMessaging:
+    :path: "../node_modules/@react-native-firebase/messaging"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
@@ -1439,12 +1530,22 @@ SPEC CHECKSUMS:
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: df34a309e356a77581809834f6ec3fbe7153f620
   FBReactNativeSpec: bbe8b686178e5ce03d1d8a356789f211f91f31b8
+  Firebase: 26b040b20866a55f55eb3611b9fcf3ae64816b86
+  FirebaseCore: a2b95ae4ce7c83ceecfbbbe3b6f1cddc7415a808
+  FirebaseCoreExtension: f63147b723e2a700fe0f34ec6fb7f358d6fe83e0
+  FirebaseCoreInternal: 58d07f1362fddeb0feb6a857d1d1d1c5e558e698
+  FirebaseInstallations: 60c1d3bc1beef809fd1ad1189a8057a040c59f2e
+  FirebaseMessaging: 585984d0a1df120617eb10b44cad8968b859815e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
+  GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   JitsiWebRTC: 80f62908fcf2a1160e0d14b584323fb6e6be630b
+  nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 0c7f03a41ee32dec802c74c341e317a4165973d5
   RCTTypeSafety: 57698bb7fcde424922e201dab377f496a08a63e3
@@ -1480,6 +1581,7 @@ SPEC CHECKSUMS:
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
   react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-pager-view: 0eb900a8c5d83c02a74b0125d4b5f9fdcc5b8f44
+  react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-slider: b42e578d7c1ee4cd5f53e1dcfca232d3007b3d3e
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
@@ -1512,6 +1614,8 @@ SPEC CHECKSUMS:
   RNCPicker: 82ccad5b08259dc09310082118cbb6c136d7da67
   RNDateTimePicker: 08f00a2c341bf96e4b30da15799fbdd4c5fa48a3
   RNDeviceInfo: 4f9c7cfd6b9db1b05eb919620a001cf35b536423
+  RNFBApp: 1ae7462cddf74a49df206d3418bc0170f8fa53e5
+  RNFBMessaging: 85f661b9f16e2b081e6809ef63d3daa4458b9042
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: bc2cdb2dc42facdf34992ae364b8a728e19a3686
   RNGoogleSignin: 24d3b3261f78b0fae0aa013f8ab6f8d25e369b0c
@@ -1528,6 +1632,6 @@ SPEC CHECKSUMS:
   VoxImplantWebRTC: db29562c228542d16240401e5fc897441c014ba6
   Yoga: 2a16e58450c48e110211dae1159fb114bbcdcfc0
 
-PODFILE CHECKSUM: 40d892ea4cbacfdba0cf779be118771d08c4a179
+PODFILE CHECKSUM: 0cc2b9197c06dbb068d59c7a85ce86a79b418ce2
 
 COCOAPODS: 1.15.2

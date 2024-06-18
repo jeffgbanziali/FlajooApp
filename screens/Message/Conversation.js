@@ -24,7 +24,7 @@ const Conversation = ({ conversation, currentUser }) => {
   const { uid } = useContext(UidContext);
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
-  const [loadStories, setLoadStories] = useState(true);
+  const [loadConversation, setLoadConversation] = useState(true);
 
   const usersData = useSelector((state) => state.usersReducer);
   const friendId = conversation.members.receiverId !== uid ? conversation.members.receiverId : conversation.members.senderId;
@@ -72,8 +72,10 @@ const Conversation = ({ conversation, currentUser }) => {
       if (différentv && conversation && conversation._id && conversation.message.isRead === false) {
         await dispatch(markConversationAsRead(conversation._id));
         console.log("Conversation marquée comme lue :", conversation._id);
+        setLoadConversation(true)
       } else if (différentv === false || différentv === true && conversation && conversation._id && conversation.message.isRead === true) {
         console.log("Bonne humeur aujourd'hui")
+        setLoadConversation(true)
 
       } else {
         console.error("ID de conversation non défini :", conversation);
@@ -83,32 +85,41 @@ const Conversation = ({ conversation, currentUser }) => {
     }
   };
 
+  useEffect(() => {
+    if (loadConversation) {
+      dispatch(fetchConversations(uid));
+      setLoadConversation(false);
+    }
+  }, [loadConversation, dispatch]);
+
 
 
   const handleClickMessage = useCallback(() => {
     handleOpenConversation();
+    setLoadConversation(true)
     navigation.navigate("Chatlist", {
       conversationId: conversation._id,
       conversation: conversation,
       user: foundUser
     });
+
   }, [handleOpenConversation, conversation, foundUser, navigation]);
 
-  const viewProfile = useCallback(() => {
+  const viewProfile = () => {
     setShowOptions(!showOptions);
-  }, [showOptions]);
+  };
 
-  const closeModal = useCallback(() => {
+  const closeModal = () => {
     setShowOptions(false);
-  }, []);
+  };
 
-  const goProfil = useCallback((id) => {
+  const goProfil = (id) => {
     navigation.navigate("ProfilFriends", { id });
     closeModal();
-  }, [closeModal, navigation]);
+  };
 
 
-  const MAX_MESSAGE_LENGTH = 36;
+  const MAX_MESSAGE_LENGTH = 60;
 
   const renderLimitedMessage = (message) => {
     if (message.length <= MAX_MESSAGE_LENGTH) {
@@ -349,7 +360,7 @@ const Conversation = ({ conversation, currentUser }) => {
                       </Text>
                       <Text
                         style={{
-                          fontSize: 16,
+                          fontSize: 14,
                           marginTop: 4,
                           alignItems: "center",
                           fontWeight: différentv && conversation.message.isRead === false ? "800" : "400",

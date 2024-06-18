@@ -174,17 +174,19 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
                           Distribué
                         </Text>
                         :
-                        <Text
+                        <View
                           style={{
-                            fontWeight: "400",
-                            marginLeft: 10,
-                            paddingTop: 5,
-                            fontSize: 12,
-                            color: "lightgray",
+                            backgroundColor: "#09C03C",
+                            position: "absolute",
+                            bottom: 0,
+                            right: 0,
+                            width: 10,
+                            height: 10,
+                            borderRadius: 30,
                           }}
                         >
-                          Lu
-                        </Text>
+
+                        </View>
                     }
 
 

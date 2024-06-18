@@ -9,7 +9,6 @@ const ViewProfile = ({ user }) => {
     const { isDarkMode } = useDarkMode();
     const navigation = useNavigation();
 
-    console.log("Mon user id ", user)
 
     const viewProfile = () => {
         navigation.navigate("ProfilFriends", {

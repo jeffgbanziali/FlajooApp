@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useState, } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import LikeButton from "../LikeButton/LikeButton"
@@ -33,6 +33,7 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
     const [showImage, setShowImage] = useState(false);
 
     const navigation = useNavigation();
+    const dispatch = useDispatch()
     const { uid } = useContext(UidContext);
     const { isDarkMode } = useDarkMode();
 

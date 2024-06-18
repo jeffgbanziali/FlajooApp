@@ -52,7 +52,8 @@ const CreateInputSearch = () => {
                     //backgroundColor: "green",
                     alignItems: "center",
                     flexDirection: "row",
-                    backgroundColor: isDarkMode ? "gray" : "lightgray",
+                    backgroundColor: isDarkMode ? "#171717" : "#F1F1F1",
+                    borderRadius: 10
 
                 }}>
                 <TextInput

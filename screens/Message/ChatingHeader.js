@@ -30,7 +30,6 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
     const { t } = useTranslation();
     const [loadStories, setLoadStories] = useState(true);
 
-    const initial = initialCreateConversation || initialConversation
 
     const [conversation, setConversation] = useState(conversationToos);
 
@@ -48,8 +47,11 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
 
             if (conversation && conversation.message && conversation.message.text === '') {
                 await dispatch(deleteConversation(conversation._id));
+                setLoadStories(true);
                 console.log('Conversation deleted successfully', conversation);
             } else {
+                setLoadStories(true);
+
                 console.log("No problem, conversation not deleted");
             }
         } catch (error) {
@@ -62,22 +64,26 @@ const ChatingHeader = ({ user, renderLimitedMessage, initialConversation, conver
 
 
 
-
     useEffect(() => {
         if (loadStories) {
-            dispatch(fetchConversations(uid));
-            setLoadStories(false);
+            const fetchAndReset = async () => {
+                await dispatch(fetchConversations(uid));
+                setLoadStories(false);
+                console.log("Stories reloaded");
+            };
+            fetchAndReset();
         }
-    }, [loadStories, dispatch]);
+    }, [loadStories, dispatch, uid]);
 
-    const handleClickReturnMessageList = () => {
+    useEffect(() => {
+        console.log("Met toi à jour", loadStories);
+    }, [loadStories]);
 
+    const handleClickReturnMessageList = async () => {
         setLoadStories(true);
-        handleDeleteConversation()
+        await handleDeleteConversation();
         navigation.goBack("Messages");
     };
-
-
 
     const handleClickCall = (user) => {
         console.log("Calling")

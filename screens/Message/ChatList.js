@@ -52,14 +52,13 @@ const Message = () => {
   const { conversationId, conversation, conversationData, user } = route.params;
   const { isDarkMode } = useDarkMode();
   const { t } = useTranslation();
-  const [loadStories, setLoadStories] = useState(true);
+  const [loadConversation, setLoadConversation] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const dispatch = useDispatch();
 
 
-  //console.log("Mon socket", socket)
 
 
   const conversationMembersId = conversationId || conversationData._id
@@ -130,6 +129,7 @@ const Message = () => {
       setChat((prevChat) => [...prevChat, response.data]);
       setCurrentChat((prevCurrentChat) => [...prevCurrentChat, response.data]);
       console.log("reponse vers notre data", response.data)
+      setLoadConversation(true)
       setNewChat("");
       setSelectedImage(null);
       setSelectedVideo(null);
@@ -197,7 +197,9 @@ const Message = () => {
           createdAt: Date.now(),
         };
         return [...prevArrivalChat, newMessage];
+
       });
+      setLoadConversation(true)
     });
 
     /* return () => {
@@ -207,7 +209,12 @@ const Message = () => {
 
 
 
-
+  useEffect(() => {
+    if (loadConversation) {
+      dispatch(fetchConversations(uid));
+      setLoadConversation(false);
+    }
+  }, [loadConversation, dispatch]);
 
 
 

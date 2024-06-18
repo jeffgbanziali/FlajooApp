@@ -14,14 +14,8 @@ import { createConversation } from '../../../actions/conversation.action';
 
 
 const CreateNewConversation = () => {
-    const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
     const { t } = useTranslation();
-
-    const [selectedUser, setSelectedUser] = useState(null);
-
-
-
 
 
 

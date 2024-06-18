@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { UidContext, useDarkMode } from '../../Context/AppContext';
 import { useSelector } from 'react-redux';
+import { createConversation } from '../../../actions/conversation.action';
 
 const ChatOnline = ({ user }) => {
     const { isDarkMode, isConnected } = useDarkMode();
@@ -26,13 +27,38 @@ const ChatOnline = ({ user }) => {
     const renderItem = ({ item }) => {
 
 
+
+        const handleCreateConversation = async () => {
+            try {
+                if (item.length === 0) {
+                    throw new Error("Aucun utilisateur sélectionné !");
+                }
+
+                const senderId = uid;
+
+                const receiverId = item._id;
+                const conversationData = await dispatch(createConversation(senderId, receiverId)); // Utilisation de await pour obtenir les données de la réponse
+                // console.log("Nouvelle conversation créée :", conversationData.message.text);
+                navigation.navigate("Chatlist", { user, conversationData });
+
+                //  console.log("Nouvelle conversation créée");
+            } catch (error) {
+                console.error("montre moi l'erreur", error.message);
+            }
+        };
+
+
         const isUserOnline = item.onlineStatus === true
 
 
+        const TapTap = () => {
+            console.info("C'est toi", item)
+        }
         return (
 
 
-            <View
+            <TouchableOpacity
+                onPress={TapTap}
                 key={item._id}
                 style={{
                     flexDirection: 'column',
@@ -99,7 +125,7 @@ const ChatOnline = ({ user }) => {
                     </Text>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -121,7 +147,7 @@ const ChatOnline = ({ user }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
-               // keyExtractor={(item) => item._id !== uid}
+            // keyExtractor={(item) => item._id !== uid}
             />
         </View>
 

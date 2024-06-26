@@ -7,7 +7,7 @@ import { useDarkMode } from '../../components/Context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Pressable } from 'react-native';
-import { APP_API_URL } from '../../config';
+import { APP_API_URL } from "@env";
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-neat-date-picker'

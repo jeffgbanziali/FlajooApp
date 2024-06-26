@@ -4,7 +4,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from 'react-i18next';
-import { APP_API_URL } from '../../config';
+import { APP_API_URL } from "@env";
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, SafeAreaView, FlatList, View, Text, Dimensions } from 'react-native';
 import axios from 'axios';
-import { APP_API_URL } from '../../config';
-import { MyPostUser } from '../../Data/UserProfilePost';
+import { APP_API_URL } from "@env";
 import { LinearGradient } from 'react-native-linear-gradient';
 import { useDarkMode } from '../Context/AppContext';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';

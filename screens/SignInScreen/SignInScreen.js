@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import Loading from "../../components/Loading/Loading";
-import { APP_API_URL } from "../../config";
+import { APP_API_URL } from "@env";
 import { useTranslation } from "react-i18next";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContinueWithGmail from "./ContinueWithGmail";
@@ -200,7 +200,8 @@ const SignInScreen = () => {
                 style={{
                   width: '100%',
                   height: 30,
-                  marginTop: 10,
+                  position: "absolute",
+                  bottom: 2,
                   justifyContent: "center",
                   alignItems: "center"
                 }}

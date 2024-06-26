@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useDispatch } from "react-redux";
 import LinearGradient from 'react-native-linear-gradient';
 import { useDarkMode, UidContext } from '../Context/AppContext';
-import { APP_API_URL } from '../../config';
+import { APP_API_URL } from "@env";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -54,7 +54,6 @@ const PostsUser = () => {
                     borderWidth: 1,
                     borderColor: isDarkMode ? "black" : "#4F4F4F",
                     backgroundColor: "black",
-                    margin: 5, // Adjust spacing between items
                 }}>
                     <Image
                         source={{ uri: item.media[0]?.mediaUrl }}
@@ -120,6 +119,7 @@ const PostsUser = () => {
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
+                    backgroundColor: "red",
                     justifyContent: 'space-evenly',
                 }}>
                     {

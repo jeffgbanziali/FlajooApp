@@ -22,7 +22,7 @@ import FirstNavigation from "./navigation/FirstNavigation";
 import Loading from "./components/Loading/Loading";
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 import { useOnlineStatus, OnlineStatusProvider } from "./components/Context/OnlineContext";
-import { APP_API_URL } from "./config";
+import { APP_API_URL } from "@env";
 import NoConnection from "./components/Loading/NoConnection";
 
 // Création du store
@@ -73,6 +73,8 @@ const AppW = () => {
     const dispatch = useDispatch();
     const { isDarkMode } = useDarkMode();
     const { isConnected, isInternetConnected } = useOnlineStatus();
+
+    //console.log("Viens me voir ", APP_API_URL)
 
     useEffect(() => {
         //  console.log('useEffect AsyncStorage.getItem uid');
@@ -125,7 +127,7 @@ const AppW = () => {
         updateUserData();
     }, [updateUserData]);
 
-    //console.log("Viens ici, kondo", uid)
+    console.log("Viens ici, kondo", uid)
 
     if (!isConnected && !isInternetConnected) {
         return <NoConnection />;

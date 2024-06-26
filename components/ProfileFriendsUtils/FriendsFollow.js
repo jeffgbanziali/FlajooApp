@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, NavLink } from "react-native";
 import { useDarkMode } from "../Context/AppContext";
 import axios from "axios";
-import { APP_API_URL } from "../../config";
+import { APP_API_URL } from "@env";;
 import { useTranslation } from "react-i18next";
 
 

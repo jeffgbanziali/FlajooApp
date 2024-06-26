@@ -932,8 +932,8 @@ PODS:
   - React-Mapbuffer (0.73.8):
     - glog
     - React-debug
-  - react-native-app-auth (7.1.3):
-    - AppAuth (~> 1.6)
+  - react-native-app-auth (7.2.0):
+    - AppAuth (>= 1.7.3)
     - React-Core
   - react-native-background-timer (2.4.1):
     - React-Core
@@ -947,19 +947,19 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
-  - react-native-cameraroll (7.5.2):
+  - react-native-cameraroll (7.8.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-color-matrix-image-filters (6.0.7):
+  - react-native-color-matrix-image-filters (6.0.9):
     - React-Core
-  - react-native-config (1.5.1):
-    - react-native-config/App (= 1.5.1)
-  - react-native-config/App (1.5.1):
+  - react-native-config (1.5.2):
+    - react-native-config/App (= 1.5.2)
+  - react-native-config/App (1.5.2):
     - React-Core
   - react-native-cookies (6.2.1):
     - React-Core
-  - react-native-document-picker (9.1.1):
+  - react-native-document-picker (9.3.0):
     - React-Core
   - react-native-image-filter-kit (0.8.0):
     - Bolts/Tasks (= 1.9.0)
@@ -972,15 +972,15 @@ PODS:
     - React-Core
   - react-native-netinfo (11.3.2):
     - React-Core
-  - react-native-pager-view (6.3.0):
+  - react-native-pager-view (6.3.3):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - react-native-restart (0.0.27):
     - React-Core
-  - react-native-safe-area-context (4.9.0):
+  - react-native-safe-area-context (4.10.5):
     - React-Core
-  - react-native-slider (4.5.1):
+  - react-native-slider (4.5.2):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -991,13 +991,13 @@ PODS:
     - React-Core
   - react-native-view-shot (3.8.0):
     - React-Core
-  - react-native-voximplant (1.40.2):
+  - react-native-voximplant (1.42.0):
     - React
-    - VoxImplantSDK (= 2.50.0)
+    - VoxImplantSDK (= 2.53.0)
   - react-native-webrtc (111.0.6):
     - JitsiWebRTC (~> 111.0.0)
     - React-Core
-  - react-native-webview (13.8.4):
+  - react-native-webview (13.10.4):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1168,11 +1168,11 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.23.1):
     - React-Core
-  - RNCPicker (2.7.2):
+  - RNCPicker (2.7.7):
     - React-Core
-  - RNDateTimePicker (7.6.4):
+  - RNDateTimePicker (7.7.0):
     - React-Core
-  - RNDeviceInfo (10.13.1):
+  - RNDeviceInfo (10.14.0):
     - React-Core
   - RNFBApp (20.1.0):
     - Firebase/CoreOnly (= 10.27.0)
@@ -1184,7 +1184,7 @@ PODS:
     - RNFBApp
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.16.0):
+  - RNGestureHandler (2.17.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1200,23 +1200,24 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNReanimated (3.8.1):
+  - RNReanimated (3.12.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - ReactCommon/turbomodule/core
-  - RNScreens (3.30.1):
+  - RNScreens (3.32.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+    - React-RCTImage
   - RNSound (0.11.2):
     - React-Core
     - RNSound/Core (= 0.11.2)
   - RNSound/Core (0.11.2):
     - React-Core
-  - RNSVG (13.14.0):
+  - RNSVG (13.14.1):
     - React-Core
-  - RNVectorIcons (10.0.3):
+  - RNVectorIcons (10.1.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1226,9 +1227,9 @@ PODS:
     - React
     - React-callinvoker
     - React-Core
-  - VoxImplantSDK (2.50.0):
-    - VoxImplantWebRTC (= 106.0.1)
-  - VoxImplantWebRTC (106.0.1)
+  - VoxImplantSDK (2.53.0):
+    - VoxImplantWebRTC (= 112.0.0)
+  - VoxImplantWebRTC (112.0.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1567,28 +1568,28 @@ SPEC CHECKSUMS:
   React-jsinspector: 1729acf5ffe2d4439d698da25fddf0c75d07d1a1
   React-logger: 60afd40b183e8e6642bfd0108f1a1ad360cc665e
   React-Mapbuffer: 672a9342eb75a4d0663306e94d4dfc88aee73b93
-  react-native-app-auth: aafaa6e2934ceeb72d1f5a42962937ffeed9566c
+  react-native-app-auth: 63fa4e58c5bd29aeb974d3a06a23c5858322d533
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
   react-native-blurhash: a59e6bf8117a0304488ed576abd440f4b0777a8c
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
-  react-native-cameraroll: af8eec1e585d053ff485d98ec837f9a8a11b5745
-  react-native-color-matrix-image-filters: d10824dc8db18e57cafe7d99b8d8aa46414eaf52
-  react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
+  react-native-cameraroll: 433f793bc2eb3bcb65c9e166f4225eae7876d056
+  react-native-color-matrix-image-filters: e2df0971b44f1aba49f4740463fdda857d467adf
+  react-native-config: d7d8a0c65f7fa523197879f6b777997abbfc987e
   react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
-  react-native-document-picker: 3599b238843369026201d2ef466df53f77ae0452
+  react-native-document-picker: 5b97e24a7f1a1e4a50a72c540a043f32d29a70a2
   react-native-image-filter-kit: d79137549eb44f8215b7f2be5e77213f605e2c92
   react-native-image-picker: d3db110a3ded6e48c93aef7e8e51afdde8b16ed0
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
   react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
-  react-native-pager-view: 0eb900a8c5d83c02a74b0125d4b5f9fdcc5b8f44
+  react-native-pager-view: 4cc7e44dbc04cad0ca9e0a49c62c593d0fa793cc
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
-  react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
-  react-native-slider: b42e578d7c1ee4cd5f53e1dcfca232d3007b3d3e
+  react-native-safe-area-context: a240ad4b683349e48b1d51fed1611138d1bdad97
+  react-native-slider: 7a39874fc1fcdfee48e448fa72cce0a8f2c7c5d6
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
-  react-native-voximplant: 5e1d9005d6e0c334a13bb553c031ef11acbdc26d
+  react-native-voximplant: 93826357ea605f586a02a5f9066ff95fdee73659
   react-native-webrtc: 255a1172fd31525b952b36aef7b8e9a41de325e5
-  react-native-webview: 9395e82c917d81407deb9b1fe53158dd6c8880ff
+  react-native-webview: dbc8171113daa2abb2499da5f327a8d0cdfcd61c
   React-nativeconfig: 2e44d0d2dd222b12a5183f4bcaa4a91881497acb
   React-NativeModulesApple: 464a9590389efd364d45d726a35ef7ade6b5c59a
   React-perflogger: f9367428cf475f4606b5965c1d5a71781bb95299
@@ -1611,25 +1612,25 @@ SPEC CHECKSUMS:
   ReactCommon: 512222a2c036e9a7d1489d4c888aac178dfb0f3c
   ReactNativeIncallManager: bfc9c67358cd524882a7c4116dcb311ac2293d4b
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
-  RNCPicker: 82ccad5b08259dc09310082118cbb6c136d7da67
-  RNDateTimePicker: 08f00a2c341bf96e4b30da15799fbdd4c5fa48a3
-  RNDeviceInfo: 4f9c7cfd6b9db1b05eb919620a001cf35b536423
+  RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
+  RNDateTimePicker: 4f3c4dbd4f908be32ec8c93f086e8924bd4a2e07
+  RNDeviceInfo: 59344c19152c4b2b32283005f9737c5c64b42fba
   RNFBApp: 1ae7462cddf74a49df206d3418bc0170f8fa53e5
   RNFBMessaging: 85f661b9f16e2b081e6809ef63d3daa4458b9042
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: bc2cdb2dc42facdf34992ae364b8a728e19a3686
+  RNGestureHandler: 67d3f1f69d4d0c98d6e83f4229e3bbf997d1dc72
   RNGoogleSignin: 24d3b3261f78b0fae0aa013f8ab6f8d25e369b0c
   RNImageCropPicker: e7ab6fb43d2fc3e84651e786ef4a080d63b0ed3d
-  RNReanimated: 8a4d86eb951a4a99d8e86266dc71d7735c0c30a9
-  RNScreens: b6b64d956af3715adbfe84808694ae82d3fec74f
+  RNReanimated: 5307ba390921b76ddf9c0aa69876916ad427a61f
+  RNScreens: e842cdccb23c0a084bd6307f6fa83fd1c1738029
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
-  RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
-  RNVectorIcons: 73ab573085f65a572d3b6233e68996d4707fd505
+  RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
+  RNVectorIcons: 96e8c5c45609932bb2f8347e1c709bcca0e95654
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
-  VoxImplantSDK: 7ff484315bb557b2471e28ad4d3f007119ad7070
-  VoxImplantWebRTC: db29562c228542d16240401e5fc897441c014ba6
+  VoxImplantSDK: 13d824b25186dc0d87759fc979fbb692efac037e
+  VoxImplantWebRTC: 2256a8b9157cc46e1a4c8e0ed5816c5c672d7d5d
   Yoga: 2a16e58450c48e110211dae1159fb114bbcdcfc0
 
 PODFILE CHECKSUM: 0cc2b9197c06dbb068d59c7a85ce86a79b418ce2

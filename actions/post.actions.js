@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_API_URL } from '../config';
+import { APP_API_URL } from "@env";;
 
 // Post actions
 export const GET_POSTS = "GET_POSTS";

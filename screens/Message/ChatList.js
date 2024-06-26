@@ -20,7 +20,7 @@ import axios from "axios";
 import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser";
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { io } from "socket.io-client";
-import { APP_API_URL, MESSAGE_ADRESS_IP } from "../../config";
+import { APP_API_URL, MESSAGE_ADRESS_IP } from "@env";
 import Video from 'react-native-video';
 import { collection, addDoc, getDoc, } from 'firebase/firestore';
 import { firestore, uploadMediaToFirebase } from '../../Data/FireStore';
@@ -235,7 +235,7 @@ const Message = () => {
         setChat(response.data);
         setCurrentChat(response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Montre moi l'erreur", err);
       }
     };
     getMessages();

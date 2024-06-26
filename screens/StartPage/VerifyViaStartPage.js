@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { UidContext, useDarkMode } from '../../components/Context/AppContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { TextInput } from 'react-native';
-import { APP_API_URL } from '../../config';
+import { APP_API_URL } from "@env";
 import axios from 'axios';
 import Modal from "react-native-modal";
 import Loading from '../../components/Loading/Loading';

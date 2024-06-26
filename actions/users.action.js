@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_API_URL } from '../config';
+import { APP_API_URL } from "@env";;
 
 export const GET_USERS = 'GET_USERS';
 

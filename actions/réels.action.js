@@ -1,5 +1,5 @@
 import axios from "axios";
-import { APP_API_URL } from "../config";
+import { APP_API_URL } from "@env";;
 
 // VideoRéels actions
 export const GET_VIDEO_REELS = "GET_VIDEO_REELS";

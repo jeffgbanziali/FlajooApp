@@ -520,6 +520,7 @@ const Posts = ({ post, loadPost, userId }) => {
                 height: "78%",
                 borderTopWidth: 1,
                 paddingBottom: 10,
+                paddingTop: 5,
                 backgroundColor: isDarkMode ? "#171717" : "white",
                 //backgroundColor: "red",
 

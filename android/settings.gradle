@@ -2,3 +2,9 @@ rootProject.name = 'FlajooApp'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+include ':unimodules-core'
+project(':unimodules-core').projectDir = new File(rootProject.projectDir, '../node_modules/@unimodules/core/android')
+
+include ':unimodules-react-native-adapter'
+project(':unimodules-react-native-adapter').projectDir = new File(rootProject.projectDir, '../node_modules/@unimodules/react-native-adapter/android')
+

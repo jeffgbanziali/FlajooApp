@@ -5,9 +5,7 @@ import {
     formatPostDate,
     isEmpty,
 } from "../../../../Context/Utils";
-import Feather from 'react-native-vector-icons/Feather';
 import { UidContext, useDarkMode } from "../../../../Context/AppContext";
-import { getPosts } from "../../../../../actions/post.actions";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import ReplyText from "../ReplyType/ReplyText";
@@ -25,11 +23,9 @@ import LikeCommentButton from "../../LikeButton/LikeCommentButton";
 const CommentImage = ({ areYouPressComment, post, comment, toggle, toAnswering, toReplying }) => {
     const { isDarkMode } = useDarkMode();
     const usersData = useSelector((state) => state.usersReducer);
-    const [loadPost, setLoadPost] = useState(true);
     const [toAnswer, setToAnswer] = useState()
     const { uid } = useContext(UidContext);
     const navigation = useNavigation();
-    const dispatch = useDispatch();
 
 
     const { t } = useTranslation();

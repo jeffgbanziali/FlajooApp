@@ -53,21 +53,39 @@ const NoConnection = () => {
                     style={styles.image}
                 />
             </View>
+            <View style={{
+                width: "100%",
+                height: 100,
+                marginBottom: 30,
+                alignItems: 'center',
+                justifyContent: "center",
+            }}>
+                <Text style={[styles.message, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
+                    {t("Veuillez vous connecter au réseau")}
+                </Text>
+            </View>
 
-            <Text style={[styles.message, { color: isDarkMode ? '#ffffff' : '#000000' }]}>
-                {t("Veuillez vous connecter au réseau")}
-            </Text>
+
 
             <Animated.View style={{ transform: [{ translateY: bounceAnim }] }}>
                 <Feather name="wifi-off" size={90} color={isDarkMode ? "white" : "black"} />
             </Animated.View>
 
-            <TouchableOpacity
-                onPress={handleReload}
-                style={styles.retryButton}>
-                <Feather name="refresh-cw" size={24} color="#ffffff" />
-                <Text style={styles.retryText}>{t("Réessayer")}</Text>
-            </TouchableOpacity>
+            <View style={{
+                width: "100%",
+                height: 200,
+                marginTop: 40,
+                alignItems: 'center',
+                justifyContent: "center",
+            }}>
+                <TouchableOpacity
+                    onPress={handleReload}
+                    style={styles.retryButton}>
+                    <Feather name="refresh-cw" size={20} color="#ffffff" />
+                    <Text style={styles.retryText}>{t("Réessayer")}</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     );
 };
@@ -99,10 +117,11 @@ const styles = StyleSheet.create({
     retryButton: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: "center",
         backgroundColor: '#007AFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 25,
+        width: 160,
+        height: 40,
+        borderRadius: 15,
         marginTop: 40,
     },
     retryText: {

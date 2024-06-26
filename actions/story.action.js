@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_API_URL } from '../config';
+import { APP_API_URL } from "@env";;
 
 // Story actions
 export const GET_STORIES = 'GET_STORIES';

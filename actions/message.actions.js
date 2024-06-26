@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_API_URL, MESSAGE_ADRESS_IP } from '../config';
+import { APP_API_URL, MESSAGE_ADRESS_IP } from "@env";;
 
 
 export const SEND_MESSAGE_SUCCESS = "SEND_MESSAGE_SUCCESS";

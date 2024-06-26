@@ -1,8 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Pressable, Modal } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { APP_API_URL } from "../../config";
 import { formatConversationDate, isEmpty } from "../../components/Context/Utils";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -342,7 +340,7 @@ const Conversation = ({ conversation, currentUser }) => {
 
                         //backgroundColor: "red",
                         height: "100%",
-                        width: "80%"
+                        width: "78%"
                       }}>
                       <Text
                         style={{
@@ -375,7 +373,7 @@ const Conversation = ({ conversation, currentUser }) => {
                       style={{
                         alignItems: "flex-end",
                         justifyContent: "center",
-                        width: "20%",
+                        width: "22%",
                         //  backgroundColor: "blue",
                         paddingRight: 10,
                         height: "80%",
@@ -384,7 +382,7 @@ const Conversation = ({ conversation, currentUser }) => {
                         style={{
                           fontSize: 13,
                           alignItems: "center",
-                          fontWeight: "600",
+                          fontWeight: "400",
                           color: isDarkMode ? (
                             différentv && conversation.message.isRead === false ? "red" : "white") : (
                             différentv && conversation.message.isRead === false ? "red" : "black"),

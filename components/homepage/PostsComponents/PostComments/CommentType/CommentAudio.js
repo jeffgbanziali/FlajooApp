@@ -5,9 +5,7 @@ import {
     formatPostDate,
     isEmpty,
 } from "../../../../Context/Utils";
-import Feather from 'react-native-vector-icons/Feather';
 import { UidContext, useDarkMode } from "../../../../Context/AppContext";
-import { getPosts } from "../../../../../actions/post.actions";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import ReplyText from "../ReplyType/ReplyText";
@@ -21,9 +19,6 @@ import ReplyToImage from "../ReplyTo/ReplyToImage";
 import ReplyToVideo from "../ReplyTo/ReplyToVideo";
 import ReplyToAudio from "../ReplyTo/ReplyToAudio";
 import LikeCommentButton from "../../LikeButton/LikeCommentButton";
-import Modal from "react-native-modal";
-import CommentTools from "../CommentTools/CommentTools";
-
 
 
 

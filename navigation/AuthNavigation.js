@@ -21,6 +21,7 @@ const AuthNavigation = () => {
         >
             <Stack.Screen name="Signin" component={SignInScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
+            <Stack.Screen name="Verify" component={AccountVerify} />
             <Stack.Screen name="VerifyStartPage" component={VerifyViaStartPage} />
             <Stack.Screen name="Changepassword" component={ForgotPasswordScreen} />
 

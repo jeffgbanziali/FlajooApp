@@ -22,6 +22,9 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         implementation project(':unimodules-core')
         implementation project(':unimodules-react-native-adapter')
+        implementation 'org.tensorflow:tensorflow-lite:2.7.0'
+        implementation 'org.tensorflow:tensorflow-lite-support:0.2.0'
+
         
     }
 }

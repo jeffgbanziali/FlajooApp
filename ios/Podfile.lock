@@ -1222,6 +1222,13 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - SocketRocket (0.6.1)
+  - TensorFlowLiteC (2.14.0):
+    - TensorFlowLiteC/Core (= 2.14.0)
+  - TensorFlowLiteC/Core (2.14.0)
+  - TensorFlowLiteSwift (2.14.0):
+    - TensorFlowLiteSwift/Core (= 2.14.0)
+  - TensorFlowLiteSwift/Core (2.14.0):
+    - TensorFlowLiteC (= 2.14.0)
   - TOCropViewController (2.7.4)
   - VisionCamera (3.9.2):
     - React
@@ -1320,6 +1327,7 @@ DEPENDENCIES:
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - TensorFlowLiteSwift
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1343,6 +1351,8 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - SocketRocket
+    - TensorFlowLiteC
+    - TensorFlowLiteSwift
     - TOCropViewController
     - VoxImplantSDK
     - VoxImplantWebRTC
@@ -1627,12 +1637,14 @@ SPEC CHECKSUMS:
   RNSVG: af3907ac5d4fa26a862b75a16d8f15bc74f2ceda
   RNVectorIcons: 96e8c5c45609932bb2f8347e1c709bcca0e95654
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  TensorFlowLiteC: a836de9b6e6018665ccc349538bdd2c3b80dd7a5
+  TensorFlowLiteSwift: f706b143b69d7bf433aba7b08049bdd11c321a10
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
   VoxImplantSDK: 13d824b25186dc0d87759fc979fbb692efac037e
   VoxImplantWebRTC: 2256a8b9157cc46e1a4c8e0ed5816c5c672d7d5d
   Yoga: 2a16e58450c48e110211dae1159fb114bbcdcfc0
 
-PODFILE CHECKSUM: 0cc2b9197c06dbb068d59c7a85ce86a79b418ce2
+PODFILE CHECKSUM: ab3db38d180f8c8cff76c06f768fd942bf3bdcc2
 
 COCOAPODS: 1.15.2

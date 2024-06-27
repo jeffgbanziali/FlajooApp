@@ -33,7 +33,7 @@ import IncomingCall from "../screens/CallScreen/IncomingCall";
 import VoiceCall from "../screens/CallScreen/VoiceCall";
 import { useTranslation } from "react-i18next";
 import { Easing } from "react-native";
-import BestModel from "../screens/BestModel/BestModel";
+import Favorite from "../screens/Favorite/Favorite";
 
 const Tab = createBottomTabNavigator();
 
@@ -220,8 +220,8 @@ const TabNavigation = () => {
           }}
         />
         <Tab.Screen
-          name="BestModel"
-          component={BestModel}
+          name="Favorite"
+          component={Favorite}
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ focused }) => (

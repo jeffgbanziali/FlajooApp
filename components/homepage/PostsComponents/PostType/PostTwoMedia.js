@@ -304,7 +304,7 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings,toggl
                                 borderRightWidth: 1,
                                 borderTopWidth: 1,
                                 paddingLeft: 20,
-                                borderColor: "rgba(255,255,255)",
+                                borderColor: "gray",
                             }}
                         >
 

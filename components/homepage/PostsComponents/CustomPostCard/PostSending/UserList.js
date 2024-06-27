@@ -10,25 +10,32 @@ const UserList = ({ firstTenUsers, isDarkMode, t }) => {
         return (
             <View
                 style={{
-                    width: 90,
-                    height: "100%",
+                    width: 80,
                     alignItems: "center",
-                    backgroundColor: "red",
                     marginTop: 8,
                 }}
             >
-                <Image
-                    source={{ uri: item.picture }}
+                <View
                     style={{
                         width: 60,
                         height: 60,
                         borderRadius: 100,
-                    }}
-                />
+
+                    }}>
+                    <Image
+                        source={{ uri: item.picture }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 100,
+                        }}
+                    />
+                </View>
+
                 <Text
                     style={{
                         marginTop: 8,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: "500",
                         color: isDarkMode ? "#FFFFFF" : "black",
                     }}
@@ -52,6 +59,8 @@ const UserList = ({ firstTenUsers, isDarkMode, t }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "row",
+                paddingLeft: 20
+
             }}
         >
             <FlatList

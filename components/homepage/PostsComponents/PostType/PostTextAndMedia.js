@@ -26,7 +26,7 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
 
-const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
+const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
     const { t } = useTranslation();
@@ -581,7 +581,10 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
                     </View>
 
-                    <PostFooter post={post} toggleComments={toggleComments} />
+                    <PostFooter
+                        post={post}
+                        toggleSending={toggleSending}
+                        toggleComments={toggleComments} />
                 </>
 
             ) : (
@@ -898,7 +901,10 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleComments }) => {
 
                     </View>
 
-                    <PostFooter post={post} toggleComments={toggleComments} />
+                    <PostFooter
+                        post={post}
+                        toggleSending={toggleSending}
+                        toggleComments={toggleComments} />
                 </>
             )
 

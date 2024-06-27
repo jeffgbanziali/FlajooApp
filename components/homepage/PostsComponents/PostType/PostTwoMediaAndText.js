@@ -30,7 +30,7 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window")
 
 
 
-const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleToolings, toggleComments }) => {
+const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleToolings, toggleSending, toggleComments }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
 
@@ -652,7 +652,10 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
                     </View>
 
 
-                    <PostFooter post={post} toggleComments={toggleComments} />
+                    <PostFooter
+                        post={post}
+                        toggleSending={toggleSending}
+                        toggleComments={toggleComments} />
                 </>
 
             ) : (
@@ -1012,7 +1015,10 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
                     </View>
 
 
-                    <PostFooter post={post} toggleComments={toggleComments} />
+                    <PostFooter
+                        post={post}
+                        toggleSending={toggleSending}
+                        toggleComments={toggleComments} />
                 </>
             )}
         </>

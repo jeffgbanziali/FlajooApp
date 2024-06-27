@@ -17,7 +17,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import PostFooter from "../CustomPostCard/PostFooter";
 
 
-const PostText = ({ post, toggleToolings, toggleComments }) => {
+const PostText = ({ post, toggleToolings, toggleComments, toggleSending }) => {
 
   const usersData = useSelector((state) => state.usersReducer);
   const navigation = useNavigation();
@@ -627,7 +627,10 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
                 paddingRight: 1
               }}
             >
-              <PostFooter post={post} toggleComments={toggleComments} />
+              <PostFooter
+                post={post}
+                toggleSending={toggleSending}
+                toggleComments={toggleComments} />
             </View>
 
             <TouchableOpacity

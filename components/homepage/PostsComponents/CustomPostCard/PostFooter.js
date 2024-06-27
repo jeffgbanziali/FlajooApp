@@ -17,7 +17,7 @@ import LikeButton from '../LikeButton/LikeButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const PostFooter = ({ post, toggleComments }) => {
+const PostFooter = ({ post, toggleComments, toggleSending }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const { t } = useTranslation();
 
@@ -235,6 +235,7 @@ const PostFooter = ({ post, toggleComments }) => {
                         }}
                     >
                         <TouchableOpacity
+                            onPress={toggleSending}
                             style={{
                                 width: 100,
                                 height: 38,

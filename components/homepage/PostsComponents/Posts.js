@@ -28,6 +28,7 @@ import PostTwoMedia from "./PostType/PostTwoMedia";
 import PostTextAndMedia from "./PostType/PostTextAndMedia";
 import PostTools from "./CustomPostCard/PostTools/PostTools";
 import PostTwoMediaAndText from "./PostType/PostTwoMediaAndText";
+import PostSending from "./CustomPostCard/PostSending/PostSending";
 
 
 
@@ -46,11 +47,13 @@ const Posts = ({ post, loadPost, userId }) => {
   const usersData = useSelector((state) => state.usersReducer);
   const [showComments, setShowComments] = useState(false);
   const [showToolings, setShowToolings] = useState(false);
+  const [showSending, setShowSending] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [selectedReply, setSelectedReply] = useState(null);
   const [isKeyboardActive, setKeyboardActive] = useState(false);
   const [commentsHeight, setCommentsHeight] = useState(new Animated.Value(0));
   const [toolingsHeight, setToolingsHeight] = useState(new Animated.Value(0));
+  const [sendingHeight, setSendingHeight] = useState(new Animated.Value(0));
   const [partVisible, setPartVisible] = useState(true);
   const [response, setResponse] = useState(false)
   const [responseToResponse, setResponseToResponse] = useState(false)
@@ -150,6 +153,24 @@ const Posts = ({ post, loadPost, userId }) => {
     }
   };
 
+  const toggleSending = () => {
+    if (showSending) {
+      Animated.timing(sendingHeight, {
+        toValue: 0,
+        duration: 200,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start(() => setShowSending(false));
+    } else {
+      setShowSending(true);
+      Animated.timing(sendingHeight, {
+        toValue: 200,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+  };
 
 
   const mediaData = post.media?.map(mediaItem => mediaItem);
@@ -164,7 +185,6 @@ const Posts = ({ post, loadPost, userId }) => {
   const commentary = post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
 
 
-  //console.log("Mes commentaires",commentary)
 
 
   return (
@@ -192,52 +212,14 @@ const Posts = ({ post, loadPost, userId }) => {
                 elevation: 2,
               }}
             >
-              {
-                isLoading /*|| loadPost || !userId*/ ? (
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 400,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column"
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        width: "30%",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 16,
-                          color: isDarkMode ? "white" : "black",
-                        }}
-                      >
-                        Loading
-                      </Text>
-                      <ActivityIndicator size="large" color="white" />
-                    </View>
-                    <Text
-                      style={{
-                        fontSize: 26,
-                        marginTop: "5%",
-                        textAlign: "center",
-                        color: isDarkMode ? "white" : "black",
-                      }}
-                    >
-                      Please wait
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <PostTwoMediaAndText post={post} currentMediaIndex={currentMediaIndex} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
-                  </>
-                )}
+
+              <PostTwoMediaAndText
+                post={post}
+                currentMediaIndex={currentMediaIndex}
+                mediaItem={mediaData}
+                toggleToolings={toggleToolings}
+                toggleComments={toggleComments} />
+
             </View>
           )}
 
@@ -261,52 +243,15 @@ const Posts = ({ post, loadPost, userId }) => {
                 elevation: 2,
               }}
             >
-              {
-                isLoading ? (
-                  <View
-                    style={{
-                      width: "100%",
-                      height: "50%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column"
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        width: "30%",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 16,
-                          color: isDarkMode ? "white" : "black",
-                        }}
-                      >
-                        Loading
-                      </Text>
-                      <ActivityIndicator size="large" color="white" />
-                    </View>
-                    <Text
-                      style={{
-                        fontSize: 26,
-                        marginTop: "5%",
-                        textAlign: "center",
-                        color: isDarkMode ? "white" : "black",
-                      }}
-                    >
-                      Please wait
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <PostTwoMedia post={post} mediaItem={mediaData} toggleToolings={toggleToolings} toggleComments={toggleComments} />
-                  </>
-                )}
+
+              <PostTwoMedia
+                post={post}
+                mediaItem={mediaData}
+                toggleToolings={toggleToolings}
+                toggleComments={toggleComments}
+                toggleSending={toggleSending}
+              />
+
             </View>
           )}
         </>
@@ -334,59 +279,27 @@ const Posts = ({ post, loadPost, userId }) => {
                   elevation: 2,
                 }}
               >
-                {
-                  isLoading /*|| loadPost || !userId*/ ? (
-                    <View
-                      style={{
-                        width: "100%",
-                        height: 400,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column"
-                      }}
-                    >
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-around",
-                          alignItems: "center",
-                          width: "30%",
-                        }}
-                      >
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            fontSize: 16,
-                            color: isDarkMode ? "white" : "black",
-                          }}
-                        >
-                          Loading
-                        </Text>
-                        <ActivityIndicator size="large" color="white" />
-                      </View>
-                      <Text
-                        style={{
-                          fontSize: 26,
-                          marginTop: "5%",
-                          textAlign: "center",
-                          color: isDarkMode ? "white" : "black",
-                        }}
-                      >
-                        Please wait
-                      </Text>
-                    </View>
-                  ) : (
-                    <>
-                      <PostTextAndMedia post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
-                    </>
-                  )}
+
+                <PostTextAndMedia
+                  post={post}
+                  item={mediaDate}
+                  toggleToolings={toggleToolings}
+                  toggleComments={toggleComments} />
+
               </View>
             )}
 
             {mediaDate && !post.message && (
 
 
-              <PostMedia isLoading={isLoading} post={post} item={mediaDate} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+              <PostMedia
+                isLoading={isLoading}
+                post={post}
+                item={mediaDate}
+                toggleToolings={toggleToolings}
+                toggleComments={toggleComments}
+                toggleSending={toggleSending}
+              />
 
 
             )}
@@ -414,54 +327,15 @@ const Posts = ({ post, loadPost, userId }) => {
                   elevation: 5,
                 }}
               >
-                {
-                  isLoading /*|| loadPost || !userId */ ? (
-                    <View
-                      style={{
-                        width: "100%",
-                        height: 400,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column"
-                      }}
-                    >
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-around",
-                          alignItems: "center",
-                          width: "30%",
-                        }}
-                      >
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            fontSize: 16,
-                            color: isDarkMode ? "white" : "black",
-                          }}
-                        >
-                          Loading
-                        </Text>
-                        <ActivityIndicator size="large" color="white" />
-                      </View>
-                      <Text
-                        style={{
-                          fontSize: 26,
-                          marginTop: "5%",
-                          textAlign: "center",
-                          color: isDarkMode ? "white" : "black",
-                        }}
-                      >
-                        Please wait
-                      </Text>
-                    </View>
-                  ) : (
-                    <>
-                      <PostText post={post} toggleToolings={toggleToolings} toggleComments={toggleComments} />
+
+                <PostText
+                  post={post}
+                  toggleToolings={toggleToolings}
+                  toggleComments={toggleComments}
+                  toggleSending={toggleSending}
+                />
 
 
-                    </>
-                  )}
               </View>
             )}
 
@@ -639,6 +513,29 @@ const Posts = ({ post, loadPost, userId }) => {
         >
           <PostTools post={post} toggleToolings={toggleToolings} />
 
+        </KeyboardAvoidingView>
+      </Modal>
+      <Modal
+        isVisible={showSending}
+        onBackdropPress={toggleSending}
+        style={{ margin: 0, justifyContent: "flex-end" }}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        useNativeDriverForBackdrop
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "null"}
+          style={{
+            backgroundColor: isDarkMode ? "#171717" : "white",
+            height: "60%",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            paddingBottom: 10,
+            justifyContent: "center"
+          }}
+        >
+          <PostSending toggleSending={toggleSending} />
         </KeyboardAvoidingView>
       </Modal>
 

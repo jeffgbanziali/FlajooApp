@@ -1105,7 +1105,6 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
 
 
 
-
           <View style={styles.messageOther}>
             {
               message.type === "message" && (<>
@@ -2023,7 +2022,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
     marginTop: "4%",
-    //backgroundColor: "blue"
   },
   messageOther: {
     display: "flex",
@@ -2032,7 +2030,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: "4%",
     marginLeft: 10,
-    //backgroundColor: "green"
   },
 
 

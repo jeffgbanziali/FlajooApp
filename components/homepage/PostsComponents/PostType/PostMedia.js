@@ -28,7 +28,7 @@ import { markPostAsViewed } from "../../../../actions/post.actions";
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 
-const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, toggleComments }) => {
+const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, toggleComments, toggleSending }) => {
     const usersData = useSelector((state) => state.usersReducer);
     const [showImage, setShowImage] = useState(false);
 
@@ -646,7 +646,12 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
 
                                 </View>
 
-                                <PostFooter post={post} toggleComments={toggleComments} />
+                                <PostFooter
+                                    post={post}
+                                    toggleSending={toggleSending}
+                                    toggleComments={toggleComments}
+
+                                />
 
                             </>
 
@@ -949,7 +954,10 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
 
                                 </View>
 
-                                <PostFooter post={post} toggleComments={toggleComments} />
+                                <PostFooter
+                                    post={post}
+                                    toggleSending={toggleSending}
+                                    toggleComments={toggleComments} />
 
 
                             </>

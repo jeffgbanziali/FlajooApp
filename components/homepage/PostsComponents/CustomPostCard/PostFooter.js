@@ -352,7 +352,7 @@ const PostFooter = ({ post, toggleComments }) => {
                                 fontWeight: "500",
                             }}
                         >
-                            0 Partages
+                            {0} Partages
                         </Text>
                     </View>
                 </View>

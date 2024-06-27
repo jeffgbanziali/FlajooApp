@@ -46,212 +46,613 @@ const PostText = ({ post, toggleToolings, toggleComments }) => {
 
 
   return (
+
+
+
+
     <View
-
     >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          position: "relative ",
-          zIndex: 1,
-          marginBottom: 10,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 10
-          }}
-        >
-          <TouchableOpacity
+      {post.originalPosterId && post.posterId ? (
 
-            style={{
-              width: 35,
-              height: 35,
-              borderRadius: 30,
-              marginLeft: 10,
-              zIndex: 1,
-            }}
-            onPress={() => goProfil(post.posterId)}>
-            <Image
-              source={{
-                uri:
-                  !isEmpty(usersData[0]) &&
-                  usersData
-                    .map((user) => {
-                      if (user._id === post.posterId) {
-                        return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                      }
-                      else
-                        return null;
-                    })
-                    .join(""),
-              }}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: 30,
-                resizeMode: "cover",
-                zIndex: 1,
-              }}
-            />
-            {isUserOnline && (<View
-              style={{
-                backgroundColor: "#09C03C",
-                position: "absolute",
-                left: 28,
-                width: 8,
-                height: 8,
-                borderRadius: 25,
-                borderWidth: 1,
-                borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                top: 25,
-                zIndex: 100
-              }}>
-            </View>
-            )}
-          </TouchableOpacity>
-
+        <>
 
 
           <View
             style={{
-              flexDirection: "column",
-              marginLeft: 6,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              position: "relative ",
+              zIndex: 1,
+              marginBottom: 10,
+              height: 60,
+              //backgroundColor:"red"
             }}
           >
             <View
               style={{
                 flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10
               }}
             >
-              <Text
+              <TouchableOpacity
+
                 style={{
-                  color: isDarkMode ? "#F5F5F5" : "black",
-                  marginLeft: 5,
-                  fontWeight: "600",
-                  fontSize: 14,
+                  width: 35,
+                  height: 35,
+                  borderRadius: 30,
+                  marginLeft: 10,
+                  zIndex: 1,
+                }}
+                onPress={() => goProfil(post.posterId)}>
+
+                <Image
+                  source={{
+                    uri:
+                      !isEmpty(usersData[0]) &&
+                      usersData
+                        .map((user) => {
+                          if (user._id === post.posterId) {
+                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                          }
+                          else
+                            return null;
+                        })
+                        .join(""),
+                  }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 30,
+                    zIndex: 1,
+                  }}
+                />
+                {isUserOnline && (<View
+                  style={{
+                    backgroundColor: "#09C03C",
+                    position: "absolute",
+                    left: 28,
+                    width: 8,
+                    height: 8,
+                    borderRadius: 25,
+                    borderWidth: 1,
+                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                    top: 25,
+                    zIndex: 100
+                  }}>
+                </View>
+                )}
+              </TouchableOpacity>
+
+
+
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginLeft: 6,
                 }}
               >
-                {!isEmpty(usersData[0]) &&
-                  usersData.map((user) => {
-                    if (user._id === post.posterId) return user.pseudo;
-                    else return null;
-                  })}
-              </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: isDarkMode ? "#F5F5F5" : "black",
+                      marginLeft: 5,
+                      fontWeight: "600",
+                      fontSize: 14,
+                    }}
+                  >
+                    {!isEmpty(usersData[0]) &&
+                      usersData.map((user) => {
+                        if (user._id === post.posterId) return user.pseudo;
+                        else return null;
+                      })}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    color: isDarkMode ? "#F5F5F5" : "black",
+                    fontSize: 10,
+                    marginLeft: 5,
+                    marginTop: 4,
+                    fontWeight: "400",
+                    fontSize: 12,
+                    lineHeight: 12,
+                  }}
+                >
+                  {formatPostDate(post.createdAt)}
+                </Text>
+              </View>
             </View>
+
+
+            <TouchableOpacity
+              onPress={toggleToolings}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                marginRight: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Feather
+                name="more-horizontal"
+                size={20}
+                color={isDarkMode ? "#F5F5F5" : "black"}
+
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              zIndex: 1,
+              width: "90%",
+              marginLeft: 10,
+              paddingBottom: 10,
+              justifyContent: "center"
+            }}
+          >
             <Text
               style={{
                 color: isDarkMode ? "#F5F5F5" : "black",
-
-                fontSize: 10,
-                marginLeft: 5,
-                marginTop: 4,
+                fontSize: 16,
                 fontWeight: "400",
-                fontSize: 12,
-                lineHeight: 12,
+                textAlign: "justify",
+                lineHeight: 20,
               }}
             >
-              {formatPostDate(post.createdAt)}
+              {post.message}
             </Text>
           </View>
-        </View>
+
+          <View
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+
+            }}>
+            <View
+              style={{
+                width: "90%",
+                borderRightRadius: 30,
+                borderLeftRadius: 30,
+                borderTopRightRadius: 30,
+                borderTopLeftRadius: 30,
+                borderLeftWidth: 1,
+                borderRightWidth: 1,
+                borderTopWidth: 1,
+                paddingLeft: 20,
+                borderColor: "rgba(255,255,255)",
+              }}
+            >
+
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  position: "relative ",
+                  zIndex: 1,
+                  marginBottom: 10,
+                  height: 60,
+                  //backgroundColor:"red"
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 10
+                  }}
+                >
+                  <TouchableOpacity
+
+                    style={{
+                      width: 25,
+                      height: 25,
+                      borderRadius: 30,
+                      marginLeft: 10,
+                      zIndex: 1,
+                    }}
+                    onPress={() => goProfil(post.originalPostId)}>
+
+                    <Image
+                      source={{
+                        uri:
+                          !isEmpty(usersData[0]) &&
+                          usersData
+                            .map((user) => {
+                              if (user._id === post.originalPosterId) {
+                                return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                              }
+                              else
+                                return null;
+                            })
+                            .join(""),
+                      }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 30,
+                        zIndex: 1,
+                      }}
+                    />
+                    {!isUserOnline && (<View
+                      style={{
+                        backgroundColor: "#09C03C",
+                        position: "absolute",
+                        left: 20,
+                        width: 6,
+                        height: 6,
+                        borderRadius: 25,
+                        borderWidth: 1,
+                        borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                        top: 20,
+                        zIndex: 100
+                      }}>
+                    </View>
+                    )}
+                  </TouchableOpacity>
 
 
 
-        <TouchableOpacity
-          onPress={toggleToolings}
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 30,
-            marginRight: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Feather
-            name="more-horizontal"
-            size={20}
-            color={isDarkMode ? "#F5F5F5" : "black"}
-
-          />
-        </TouchableOpacity>
-
-
-      </View>
-
-
-
-
-
-      <View
-        style={{
-          zIndex: 1,
-          //height: "20%",
-          width: "90%",
-          marginLeft: 10,
-          paddingTop: 10,
-          paddingBottom: 20,
-          // backgroundColor:"red"
-        }}
-      >
-        <Text
-          style={{
-            color: isDarkMode ? "#F5F5F5" : "black",
-            fontSize: 16,
-            fontWeight: "400",
-            textAlign: "justify",
-            lineHeight: 20,
-          }}
-        >
-
-          {post.message}
-        </Text>
-      </View>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      marginLeft: 6,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: isDarkMode ? "#F5F5F5" : "black",
+                          marginLeft: 5,
+                          fontWeight: "600",
+                          fontSize: 12,
+                        }}
+                      >
+                        {!isEmpty(usersData[0]) &&
+                          usersData.map((user) => {
+                            if (user._id === post.originalPosterId) return user.pseudo;
+                            else return null;
+                          })}
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        color: isDarkMode ? "#F5F5F5" : "black",
+                        fontSize: 10,
+                        marginLeft: 5,
+                        marginTop: 4,
+                        fontWeight: "400",
+                        fontSize: 10,
+                        lineHeight: 12,
+                      }}
+                    >
+                      {formatPostDate(post.originalPostCreated)}
+                    </Text>
+                  </View>
+                </View>
 
 
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "100%",
+              </View>
+              {post.originalMessage && (
+                <View
+                  style={{
+                    zIndex: 1,
+                    width: "90%",
+                    marginLeft: 10,
+                    paddingBottom: 10,
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: isDarkMode ? "#F5F5F5" : "black",
+                      fontSize: 12,
+                      fontWeight: "400",
+                      textAlign: "justify",
+                      lineHeight: 20,
+                    }}
+                  >
+                    {post.originalMessage}
+                  </Text>
+                </View>
+              )}
 
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: "center",
-            paddingLeft: 1,
-            paddingRight: 1
-          }}
-        >
-          <PostFooter post={post} toggleComments={toggleComments} />
-        </View>
+            </View>
 
-        <TouchableOpacity
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            marginRight: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Feather
-            name="bookmark"
-            size={25}
-            color={isDarkMode ? "#F5F5F5" : "black"}
+          </View>
 
-          />
-        </TouchableOpacity>
-      </View>
+          <View
+            style={{
+              zIndex: 1,
+              //height: "20%",
+              width: "90%",
+              marginLeft: 10,
+              paddingTop: 10,
+              paddingBottom: 20,
+              // backgroundColor:"red"
+            }}
+          >
+            <Text
+              style={{
+                color: isDarkMode ? "#F5F5F5" : "black",
+                fontSize: 16,
+                fontWeight: "400",
+                textAlign: "justify",
+                lineHeight: 20,
+              }}
+            >
+
+              {post.message}
+            </Text>
+          </View>
+
+
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'column',
+                alignItems: "center",
+                paddingLeft: 1,
+                paddingRight: 1
+              }}
+            >
+              <PostFooter post={post} toggleComments={toggleComments} />
+            </View>
+
+            <TouchableOpacity
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginRight: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Feather
+                name="bookmark"
+                size={25}
+                color={isDarkMode ? "#F5F5F5" : "black"}
+
+              />
+            </TouchableOpacity>
+          </View>
+
+        </>
+
+      ) : (
+
+        <>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              position: "relative ",
+              zIndex: 1,
+              marginBottom: 10,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10
+              }}
+            >
+              <TouchableOpacity
+
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: 30,
+                  marginLeft: 10,
+                  zIndex: 1,
+                }}
+                onPress={() => goProfil(post.posterId)}>
+                <Image
+                  source={{
+                    uri:
+                      !isEmpty(usersData[0]) &&
+                      usersData
+                        .map((user) => {
+                          if (user._id === post.posterId) {
+                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                          }
+                          else
+                            return null;
+                        })
+                        .join(""),
+                  }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 30,
+                    resizeMode: "cover",
+                    zIndex: 1,
+                  }}
+                />
+                {isUserOnline && (<View
+                  style={{
+                    backgroundColor: "#09C03C",
+                    position: "absolute",
+                    left: 28,
+                    width: 8,
+                    height: 8,
+                    borderRadius: 25,
+                    borderWidth: 1,
+                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                    top: 25,
+                    zIndex: 100
+                  }}>
+                </View>
+                )}
+              </TouchableOpacity>
+
+
+
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginLeft: 6,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: isDarkMode ? "#F5F5F5" : "black",
+                      marginLeft: 5,
+                      fontWeight: "600",
+                      fontSize: 14,
+                    }}
+                  >
+                    {!isEmpty(usersData[0]) &&
+                      usersData.map((user) => {
+                        if (user._id === post.posterId) return user.pseudo;
+                        else return null;
+                      })}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    color: isDarkMode ? "#F5F5F5" : "black",
+
+                    fontSize: 10,
+                    marginLeft: 5,
+                    marginTop: 4,
+                    fontWeight: "400",
+                    fontSize: 12,
+                    lineHeight: 12,
+                  }}
+                >
+                  {formatPostDate(post.createdAt)}
+                </Text>
+              </View>
+            </View>
+
+
+
+            <TouchableOpacity
+              onPress={toggleToolings}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 30,
+                marginRight: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Feather
+                name="more-horizontal"
+                size={20}
+                color={isDarkMode ? "#F5F5F5" : "black"}
+
+              />
+            </TouchableOpacity>
+
+
+          </View>
+
+          <View
+            style={{
+              zIndex: 1,
+              //height: "20%",
+              width: "90%",
+              marginLeft: 10,
+              paddingTop: 10,
+              paddingBottom: 20,
+              // backgroundColor:"red"
+            }}
+          >
+            <Text
+              style={{
+                color: isDarkMode ? "#F5F5F5" : "black",
+                fontSize: 16,
+                fontWeight: "400",
+                textAlign: "justify",
+                lineHeight: 20,
+              }}
+            >
+
+              {post.message}
+            </Text>
+          </View>
+
+
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'column',
+                alignItems: "center",
+                paddingLeft: 1,
+                paddingRight: 1
+              }}
+            >
+              <PostFooter post={post} toggleComments={toggleComments} />
+            </View>
+
+            <TouchableOpacity
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+                marginRight: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Feather
+                name="bookmark"
+                size={25}
+                color={isDarkMode ? "#F5F5F5" : "black"}
+
+              />
+            </TouchableOpacity>
+          </View>
+        </>
+
+      )}
+
+
 
     </View>
   )

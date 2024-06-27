@@ -119,7 +119,6 @@ const PostsUser = () => {
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
-                    backgroundColor: "red",
                     justifyContent: 'space-evenly',
                 }}>
                     {

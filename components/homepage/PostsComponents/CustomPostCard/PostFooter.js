@@ -23,6 +23,11 @@ const PostFooter = ({ post, toggleComments, toggleSending }) => {
 
 
     const { isDarkMode } = useDarkMode();
+
+
+
+
+    console.log("mes partages", post.shares.length)
     return (
         <>
             <View
@@ -353,7 +358,7 @@ const PostFooter = ({ post, toggleComments, toggleSending }) => {
                                 fontWeight: "500",
                             }}
                         >
-                            {0} Partages
+                            {post?.shares.length} Partages
                         </Text>
                     </View>
                 </View>

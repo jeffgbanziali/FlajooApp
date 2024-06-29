@@ -31,7 +31,7 @@ const ShareSection = ({ isDarkMode, t }) => (
                         width: 60,
                         height: 60,
                         borderRadius: 30,
-                        backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        backgroundColor: isDarkMode ? "#202020" : "#D9D9D9",
                         alignItems: "center",
                         justifyContent: "center",
                     }}
@@ -66,7 +66,7 @@ const ShareSection = ({ isDarkMode, t }) => (
                         width: 60,
                         height: 60,
                         borderRadius: 30,
-                        backgroundColor: isDarkMode ? "#161414" : "#E3E4E5",
+                        backgroundColor: isDarkMode ? "#202020" : "#D9D9D9",
                         alignItems: "center",
                         justifyContent: "center",
                     }}

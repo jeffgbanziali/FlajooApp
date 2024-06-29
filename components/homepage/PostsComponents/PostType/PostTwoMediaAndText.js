@@ -263,27 +263,31 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
                         </TouchableOpacity>
                     </View>
 
-                    <View
-                        style={{
-                            zIndex: 1,
-                            width: "90%",
-                            marginLeft: 10,
-                            paddingBottom: 10,
-                            justifyContent: "center"
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: isDarkMode ? "#F5F5F5" : "black",
-                                fontSize: 16,
-                                fontWeight: "400",
-                                textAlign: "justify",
-                                lineHeight: 20,
-                            }}
-                        >
-                            {post.message}
-                        </Text>
-                    </View>
+                    {
+                        post.message && (
+                            <View
+                                style={{
+                                    zIndex: 1,
+                                    width: "90%",
+                                    marginLeft: 10,
+                                    paddingBottom: 10,
+                                    justifyContent: "center"
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: isDarkMode ? "#F5F5F5" : "black",
+                                        fontSize: 16,
+                                        fontWeight: "400",
+                                        textAlign: "justify",
+                                        lineHeight: 20,
+                                    }}
+                                >
+                                    {post.message}
+                                </Text>
+                            </View>
+                        )
+                    }
 
                     <View
                         style={{
@@ -336,7 +340,7 @@ const PostTwoMediaAndText = ({ post, mediaItem, currentMediaIndex, toggleTooling
                                             marginLeft: 10,
                                             zIndex: 1,
                                         }}
-                                        onPress={() => goProfil(post.originalPostId)}>
+                                        onPress={() => goProfil(post.originalPosterId)}>
 
                                         <Image
                                             source={{

@@ -15,7 +15,7 @@ import PostSendingHeader from './PostSendingHeader';
 import UserList from './UserList';
 import ShareSection from './ShareSection';
 
-const PostSending = ({ toggleSending }) => {
+const PostSending = ({ toggleSending, postSenderPost }) => {
     const { t } = useTranslation();
     const { isDarkMode } = useDarkMode();
     const userData = useSelector((state) => state.userReducer);
@@ -43,8 +43,10 @@ const PostSending = ({ toggleSending }) => {
             >
                 <TextSection title={t("SendTo")} isDarkMode={isDarkMode} />
                 <UserList
+                    postSenderPost={postSenderPost}
                     firstTenUsers={firstTenUsers}
                     isDarkMode={isDarkMode}
+                    toggleSending={toggleSending}
                     t={t}
                 />
             </View>

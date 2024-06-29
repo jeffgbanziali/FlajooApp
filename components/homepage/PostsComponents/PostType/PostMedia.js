@@ -115,188 +115,147 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                         elevation: 2,
                     }]}
             >
-                {isLoading ? (
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "50%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column"
-                        }}
-                    >
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                width: "30%",
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    textAlign: "center",
-                                    fontSize: 16,
-                                    color: isDarkMode ? "white" : "black",
-                                }}
-                            >
-                                Loading
-                            </Text>
-                            <ActivityIndicator size="large" color="white" />
-                        </View>
-                        <Text
-                            style={{
-                                fontSize: 26,
-                                marginTop: "5%",
-                                textAlign: "center",
-                                color: isDarkMode ? "white" : "black",
-                            }}
-                        >
-                            Please wait
-                        </Text>
-                    </View>
-                ) : (
+
+
+                {post.originalPosterId && post.posterId ? (
 
                     <>
 
-                        {post.originalPosterId && post.posterId ? (
 
-                            <>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                position: "relative ",
+                                zIndex: 1,
+                                marginBottom: 10,
+                                height: 60,
+                                //backgroundColor:"red"
+                            }}
+                        >
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 10
+                                }}
+                            >
+                                <TouchableOpacity
+
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: 30,
+                                        marginLeft: 10,
+                                        zIndex: 1,
+                                    }}
+                                    onPress={() => goProfil(post.posterId)}>
+
+                                    <Image
+                                        source={{
+                                            uri:
+                                                !isEmpty(usersData[0]) &&
+                                                usersData
+                                                    .map((user) => {
+                                                        if (user._id === post.posterId) {
+                                                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                                                        }
+                                                        else
+                                                            return null;
+                                                    })
+                                                    .join(""),
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: 30,
+                                            zIndex: 1,
+                                        }}
+                                    />
+                                    {isUserOnline && (<View
+                                        style={{
+                                            backgroundColor: "#09C03C",
+                                            position: "absolute",
+                                            left: 28,
+                                            width: 8,
+                                            height: 8,
+                                            borderRadius: 25,
+                                            borderWidth: 1,
+                                            borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                                            top: 25,
+                                            zIndex: 100
+                                        }}>
+                                    </View>
+                                    )}
+                                </TouchableOpacity>
+
 
 
                                 <View
                                     style={{
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        position: "relative ",
-                                        zIndex: 1,
-                                        marginBottom: 10,
-                                        height: 60,
-                                        //backgroundColor:"red"
+                                        flexDirection: "column",
+                                        marginLeft: 6,
                                     }}
                                 >
                                     <View
                                         style={{
                                             flexDirection: "row",
-                                            alignItems: "center",
-                                            marginTop: 10
                                         }}
                                     >
-                                        <TouchableOpacity
-
+                                        <Text
                                             style={{
-                                                width: 35,
-                                                height: 35,
-                                                borderRadius: 30,
-                                                marginLeft: 10,
-                                                zIndex: 1,
-                                            }}
-                                            onPress={() => goProfil(post.posterId)}>
-
-                                            <Image
-                                                source={{
-                                                    uri:
-                                                        !isEmpty(usersData[0]) &&
-                                                        usersData
-                                                            .map((user) => {
-                                                                if (user._id === post.posterId) {
-                                                                    return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                                                                }
-                                                                else
-                                                                    return null;
-                                                            })
-                                                            .join(""),
-                                                }}
-                                                style={{
-                                                    width: "100%",
-                                                    height: "100%",
-                                                    borderRadius: 30,
-                                                    zIndex: 1,
-                                                }}
-                                            />
-                                            {isUserOnline && (<View
-                                                style={{
-                                                    backgroundColor: "#09C03C",
-                                                    position: "absolute",
-                                                    left: 28,
-                                                    width: 8,
-                                                    height: 8,
-                                                    borderRadius: 25,
-                                                    borderWidth: 1,
-                                                    borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                                                    top: 25,
-                                                    zIndex: 100
-                                                }}>
-                                            </View>
-                                            )}
-                                        </TouchableOpacity>
-
-
-
-                                        <View
-                                            style={{
-                                                flexDirection: "column",
-                                                marginLeft: 6,
+                                                color: isDarkMode ? "#F5F5F5" : "black",
+                                                marginLeft: 5,
+                                                fontWeight: "600",
+                                                fontSize: 14,
                                             }}
                                         >
-                                            <View
-                                                style={{
-                                                    flexDirection: "row",
-                                                }}
-                                            >
-                                                <Text
-                                                    style={{
-                                                        color: isDarkMode ? "#F5F5F5" : "black",
-                                                        marginLeft: 5,
-                                                        fontWeight: "600",
-                                                        fontSize: 14,
-                                                    }}
-                                                >
-                                                    {!isEmpty(usersData[0]) &&
-                                                        usersData.map((user) => {
-                                                            if (user._id === post.posterId) return user.pseudo;
-                                                            else return null;
-                                                        })}
-                                                </Text>
-                                            </View>
-                                            <Text
-                                                style={{
-                                                    color: isDarkMode ? "#F5F5F5" : "black",
-                                                    fontSize: 10,
-                                                    marginLeft: 5,
-                                                    marginTop: 4,
-                                                    fontWeight: "400",
-                                                    fontSize: 12,
-                                                    lineHeight: 12,
-                                                }}
-                                            >
-                                                {formatPostDate(post.createdAt)}
-                                            </Text>
-                                        </View>
+                                            {!isEmpty(usersData[0]) &&
+                                                usersData.map((user) => {
+                                                    if (user._id === post.posterId) return user.pseudo;
+                                                    else return null;
+                                                })}
+                                        </Text>
                                     </View>
-
-
-                                    <TouchableOpacity
-                                        onPress={toggleToolings}
+                                    <Text
                                         style={{
-                                            width: 40,
-                                            height: 40,
-                                            borderRadius: 30,
-                                            marginRight: 10,
-                                            justifyContent: "center",
-                                            alignItems: "center",
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            fontSize: 10,
+                                            marginLeft: 5,
+                                            marginTop: 4,
+                                            fontWeight: "400",
+                                            fontSize: 12,
+                                            lineHeight: 12,
                                         }}
                                     >
-                                        <Feather
-                                            name="more-horizontal"
-                                            size={20}
-                                            color={isDarkMode ? "#F5F5F5" : "black"}
-
-                                        />
-                                    </TouchableOpacity>
+                                        {formatPostDate(post.createdAt)}
+                                    </Text>
                                 </View>
+                            </View>
 
+
+                            <TouchableOpacity
+                                onPress={toggleToolings}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    borderRadius: 30,
+                                    marginRight: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Feather
+                                    name="more-horizontal"
+                                    size={20}
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        {
+                            post.message && (
                                 <View
                                     style={{
                                         zIndex: 1,
@@ -318,345 +277,30 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                         {post.message}
                                     </Text>
                                 </View>
+                            )
+                        }
 
-                                <View
-                                    style={{
-                                        width: "100%",
-                                        justifyContent: "center",
-                                        alignItems: "center",
+                        <View
+                            style={{
+                                width: "100%",
+                                justifyContent: "center",
+                                alignItems: "center",
 
-                                    }}>
-                                    <View
-                                        style={{
-                                            width: "90%",
-                                            borderRightRadius: 30,
-                                            borderLeftRadius: 30,
-                                            borderTopRightRadius: 30,
-                                            borderTopLeftRadius: 30,
-                                            borderLeftWidth: 1,
-                                            borderRightWidth: 1,
-                                            borderTopWidth: 1,
-                                            paddingLeft: 20,
-                                            borderColor: "gray",
-                                        }}
-                                    >
-
-
-                                        <View
-                                            style={{
-                                                flexDirection: "row",
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
-                                                position: "relative ",
-                                                zIndex: 1,
-                                                marginBottom: 10,
-                                                height: 60,
-                                                //backgroundColor:"red"
-                                            }}
-                                        >
-                                            <View
-                                                style={{
-                                                    flexDirection: "row",
-                                                    alignItems: "center",
-                                                    marginTop: 10
-                                                }}
-                                            >
-                                                <TouchableOpacity
-
-                                                    style={{
-                                                        width: 25,
-                                                        height: 25,
-                                                        borderRadius: 30,
-                                                        marginLeft: 10,
-                                                        zIndex: 1,
-                                                    }}
-                                                    onPress={() => goProfil(post.originalPostId)}>
-
-                                                    <Image
-                                                        source={{
-                                                            uri:
-                                                                !isEmpty(usersData[0]) &&
-                                                                usersData
-                                                                    .map((user) => {
-                                                                        if (user._id === post.originalPosterId) {
-                                                                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
-                                                                        }
-                                                                        else
-                                                                            return null;
-                                                                    })
-                                                                    .join(""),
-                                                        }}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            borderRadius: 30,
-                                                            zIndex: 1,
-                                                        }}
-                                                    />
-                                                    {!isUserOnline && (<View
-                                                        style={{
-                                                            backgroundColor: "#09C03C",
-                                                            position: "absolute",
-                                                            left: 20,
-                                                            width: 6,
-                                                            height: 6,
-                                                            borderRadius: 25,
-                                                            borderWidth: 1,
-                                                            borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                                                            top: 20,
-                                                            zIndex: 100
-                                                        }}>
-                                                    </View>
-                                                    )}
-                                                </TouchableOpacity>
-
-
-
-                                                <View
-                                                    style={{
-                                                        flexDirection: "column",
-                                                        marginLeft: 6,
-                                                    }}
-                                                >
-                                                    <View
-                                                        style={{
-                                                            flexDirection: "row",
-                                                        }}
-                                                    >
-                                                        <Text
-                                                            style={{
-                                                                color: isDarkMode ? "#F5F5F5" : "black",
-                                                                marginLeft: 5,
-                                                                fontWeight: "600",
-                                                                fontSize: 12,
-                                                            }}
-                                                        >
-                                                            {!isEmpty(usersData[0]) &&
-                                                                usersData.map((user) => {
-                                                                    if (user._id === post.originalPosterId) return user.pseudo;
-                                                                    else return null;
-                                                                })}
-                                                        </Text>
-                                                    </View>
-                                                    <Text
-                                                        style={{
-                                                            color: isDarkMode ? "#F5F5F5" : "black",
-                                                            fontSize: 10,
-                                                            marginLeft: 5,
-                                                            marginTop: 4,
-                                                            fontWeight: "400",
-                                                            fontSize: 10,
-                                                            lineHeight: 12,
-                                                        }}
-                                                    >
-                                                        {formatPostDate(post.originalPostCreated)}
-                                                    </Text>
-                                                </View>
-                                            </View>
-
-
-
-                                        </View>
-                                        {post.originalMessage && (
-                                            <View
-                                                style={{
-                                                    zIndex: 1,
-                                                    width: "90%",
-                                                    marginLeft: 10,
-                                                    paddingBottom: 10,
-                                                    justifyContent: "center"
-                                                }}
-                                            >
-                                                <Text
-                                                    style={{
-                                                        color: isDarkMode ? "#F5F5F5" : "black",
-                                                        fontSize: 14,
-                                                        fontWeight: "400",
-                                                        textAlign: "justify",
-                                                        lineHeight: 20,
-                                                    }}
-                                                >
-                                                    {post.originalMessage}
-                                                </Text>
-                                            </View>
-                                        )}
-
-                                    </View>
-
-                                </View>
-
-                                <View
-                                    style={[
-                                        style, {
-                                            // backgroundColor: "red",
-                                        }]}
-                                >
-
-
-
-                                    <Pressable
-                                        onPress={showModal}
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            position: "absolute",
-                                            // borderRadius: 20,
-                                            backgroundColor: 'rgba(0, 0, 0, 0.93)',
-                                            overflow: "hidden",
-                                        }}
-                                    >
-
-
-
-                                        {
-                                            item.mediaType === "image" && (
-                                                <Image
-                                                    source={{
-                                                        uri: item.mediaUrl,
-                                                    }}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        resizeMode: "contain",
-                                                        opacity: isDarkMode ? 0.7 : 1,
-                                                    }}
-                                                />
-                                            )
-                                        }
-                                        {
-                                            item.mediaType === "video" && (
-
-
-                                                <Video
-                                                    source={{
-                                                        uri: item.mediaUrl,
-                                                    }}
-                                                    rate={1.0}
-                                                    volume={1.0}
-                                                    isMuted={false}
-                                                    isLooping
-                                                    paused={true}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        opacity: isDarkMode ? 0.7 : 1,
-                                                    }}
-                                                />
-                                            )
-                                        }
-
-
-
-                                    </Pressable>
-
-                                    <Modal
-                                        visible={showImage}
-                                        transparent={true}
-                                        animationIn="pulse"
-                                        animationOut="fadeOut"
-                                        onRequestClose={showModal}
-                                    >
-                                        <View
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                backgroundColor: isDarkMode ? "black" : "black",
-
-                                            }}>
-
-                                            <View
-                                                style={{
-                                                    position: "absolute",
-                                                    width: "100%",
-                                                    height: "10%",
-                                                    marginTop: "4%",
-                                                    zIndex: 3
-                                                }}
-                                            >
-
-                                                <Pressable
-
-                                                    onPress={showModal}
-
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        //backgroundColor: "blue",
-                                                        flexDirection: "row",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                    }}
-                                                >
-                                                </Pressable>
-
-                                            </View>
-
-
-                                            {
-                                                item.mediaType === "image" && (
-                                                    <Image
-                                                        source={{
-                                                            uri: item.mediaUrl,
-                                                        }}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            resizeMode: "contain",
-                                                            borderRadius: 20,
-                                                            opacity: isDarkMode ? 0.7 : 1,
-                                                        }}
-                                                    />
-                                                )
-                                            }
-
-
-
-                                            {
-                                                item.mediaType === "video" && (
-
-                                                    <Video
-                                                        source={{
-                                                            uri: item.mediaUrl,
-                                                        }}
-                                                        rate={1.0}
-                                                        volume={1.0}
-                                                        isMuted={false}
-                                                        isLooping
-                                                        paused={true}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            resizeMode: "contain",
-                                                            borderRadius: 20,
-                                                            opacity: isDarkMode ? 0.7 : 1,
-                                                        }}
-                                                    />
-                                                )
-
-                                            }
-
-
-                                        </View>
-                                    </Modal>
-
-
-                                </View>
-
-                                <PostFooter
-                                    post={post}
-                                    toggleSending={toggleSending}
-                                    toggleComments={toggleComments}
-
-                                />
-
-                            </>
-
-                        ) : (
-                            <>
+                            }}>
+                            <View
+                                style={{
+                                    width: "90%",
+                                    borderRightRadius: 30,
+                                    borderLeftRadius: 30,
+                                    borderTopRightRadius: 30,
+                                    borderTopLeftRadius: 30,
+                                    borderLeftWidth: 1,
+                                    borderRightWidth: 1,
+                                    borderTopWidth: 1,
+                                    paddingLeft: 20,
+                                    borderColor: "gray",
+                                }}
+                            >
 
 
                                 <View
@@ -681,20 +325,21 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                         <TouchableOpacity
 
                                             style={{
-                                                width: 35,
-                                                height: 35,
+                                                width: 25,
+                                                height: 25,
                                                 borderRadius: 30,
                                                 marginLeft: 10,
                                                 zIndex: 1,
                                             }}
-                                            onPress={() => goProfil(post.posterId)}>
+                                            onPress={() => goProfil(post.originalPosterId)}>
+
                                             <Image
                                                 source={{
                                                     uri:
                                                         !isEmpty(usersData[0]) &&
                                                         usersData
                                                             .map((user) => {
-                                                                if (user._id === post.posterId) {
+                                                                if (user._id === post.originalPosterId) {
                                                                     return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
                                                                 }
                                                                 else
@@ -706,22 +351,20 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                                     width: "100%",
                                                     height: "100%",
                                                     borderRadius: 30,
-                                                    //resizeMode: "cover",
                                                     zIndex: 1,
                                                 }}
                                             />
-
-                                            {isUserOnline && (<View
+                                            {!isUserOnline && (<View
                                                 style={{
                                                     backgroundColor: "#09C03C",
                                                     position: "absolute",
-                                                    left: 28,
-                                                    width: 8,
-                                                    height: 8,
+                                                    left: 20,
+                                                    width: 6,
+                                                    height: 6,
                                                     borderRadius: 25,
                                                     borderWidth: 1,
                                                     borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
-                                                    top: 25,
+                                                    top: 20,
                                                     zIndex: 100
                                                 }}>
                                             </View>
@@ -746,12 +389,12 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                                         color: isDarkMode ? "#F5F5F5" : "black",
                                                         marginLeft: 5,
                                                         fontWeight: "600",
-                                                        fontSize: 14,
+                                                        fontSize: 12,
                                                     }}
                                                 >
                                                     {!isEmpty(usersData[0]) &&
                                                         usersData.map((user) => {
-                                                            if (user._id === post.posterId) return user.pseudo;
+                                                            if (user._id === post.originalPosterId) return user.pseudo;
                                                             else return null;
                                                         })}
                                                 </Text>
@@ -763,212 +406,526 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
                                                     marginLeft: 5,
                                                     marginTop: 4,
                                                     fontWeight: "400",
-                                                    fontSize: 12,
+                                                    fontSize: 10,
                                                     lineHeight: 12,
                                                 }}
                                             >
-                                                {formatPostDate(post.createdAt)}
+                                                {formatPostDate(post.originalPostCreated)}
                                             </Text>
                                         </View>
                                     </View>
 
 
-                                    <TouchableOpacity
-                                        onPress={toggleToolings}
-                                        style={{
-                                            width: 40,
-                                            height: 40,
-                                            borderRadius: 30,
-                                            marginRight: 10,
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        <Feather
-                                            name="more-horizontal"
-                                            size={20}
-                                            color={isDarkMode ? "#F5F5F5" : "black"}
 
-                                        />
-                                    </TouchableOpacity>
                                 </View>
-
-                                <View
-                                    style={[
-                                        style, {
-                                            // backgroundColor: "red",
-                                        }]}
-                                >
-
-
-
-                                    <Pressable
-                                        onPress={showModal}
+                                {post.originalMessage && (
+                                    <View
                                         style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            position: "absolute",
-                                            // borderRadius: 20,
-                                            backgroundColor: 'rgba(0, 0, 0, 0.93)',
-                                            overflow: "hidden",
+                                            zIndex: 1,
+                                            width: "90%",
+                                            marginLeft: 10,
+                                            paddingBottom: 10,
+                                            justifyContent: "center"
                                         }}
                                     >
+                                        <Text
+                                            style={{
+                                                color: isDarkMode ? "#F5F5F5" : "black",
+                                                fontSize: 14,
+                                                fontWeight: "400",
+                                                textAlign: "justify",
+                                                lineHeight: 20,
+                                            }}
+                                        >
+                                            {post.originalMessage}
+                                        </Text>
+                                    </View>
+                                )}
+
+                            </View>
+
+                        </View>
+
+                        <View
+                            style={[
+                                style, {
+                                    // backgroundColor: "red",
+                                }]}
+                        >
 
 
 
-                                        {
-                                            item.mediaType === "image" && (
-                                                <Image
-                                                    source={{
-                                                        uri: item.mediaUrl,
-                                                    }}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        resizeMode: "contain",
-                                                        opacity: isDarkMode ? 0.7 : 1,
-                                                    }}
-                                                />
-                                            )
-                                        }
-                                        {
-                                            item.mediaType === "video" && (
-
-
-                                                <Video
-                                                    source={{
-                                                        uri: item.mediaUrl,
-                                                    }}
-                                                    rate={1.0}
-                                                    volume={1.0}
-                                                    isMuted={false}
-                                                    isLooping
-                                                    paused={true}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        opacity: isDarkMode ? 0.7 : 1,
-                                                    }}
-                                                />
-                                            )
-                                        }
+                            <Pressable
+                                onPress={showModal}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    position: "absolute",
+                                    // borderRadius: 20,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.93)',
+                                    overflow: "hidden",
+                                }}
+                            >
 
 
 
-                                    </Pressable>
-
-                                    <Modal
-                                        visible={showImage}
-                                        transparent={true}
-                                        animationIn="pulse"
-                                        animationOut="fadeOut"
-                                        onRequestClose={showModal}
-                                    >
-                                        <View
+                                {
+                                    item.mediaType === "image" && (
+                                        <Image
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
                                             style={{
                                                 width: "100%",
                                                 height: "100%",
+                                                resizeMode: "contain",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+                                {
+                                    item.mediaType === "video" && (
+
+
+                                        <Video
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            rate={1.0}
+                                            volume={1.0}
+                                            isMuted={false}
+                                            isLooping
+                                            paused={true}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+
+
+
+                            </Pressable>
+
+                            <Modal
+                                visible={showImage}
+                                transparent={true}
+                                animationIn="pulse"
+                                animationOut="fadeOut"
+                                onRequestClose={showModal}
+                            >
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        backgroundColor: isDarkMode ? "black" : "black",
+
+                                    }}>
+
+                                    <View
+                                        style={{
+                                            position: "absolute",
+                                            width: "100%",
+                                            height: "10%",
+                                            marginTop: "4%",
+                                            zIndex: 3
+                                        }}
+                                    >
+
+                                        <Pressable
+
+                                            onPress={showModal}
+
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                //backgroundColor: "blue",
+                                                flexDirection: "row",
                                                 alignItems: "center",
                                                 justifyContent: "center",
-                                                backgroundColor: isDarkMode ? "black" : "black",
+                                            }}
+                                        >
+                                        </Pressable>
 
-                                            }}>
+                                    </View>
 
-                                            <View
-                                                style={{
-                                                    position: "absolute",
-                                                    width: "100%",
-                                                    height: "10%",
-                                                    marginTop: "4%",
-                                                    zIndex: 3
+
+                                    {
+                                        item.mediaType === "image" && (
+                                            <Image
+                                                source={{
+                                                    uri: item.mediaUrl,
                                                 }}
-                                            >
-
-                                                <Pressable
-
-                                                    onPress={showModal}
-
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        //backgroundColor: "blue",
-                                                        flexDirection: "row",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                    }}
-                                                >
-                                                </Pressable>
-
-                                            </View>
-
-
-                                            {
-                                                item.mediaType === "image" && (
-                                                    <Image
-                                                        source={{
-                                                            uri: item.mediaUrl,
-                                                        }}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            resizeMode: "contain",
-                                                            borderRadius: 20,
-                                                            opacity: isDarkMode ? 0.7 : 1,
-                                                        }}
-                                                    />
-                                                )
-                                            }
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
 
 
 
-                                            {
-                                                item.mediaType === "video" && (
+                                    {
+                                        item.mediaType === "video" && (
 
-                                                    <Video
-                                                        source={{
-                                                            uri: item.mediaUrl,
-                                                        }}
-                                                        rate={1.0}
-                                                        volume={1.0}
-                                                        isMuted={false}
-                                                        isLooping
-                                                        paused={true}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            resizeMode: "contain",
-                                                            borderRadius: 20,
-                                                            opacity: isDarkMode ? 0.7 : 1,
-                                                        }}
-                                                    />
-                                                )
+                                            <Video
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                rate={1.0}
+                                                volume={1.0}
+                                                isMuted={false}
+                                                isLooping
+                                                paused={true}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
 
-                                            }
-
-
-                                        </View>
-                                    </Modal>
+                                    }
 
 
                                 </View>
-
-                                <PostFooter
-                                    post={post}
-                                    toggleSending={toggleSending}
-                                    toggleComments={toggleComments} />
+                            </Modal>
 
 
-                            </>
+                        </View>
 
-                        )}
+                        <PostFooter
+                            post={post}
+                            toggleSending={toggleSending}
+                            toggleComments={toggleComments}
 
+                        />
+
+                    </>
+
+                ) : (
+                    <>
+
+
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                position: "relative ",
+                                zIndex: 1,
+                                marginBottom: 10,
+                                height: 60,
+                                //backgroundColor:"red"
+                            }}
+                        >
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 10
+                                }}
+                            >
+                                <TouchableOpacity
+
+                                    style={{
+                                        width: 35,
+                                        height: 35,
+                                        borderRadius: 30,
+                                        marginLeft: 10,
+                                        zIndex: 1,
+                                    }}
+                                    onPress={() => goProfil(post.posterId)}>
+                                    <Image
+                                        source={{
+                                            uri:
+                                                !isEmpty(usersData[0]) &&
+                                                usersData
+                                                    .map((user) => {
+                                                        if (user._id === post.posterId) {
+                                                            return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png"
+                                                        }
+                                                        else
+                                                            return null;
+                                                    })
+                                                    .join(""),
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: 30,
+                                            //resizeMode: "cover",
+                                            zIndex: 1,
+                                        }}
+                                    />
+
+                                    {isUserOnline && (<View
+                                        style={{
+                                            backgroundColor: "#09C03C",
+                                            position: "absolute",
+                                            left: 28,
+                                            width: 8,
+                                            height: 8,
+                                            borderRadius: 25,
+                                            borderWidth: 1,
+                                            borderColor: isDarkMode ? "#0D0C0C" : "#F3F2F2",
+                                            top: 25,
+                                            zIndex: 100
+                                        }}>
+                                    </View>
+                                    )}
+                                </TouchableOpacity>
+
+
+
+                                <View
+                                    style={{
+                                        flexDirection: "column",
+                                        marginLeft: 6,
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                color: isDarkMode ? "#F5F5F5" : "black",
+                                                marginLeft: 5,
+                                                fontWeight: "600",
+                                                fontSize: 14,
+                                            }}
+                                        >
+                                            {!isEmpty(usersData[0]) &&
+                                                usersData.map((user) => {
+                                                    if (user._id === post.posterId) return user.pseudo;
+                                                    else return null;
+                                                })}
+                                        </Text>
+                                    </View>
+                                    <Text
+                                        style={{
+                                            color: isDarkMode ? "#F5F5F5" : "black",
+                                            fontSize: 10,
+                                            marginLeft: 5,
+                                            marginTop: 4,
+                                            fontWeight: "400",
+                                            fontSize: 12,
+                                            lineHeight: 12,
+                                        }}
+                                    >
+                                        {formatPostDate(post.createdAt)}
+                                    </Text>
+                                </View>
+                            </View>
+
+
+                            <TouchableOpacity
+                                onPress={toggleToolings}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    borderRadius: 30,
+                                    marginRight: 10,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Feather
+                                    name="more-horizontal"
+                                    size={20}
+                                    color={isDarkMode ? "#F5F5F5" : "black"}
+
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View
+                            style={[
+                                style, {
+                                    // backgroundColor: "red",
+                                }]}
+                        >
+
+
+
+                            <Pressable
+                                onPress={showModal}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    position: "absolute",
+                                    // borderRadius: 20,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.93)',
+                                    overflow: "hidden",
+                                }}
+                            >
+
+
+
+                                {
+                                    item.mediaType === "image" && (
+                                        <Image
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                resizeMode: "contain",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+                                {
+                                    item.mediaType === "video" && (
+
+
+                                        <Video
+                                            source={{
+                                                uri: item.mediaUrl,
+                                            }}
+                                            rate={1.0}
+                                            volume={1.0}
+                                            isMuted={false}
+                                            isLooping
+                                            paused={true}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                opacity: isDarkMode ? 0.7 : 1,
+                                            }}
+                                        />
+                                    )
+                                }
+
+
+
+                            </Pressable>
+
+                            <Modal
+                                visible={showImage}
+                                transparent={true}
+                                animationIn="pulse"
+                                animationOut="fadeOut"
+                                onRequestClose={showModal}
+                            >
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        backgroundColor: isDarkMode ? "black" : "black",
+
+                                    }}>
+
+                                    <View
+                                        style={{
+                                            position: "absolute",
+                                            width: "100%",
+                                            height: "10%",
+                                            marginTop: "4%",
+                                            zIndex: 3
+                                        }}
+                                    >
+
+                                        <Pressable
+
+                                            onPress={showModal}
+
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                //backgroundColor: "blue",
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                        </Pressable>
+
+                                    </View>
+
+
+                                    {
+                                        item.mediaType === "image" && (
+                                            <Image
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+                                    }
+
+
+
+                                    {
+                                        item.mediaType === "video" && (
+
+                                            <Video
+                                                source={{
+                                                    uri: item.mediaUrl,
+                                                }}
+                                                rate={1.0}
+                                                volume={1.0}
+                                                isMuted={false}
+                                                isLooping
+                                                paused={true}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    resizeMode: "contain",
+                                                    borderRadius: 20,
+                                                    opacity: isDarkMode ? 0.7 : 1,
+                                                }}
+                                            />
+                                        )
+
+                                    }
+
+
+                                </View>
+                            </Modal>
+
+
+                        </View>
+
+                        <PostFooter
+                            post={post}
+                            toggleSending={toggleSending}
+                            toggleComments={toggleComments} />
 
 
                     </>
 
                 )}
+
+
 
             </View>
 

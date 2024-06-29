@@ -984,6 +984,8 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+  - react-native-splash-screen (3.3.0):
+    - React-Core
   - react-native-video (5.2.1):
     - React-Core
     - react-native-video/Video (= 5.2.1)
@@ -1286,6 +1288,7 @@ DEPENDENCIES:
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-voximplant (from `../node_modules/react-native-voximplant`)
@@ -1446,6 +1449,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-view-shot:
@@ -1595,6 +1600,7 @@ SPEC CHECKSUMS:
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: a240ad4b683349e48b1d51fed1611138d1bdad97
   react-native-slider: 7a39874fc1fcdfee48e448fa72cce0a8f2c7c5d6
+  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-voximplant: 93826357ea605f586a02a5f9066ff95fdee73659
@@ -1645,6 +1651,6 @@ SPEC CHECKSUMS:
   VoxImplantWebRTC: 2256a8b9157cc46e1a4c8e0ed5816c5c672d7d5d
   Yoga: 2a16e58450c48e110211dae1159fb114bbcdcfc0
 
-PODFILE CHECKSUM: ab3db38d180f8c8cff76c06f768fd942bf3bdcc2
+PODFILE CHECKSUM: 79d6a9c8b762fbc67bb3c2adf8544ea0c351a566
 
 COCOAPODS: 1.15.2

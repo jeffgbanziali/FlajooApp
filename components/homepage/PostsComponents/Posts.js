@@ -535,7 +535,9 @@ const Posts = ({ post, loadPost, userId }) => {
             justifyContent: "center"
           }}
         >
-          <PostSending toggleSending={toggleSending} />
+          <PostSending
+            postSenderPost={post}
+            toggleSending={toggleSending} />
         </KeyboardAvoidingView>
       </Modal>
 

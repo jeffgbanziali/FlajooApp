@@ -161,7 +161,7 @@ const SenderUserEdit = ({ closeModel, modalVisible, toggleSending, userSelect, i
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={{ width: 120, height: 40, margin: 4, borderRadius: 10, backgroundColor: "lightblue", justifyContent: "center", alignItems: "center" }}
+                                style={{ width: 120, height: 40, margin: 4, borderRadius: 10, backgroundColor: "#2196F3", justifyContent: "center", alignItems: "center" }}
                                 onPress={closeModel}
                             >
                                 <Text style={{ fontSize: 14, fontWeight: "600", color: isDarkMode ? "#FFFFFF" : "black" }}>

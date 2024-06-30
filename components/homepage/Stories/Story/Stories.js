@@ -86,15 +86,28 @@ const Stories = () => {
 
 
 
-    const foundUser = usersData.map(user => {
-      if (user._id === item.container.posterId) {
-        return user;
-      }
-      return null;
-    }).filter(user => user !== null)[0]
+    let foundUser = null;
+
+    if (Array.isArray(usersData)) {
+      foundUser = usersData.map(function (user) {
+        if (user._id === item.container.posterId) {
+          return user;
+        }
+        return null;
+      }).filter(Boolean)[0];
+    } else {
+      console.error('usersData is not an array', usersData);
+    }
+
 
 
     const isUserOnline = foundUser.onlineStatus === true
+
+
+
+
+
+
 
 
 

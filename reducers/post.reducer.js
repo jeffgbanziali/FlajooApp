@@ -13,10 +13,18 @@ import {
     DELETE_COMMENT,
     VIEW_POST,
     VIEW_POST_FAILED,
+    SHARE_POST_WITH_USER_REQUEST,
+    SHARE_POST_WITH_USER_SUCCESS,
+    SHARE_POST_WITH_USER_FAILURE,
+    SHARE_POST_AS_NEW_POST_REQUEST,
+    SHARE_POST_AS_NEW_POST_SUCCESS,
+    SHARE_POST_AS_NEW_POST_FAILURE,
 } from "../actions/post.actions";
 
 const initialState = {
     post: [],
+    message: null,
+    error: null,
 };
 
 export default function postReducer(state = initialState, action) {
@@ -237,11 +245,49 @@ export default function postReducer(state = initialState, action) {
                     return post;
                 })
             };
+        case SHARE_POST_WITH_USER_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case SHARE_POST_WITH_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                post: state.post.map(p => p._id === action.payload.post._id ? action.payload.post : p),
+                message: action.payload.message,
+                error: null,
+            };
+
+        case SHARE_POST_WITH_USER_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case SHARE_POST_AS_NEW_POST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case SHARE_POST_AS_NEW_POST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                post: [action.payload.post, ...state.post],
+                error: null,
+            };
+        case SHARE_POST_AS_NEW_POST_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
 
         case CREATE_POST_ERROR:
             return {
                 ...state,
-                error: action.payload // Stockez l'erreur dans un champ d'état "error"
+                error: action.payload
             };
 
         default:

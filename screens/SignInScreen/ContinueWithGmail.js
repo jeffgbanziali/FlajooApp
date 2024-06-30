@@ -9,10 +9,6 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-
 
 const ContinueWithGmail = () => {
     const { isDarkMode } = useDarkMode();
@@ -75,7 +71,6 @@ const ContinueWithGmail = () => {
                     'Authorization': `Bearer ${idToken}`,
                     'Server-Auth-Code': userInfo.serverAuthCode,
                 },
-
 
             });
 

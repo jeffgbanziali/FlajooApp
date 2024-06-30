@@ -7,7 +7,6 @@ import { UidContext, useDarkMode } from "../Context/AppContext";
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
 import { APP_API_URL } from "@env";
-import { getPostsById } from "../../actions/post.actions";
 
 
 const Followers = () => {

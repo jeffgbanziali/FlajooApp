@@ -20,7 +20,7 @@ const PostSending = ({ toggleSending, postSenderPost }) => {
     const { isDarkMode } = useDarkMode();
     const userData = useSelector((state) => state.userReducer);
     const usersData = useSelector((state) => state.usersReducer);
-    const firstTenUsers = usersData.slice(0, 10);
+    const firstTenUsers = usersData.slice(0, 50).filter((user) => user._id !== userData._id);
 
     return (
         <SafeAreaView

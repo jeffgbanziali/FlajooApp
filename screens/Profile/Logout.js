@@ -15,18 +15,29 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       setIsLoadingSignOut(true);
+
+      // Suppression du token du stockage local
       await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user");
+      await AsyncStorage.removeItem("uid");
+
+      // Appel à l'API de déconnexion
       await axios.get(`${APP_API_URL}/api/user/logout`);
+
+      // Réinitialisation de l'identifiant utilisateur
       setUid(null);
-      console.log("Logged out");
+
+      console.log("Logged out successfully");
     } catch (error) {
-      console.error(error);
+      console.error("Error during logout:", error);
     } finally {
+      // Réinitialisation de l'état de chargement après un délai
       setTimeout(() => {
         setIsLoadingSignOut(false);
       }, 5000);
     }
   };
+
 
 
 

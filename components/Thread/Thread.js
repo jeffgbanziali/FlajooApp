@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../actions/post.actions";
 import Posts from "../homepage/PostsComponents/Posts";
@@ -33,37 +33,35 @@ const Thread = () => {
     fetchPosts();
   }, [uid, dispatch]);
 
-  const renderPlaceholders = () => {
-    return Array(userRequire.length || 5).fill(null).map((_, index) => (
-      <PlaceholderComponent key={index} />
-    ));
-  };
+  const renderPlaceholder = ({ item }) => <PlaceholderComponent />;
+
+  const renderPost = ({ item }) => (
+    <View
+      style={{
+        alignItems: "center",
+        backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
+      }}
+    >
+      <Posts loadPost={loadPost} user={uid} post={item} />
+    </View>
+  );
 
   return (
     <GestureHandlerRootView>
-      <ScrollView
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <Header />
+            <Stories />
+          </>
+        }
+        data={userRequire}
+        renderItem={loadPost ? renderPlaceholder : renderPost}
+        keyExtractor={(item, index) => item?._id ? item._id : index.toString()}
         contentContainerStyle={{
           backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
         }}
-      >
-        <Header />
-        <Stories />
-        {loadPost ? (
-          renderPlaceholders()
-        ) : (
-          userRequire.map((item) => (
-            <View
-              style={{
-                alignItems: "center",
-                backgroundColor: isDarkMode ? "#0D0D0D" : "lightgray"
-              }}
-              key={item._id}
-            >
-              <Posts loadPost={loadPost} user={uid} post={item} />
-            </View>
-          ))
-        )}
-      </ScrollView>
+      />
     </GestureHandlerRootView>
   );
 };

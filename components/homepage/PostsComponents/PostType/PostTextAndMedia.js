@@ -10,12 +10,9 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useState, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty, formatPostDate } from "../../../Context/Utils";
 import { UidContext, useDarkMode } from "../../../Context/AppContext";
-import { LinearGradient } from "react-native-linear-gradient";
 import Video from 'react-native-video';
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -34,9 +31,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
     const dispatch = useDispatch()
 
 
-    //console.log("Mon post est là", post)
-    //console.log("Mon user identifiant est là", uid)
-
 
     const navigation = useNavigation();
     const { isDarkMode } = useDarkMode();
@@ -48,6 +42,7 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
             navigation.navigate("ProfilFriends", { id });
         }
     };
+
 
     const handleViewView = () => {
         const meViewPost = post.views.find((user) => user.viewerId === uid);
@@ -83,14 +78,29 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
         style = styles.landscape;
     }
 
-    const user = usersData.map(user => {
-        if (user._id === post.posterId) {
-            return user;
-        }
-        return null;
-    }).filter(user => user !== null)[0];
+    let user = null;
+
+    if (Array.isArray(usersData)) {
+        user = usersData.map(function (user) {
+            if (user._id === post.posterId) {
+                return user;
+            }
+            return null;
+        }).filter(Boolean)[0];
+    } else {
+        console.error('usersData is not an array', usersData);
+    }
+
+
+
 
     const isUserOnline = user.onlineStatus === true
+
+
+
+
+
+
 
     return (
 
@@ -101,7 +111,6 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
             {post.originalPosterId && post.posterId ? (
 
                 <>
-
 
                     <View
                         style={{
@@ -585,13 +594,16 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
 
                     </View>
 
+
                     <PostFooter
                         post={post}
                         toggleSending={toggleSending}
-                        toggleComments={toggleComments} />
+                        toggleComments={toggleComments}
+                    />
                 </>
 
             ) : (
+
                 <>
                     <View
                         style={{
@@ -908,13 +920,11 @@ const PostTextAndMedia = ({ post, item, toggleToolings, toggleSending, toggleCom
                     <PostFooter
                         post={post}
                         toggleSending={toggleSending}
-                        toggleComments={toggleComments} />
+                        toggleComments={toggleComments}
+                    />
                 </>
             )
-
             }
-
-
 
         </>
 

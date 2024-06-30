@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import React, { useContext, useRef, useState, } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LikeButton from "../LikeButton/LikeButton"
 import { useNavigation } from "@react-navigation/native";
@@ -38,6 +38,7 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
     const navigation = useNavigation();
     const { uid } = useContext(UidContext);
     const { isDarkMode } = useDarkMode();
+    const dispatch = useDispatch();
 
     const scrollX = useRef(new Animated.Value(0)).current
 
@@ -113,12 +114,18 @@ const PostTwoMedia = ({ post, mediaItem, currentMediaIndex, toggleToolings, togg
         style = styles.landscape;
     }
 
-    const user = usersData.map(user => {
-        if (user._id === post.posterId) {
-            return user;
-        }
-        return null;
-    }).filter(user => user !== null)[0];
+    let user = null;
+
+    if (Array.isArray(usersData)) {
+        user = usersData.map(function (user) {
+            if (user._id === post.posterId) {
+                return user;
+            }
+            return null;
+        }).filter(Boolean)[0];  // filter(Boolean) removes null values, [0] gets the first match
+    } else {
+        console.error('usersData is not an array', usersData);
+    }
 
     const isUserOnline = user.onlineStatus === true
 

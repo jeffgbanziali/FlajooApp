@@ -79,12 +79,21 @@ const PostMedia = ({ post, item, selectedComment, isLoading, toggleToolings, tog
 
 
 
-    const user = usersData.map(user => {
-        if (user._id === post.posterId) {
-            return user;
-        }
-        return null;
-    }).filter(user => user !== null)[0];
+    let user = null;
+
+    if (Array.isArray(usersData)) {
+        user = usersData.map(function (user) {
+            if (user._id === post.posterId) {
+                return user;
+            }
+            return null;
+        }).filter(Boolean)[0];  // filter(Boolean) removes null values, [0] gets the first match
+    } else {
+        console.error('usersData is not an array', usersData);
+    }
+
+   
+
 
     const isUserOnline = user.onlineStatus === true
 

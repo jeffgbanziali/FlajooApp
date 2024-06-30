@@ -74,7 +74,6 @@ const AppW = () => {
     const { isDarkMode } = useDarkMode();
     const { isConnected, isInternetConnected } = useOnlineStatus();
 
-    //console.log("Viens me voir ", APP_API_URL)
 
     useEffect(() => {
         //  console.log('useEffect AsyncStorage.getItem uid');
@@ -113,7 +112,6 @@ const AppW = () => {
 
     const updateUserData = useCallback(() => {
         if (uid) {
-            // console.log('useEffect dispatch actions with UID:', uid);
             dispatch(getUser(uid));
             dispatch(getUsers());
             dispatch(getPosts(uid));
@@ -122,12 +120,10 @@ const AppW = () => {
         }
     }, [uid, dispatch]);
 
-    // Dispatch actions lorsqu'on a l'UID
     useEffect(() => {
         updateUserData();
     }, [updateUserData]);
 
-    console.log("Viens ici, kondo", uid)
 
     if (!isConnected && !isInternetConnected) {
         return <NoConnection />;

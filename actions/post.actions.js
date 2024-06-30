@@ -17,7 +17,14 @@ export const UNLIKE_REPLY = 'UNLIKE_REPLY';
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
 export const ADD_POSTS_SUCCESS = "ADD_POSTS_SUCCESS";
 export const VIEW_POST = 'VIEW_POST';
-export const VIEW_POST_FAILED = "VIEW_POST_FAILED"
+export const VIEW_POST_FAILED = "VIEW_POST_FAILED";
+export const SHARE_POST_WITH_USER_REQUEST = 'SHARE_POST_WITH_USER_REQUEST';
+export const SHARE_POST_WITH_USER_SUCCESS = 'SHARE_POST_WITH_USER_SUCCESS';
+export const SHARE_POST_WITH_USER_FAILURE = 'SHARE_POST_WITH_USER_FAILURE';
+export const SHARE_POST_AS_NEW_POST_REQUEST = 'SHARE_POST_AS_NEW_POST_REQUEST';
+export const SHARE_POST_AS_NEW_POST_SUCCESS = 'SHARE_POST_AS_NEW_POST_SUCCESS';
+export const SHARE_POST_AS_NEW_POST_FAILURE = 'SHARE_POST_AS_NEW_POST_FAILURE';
+
 
 
 
@@ -227,3 +234,61 @@ export const markPostAsViewed = (postId, viewerId) => {
         }
     }
 }
+
+
+const sharePostWithUserRequest = () => ({
+    type: SHARE_POST_WITH_USER_REQUEST,
+});
+
+const sharePostWithUserSuccess = (data) => ({
+    type: SHARE_POST_WITH_USER_SUCCESS,
+    payload: data,
+});
+
+const sharePostWithUserFailure = (error) => ({
+    type: SHARE_POST_WITH_USER_FAILURE,
+    payload: error,
+});
+
+export const sharePostWithUser = (postData) => async (dispatch) => {
+    dispatch(sharePostWithUserRequest());
+    try {
+        const response = await axios.post(`${APP_API_URL}/api/post/share-with-user`, postData);
+        const data = response.data; // Accédez aux données spécifiques de la réponse
+        dispatch(sharePostWithUserSuccess(data));
+        console.log("Voici mon log ", data);
+        return response;
+    } catch (error) {
+        dispatch(sharePostWithUserFailure(error.response?.data || error.message));
+        console.error("An error occurred while sharing the post:", error); // Ajoutez un log pour les erreurs
+        throw error; // Lancez l'erreur pour permettre un traitement ultérieur
+    }
+};
+
+
+const sharePostAsNewPostRequest = () => ({
+    type: SHARE_POST_AS_NEW_POST_REQUEST,
+});
+
+const sharePostAsNewPostSuccess = (data) => ({
+    type: SHARE_POST_AS_NEW_POST_SUCCESS,
+    payload: data,
+});
+
+const sharePostAsNewPostFailure = (error) => ({
+    type: SHARE_POST_AS_NEW_POST_FAILURE,
+    payload: error,
+});
+
+export const sharePostAsNewPost = (postData) => async (dispatch) => {
+    dispatch(sharePostAsNewPostRequest());
+    try {
+        const response = await axios.post(`${APP_API_URL}/api/post/share-as-new-post`, postData);
+        dispatch(sharePostAsNewPostSuccess(response));
+
+
+        return response;
+    } catch (error) {
+        dispatch(sharePostAsNewPostFailure(error.response?.data || error.message));
+    }
+};

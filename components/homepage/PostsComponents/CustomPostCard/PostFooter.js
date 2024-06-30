@@ -27,7 +27,6 @@ const PostFooter = ({ post, toggleComments, toggleSending }) => {
 
 
 
-    console.log("mes partages", post.shares.length)
     return (
         <>
             <View
@@ -358,7 +357,7 @@ const PostFooter = ({ post, toggleComments, toggleSending }) => {
                                 fontWeight: "500",
                             }}
                         >
-                            {post?.shares.length} Partages
+                            {post?.shares?.length} Partages
                         </Text>
                     </View>
                 </View>

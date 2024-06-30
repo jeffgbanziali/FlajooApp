@@ -169,6 +169,7 @@ const Posts = ({ post, loadPost, userId }) => {
         easing: Easing.linear,
         useNativeDriver: false,
       }).start();
+      console.log('My sender is here')
     }
   };
 
@@ -218,6 +219,7 @@ const Posts = ({ post, loadPost, userId }) => {
                 currentMediaIndex={currentMediaIndex}
                 mediaItem={mediaData}
                 toggleToolings={toggleToolings}
+                toggleSending={toggleSending}
                 toggleComments={toggleComments} />
 
             </View>
@@ -284,7 +286,9 @@ const Posts = ({ post, loadPost, userId }) => {
                   post={post}
                   item={mediaDate}
                   toggleToolings={toggleToolings}
-                  toggleComments={toggleComments} />
+                  toggleComments={toggleComments}
+                  toggleSending={toggleSending}
+                />
 
               </View>
             )}

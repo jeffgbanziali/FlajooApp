@@ -27,6 +27,7 @@ import MessagesUser from "../../components/MessagesUser/MessageUser/MessagesUser
 import { UidContext, useDarkMode } from "../../components/Context/AppContext";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useTranslation } from "react-i18next";
+import Video from "react-native-video";
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");

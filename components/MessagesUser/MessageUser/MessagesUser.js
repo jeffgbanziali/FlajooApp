@@ -3,7 +3,6 @@ import { Animated, Dimensions, Easing, KeyboardAvoidingView, Linking, Platform, 
 import { View, StyleSheet, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { formatMessageDate, formatPostDate, isEmpty } from "../../Context/Utils";
-import Modal from "react-native-modal";
 import { useDarkMode } from "../../Context/AppContext";
 import { TouchableOpacity } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -13,6 +12,7 @@ import { APP_API_URL } from "@env";
 import Video from 'react-native-video';
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Modal from "react-native-modal";
 
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -70,6 +70,7 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
   };
 
   const handleImagePress = () => {
+
     setSelectedImage(message.attachment.url);
     setShowImage(true);
   };
@@ -125,7 +126,7 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
     return null;
   }).filter(post => post !== null)[0];
 
-  console.log("mes messages", foundPoster)
+  console.log("mes messages", selectedImage)
 
 
   return (
@@ -735,6 +736,8 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
                         />
                         <Pressable
                           onLongPress={messageTools}
+                          onPress={() => handleImagePress(message.attachment.url)}
+
                         >
                           <View
                             style={{
@@ -837,6 +840,8 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
 
                           <Pressable
                             onLongPress={messageTools}
+                            onPress={() => handleImagePress(message.attachment.url)}
+
                           >
                             {
                               message.attachment.type === "image" && (
@@ -1563,6 +1568,8 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
                         />
                         <Pressable
                           onLongPress={messageTools}
+                          onPress={() => handleImagePress(message.attachment.url)}
+
                         >
                           <View
                             style={{
@@ -1636,6 +1643,8 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
 
                           <Pressable
                             onLongPress={messageTools}
+                            onPress={() => handleImagePress(message.attachment.url)}
+
                           >
                             {
                               message.attachment.type === "image" && (
@@ -1953,16 +1962,21 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
       </Modal >
 
       <Modal
-        isVisible={showImage}
         transparent={true}
-        animationType="slide"
+        isVisible={showImage}
+        animationIn="pulse"
+        animationOut="fadeOut"
         onRequestClose={closeImageModal}
+        style={{ margin: 0, justifyContent: 'center' }}
       >
-        <View style={{
-          flex: 1,
-          alignItems: "center",
-          backgroundColor: isDarkMode ? "black" : "black",
-        }}>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            backgroundColor: isDarkMode ? "red" : "black",
+          }}>
           <View
             style={{
               width: "100%",
@@ -1992,19 +2006,20 @@ const MessagesUser = ({ message, own, user, conversationToos }) => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
+              width: "100%",
+              height: "100%",
               backgroundColor: 'black',
             }}
           >
-            {selectedImage && (
-              <Image
-                source={{ uri: selectedImage.uri }}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  resizeMode: "contain"
-                }}
-              />
-            )}
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                width: "100%",
+                height: "100%",
+                resizeMode: "contain"
+              }}
+            />
+
           </View>
         </View>
       </Modal>

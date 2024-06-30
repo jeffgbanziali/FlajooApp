@@ -125,9 +125,9 @@ const AppW = () => {
     }, [updateUserData]);
 
 
-    if (!isConnected && !isInternetConnected) {
-        return <NoConnection />;
-    }
+    /*  if (!isConnected && !isInternetConnected) {
+          return <NoConnection />;
+      }*/
 
     return (
         <UidContext.Provider value={{ uid, setUid }}>

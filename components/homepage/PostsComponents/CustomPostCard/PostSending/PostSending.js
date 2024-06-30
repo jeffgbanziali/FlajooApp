@@ -60,8 +60,14 @@ const PostSending = ({ toggleSending, postSenderPost }) => {
                     flexDirection: "column",
                 }}
             >
-                <TextSection title={t("ShareOn")} isDarkMode={isDarkMode} />
-                <ShareSection isDarkMode={isDarkMode} t={t} />
+                <TextSection
+                    title={t("ShareOn")}
+                    isDarkMode={isDarkMode} />
+                <ShareSection
+                    postSenderPost={postSenderPost}
+                    toggleSending={toggleSending}
+                    isDarkMode={isDarkMode}
+                    t={t} />
             </View>
         </SafeAreaView>
     );

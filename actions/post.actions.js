@@ -283,12 +283,16 @@ const sharePostAsNewPostFailure = (error) => ({
 export const sharePostAsNewPost = (postData) => async (dispatch) => {
     dispatch(sharePostAsNewPostRequest());
     try {
+
         const response = await axios.post(`${APP_API_URL}/api/post/share-as-new-post`, postData);
-        dispatch(sharePostAsNewPostSuccess(response));
+        const data = response.data;
+        dispatch(sharePostAsNewPostSuccess(data));
 
 
         return response;
     } catch (error) {
         dispatch(sharePostAsNewPostFailure(error.response?.data || error.message));
+        console.error("An error occurred while reply the post:", error);
+        throw error;
     }
 };

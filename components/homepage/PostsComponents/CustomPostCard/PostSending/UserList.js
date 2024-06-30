@@ -6,15 +6,12 @@ import { UidContext } from '../../../../Context/AppContext';
 import SenderUserEdit from './SenderUserEdit';
 import { sharePostWithUser } from '../../../../../actions/post.actions';
 import { useDispatch } from 'react-redux';
+import RepostPostEdit from './RepostPostEdit';
 
 
 const UserList = ({ firstTenUsers, toggleSending, isDarkMode, t, postSenderPost }) => {
     const [userSelect, setUserSelect] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [text, setText] = useState("");
-    const { uid } = useContext(UidContext);
-    const dispatch = useDispatch()
-    const [alertVisible, setAlertVisible] = useState(true);
 
 
     const selectUserSend = (id) => {
@@ -108,6 +105,8 @@ const UserList = ({ firstTenUsers, toggleSending, isDarkMode, t, postSenderPost 
                 userSelect={userSelect}
                 toggleSending={toggleSending}
                 postSenderPost={postSenderPost} />
+
+
 
 
 

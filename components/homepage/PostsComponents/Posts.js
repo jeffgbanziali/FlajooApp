@@ -174,16 +174,16 @@ const Posts = ({ post, loadPost, userId }) => {
   };
 
 
-  const mediaData = post.media?.map(mediaItem => mediaItem);
+  const mediaData = post?.media?.map(mediaItem => mediaItem);
 
 
   const [currentMediaIndex, setCurrentMediaIndex] = useState(
-    post.media
+    post?.media
   );
 
-  const mediaDate = post.media?.find(mediaItem => mediaItem);
+  const mediaDate = post?.media?.find(mediaItem => mediaItem);
 
-  const commentary = post.comments.length + post.comments.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
+  const commentary = post?.comments?.length + post?.comments?.reduce((total, comment) => total + (comment.replies ? comment.replies.length : 0), 0)
 
 
 
@@ -193,7 +193,7 @@ const Posts = ({ post, loadPost, userId }) => {
 
       {currentMediaIndex?.length > 1 ? (
         <>
-          {mediaData && post.message && (
+          {mediaData && post?.message && (
             <View
               key={post._id}
               style={{
@@ -225,7 +225,7 @@ const Posts = ({ post, loadPost, userId }) => {
             </View>
           )}
 
-          {mediaData && !post.message && (
+          {mediaData && !post?.message && (
             <View
               key={post._id}
               style={{
@@ -261,7 +261,7 @@ const Posts = ({ post, loadPost, userId }) => {
         currentMediaIndex?.length === 1 ? (
           <>
 
-            {mediaDate && post.message && (
+            {mediaDate && post?.message && (
               <View
                 key={post._id}
                 style={{
@@ -293,7 +293,7 @@ const Posts = ({ post, loadPost, userId }) => {
               </View>
             )}
 
-            {mediaDate && !post.message && (
+            {mediaDate && !post?.message && (
 
 
               <PostMedia
@@ -310,7 +310,7 @@ const Posts = ({ post, loadPost, userId }) => {
           </>
         ) : (
           <>
-            {!mediaDate && post.message && (
+            {!mediaDate && post?.message && (
               <View
                 key={post._id}
                 style={{
@@ -519,6 +519,7 @@ const Posts = ({ post, loadPost, userId }) => {
 
         </KeyboardAvoidingView>
       </Modal>
+      
       <Modal
         isVisible={showSending}
         onBackdropPress={toggleSending}

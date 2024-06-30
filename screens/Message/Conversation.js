@@ -290,7 +290,8 @@ const Conversation = ({ conversation, currentUser }) => {
                             usersData
                               .map((user) => {
                                 if (user._id === friendId) {
-                                  return user.picture || "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
+                                  console.log("user picture ", user.picture)
+                                  return user.picture ? user.picture : "https://pbs.twimg.com/media/EFIv5HzUcAAdjhl.png";
                                 }
                                 return null;
                               })

@@ -152,11 +152,8 @@ const NewPostScreen = () => {
 
                 setProgress(1);
 
-                if (progress === 1) {
-                    const response = await dispatch(addPosts(postData));
-                    console.log("Voici ma log", response)
 
-                }
+                dispatch(addPosts(postData))
                 dispatch(getPosts(userData._id));
                 setPostText('');
                 setSelectedMediaArray([]);

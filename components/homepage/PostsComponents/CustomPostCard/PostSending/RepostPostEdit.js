@@ -47,7 +47,7 @@ const RepostPostEdit = ({ closeModel, modalVisible, toggleSending, isDarkMode, t
             const response = await dispatch(sharePostAsNewPost(postData));
             console.log('Response:', response);
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 Alert.alert("Vous avez republié ce post")
             }
         } catch (error) {
